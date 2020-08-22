@@ -1,19 +1,19 @@
 //
-//  PEPTests.m
+//  GLexerTests.m
 //  PEPTests
 //
-//  Created by Aaron Elkins on 8/21/20.
+//  Created by Aaron Elkins on 8/22/20.
 //  Copyright © 2020 Aaron Elkins. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
 #import "GLexer.h"
 
-@interface PEPTests : XCTestCase
+@interface GLexerTests : XCTestCase
 
 @end
 
-@implementation PEPTests
+@implementation GLexerTests
 
 - (void)setUp {
     // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -23,10 +23,11 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
 }
 
-- (void)testExample {
+- (void)testGToken {
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
-    XCTAssert(YES);
+    GToken *t = [GToken token];
+    NSLog(@"%@", t);
 }
 
 @end

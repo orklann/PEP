@@ -10,8 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface GToken : NSObject
-
+@interface GToken : NSObject {
+    int type;
+    NSData *content;
+}
++ (id)token;
 @end
 
 

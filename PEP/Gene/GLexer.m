@@ -9,7 +9,10 @@
 #import "GLexer.h"
 
 @implementation GToken
-
++ (id)token {
+    GToken *t = [[GToken alloc] init];
+    return t;
+}
 @end
 
 @implementation GLexer
