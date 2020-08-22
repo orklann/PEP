@@ -10,6 +10,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@interface GToken : NSObject
+
+@end
+
+
 @interface GLexer : NSObject
 
 @end

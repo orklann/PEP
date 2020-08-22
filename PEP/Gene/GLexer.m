@@ -8,6 +8,10 @@
 
 #import "GLexer.h"
 
+@implementation GToken
+
+@end
+
 @implementation GLexer
 
 @end
