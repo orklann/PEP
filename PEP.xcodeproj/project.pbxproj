@@ -12,20 +12,12 @@
 		931221CC24F0139300929C01 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 931221CA24F0139300929C01 /* MainMenu.xib */; };
 		931221CF24F0139300929C01 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 931221CE24F0139300929C01 /* main.m */; };
 		931221DA24F0139700929C01 /* PEPTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 931221D924F0139700929C01 /* PEPTests.m */; };
-		931221E524F0139700929C01 /* PEPUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 931221E424F0139700929C01 /* PEPUITests.m */; };
 		9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9355AEB824F12DCC00764E36 /* GLexerTests.m */; };
 		93E336FD24F1265300F91F74 /* GLexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E336F824F1254300F91F74 /* GLexer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		931221D624F0139700929C01 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 931221BA24F0137F00929C01 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 931221C124F0137F00929C01;
-			remoteInfo = PEP;
-		};
-		931221E124F0139700929C01 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 931221BA24F0137F00929C01 /* Project object */;
 			proxyType = 1;
@@ -46,9 +38,6 @@
 		931221D524F0139700929C01 /* PEPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PEPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		931221D924F0139700929C01 /* PEPTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEPTests.m; sourceTree = "<group>"; };
 		931221DB24F0139700929C01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		931221E024F0139700929C01 /* PEPUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PEPUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		931221E424F0139700929C01 /* PEPUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEPUITests.m; sourceTree = "<group>"; };
-		931221E624F0139700929C01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9355AEB824F12DCC00764E36 /* GLexerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLexerTests.m; sourceTree = "<group>"; };
 		93E336F824F1254300F91F74 /* GLexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLexer.m; sourceTree = "<group>"; };
 		93E336FC24F1256000F91F74 /* GLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLexer.h; sourceTree = "<group>"; };
@@ -69,13 +58,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		931221DD24F0139700929C01 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -84,7 +66,6 @@
 			children = (
 				931221C424F0137F00929C01 /* PEP */,
 				931221D824F0139700929C01 /* PEPTests */,
-				931221E324F0139700929C01 /* PEPUITests */,
 				931221C324F0137F00929C01 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -94,7 +75,6 @@
 			children = (
 				931221C224F0137F00929C01 /* PEP.app */,
 				931221D524F0139700929C01 /* PEPTests.xctest */,
-				931221E024F0139700929C01 /* PEPUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -122,15 +102,6 @@
 				931221DB24F0139700929C01 /* Info.plist */,
 			);
 			path = PEPTests;
-			sourceTree = "<group>";
-		};
-		931221E324F0139700929C01 /* PEPUITests */ = {
-			isa = PBXGroup;
-			children = (
-				931221E424F0139700929C01 /* PEPUITests.m */,
-				931221E624F0139700929C01 /* Info.plist */,
-			);
-			path = PEPUITests;
 			sourceTree = "<group>";
 		};
 		93E336ED24F11C2500F91F74 /* Gene */ = {
@@ -180,24 +151,6 @@
 			productReference = 931221D524F0139700929C01 /* PEPTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		931221DF24F0139700929C01 /* PEPUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 931221EF24F0139700929C01 /* Build configuration list for PBXNativeTarget "PEPUITests" */;
-			buildPhases = (
-				931221DC24F0139700929C01 /* Sources */,
-				931221DD24F0139700929C01 /* Frameworks */,
-				931221DE24F0139700929C01 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				931221E224F0139700929C01 /* PBXTargetDependency */,
-			);
-			name = PEPUITests;
-			productName = PEPUITests;
-			productReference = 931221E024F0139700929C01 /* PEPUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -211,10 +164,6 @@
 						CreatedOnToolsVersion = 11.6;
 					};
 					931221D424F0139700929C01 = {
-						CreatedOnToolsVersion = 11.6;
-						TestTargetID = 931221C124F0137F00929C01;
-					};
-					931221DF24F0139700929C01 = {
 						CreatedOnToolsVersion = 11.6;
 						TestTargetID = 931221C124F0137F00929C01;
 					};
@@ -235,7 +184,6 @@
 			targets = (
 				931221C124F0137F00929C01 /* PEP */,
 				931221D424F0139700929C01 /* PEPTests */,
-				931221DF24F0139700929C01 /* PEPUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -251,13 +199,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		931221D324F0139700929C01 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		931221DE24F0139700929C01 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -286,14 +227,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		931221DC24F0139700929C01 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				931221E524F0139700929C01 /* PEPUITests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -301,11 +234,6 @@
 			isa = PBXTargetDependency;
 			target = 931221C124F0137F00929C01 /* PEP */;
 			targetProxy = 931221D624F0139700929C01 /* PBXContainerItemProxy */;
-		};
-		931221E224F0139700929C01 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 931221C124F0137F00929C01 /* PEP */;
-			targetProxy = 931221E124F0139700929C01 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -504,40 +432,6 @@
 			};
 			name = Release;
 		};
-		931221F024F0139700929C01 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = PEPUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.macpep.PEPUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = PEP;
-			};
-			name = Debug;
-		};
-		931221F124F0139700929C01 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = PEPUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.macpep.PEPUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = PEP;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -564,15 +458,6 @@
 			buildConfigurations = (
 				931221ED24F0139700929C01 /* Debug */,
 				931221EE24F0139700929C01 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		931221EF24F0139700929C01 /* Build configuration list for PBXNativeTarget "PEPUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				931221F024F0139700929C01 /* Debug */,
-				931221F124F0139700929C01 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
