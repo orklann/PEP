@@ -41,4 +41,25 @@
     XCTAssertEqual([l nextChar], 'D');
     XCTAssertEqual([l nextChar], 'E');
 }
+
+- (void)testIsWhiteSpace {
+    unsigned char ch = 0x00;
+    XCTAssertTrue(isWhiteSpace(ch));
+    ch = 0x09;
+    XCTAssertTrue(isWhiteSpace(ch));
+    ch = 0x0A;
+    XCTAssertTrue(isWhiteSpace(ch));
+    ch = 0x0C;
+    XCTAssertTrue(isWhiteSpace(ch));
+    ch = 0x0D;
+    XCTAssertTrue(isWhiteSpace(ch));
+    ch = 0x20;
+    XCTAssertTrue(isWhiteSpace(ch));
+    ch = 'A';
+    XCTAssertFalse(isWhiteSpace(ch));
+    ch = '\n';
+    XCTAssertTrue(isWhiteSpace(ch));
+    ch = '\r';
+    XCTAssertTrue(isWhiteSpace(ch));
+}
 @end

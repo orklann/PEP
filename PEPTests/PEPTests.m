@@ -7,7 +7,6 @@
 //
 
 #import <XCTest/XCTest.h>
-#import "GLexer.h"
 
 @interface PEPTests : XCTestCase
 
