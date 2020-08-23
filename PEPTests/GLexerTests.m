@@ -23,7 +23,7 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
 }
 
-- (void)testGTokenSetStream {
+- (void)testGLexerSetStream {
     GLexer *l = [GLexer lexer];
     char *b = "HELLO, LEXER";
     NSData *d = [NSData dataWithBytes:b length:13];
@@ -31,4 +31,11 @@
     XCTAssertEqualObjects(d, [l stream]);
 }
 
+- (void)testGLexerNextChar {
+    GLexer *l = [GLexer lexer];
+    char *b = "ABCDE";
+    NSData *d = [NSData dataWithBytes:b length:13];
+    [l setStream:d];
+    XCTAssertEqual([l nextChar], 'B');
+}
 @end

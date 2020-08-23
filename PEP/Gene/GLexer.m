@@ -23,9 +23,16 @@
 
 - (void)setStream:(NSData*)s {
     stream = s;
+    pos = 0;
 }
 
 - (NSData*)stream {
     return stream;
+}
+
+- (char)nextChar {
+    unsigned char *bytes = (unsigned char*)[stream bytes];
+    pos += 1;
+    return *(bytes + pos);
 }
 @end

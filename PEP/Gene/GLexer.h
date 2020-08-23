@@ -21,10 +21,12 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GLexer : NSObject
 {
     NSData *stream;
+    unsigned int pos;
 }
 + (id)lexer;
 - (void)setStream:(NSData*)s;
 - (NSData*)stream;
+- (char)nextChar;
 @end
 
 NS_ASSUME_NONNULL_END
