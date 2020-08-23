@@ -33,6 +33,13 @@ BOOL isWhiteSpace(unsigned char ch) {
     GToken *t = [[GToken alloc] init];
     return t;
 }
+- (void)setType:(int)t {
+    type = t;
+}
+
+- (int)type {
+    return type;
+}
 @end
 
 @implementation GLexer

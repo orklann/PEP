@@ -18,6 +18,8 @@ BOOL isWhiteSpace(unsigned char ch);
     NSData *content;
 }
 + (id)token;
+- (void)setType:(int)t;
+- (int)type;
 @end
 
 

@@ -75,4 +75,10 @@
     [l nextChar];
     XCTAssertEqual([l pos], 1);
 }
+
+- (void)testGTokenSetType {
+    GToken *t = [GToken token];
+    [t setType: 0xff];
+    XCTAssertEqual([t type], 0xff);
+}
 @end
