@@ -34,7 +34,7 @@
 - (void)testGLexerNextChar {
     GLexer *l = [GLexer lexer];
     char *b = "ABCDE";
-    NSData *d = [NSData dataWithBytes:b length:13];
+    NSData *d = [NSData dataWithBytes:b length:6];
     [l setStream:d];
     XCTAssertEqual([l nextChar], 'B');
     XCTAssertEqual([l nextChar], 'C');
