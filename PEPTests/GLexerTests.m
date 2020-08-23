@@ -37,5 +37,8 @@
     NSData *d = [NSData dataWithBytes:b length:13];
     [l setStream:d];
     XCTAssertEqual([l nextChar], 'B');
+    XCTAssertEqual([l nextChar], 'C');
+    XCTAssertEqual([l nextChar], 'D');
+    XCTAssertEqual([l nextChar], 'E');
 }
 @end
