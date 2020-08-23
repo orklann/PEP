@@ -40,6 +40,14 @@ BOOL isWhiteSpace(unsigned char ch) {
 - (int)type {
     return type;
 }
+
+- (void)setContent:(NSData *)d {
+    content = d;
+}
+
+- (NSData*)content {
+    return content;
+}
 @end
 
 @implementation GLexer
@@ -68,5 +76,38 @@ BOOL isWhiteSpace(unsigned char ch) {
         pos += 1;
     }
     return *(bytes + pos);
+}
+
+- (unsigned char)currentChar {
+    unsigned char *bytes = (unsigned char*)[stream bytes];
+    return *(bytes + pos);
+}
+
+- (GToken *)nextToken {
+    unsigned char current = [self currentChar];
+    GToken * token = [GToken token];
+    unsigned int start = pos;
+    switch (current) {
+        case 'f':
+            if([self nextChar] == 'a' && [self nextChar] == 'l' && [self nextChar] == 's'
+               && [self nextChar] == 'e' && isWhiteSpace([self nextChar])){
+                [token setType:kBooleanToken];
+                unsigned char* bytes = (unsigned char*)[stream bytes];
+                NSData *d = [NSData dataWithBytes:bytes + start length:5];
+                [token setContent:d];
+            }
+            break;
+        case 't':
+            if ([self nextChar] == 'r' && [self nextChar] == 'u' && [self nextChar] == 'e'
+                && isWhiteSpace([self nextChar])) {
+                [token setType:kBooleanToken];
+                unsigned char* bytes = (unsigned char*)[stream bytes];
+                NSData *d = [NSData dataWithBytes:bytes + start length:4];
+                [token setContent:d];
+            }
+        default:
+            break;
+    }
+    return token;
 }
 @end

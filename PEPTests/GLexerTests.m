@@ -81,4 +81,46 @@
     [t setType: kBooleanToken];
     XCTAssertEqual([t type], kBooleanToken);
 }
+
+- (void)testGLexerNextTokenBooleanToken {
+    // #1 Test boolean: "false" from "false"
+    GLexer *l = [GLexer lexer];
+    char *b = "false";
+    NSData *d = [NSData dataWithBytes:b length:6];
+    NSData *falseData = [NSData dataWithBytes:"false" length:5];
+    [l setStream:d];
+    GToken *t = [l nextToken];
+    XCTAssertEqual([t type], kBooleanToken);
+    XCTAssertEqualObjects([t content], falseData);
+    
+    // #2 Test boolean: "false" from "false "
+    GLexer *l2 = [GLexer lexer];
+    char *b2 = "false ";
+    NSData *d2 = [NSData dataWithBytes:b2 length:6];
+    NSData *falseData2 = [NSData dataWithBytes:"false" length:5];
+    [l2 setStream:d2];
+    GToken *t2 = [l2 nextToken];
+    XCTAssertEqual([t2 type], kBooleanToken);
+    XCTAssertEqualObjects([t2 content], falseData2);
+    
+    // #3 Test boolean: "true" from "true"
+    GLexer *l3 = [GLexer lexer];
+    char *b3 = "true";
+    NSData *d3 = [NSData dataWithBytes:b3 length:5];
+    NSData *trueData = [NSData dataWithBytes:"true" length:4];
+    [l3 setStream:d3];
+    GToken *t3 = [l3 nextToken];
+    XCTAssertEqual([t3 type], kBooleanToken);
+    XCTAssertEqualObjects([t3 content], trueData);
+    
+    // #4 Test boolean: "true" from "true "
+    GLexer *l4 = [GLexer lexer];
+    char *b4 = "true ";
+    NSData *d4 = [NSData dataWithBytes:b4 length:5];
+    NSData *trueData2 = [NSData dataWithBytes:"true" length:4];
+    [l4 setStream:d4];
+    GToken *t4 = [l4 nextToken];
+    XCTAssertEqual([t4 type], kBooleanToken);
+    XCTAssertEqualObjects([t4 content], trueData2);
+}
 @end

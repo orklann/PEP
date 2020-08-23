@@ -24,6 +24,8 @@ enum {
 + (id)token;
 - (void)setType:(int)t;
 - (int)type;
+- (void)setContent:(NSData *)d;
+- (NSData*)content;
 @end
 
 
@@ -37,6 +39,8 @@ enum {
 - (void)setStream:(NSData*)s;
 - (NSData*)stream;
 - (unsigned char)nextChar;
+- (unsigned char)currentChar;
+- (GToken *)nextToken;
 @end
 
 NS_ASSUME_NONNULL_END
