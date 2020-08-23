@@ -29,8 +29,7 @@ enum {
 @end
 
 
-@interface GLexer : NSObject
-{
+@interface GLexer : NSObject {
     NSData *stream;
     unsigned int pos;
 }
