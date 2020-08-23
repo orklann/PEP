@@ -21,6 +21,7 @@ enum {
     int type;
     NSData *content;
 }
+
 + (id)token;
 - (void)setType:(int)t;
 - (int)type;
@@ -33,6 +34,7 @@ enum {
     NSData *stream;
     unsigned int pos;
 }
+
 + (id)lexer;
 - (unsigned int)pos;
 - (void)setStream:(NSData*)s;
