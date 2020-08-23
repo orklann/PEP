@@ -31,6 +31,14 @@
     XCTAssertEqualObjects(d, [l stream]);
 }
 
+- (void)testGLexerCurrentChar {
+    GLexer *l = [GLexer lexer];
+    char *b = "ABCDE";
+    NSData *d = [NSData dataWithBytes:b length:6];
+    [l setStream:d];
+    XCTAssertEqual([l currentChar], 'A');
+}
+
 - (void)testGLexerNextChar {
     GLexer *l = [GLexer lexer];
     char *b = "ABCDE";
