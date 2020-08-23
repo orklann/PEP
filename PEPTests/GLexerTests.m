@@ -40,6 +40,9 @@
     XCTAssertEqual([l nextChar], 'C');
     XCTAssertEqual([l nextChar], 'D');
     XCTAssertEqual([l nextChar], 'E');
+    XCTAssertEqual([l nextChar], '\0');
+    XCTAssertEqual([l nextChar], '\0');
+    XCTAssertEqual([l nextChar], '\0');
 }
 
 - (void)testIsWhiteSpace {

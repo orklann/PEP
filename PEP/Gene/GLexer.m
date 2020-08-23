@@ -56,7 +56,10 @@ BOOL isWhiteSpace(unsigned char ch) {
 
 - (unsigned char)nextChar {
     unsigned char *bytes = (unsigned char*)[stream bytes];
-    pos += 1;
+    unsigned int len = (unsigned int)[stream length];
+    if (pos + 1 <= len - 1){
+        pos += 1;
+    }
     return *(bytes + pos);
 }
 @end
