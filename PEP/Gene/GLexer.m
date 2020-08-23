@@ -50,7 +50,7 @@ BOOL isWhiteSpace(unsigned char ch) {
     return stream;
 }
 
-- (char)nextChar {
+- (unsigned char)nextChar {
     unsigned char *bytes = (unsigned char*)[stream bytes];
     pos += 1;
     return *(bytes + pos);

@@ -29,7 +29,7 @@ BOOL isWhiteSpace(unsigned char ch);
 + (id)lexer;
 - (void)setStream:(NSData*)s;
 - (NSData*)stream;
-- (char)nextChar;
+- (unsigned char)nextChar;
 @end
 
 NS_ASSUME_NONNULL_END
