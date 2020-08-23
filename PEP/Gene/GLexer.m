@@ -16,5 +16,16 @@
 @end
 
 @implementation GLexer
++ (id)lexer {
+    GLexer *l = [[GLexer alloc] init];
+    return l;
+}
 
+- (void)setStream:(NSData*)s {
+    stream = s;
+}
+
+- (NSData*)stream {
+    return stream;
+}
 @end

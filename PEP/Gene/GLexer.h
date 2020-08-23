@@ -19,7 +19,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @interface GLexer : NSObject
-
+{
+    NSData *stream;
+}
++ (id)lexer;
+- (void)setStream:(NSData*)s;
+- (NSData*)stream;
 @end
 
 NS_ASSUME_NONNULL_END

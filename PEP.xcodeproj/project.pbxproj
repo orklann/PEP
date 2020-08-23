@@ -97,8 +97,8 @@
 		931221D824F0139700929C01 /* PEPTests */ = {
 			isa = PBXGroup;
 			children = (
-				931221D924F0139700929C01 /* PEPTests.m */,
 				9355AEB824F12DCC00764E36 /* GLexerTests.m */,
+				931221D924F0139700929C01 /* PEPTests.m */,
 				931221DB24F0139700929C01 /* Info.plist */,
 			);
 			path = PEPTests;
