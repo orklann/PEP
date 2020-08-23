@@ -122,5 +122,17 @@
     GToken *t4 = [l4 nextToken];
     XCTAssertEqual([t4 type], kBooleanToken);
     XCTAssertEqualObjects([t4 content], trueData2);
+    
+    // #5 Test boolean: "true", "false" from "true false"
+    GLexer *l5 = [GLexer lexer];
+    char *b5 = "true false";
+    NSData *d5 = [NSData dataWithBytes:b5 length:11];
+    [l5 setStream:d5];
+    GToken *t5 = [l5 nextToken];
+    XCTAssertEqual([t5 type], kBooleanToken);
+    XCTAssertEqualObjects([t5 content], trueData);
+    GToken *t6 = [l5 nextToken];
+    XCTAssertEqual([t6 type], kBooleanToken);
+    XCTAssertEqualObjects([t6 content], falseData);
 }
 @end

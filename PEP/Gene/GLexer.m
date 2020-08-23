@@ -95,6 +95,7 @@ BOOL isWhiteSpace(unsigned char ch) {
                 unsigned char* bytes = (unsigned char*)[stream bytes];
                 NSData *d = [NSData dataWithBytes:bytes + start length:5];
                 [token setContent:d];
+                [self nextChar];
             }
             break;
         case 't': // 'true'
@@ -104,6 +105,7 @@ BOOL isWhiteSpace(unsigned char ch) {
                 unsigned char* bytes = (unsigned char*)[stream bytes];
                 NSData *d = [NSData dataWithBytes:bytes + start length:4];
                 [token setContent:d];
+                [self nextChar];
             }
         default:
             break;
