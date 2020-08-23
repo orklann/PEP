@@ -13,6 +13,10 @@ NS_ASSUME_NONNULL_BEGIN
 // Test for white space char
 BOOL isWhiteSpace(unsigned char ch);
 
+enum {
+    kBooleanToken
+};
+
 @interface GToken : NSObject {
     int type;
     NSData *content;

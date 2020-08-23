@@ -78,7 +78,7 @@
 
 - (void)testGTokenSetType {
     GToken *t = [GToken token];
-    [t setType: 0xff];
-    XCTAssertEqual([t type], 0xff);
+    [t setType: kBooleanToken];
+    XCTAssertEqual([t type], kBooleanToken);
 }
 @end
