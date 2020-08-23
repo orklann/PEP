@@ -41,6 +41,10 @@ BOOL isWhiteSpace(unsigned char ch) {
     return l;
 }
 
+- (unsigned int)pos {
+    return pos;
+}
+
 - (void)setStream:(NSData*)s {
     stream = s;
     pos = 0;

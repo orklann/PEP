@@ -27,6 +27,7 @@ BOOL isWhiteSpace(unsigned char ch);
     unsigned int pos;
 }
 + (id)lexer;
+- (unsigned int)pos;
 - (void)setStream:(NSData*)s;
 - (NSData*)stream;
 - (unsigned char)nextChar;

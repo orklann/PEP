@@ -62,4 +62,14 @@
     ch = '\r';
     XCTAssertTrue(isWhiteSpace(ch));
 }
+
+- (void)testGLexerPos {
+    GLexer *l = [GLexer lexer];
+    char *b = "ABCDE";
+    NSData *d = [NSData dataWithBytes:b length:6];
+    [l setStream:d];
+    XCTAssertEqual([l pos], 0);
+    [l nextChar];
+    XCTAssertEqual([l pos], 1);
+}
 @end
