@@ -89,7 +89,8 @@ BOOL isWhiteSpace(unsigned char ch) {
     unsigned int start = pos;
     switch (current) {
         case 'f': // 'false'
-            if([self nextChar] == 'a' && [self nextChar] == 'l' && [self nextChar] == 's'
+            if([self nextChar] == 'a' && [self nextChar] == 'l'
+               && [self nextChar] == 's'
                && [self nextChar] == 'e' && isWhiteSpace([self nextChar])){
                 [token setType:kBooleanToken];
                 unsigned char* bytes = (unsigned char*)[stream bytes];
@@ -99,7 +100,8 @@ BOOL isWhiteSpace(unsigned char ch) {
             }
             break;
         case 't': // 'true'
-            if ([self nextChar] == 'r' && [self nextChar] == 'u' && [self nextChar] == 'e'
+            if ([self nextChar] == 'r' && [self nextChar] == 'u'
+                && [self nextChar] == 'e'
                 && isWhiteSpace([self nextChar])) {
                 [token setType:kBooleanToken];
                 unsigned char* bytes = (unsigned char*)[stream bytes];
