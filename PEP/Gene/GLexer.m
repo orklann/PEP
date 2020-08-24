@@ -85,16 +85,12 @@ BOOL isWhiteSpace(unsigned char ch) {
 
 - (NSData *)getNumber {
     unsigned char current = [self currentChar];
-    unsigned char s[5];
-    sprintf((char *)s, "%c", current);
     NSMutableData *d = [NSMutableData dataWithCapacity:100];
-    [d appendBytes:(unsigned char*)s length:1];
+    [d appendBytes:(unsigned char*)&current length:1];
     
     unsigned char next = [self nextChar];
     while(!isWhiteSpace(next)) {
-        unsigned char s[5];
-        sprintf((char *)s, "%c", next);
-        [d appendBytes:(unsigned char*)s length:1];
+        [d appendBytes:(unsigned char*)&next length:1];
         next = [self nextChar];
     }
     return (NSData*)d;
