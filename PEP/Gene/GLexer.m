@@ -11,15 +11,10 @@
 BOOL isWhiteSpace(unsigned char ch) {
     switch (ch) {
         case 0x00:
-            return YES;
         case 0x09:
-            return YES;
         case 0x0A:
-            return YES;
         case 0x0C:
-            return YES;
         case 0x0D:
-            return YES;
         case 0x20:
             return YES;
         default:
