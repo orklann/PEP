@@ -15,7 +15,8 @@ BOOL isWhiteSpace(unsigned char ch);
 
 enum {
     kBooleanToken,
-    kNumberToken
+    kNumberToken,
+    kLiteralStringToken
 };
 
 @interface GToken : NSObject {

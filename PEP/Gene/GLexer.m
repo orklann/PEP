@@ -90,12 +90,12 @@ BOOL isWhiteSpace(unsigned char ch) {
     NSMutableData *d = [NSMutableData dataWithCapacity:100];
     [d appendBytes:(unsigned char*)s length:1];
     
-    current = [self nextChar];
-    while(!isWhiteSpace(current)) {
+    unsigned char next = [self nextChar];
+    while(!isWhiteSpace(next)) {
         unsigned char s[5];
-        sprintf((char *)s, "%c", current);
+        sprintf((char *)s, "%c", next);
         [d appendBytes:(unsigned char*)s length:1];
-        current = [self nextChar];
+        next = [self nextChar];
     }
     return (NSData*)d;
 }
