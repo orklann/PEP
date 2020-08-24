@@ -163,6 +163,7 @@
     GToken *t = [l nextToken];
     XCTAssertEqual([t type], kNumberToken);
     XCTAssertEqualObjects([t content], d1);
+    XCTAssertNotEqualObjects([t content], [NSData dataWithBytes:"1000" length:4]);
     t = [l nextToken];
     XCTAssertEqualObjects([t content], d2);
     t = [l nextToken];
