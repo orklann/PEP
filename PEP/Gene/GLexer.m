@@ -106,7 +106,7 @@ BOOL isWhiteSpace(unsigned char ch) {
     unsigned int start = pos;
     switch (current) {
         case 'f': // 'false'
-            if([self nextChar] == 'a' && [self nextChar] == 'l'
+            if ([self nextChar] == 'a' && [self nextChar] == 'l'
                && [self nextChar] == 's'
                && [self nextChar] == 'e' && isWhiteSpace([self nextChar])){
                 [token setType:kBooleanToken];
@@ -115,6 +115,7 @@ BOOL isWhiteSpace(unsigned char ch) {
                 [token setContent:d];
             }
             break;
+            
         case 't': // 'true'
             if ([self nextChar] == 'r' && [self nextChar] == 'u'
                 && [self nextChar] == 'e'
@@ -125,6 +126,7 @@ BOOL isWhiteSpace(unsigned char ch) {
                 [token setContent:d];
             }
             break;
+            
         case '0':
         case '1':
         case '2':
