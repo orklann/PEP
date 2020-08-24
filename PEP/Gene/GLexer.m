@@ -83,6 +83,23 @@ BOOL isWhiteSpace(unsigned char ch) {
     return *(bytes + pos);
 }
 
+- (NSData *)getNumber {
+    unsigned char current = [self currentChar];
+    unsigned char s[5];
+    sprintf((char *)s, "%c", current);
+    NSMutableData *d = [NSMutableData dataWithCapacity:100];
+    [d appendBytes:(unsigned char*)s length:1];
+    
+    current = [self nextChar];
+    while(!isWhiteSpace(current)) {
+        unsigned char s[5];
+        sprintf((char *)s, "%c", current);
+        [d appendBytes:(unsigned char*)s length:1];
+        current = [self nextChar];
+    }
+    return (NSData*)d;
+}
+
 - (GToken *)nextToken {
     // Consume white spaces before parsing token
     while (isWhiteSpace([self currentChar])) {
@@ -111,6 +128,24 @@ BOOL isWhiteSpace(unsigned char ch) {
                 NSData *d = [NSData dataWithBytes:bytes + start length:4];
                 [token setContent:d];
             }
+            break;
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        case '+':
+        case '-':
+        case '.': // number
+            [token setType:kNumberToken];
+            [token setContent:[self getNumber]];
+            break;
+            
         default:
             break;
     }

@@ -143,4 +143,45 @@
     XCTAssertEqual([t6 type], kBooleanToken);
     XCTAssertEqualObjects([t6 content], falseData);
 }
+
+- (void)testGLexerNextTokenNumberToken {
+    GLexer *l = [GLexer lexer];
+    char *b = "123 43445 +17 -98 0 34.5 -3.62 +123.6 4. -.002 0.0";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    NSData *d1 = [NSData dataWithBytes:"123" length:3];
+    NSData *d2 = [NSData dataWithBytes:"43445" length:5];
+    NSData *d3 = [NSData dataWithBytes:"+17" length:3];
+    NSData *d4 = [NSData dataWithBytes:"-98" length:3];
+    NSData *d5 = [NSData dataWithBytes:"0" length:1];
+    NSData *d6 = [NSData dataWithBytes:"34.5" length:4];
+    NSData *d7 = [NSData dataWithBytes:"-3.62" length:5];
+    NSData *d8 = [NSData dataWithBytes:"+123.6" length:6];
+    NSData *d9 = [NSData dataWithBytes:"4." length:2];
+    NSData *d10 = [NSData dataWithBytes:"-.002" length:5];
+    NSData *d11 = [NSData dataWithBytes:"0.0" length:3];
+    [l setStream:d];
+    GToken *t = [l nextToken];
+    XCTAssertEqual([t type], kNumberToken);
+    XCTAssertEqualObjects([t content], d1);
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d2);
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d3);
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d4);
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d5);
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d6);
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d7);
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d8);
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d9);
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d10);
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d11);
+}
 @end

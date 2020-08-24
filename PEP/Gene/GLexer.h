@@ -14,7 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 BOOL isWhiteSpace(unsigned char ch);
 
 enum {
-    kBooleanToken
+    kBooleanToken,
+    kNumberToken
 };
 
 @interface GToken : NSObject {
