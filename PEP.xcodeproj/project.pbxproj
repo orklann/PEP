@@ -368,7 +368,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = "0.1 alpha";
-				PRODUCT_BUNDLE_IDENTIFIER = org.macpep.PEP;
+				PRODUCT_BUNDLE_IDENTIFIER = org.macpep.pep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -387,7 +387,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = "0.1 alpha";
-				PRODUCT_BUNDLE_IDENTIFIER = org.macpep.PEP;
+				PRODUCT_BUNDLE_IDENTIFIER = org.macpep.pep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
