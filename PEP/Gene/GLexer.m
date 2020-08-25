@@ -114,6 +114,22 @@ BOOL isWhiteSpace(unsigned char ch) {
     return [NSData dataWithBytes:([d bytes]+1) length:[d length] - 2];
 }
 
+- (NSData *)getHexadecimalStrings {
+    NSMutableData *d = [NSMutableData dataWithCapacity:1024];
+    unsigned char next = [self currentChar];
+    [d appendBytes:(unsigned char*)&next length:1];
+    next = [self nextChar];
+    while(next != '>') {
+        [d appendBytes:(unsigned char*)&next length:1];
+        next = [self nextChar];
+    }
+    // Append '0' if the length of hexademical strings is not even
+    if ([d length] % 2 != 0){
+        [d appendBytes:"0" length:1];
+    }
+    return (NSData*)d;
+}
+
 - (GToken *)nextToken {
     // Consume white spaces before parsing token
     while (isWhiteSpace([self currentChar])) {
@@ -165,6 +181,13 @@ BOOL isWhiteSpace(unsigned char ch) {
         case '(': // literal strings
             [token setType:kLiteralStringsToken];
             [token setContent:[self getLiteralStrings]];
+            break;
+ 
+        case '<':
+            if ([self nextChar] != '<') {
+                [token setType:kHexadecimalStringsToken];
+                [token setContent:[self getHexadecimalStrings]];
+            }
             break;
             
         default:

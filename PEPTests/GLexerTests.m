@@ -207,4 +207,26 @@
     XCTAssertEqual([t2 type], kLiteralStringsToken);
     XCTAssertEqualObjects([t2 content], d3);
 }
+
+- (void)testGLexerNextTokenHexadecimalStringsToken{
+    GLexer *l = [GLexer lexer];
+    char *b = "<AAFFDE34F>";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    NSData *d1 = [NSData dataWithBytes:"AAFFDE34F0"
+                                length:strlen("AAFFDE34F0")];
+    [l setStream:d];
+    GToken *t = [l nextToken];
+    XCTAssertEqual([t type], kHexadecimalStringsToken);
+    XCTAssertEqualObjects([t content], d1);
+    
+    b = "<AAFFDE34FE>";
+    d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    d1 = [NSData dataWithBytes:"AAFFDE34FE"
+                                length:strlen("AAFFDE34FE")];
+    [l setStream:d];
+    t = [l nextToken];
+    XCTAssertEqual([t type], kHexadecimalStringsToken);
+    XCTAssertEqualObjects([t content], d1);
+    
+}
 @end
