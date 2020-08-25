@@ -204,14 +204,14 @@ BOOL isWhiteSpace(unsigned char ch) {
             [token setContent:[self getLiteralStrings]];
             break;
  
-        case '<':
+        case '<': // hexadecimal strings
             if ([self nextChar] != '<') {
                 [token setType:kHexadecimalStringsToken];
                 [token setContent:[self getHexadecimalStrings]];
             }
             break;
         
-        case '/':
+        case '/': // name object
             [token setType:kNameObjectToken];
             [token setContent:[self getName]];
             break;
