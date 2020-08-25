@@ -130,6 +130,27 @@ BOOL isWhiteSpace(unsigned char ch) {
     return (NSData*)d;
 }
 
+- (NSData *)getName {
+    NSMutableData *d = [NSMutableData dataWithCapacity:100];
+    unsigned char next = [self nextChar];
+    while(!isWhiteSpace(next)) {
+        if (next == '#') {
+            unsigned char ch1 = [self nextChar];
+            unsigned char ch2 = [self nextChar];
+            unsigned char s[3];
+            long hex;
+            sprintf((char*)&s, "%c%c", ch1, ch2);
+            hex = strtol((char *)s, NULL, 16);
+            sprintf((char*)&s, "%c", (int)hex);
+            [d appendBytes:(unsigned char*)&s length:1];
+        } else {
+            [d appendBytes:(unsigned char*)&next length:1];
+        }
+        next = [self nextChar];
+    }
+    return (NSData*)d;
+}
+
 - (GToken *)nextToken {
     // Consume white spaces before parsing token
     while (isWhiteSpace([self currentChar])) {
@@ -188,6 +209,11 @@ BOOL isWhiteSpace(unsigned char ch) {
                 [token setType:kHexadecimalStringsToken];
                 [token setContent:[self getHexadecimalStrings]];
             }
+            break;
+        
+        case '/':
+            [token setType:kNameObjectToken];
+            [token setContent:[self getName]];
             break;
             
         default:

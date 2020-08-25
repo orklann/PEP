@@ -229,4 +229,66 @@
     XCTAssertEqualObjects([t content], d1);
     
 }
+
+- (void)testGLexerNextTokenNameObjectToken {
+    GLexer *l = [GLexer lexer];
+    char *b = "/Name1 /ASomewhatLongerName /A;Name_With-Various***Characters? /1.2 /$$ /@pattern /.notdef /Lime#20Green /paired#28#29parentheses /The_Key_of_F#23_Minor /A#42";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    NSData *d1 = [NSData dataWithBytes:"Name1"
+                                length:strlen("Name1")];
+    NSData *d2 = [NSData dataWithBytes:"ASomewhatLongerName"
+                                length:strlen("ASomewhatLongerName")];
+    NSData *d3 = [NSData dataWithBytes:"A;Name_With-Various***Characters?"
+                                length:strlen("A;Name_With-Various***Characters?")];
+    NSData *d4 = [NSData dataWithBytes:"1.2"
+                                length:strlen("1.2")];
+    NSData *d5 = [NSData dataWithBytes:"$$"
+                                length:strlen("$$")];
+    NSData *d6 = [NSData dataWithBytes:"@pattern"
+                                length:strlen("@pattern")];
+    NSData *d7 = [NSData dataWithBytes:".notdef"
+                                length:strlen(".notdef")];
+    NSData *d8 = [NSData dataWithBytes:"Lime Green"
+                                length:strlen("Lime Green")];
+    NSData *d9 = [NSData dataWithBytes:"paired()parentheses"
+                                length:strlen("paired()parentheses")];
+    NSData *d10 = [NSData dataWithBytes:"The_Key_of_F#_Minor"
+                                length:strlen("The_Key_of_F#_Minor")];
+    NSData *d11 = [NSData dataWithBytes:"AB"
+                                length:strlen("AB")];
+    [l setStream:d];
+    GToken *t = [l nextToken];
+    XCTAssertEqual([t type], kNameObjectToken);
+    XCTAssertEqualObjects([t content], d1);
+    
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d2);
+    
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d3);
+    
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d4);
+    
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d5);
+    
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d6);
+    
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d7);
+    
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d8);
+    
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d9);
+    
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d10);
+    
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d11);
+}
 @end
