@@ -185,4 +185,26 @@
     t = [l nextToken];
     XCTAssertEqualObjects([t content], d11);
 }
+
+- (void)testGLexerNextTokenLiteralStringsToken {
+    GLexer *l = [GLexer lexer];
+    char *b = "(This is a string)";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    NSData *d1 = [NSData dataWithBytes:"This is a string"
+                                length:strlen("This is a string")];
+    [l setStream:d];
+    GToken *t = [l nextToken];
+    XCTAssertEqual([t type], kLiteralStringsToken);
+    XCTAssertEqualObjects([t content], d1);
+    
+    GLexer *l2 = [GLexer lexer];
+    char *b2 = "(This is (a) () string)";
+    NSData *d2 = [NSData dataWithBytes:b2 length:strlen(b2) + 1];
+    NSData *d3 = [NSData dataWithBytes:"This is (a) () string"
+                                length:strlen("This is (a) () string")];
+    [l2 setStream:d2];
+    GToken *t2 = [l2 nextToken];
+    XCTAssertEqual([t2 type], kLiteralStringsToken);
+    XCTAssertEqualObjects([t2 content], d3);
+}
 @end

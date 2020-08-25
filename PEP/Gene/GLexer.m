@@ -91,6 +91,29 @@ BOOL isWhiteSpace(unsigned char ch) {
     return (NSData*)d;
 }
 
+- (NSData*)getLiteralStrings {
+    NSMutableData *d = [NSMutableData dataWithCapacity:100];
+    unsigned char next = [self currentChar];
+    int unbalanced = 1;
+    [d appendBytes:(unsigned char*)&next length:1];
+    next = [self nextChar];
+    if (next == '(') {
+        unbalanced += 1;
+    } else if (next == ')') {
+        unbalanced -= 1;
+    }
+    while(unbalanced != 0) {
+        if (next == '(') {
+            unbalanced += 1;
+        } else if (next == ')') {
+            unbalanced -= 1;
+        }
+        [d appendBytes:(unsigned char*)&next length:1];
+        next = [self nextChar];
+    }
+    return [NSData dataWithBytes:([d bytes]+1) length:[d length] - 2];
+}
+
 - (GToken *)nextToken {
     // Consume white spaces before parsing token
     while (isWhiteSpace([self currentChar])) {
@@ -137,6 +160,11 @@ BOOL isWhiteSpace(unsigned char ch) {
         case '.': // number
             [token setType:kNumberToken];
             [token setContent:[self getNumber]];
+            break;
+        
+        case '(': // literal strings
+            [token setType:kLiteralStringsToken];
+            [token setContent:[self getLiteralStrings]];
             break;
             
         default:
