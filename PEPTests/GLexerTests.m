@@ -232,7 +232,7 @@
 
 - (void)testGLexerNextTokenNameObjectToken {
     GLexer *l = [GLexer lexer];
-    char *b = "/Name1 /ASomewhatLongerName /A;Name_With-Various***Characters? /1.2 /$$ /@pattern /.notdef /Lime#20Green /paired#28#29parentheses /The_Key_of_F#23_Minor /A#42";
+    char *b = "/Name1 /ASomewhatLongerName /A;Name_With-Various***Characters? /1.2 /$$ /@pattern /.notdef /Lime#20Green /paired#28#29parentheses /The_Key_of_F#23_Minor /A#42 /";
     NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
     NSData *d1 = [NSData dataWithBytes:"Name1"
                                 length:strlen("Name1")];
@@ -256,6 +256,8 @@
                                 length:strlen("The_Key_of_F#_Minor")];
     NSData *d11 = [NSData dataWithBytes:"AB"
                                 length:strlen("AB")];
+    NSData *d12 = [NSData dataWithBytes:""
+                                 length:strlen("")];
     [l setStream:d];
     GToken *t = [l nextToken];
     XCTAssertEqual([t type], kNameObjectToken);
@@ -290,5 +292,8 @@
     
     t = [l nextToken];
     XCTAssertEqualObjects([t content], d11);
+    
+    t = [l nextToken];
+    XCTAssertEqualObjects([t content], d12);
 }
 @end
