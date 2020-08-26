@@ -296,4 +296,16 @@
     t = [l nextToken];
     XCTAssertEqualObjects([t content], d12);
 }
+
+- (void)testGLexerNextTokenArrayObjectToken {
+    GLexer *l = [GLexer lexer];
+    char *b = "[549 3.14 false (Ralph) /SomeName [123 3.14 (Jerry)]";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    NSData *d1 = [NSData dataWithBytes:b
+                                length:strlen(b)];
+    [l setStream:d];
+    GToken *t = [l nextToken];
+    XCTAssertEqual([t type], kArrayObjectToken);
+    XCTAssertEqualObjects([t content], d1);
+}
 @end

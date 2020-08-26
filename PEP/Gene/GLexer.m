@@ -151,6 +151,30 @@ BOOL isWhiteSpace(unsigned char ch) {
     return (NSData*)d;
 }
 
+- (NSData *)getArray {
+    // return array strings with '[' and ']'
+    NSMutableData *d = [NSMutableData dataWithCapacity:100];
+    unsigned char next = [self currentChar];
+    int unbalanced = 1;
+    [d appendBytes:(unsigned char*)&next length:1];
+    next = [self nextChar];
+    if (next == '[') {
+        unbalanced += 1;
+    } else if (next == ']') {
+        unbalanced -= 1;
+    }
+    while(unbalanced != 0) {
+        if (next == '[') {
+            unbalanced += 1;
+        } else if (next == ']') {
+            unbalanced -= 1;
+        }
+        [d appendBytes:(unsigned char*)&next length:1];
+        next = [self nextChar];
+    }
+    return (NSData *)d;
+}
+
 - (GToken *)nextToken {
     // Consume white spaces before parsing token
     while (isWhiteSpace([self currentChar])) {
@@ -214,6 +238,11 @@ BOOL isWhiteSpace(unsigned char ch) {
         case '/': // name object
             [token setType:kNameObjectToken];
             [token setContent:[self getName]];
+            break;
+        
+        case '[':
+            [token setType:kArrayObjectToken];
+            [token setContent:[self getArray]];
             break;
             
         default:

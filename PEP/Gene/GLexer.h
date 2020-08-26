@@ -18,7 +18,8 @@ enum {
     kNumberToken,
     kLiteralStringsToken,
     kHexadecimalStringsToken,
-    kNameObjectToken
+    kNameObjectToken,
+    kArrayObjectToken
 };
 
 @interface GToken : NSObject {
