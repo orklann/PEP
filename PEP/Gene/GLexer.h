@@ -19,7 +19,8 @@ enum {
     kLiteralStringsToken,
     kHexadecimalStringsToken,
     kNameObjectToken,
-    kArrayObjectToken
+    kArrayObjectToken,
+    kDictionaryObjectToken
 };
 
 @interface GToken : NSObject {
@@ -46,6 +47,7 @@ enum {
 - (NSData*)stream;
 - (unsigned char)nextChar;
 - (unsigned char)currentChar;
+- (unsigned char)peekNextChar;
 - (GToken *)nextToken;
 @end
 

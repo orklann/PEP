@@ -299,13 +299,33 @@
 
 - (void)testGLexerNextTokenArrayObjectToken {
     GLexer *l = [GLexer lexer];
-    char *b = "[549 3.14 false (Ralph) /SomeName [123 3.14 (Jerry)]";
+    char *b = "[549 3.14 false (Ralph) /SomeName [123 3.14 (Jerry)]]";
     NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
     NSData *d1 = [NSData dataWithBytes:b
                                 length:strlen(b)];
     [l setStream:d];
     GToken *t = [l nextToken];
     XCTAssertEqual([t type], kArrayObjectToken);
+    XCTAssertEqualObjects([t content], d1);
+}
+
+- (void)testGLexerNextTokenDictionaryObjectToken {
+    GLexer *l = [GLexer lexer];
+    char *b = "<</Type /Example\n"
+              "/Subtype /DictionaryExample\n"
+              "/Version 0.01 /IntegerItem 12 /StringItem (a string)\n"
+              "/Subdictionary <<\n"
+                    "/Item1 0.4\n"
+                    "/Item2 true\n"
+                    "/LastItem (not !) /VeryLastItem (OK)\n"
+                  ">>\n"
+    ">> 123"; // "123" for testing
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    NSData *d1 = [NSData dataWithBytes:b
+                                length:strlen(b) - 4];
+    [l setStream:d];
+    GToken *t = [l nextToken];
+    XCTAssertEqual([t type], kDictionaryObjectToken);
     XCTAssertEqualObjects([t content], d1);
 }
 @end

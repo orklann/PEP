@@ -73,6 +73,16 @@ BOOL isWhiteSpace(unsigned char ch) {
     return *(bytes + pos);
 }
 
+- (unsigned char)peekNextChar {
+    unsigned char *bytes = (unsigned char*)[stream bytes];
+    unsigned int len = (unsigned int)[stream length];
+    int peekPos = pos;
+    if (pos + 1 <= len - 1){
+        peekPos = pos + 1;
+    }
+    return *(bytes + peekPos);
+}
+
 - (unsigned char)currentChar {
     unsigned char *bytes = (unsigned char*)[stream bytes];
     return *(bytes + pos);
@@ -175,6 +185,32 @@ BOOL isWhiteSpace(unsigned char ch) {
     return (NSData *)d;
 }
 
+- (NSData *)getDictionary {
+    // return array strings with '<<' and '>>'
+    NSMutableData *d = [NSMutableData dataWithCapacity:100];
+    int unbalanced = 1;
+    [d appendBytes:(unsigned char*)"<<" length:2];
+    unsigned char next = [self nextChar];
+    while(unbalanced != 0) {
+        if (next == '<' && [self peekNextChar] == '<') {
+            unbalanced += 1;
+            [self nextChar];
+            [d appendBytes:(unsigned char*)"<<" length:2];
+            next = [self nextChar];
+        } else if (next == '>' && [self peekNextChar] == '>') {
+            unbalanced -= 1;
+            [self nextChar];
+            [d appendBytes:(unsigned char*)">>" length:2];
+            next = [self nextChar];
+        } else {
+            [d appendBytes:(unsigned char*)&next length:1];
+            next = [self nextChar];
+        }
+    }
+    return (NSData *)d;
+}
+
+
 - (GToken *)nextToken {
     // Consume white spaces before parsing token
     while (isWhiteSpace([self currentChar])) {
@@ -232,6 +268,9 @@ BOOL isWhiteSpace(unsigned char ch) {
             if ([self nextChar] != '<') {
                 [token setType:kHexadecimalStringsToken];
                 [token setContent:[self getHexadecimalStrings]];
+            } else {
+                [token setType:kDictionaryObjectToken];
+                [token setContent:[self getDictionary]];
             }
             break;
         
