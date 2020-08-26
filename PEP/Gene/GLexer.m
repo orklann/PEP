@@ -221,15 +221,15 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
 
 - (NSData *)getStreamContent:(int)ret {
     unsigned int start = 0;
-    unsigned int len = 1;
+    unsigned int len = 1; // start with len in 1
     unsigned char next = 0;
     if (ret == kTWO_END_LINE_MARKERS) {
         next = [self nextChar];
-        start = pos;
+        start = pos; // pos: the current position of stream
     }
     
     if (ret == kONE_END_LINE_MARKER) {
-        start = pos;
+        start = pos; // pos: the current position of stream
         next = [self currentChar];
     }
     
