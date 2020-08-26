@@ -241,7 +241,8 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     while (!([endStream isEqualToString: endStreamMarker1] ||
              [endStream isEqualToString: endStreamMarker2]) ) {
         if (next == kCARRIAGE_RETURN && [self peekNextChar] == kLINE_FEED) {
-            [endStream setString:[NSString stringWithFormat:@"%c%c", next, [self nextChar]]];
+            [endStream setString:[NSString stringWithFormat:@"%c%c", next,
+                                  [self nextChar]]];
             len += 2;
         } else if(next == kLINE_FEED) {
             [endStream setString:[NSString stringWithFormat:@"%c", next]];
@@ -253,7 +254,8 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
         next = [self nextChar];
     }
     NSUInteger endStreamLength = [endStream length];
-    return [NSData dataWithBytes:[[self stream] bytes] + start length: len - endStreamLength - 1];
+    return [NSData dataWithBytes:[[self stream] bytes] + start
+                          length: len - endStreamLength - 1];
 }
 
 - (GToken *)nextToken {
