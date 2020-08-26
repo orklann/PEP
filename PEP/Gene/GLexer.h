@@ -10,9 +10,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+// Return by isEndLineMarker()
 #define kNOT_END_LINE_MARKER -1
 #define kTWO_END_LINE_MARKERS 2
 #define kONE_END_LINE_MARKER 1
+
+
 #define kCARRIAGE_RETURN 0x0D
 #define kLINE_FEED 0x0A
 
