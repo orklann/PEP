@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Test for white space char
 BOOL isWhiteSpace(unsigned char ch);
+
+// Test for stream content end line markers
 int isEndLineMarker(unsigned char ch1, unsigned char ch2);
 
 enum {
