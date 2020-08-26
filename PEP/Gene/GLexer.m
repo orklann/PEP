@@ -253,7 +253,6 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
         next = [self nextChar];
     }
     NSUInteger endStreamLength = [endStream length];
-    NSLog(@"%d", endStreamLength);
     return [NSData dataWithBytes:[[self stream] bytes] + start length: len - endStreamLength - 1];
 }
 
