@@ -10,8 +10,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#define kNOT_END_LINE_MARKER -1
+#define kTWO_END_LINE_MARKERS 2
+#define kONE_END_LINE_MARKER 1
+#define kCARRIAGE_RETURN 0x0D
+#define kLINE_FEED 0x0A
+
 // Test for white space char
 BOOL isWhiteSpace(unsigned char ch);
+int isEndLineMarker(unsigned char ch1, unsigned char ch2);
 
 enum {
     kBooleanToken,
@@ -20,7 +27,8 @@ enum {
     kHexadecimalStringsToken,
     kNameObjectToken,
     kArrayObjectToken,
-    kDictionaryObjectToken
+    kDictionaryObjectToken,
+    kStreamContentToken
 };
 
 @interface GToken : NSObject {

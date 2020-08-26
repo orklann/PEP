@@ -23,6 +23,15 @@ BOOL isWhiteSpace(unsigned char ch) {
     return NO;
 }
 
+int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
+    if (ch1 == kCARRIAGE_RETURN && ch2 == kLINE_FEED) {
+        return kTWO_END_LINE_MARKERS ;
+    } else if (ch1 == kLINE_FEED) {
+        return kONE_END_LINE_MARKER;
+    }
+    return kNOT_END_LINE_MARKER;
+}
+
 @implementation GToken
 + (id)token {
     GToken *t = [[GToken alloc] init];
@@ -210,6 +219,43 @@ BOOL isWhiteSpace(unsigned char ch) {
     return (NSData *)d;
 }
 
+- (NSData *)getStreamContent:(int)ret {
+    unsigned int start = 0;
+    unsigned int len = 1;
+    unsigned char next = 0;
+    if (ret == kTWO_END_LINE_MARKERS) {
+        next = [self nextChar];
+        start = pos;
+    }
+    
+    if (ret == kONE_END_LINE_MARKER) {
+        start = pos;
+        next = [self currentChar];
+    }
+    
+    NSMutableString *endStream = [NSMutableString string];
+    NSString *endStreamMarker1 = [NSString stringWithFormat:@"%c%cendstream",
+                                  kCARRIAGE_RETURN, kLINE_FEED];
+    NSString *endStreamMarker2 = [NSString stringWithFormat:@"%cendstream",
+                                  kLINE_FEED];
+    while (!([endStream isEqualToString: endStreamMarker1] ||
+             [endStream isEqualToString: endStreamMarker2]) ) {
+        if (next == kCARRIAGE_RETURN && [self peekNextChar] == kLINE_FEED) {
+            [endStream setString:[NSString stringWithFormat:@"%c%c", next, [self nextChar]]];
+            len += 2;
+        } else if(next == kLINE_FEED) {
+            [endStream setString:[NSString stringWithFormat:@"%c", next]];
+            len += 1;
+        } else {
+            [endStream appendFormat:@"%c", next];
+            len += 1;
+        }
+        next = [self nextChar];
+    }
+    NSUInteger endStreamLength = [endStream length];
+    NSLog(@"%d", endStreamLength);
+    return [NSData dataWithBytes:[[self stream] bytes] + start length: len - endStreamLength - 1];
+}
 
 - (GToken *)nextToken {
     // Consume white spaces before parsing token
@@ -282,6 +328,18 @@ BOOL isWhiteSpace(unsigned char ch) {
         case '[':
             [token setType:kArrayObjectToken];
             [token setContent:[self getArray]];
+            break;
+        
+        case 's':
+            if ([self nextChar] == 't' && [self nextChar] == 'r'
+                && [self nextChar] == 'e' && [self nextChar] == 'a'
+                && [self nextChar] == 'm') {
+                int ret = isEndLineMarker([self nextChar], [self nextChar]);
+                if (ret !=  kNOT_END_LINE_MARKER) {
+                    [token setType:kStreamContentToken];
+                    [token setContent:[self getStreamContent:ret]];
+                }
+            }
             break;
             
         default:

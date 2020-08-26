@@ -328,4 +328,28 @@
     XCTAssertEqual([t type], kDictionaryObjectToken);
     XCTAssertEqualObjects([t content], d1);
 }
+
+- (void)testGLexerNextTokenStreamContentToken {
+    GLexer *l = [GLexer lexer];
+    char *b = "stream\n"
+              "I AM A STREAM CONTENT\n"
+              "endstream";
+    char *test1 = "I AM A STREAM CONTENT";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    NSData *d1 = [NSData dataWithBytes:test1
+                                   length:strlen(test1)];
+    [l setStream:d];
+    GToken *t = [l nextToken];
+    XCTAssertEqual([t type], kStreamContentToken);
+    XCTAssertEqualObjects([t content], d1);
+    
+    b = "stream\r\n"
+        "I AM A STREAM CONTENT\r\n"
+        "endstream";
+    d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [l setStream:d];
+    t = [l nextToken];
+    XCTAssertEqual([t type], kStreamContentToken);
+    XCTAssertEqualObjects([t content], d1);
+}
 @end
