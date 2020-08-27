@@ -35,6 +35,7 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
 @implementation GToken
 + (id)token {
     GToken *t = [[GToken alloc] init];
+    [t setType:kUnknownToken];
     return t;
 }
 - (void)setType:(int)t {
