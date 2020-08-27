@@ -267,6 +267,16 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     GToken * token = [GToken token];
     unsigned int start = pos;
     switch (current) {
+        case 'n':
+            if ([self nextChar] == 'u' && [self nextChar] == 'l' &&
+                [self nextChar] == 'l' && isWhiteSpace([self nextChar])){
+                [token setType:kNullObjectToken];
+                unsigned char* bytes = (unsigned char*)[stream bytes];
+                NSData *d = [NSData dataWithBytes:bytes + start length:4];
+                [token setContent:d];
+            }
+            break;
+            
         case 'f': // 'false'
             if ([self nextChar] == 'a' && [self nextChar] == 'l'
                && [self nextChar] == 's'

@@ -33,7 +33,8 @@ enum {
     kNameObjectToken,
     kArrayObjectToken,
     kDictionaryObjectToken,
-    kStreamContentToken
+    kStreamContentToken,
+    kNullObjectToken
 };
 
 @interface GToken : NSObject {
