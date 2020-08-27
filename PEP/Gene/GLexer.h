@@ -36,6 +36,7 @@ enum {
     kDictionaryObjectToken,
     kStreamContentToken,
     kNullObjectToken,
+    kIndirectObjectContentToken,
     kEndToken,
 };
 

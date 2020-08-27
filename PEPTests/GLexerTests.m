@@ -392,4 +392,46 @@
     t = [l nextToken];
     XCTAssertEqual([t type], kEndToken);
 }
+
+- (void)testGLexerNextTokenIndirectObjectContentToken {
+    GLexer *l = [GLexer lexer];
+    char *b = "obj\n"
+              "I am an indirect object content\n"
+              "endobj";
+    char *test1 = "I am an indirect object content";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    NSData *d1 = [NSData dataWithBytes:test1
+                                   length:strlen(test1)];
+    [l setStream:d];
+    GToken *t = [l nextToken];
+    XCTAssertEqual([t type], kIndirectObjectContentToken);
+    XCTAssertEqualObjects([t content], d1);
+    
+    b = "obj\r\n"
+        "I am an indirect object content\r\n"
+        "endobj";
+    d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [l setStream:d];
+    t = [l nextToken];
+    XCTAssertEqual([t type], kIndirectObjectContentToken);
+    XCTAssertEqualObjects([t content], d1);
+    
+    b = "11 0 obj\r\n"
+        "I am an indirect object content\r\n"
+        "endobj";
+    d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [l setStream:d];
+    
+    t = [l nextToken];
+    XCTAssertEqual([t type], kNumberToken);
+    XCTAssertEqualObjects([t content], [NSData dataWithBytes:"11" length:2]);
+    
+    t = [l nextToken];
+    XCTAssertEqual([t type], kNumberToken);
+    XCTAssertEqualObjects([t content], [NSData dataWithBytes:"0" length:1]);
+    
+    t = [l nextToken];
+    XCTAssertEqual([t type], kIndirectObjectContentToken);
+    XCTAssertEqualObjects([t content], d1);
+}
 @end
