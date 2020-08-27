@@ -8,16 +8,21 @@
 
 #import <Foundation/Foundation.h>
 #import "GLexer.h"
+#import "GObjects.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GParser : NSObject {
     GLexer *lexer;
+    NSMutableArray *objects;
 }
 
 + (id)parser;
 - (GLexer*)lexer;
 - (void)setLexer:(GLexer *)l;
+- (void)setStream:(NSData*)s;
+- (NSMutableArray*)objects;
+- (void)parse; // parse tokens from lexer into GObjects array
 @end
 
 NS_ASSUME_NONNULL_END

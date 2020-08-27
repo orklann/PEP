@@ -32,4 +32,23 @@
     GLexer *l2 = [GLexer lexer];
     XCTAssertNotEqual([p lexer], l2);
 }
+
+- (void)testGParserParseBooleanObject {
+    GParser *p = [GParser parser];
+    char *b = "false true";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    NSInteger i = 0;
+    for (i = 0; i < [objs count]; i++) {
+        if (i == 0) {
+            GBooleanObject *obj = [objs objectAtIndex:i];
+            XCTAssertEqual([obj value], NO);
+        } else if (i == 1) {
+            GBooleanObject *obj = [objs objectAtIndex:i];
+            XCTAssertEqual([obj value], YES);
+        }
+    }
+}
 @end
