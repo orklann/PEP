@@ -369,4 +369,27 @@
     XCTAssertEqual([t type], kNullObjectToken);
     XCTAssertEqualObjects([t content], d1);
 }
+
+- (void)testGLexerNextTokenEndToken {
+    GLexer *l = [GLexer lexer];
+    char *b = "null false  ";
+    char *test1 = "null";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    NSData *d1 = [NSData dataWithBytes:test1
+                                   length:strlen(test1)];
+    char *test2 = "false";
+    NSData *d2 = [NSData dataWithBytes:test2
+                                   length:strlen(test2)];
+    [l setStream:d];
+    GToken *t = [l nextToken];
+    XCTAssertEqual([t type], kNullObjectToken);
+    XCTAssertEqualObjects([t content], d1);
+    
+    t = [l nextToken];
+    XCTAssertEqual([t type], kBooleanToken);
+    XCTAssertEqualObjects([t content], d2);
+    
+    t = [l nextToken];
+    XCTAssertEqual([t type], kEndToken);
+}
 @end

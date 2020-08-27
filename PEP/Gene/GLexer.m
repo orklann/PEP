@@ -260,12 +260,18 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
 
 - (GToken *)nextToken {
     // Consume white spaces before parsing token
-    while (isWhiteSpace([self currentChar])) {
+    while (isWhiteSpace([self currentChar]) && pos < [[self stream] length] - 1) {
         [self nextChar];
     }
     unsigned char current = [self currentChar];
-    GToken * token = [GToken token];
     unsigned int start = pos;
+    
+    GToken * token = [GToken token];
+    if (pos == [[self stream] length] - 1) {
+        [token setType: kEndToken];
+        return token;
+    }
+    
     switch (current) {
         case 'n': // 'null'
             if ([self nextChar] == 'u' && [self nextChar] == 'l' &&
