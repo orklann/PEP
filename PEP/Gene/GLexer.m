@@ -267,7 +267,7 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     GToken * token = [GToken token];
     unsigned int start = pos;
     switch (current) {
-        case 'n':
+        case 'n': // 'null'
             if ([self nextChar] == 'u' && [self nextChar] == 'l' &&
                 [self nextChar] == 'l' && isWhiteSpace([self nextChar])){
                 [token setType:kNullObjectToken];
