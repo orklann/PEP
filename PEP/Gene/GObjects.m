@@ -29,4 +29,12 @@
 - (BOOL)value {
     return value;
 }
+
+- (void)setRawContent:(NSData*)d {
+    rawContent = d;
+}
+
+- (NSData *)rawContent {
+    return rawContent;
+}
 @end

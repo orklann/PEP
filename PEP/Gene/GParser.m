@@ -57,6 +57,7 @@
                 } else if ([[token content] isEqualToData:[NSData dataWithBytes:"true" length:4]]) {
                     [o setValue:YES];
                 }
+                [o setRawContent:[token content]];
                 [objects addObject:o];
                 break;
             }

@@ -17,12 +17,15 @@ enum {
 @interface GBooleanObject : NSObject {
     int type;
     BOOL value;
+    NSData *rawContent;
 }
 + (id)create;
 - (void)setType:(int)t;
 - (int)type;
 - (void)setValue:(BOOL)v;
 - (BOOL)value;
+- (void)setRawContent:(NSData*)d;
+- (NSData *)rawContent;
 @end
 
 NS_ASSUME_NONNULL_END

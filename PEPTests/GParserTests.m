@@ -45,9 +45,11 @@
         if (i == 0) {
             GBooleanObject *obj = [objs objectAtIndex:i];
             XCTAssertEqual([obj value], NO);
+            XCTAssertEqualObjects([obj rawContent], [NSData dataWithBytes:"false" length:5]);
         } else if (i == 1) {
             GBooleanObject *obj = [objs objectAtIndex:i];
             XCTAssertEqual([obj value], YES);
+            XCTAssertEqualObjects([obj rawContent], [NSData dataWithBytes:"true" length:4]);
         }
     }
 }
