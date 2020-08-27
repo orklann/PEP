@@ -316,14 +316,22 @@
               "/Subtype /DictionaryExample\n"
               "/Version 0.01 /IntegerItem 12 /StringItem (a string)\n"
               "/Subdictionary <<\n"
-                    "/Item1 0.4\n"
-                    "/Item2 true\n"
-                    "/LastItem (not !) /VeryLastItem (OK)\n"
-                  ">>\n"
+              "/Item1 0.4\n"
+              "/Item2 true\n"
+              "/LastItem (not !) /VeryLastItem (OK)\n"
+              ">>\n"
     ">> 123"; // "123" for testing
+    char *test = "/Type /Example\n"
+              "/Subtype /DictionaryExample\n"
+              "/Version 0.01 /IntegerItem 12 /StringItem (a string)\n"
+              "/Subdictionary <<\n"
+              "/Item1 0.4\n"
+              "/Item2 true\n"
+              "/LastItem (not !) /VeryLastItem (OK)\n"
+    ">>\n";
     NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
-    NSData *d1 = [NSData dataWithBytes:b
-                                length:strlen(b) - 4];
+    NSData *d1 = [NSData dataWithBytes:test
+                                length:strlen(test)];
     [l setStream:d];
     GToken *t = [l nextToken];
     XCTAssertEqual([t type], kDictionaryObjectToken);

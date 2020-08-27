@@ -197,7 +197,6 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
 }
 
 - (NSData *)getDictionary {
-    // return array strings with '<<' and '>>'
     NSMutableData *d = [NSMutableData dataWithCapacity:100];
     int unbalanced = 1;
     [d appendBytes:(unsigned char*)"<<" length:2];
@@ -218,7 +217,8 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
             next = [self nextChar];
         }
     }
-    return (NSData *)d;
+    // return dictionary without << and >>
+    return [NSData dataWithBytes:[d bytes] + 2 length:[d length] - 4];
 }
 
 - (NSData *)getStreamContent:(int)ret {
