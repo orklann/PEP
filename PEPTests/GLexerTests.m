@@ -301,8 +301,9 @@
     GLexer *l = [GLexer lexer];
     char *b = "[549 3.14 false (Ralph) /SomeName [123 3.14 (Jerry)]]";
     NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
-    NSData *d1 = [NSData dataWithBytes:b
-                                length:strlen(b)];
+    char *test = "549 3.14 false (Ralph) /SomeName [123 3.14 (Jerry)]";
+    NSData *d1 = [NSData dataWithBytes:test
+                                length:strlen(test)];
     [l setStream:d];
     GToken *t = [l nextToken];
     XCTAssertEqual([t type], kArrayObjectToken);

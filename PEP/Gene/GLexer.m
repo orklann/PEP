@@ -192,7 +192,9 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
         [d appendBytes:(unsigned char*)&next length:1];
         next = [self nextChar];
     }
-    return (NSData *)d;
+    
+    // return array content without [ and ]
+    return [NSData dataWithBytes:[d bytes] + 1  length:[d length] - 2];
 }
 
 - (NSData *)getDictionary {
