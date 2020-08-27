@@ -26,7 +26,7 @@ BOOL isWhiteSpace(unsigned char ch);
 int isEndLineMarker(unsigned char ch1, unsigned char ch2);
 
 enum {
-    kUnkonwnToken,
+    kUnknownToken,
     kBooleanToken,
     kNumberToken,
     kLiteralStringsToken,

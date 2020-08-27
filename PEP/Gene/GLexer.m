@@ -360,7 +360,7 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
             break;
             
         default:
-            [token setType:kUnkonwnToken];
+            [token setType:kUnknownToken];
             break;
     }
     return token;
