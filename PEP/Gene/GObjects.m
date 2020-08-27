@@ -44,4 +44,12 @@
 - (BOOL)value {
     return value;
 }
+
+- (void)parse {
+     if ([rawContent isEqualToData:[NSData dataWithBytes:"false" length:5]]) {
+         [self setValue:NO];
+     } else if ([rawContent isEqualToData:[NSData dataWithBytes:"true" length:4]]) {
+         [self setValue:YES];
+     }
+}
 @end

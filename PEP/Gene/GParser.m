@@ -52,12 +52,8 @@
             {
                 GBooleanObject *o = [GBooleanObject create];
                 [o setType:kBooleanObject];
-                if ([[token content] isEqualToData:[NSData dataWithBytes:"false" length:5]]) {
-                    [o setValue:NO];
-                } else if ([[token content] isEqualToData:[NSData dataWithBytes:"true" length:4]]) {
-                    [o setValue:YES];
-                }
                 [o setRawContent:[token content]];
+                [o parse];
                 [objects addObject:o];
                 break;
             }

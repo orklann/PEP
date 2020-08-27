@@ -33,6 +33,7 @@ enum {
 + (id)create;
 - (void)setValue:(BOOL)v;
 - (BOOL)value;
+- (void)parse;
 @end
 
 NS_ASSUME_NONNULL_END
