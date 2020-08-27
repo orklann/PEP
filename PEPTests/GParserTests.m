@@ -28,5 +28,8 @@
     GLexer *l = [GLexer lexer];
     [p setLexer:l];
     XCTAssertEqual([p lexer], l);
+    
+    GLexer *l2 = [GLexer lexer];
+    XCTAssertNotEqual([p lexer], l2);
 }
 @end
