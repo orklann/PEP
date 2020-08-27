@@ -172,7 +172,6 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
 }
 
 - (NSData *)getArray {
-    // return array strings with '[' and ']'
     NSMutableData *d = [NSMutableData dataWithCapacity:100];
     unsigned char next = [self currentChar];
     int unbalanced = 1;
