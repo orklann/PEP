@@ -36,17 +36,25 @@
 }
 
 - (void)parse {
+    NSMutableArray *tokens = [NSMutableArray array];
     GToken *t = [lexer nextToken];
     while([t type] != kEndToken) {
-        int type = [t type];
+        [tokens addObject:t];
+        t = [lexer nextToken];
+    }
+    
+    NSUInteger i = 0;
+    for (i = 0; i < [tokens count]; i++) {
+        GToken *token = [tokens objectAtIndex:i];
+        int type = [token type];
         switch (type) {
             case kBooleanToken:
             {
                 GBooleanObject *o = [GBooleanObject create];
                 [o setType:kBooleanObject];
-                if ([[t content] isEqualToData:[NSData dataWithBytes:"false" length:5]]) {
+                if ([[token content] isEqualToData:[NSData dataWithBytes:"false" length:5]]) {
                     [o setValue:NO];
-                } else if ([[t content] isEqualToData:[NSData dataWithBytes:"true" length:4]]) {
+                } else if ([[token content] isEqualToData:[NSData dataWithBytes:"true" length:4]]) {
                     [o setValue:YES];
                 }
                 [objects addObject:o];
@@ -56,7 +64,6 @@
             default:
                 break;
         }
-        t = [lexer nextToken];
     }
 }
 @end
