@@ -12,6 +12,8 @@
 		931221CC24F0139300929C01 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 931221CA24F0139300929C01 /* MainMenu.xib */; };
 		931221CF24F0139300929C01 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 931221CE24F0139300929C01 /* main.m */; };
 		9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9355AEB824F12DCC00764E36 /* GLexerTests.m */; };
+		93DC04C424F7B335003AC9B0 /* GParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C324F7B335003AC9B0 /* GParser.m */; };
+		93DC04C624F7B474003AC9B0 /* GLParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C524F7B474003AC9B0 /* GLParserTests.m */; };
 		93E336FD24F1265300F91F74 /* GLexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E336F824F1254300F91F74 /* GLexer.m */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +39,9 @@
 		931221D524F0139700929C01 /* PEPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PEPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		931221DB24F0139700929C01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9355AEB824F12DCC00764E36 /* GLexerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLexerTests.m; sourceTree = "<group>"; };
+		93DC04C224F7B335003AC9B0 /* GParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GParser.h; sourceTree = "<group>"; };
+		93DC04C324F7B335003AC9B0 /* GParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GParser.m; sourceTree = "<group>"; };
+		93DC04C524F7B474003AC9B0 /* GLParserTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLParserTests.m; sourceTree = "<group>"; };
 		93E336F824F1254300F91F74 /* GLexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLexer.m; sourceTree = "<group>"; };
 		93E336FC24F1256000F91F74 /* GLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLexer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				9355AEB824F12DCC00764E36 /* GLexerTests.m */,
+				93DC04C524F7B474003AC9B0 /* GLParserTests.m */,
 				931221DB24F0139700929C01 /* Info.plist */,
 			);
 			path = PEPTests;
@@ -106,6 +112,8 @@
 			children = (
 				93E336FC24F1256000F91F74 /* GLexer.h */,
 				93E336F824F1254300F91F74 /* GLexer.m */,
+				93DC04C224F7B335003AC9B0 /* GParser.h */,
+				93DC04C324F7B335003AC9B0 /* GParser.m */,
 			);
 			path = Gene;
 			sourceTree = "<group>";
@@ -209,6 +217,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93DC04C424F7B335003AC9B0 /* GParser.m in Sources */,
 				931221CF24F0139300929C01 /* main.m in Sources */,
 				93E336FD24F1265300F91F74 /* GLexer.m in Sources */,
 				931221C724F0137F00929C01 /* AppDelegate.m in Sources */,
@@ -220,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */,
+				93DC04C624F7B474003AC9B0 /* GLParserTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
