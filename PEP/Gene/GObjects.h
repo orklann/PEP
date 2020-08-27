@@ -14,18 +14,25 @@ enum {
     kBooleanObject
 };
 
-@interface GBooleanObject : NSObject {
+@interface GObject : NSObject {
     int type;
-    BOOL value;
     NSData *rawContent;
 }
+
 + (id)create;
 - (void)setType:(int)t;
 - (int)type;
-- (void)setValue:(BOOL)v;
-- (BOOL)value;
 - (void)setRawContent:(NSData*)d;
 - (NSData *)rawContent;
+@end
+
+@interface GBooleanObject : GObject {
+    BOOL value;
+}
+
++ (id)create;
+- (void)setValue:(BOOL)v;
+- (BOOL)value;
 @end
 
 NS_ASSUME_NONNULL_END

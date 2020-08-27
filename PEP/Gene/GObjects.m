@@ -8,9 +8,9 @@
 
 #import "GObjects.h"
 
-@implementation GBooleanObject
+@implementation GObject
 + (id)create {
-    GBooleanObject *o = [[GBooleanObject alloc] init];
+    GObject *o = [[GObject alloc] init];
     return o;
 }
 
@@ -22,19 +22,26 @@
     return type;
 }
 
-- (void)setValue:(BOOL)v {
-    value = v;
-}
-
-- (BOOL)value {
-    return value;
-}
-
 - (void)setRawContent:(NSData*)d {
     rawContent = d;
 }
 
 - (NSData *)rawContent {
     return rawContent;
+}
+@end
+
+@implementation GBooleanObject
++ (id)create {
+    GBooleanObject *o = [[GBooleanObject alloc] init];
+    return o;
+}
+
+- (void)setValue:(BOOL)v {
+    value = v;
+}
+
+- (BOOL)value {
+    return value;
 }
 @end
