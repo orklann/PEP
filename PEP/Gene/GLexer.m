@@ -38,6 +38,7 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     [t setType:kUnknownToken];
     return t;
 }
+
 - (void)setType:(TokenType)t {
     type = t;
 }
