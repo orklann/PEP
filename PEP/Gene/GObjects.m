@@ -14,11 +14,11 @@
     return o;
 }
 
-- (void)setType:(int)t {
+- (void)setType:(ObjectType)t {
     type = t;
 }
 
-- (int)type {
+- (ObjectType)type {
     return type;
 }
 
@@ -60,7 +60,7 @@
     return o;
 }
 
-- (int)subtype {
+- (NumberSubtype)subtype {
     return subtype;
 }
 

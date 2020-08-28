@@ -26,8 +26,8 @@ typedef enum {
 }
 
 + (id)create;
-- (void)setType:(int)t;
-- (int)type;
+- (void)setType:(ObjectType)t;
+- (ObjectType)type;
 - (void)setRawContent:(NSData*)d;
 - (NSData *)rawContent;
 @end
@@ -49,7 +49,7 @@ typedef enum {
 }
 
 + (id)create;
-- (int)subtype;
+- (NumberSubtype)subtype;
 - (void)setIntValue:(int)v;
 - (int)intValue;
 - (void)setRealValue:(double)v;
