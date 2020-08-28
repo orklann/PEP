@@ -11,7 +11,13 @@
 NS_ASSUME_NONNULL_BEGIN
 enum {
     kUnknownObject,
-    kBooleanObject
+    kBooleanObject,
+    kNumberObject
+};
+
+enum {
+    kIntSubtype,
+    kRealSubtype
 };
 
 @interface GObject : NSObject {
@@ -33,6 +39,21 @@ enum {
 + (id)create;
 - (void)setValue:(BOOL)v;
 - (BOOL)value;
+- (void)parse;
+@end
+
+@interface GNumberObject : GObject {
+    int intValue;
+    double realValue;
+    int subtype;
+}
+
++ (id)create;
+- (int)subtype;
+- (void)setIntValue:(int)v;
+- (int)intValue;
+- (void)setRealValue:(double)v;
+- (double)realValue;
 - (void)parse;
 @end
 

@@ -57,7 +57,16 @@
                 [objects addObject:o];
                 break;
             }
-                
+            
+            case kNumberToken:
+            {
+                GNumberObject *o = [GNumberObject create];
+                [o setType:kNumberObject];
+                [o setRawContent:[token content]];
+                [o parse];
+                [objects addObject:o];
+                break;
+            }
             default:
                 break;
         }

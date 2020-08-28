@@ -53,3 +53,54 @@
      }
 }
 @end
+
+@implementation GNumberObject
++ (id)create {
+    GNumberObject *o = [[GNumberObject alloc] init];
+    return o;
+}
+
+- (int)subtype {
+    return subtype;
+}
+
+- (void)setIntValue:(int)v {
+    intValue = v;
+}
+
+- (int)intValue {
+    return intValue;
+}
+
+- (void)setRealValue:(double)v {
+    realValue = v;
+}
+
+- (double)realValue {
+    return realValue;
+}
+
+- (int)getSubtype {
+    NSUInteger i;
+    for (i = 0; i < [rawContent length]; i++) {
+        if(*((unsigned char*)[rawContent bytes] + i) == '.') {
+            return kRealSubtype;
+        }
+    }
+    return kIntSubtype;
+}
+
+- (void)parse {
+    int st = [self getSubtype];
+    NSMutableData *d = [NSMutableData data];
+    if (st == kIntSubtype) {
+        [d appendData:rawContent];
+        [d appendBytes:"\0" length:1];
+        NSString *s = [NSString stringWithUTF8String:[d bytes]];
+        intValue = [s intValue];
+    } else if (st == kRealSubtype) {
+        
+    }
+    subtype = st;
+}
+@end
