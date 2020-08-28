@@ -56,21 +56,37 @@
 
 - (void)testGParserParseNumberObject {
     GParser *p = [GParser parser];
-    char *b = "128 -128";
+    char *b = "128 -128 .123 123. 3.14";
     NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
     [p setStream:d];
     [p parse];
     NSMutableArray *objs = [p objects];
     NSInteger i = 0;
     for (i = 0; i < [objs count]; i++) {
+        GNumberObject *obj = [objs objectAtIndex:i];
         if (i == 0) {
-            GNumberObject *obj = [objs objectAtIndex:i];
             XCTAssertEqual([obj subtype], kIntSubtype);
             XCTAssertEqual([obj intValue], 128);
         } else if (i == 1) {
-            GNumberObject *obj = [objs objectAtIndex:i];
             XCTAssertEqual([obj subtype], kIntSubtype);
             XCTAssertEqual([obj intValue], -128);
+        } else if (i == 2) {
+            XCTAssertEqual([obj subtype], kRealSubtype);
+            NSString* numberA = [NSString stringWithFormat:@"%.6f", [obj realValue]];
+            NSString* numberB = [NSString stringWithFormat:@"%.6f", .123];
+            XCTAssertEqualObjects(numberA, numberB);
+        } else if (i == 3) {
+            XCTAssertEqual([obj subtype], kRealSubtype);
+            NSString* numberA = [NSString stringWithFormat:@"%.6f", [obj realValue]];
+            NSString* numberB = [NSString stringWithFormat:@"%.6f", 123.];
+            XCTAssertEqualObjects(numberA, numberB);
+        } else if (i == 4) {
+            XCTAssertEqual([obj subtype], kRealSubtype);
+            NSString* numberA = [NSString stringWithFormat:@"%.6f", [obj realValue]];
+            NSString* numberB = [NSString stringWithFormat:@"%.6f", 3.14];
+            NSString* numberC = [NSString stringWithFormat:@"%.6f", 0.123];
+            XCTAssertEqualObjects(numberA, numberB);
+            XCTAssertNotEqualObjects(numberA, numberC);
         }
     }
 }

@@ -93,13 +93,13 @@
 - (void)parse {
     int st = [self getSubtype];
     NSMutableData *d = [NSMutableData data];
+    [d appendData:rawContent];
+    [d appendBytes:"\0" length:1];
+    NSString *s = [NSString stringWithUTF8String:[d bytes]];
     if (st == kIntSubtype) {
-        [d appendData:rawContent];
-        [d appendBytes:"\0" length:1];
-        NSString *s = [NSString stringWithUTF8String:[d bytes]];
         intValue = [s intValue];
     } else if (st == kRealSubtype) {
-        
+        realValue = [s doubleValue];
     }
     subtype = st;
 }
