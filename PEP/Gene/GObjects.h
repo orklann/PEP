@@ -13,7 +13,8 @@ typedef enum {
     kUnknownObject,
     kBooleanObject,
     kNumberObject,
-    kLiteralStringsObject
+    kLiteralStringsObject,
+    kHexStringsObject
 } ObjectType;
 
 typedef enum {
@@ -71,5 +72,16 @@ typedef enum {
 - (NSString *)value;
 - (void)parse;
 @end
+
+@interface GHexStringsObject : GObject {
+    NSData *value;
+}
+
++ (id)create;
+- (void)setValue:(NSData*)v;
+- (NSData *)value;
+- (void)parse;
+@end
+
 
 NS_ASSUME_NONNULL_END

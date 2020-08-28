@@ -77,6 +77,20 @@
                 [objects addObject:o];
                 break;
             }
+                
+            case kHexadecimalStringsToken:
+            {
+                GHexStringsObject *o = [GHexStringsObject create];
+                [o setType:kHexStringsObject];
+                [o setRawContent:[token content]];
+                [o parse];
+                [objects addObject:o];
+                break;
+            }
+            case kEndToken:
+            {
+                break;
+            }
             default:
                 break;
         }

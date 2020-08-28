@@ -78,7 +78,7 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
 - (unsigned char)nextChar {
     unsigned char *bytes = (unsigned char*)[stream bytes];
     unsigned int len = (unsigned int)[stream length];
-    if (pos + 1 <= len - 1){
+    if (pos + 1 <= len){
         pos += 1;
     }
     return *(bytes + pos);
@@ -88,7 +88,7 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     unsigned char *bytes = (unsigned char*)[stream bytes];
     unsigned int len = (unsigned int)[stream length];
     int peekPos = pos;
-    if (pos + 1 <= len - 1){
+    if (pos + 1 <= len){
         peekPos = pos + 1;
     }
     return *(bytes + peekPos);
@@ -150,6 +150,7 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     if ([d length] % 2 != 0){
         [d appendBytes:"0" length:1];
     }
+    [self nextChar]; // Fix infinite loop
     return (NSData*)d;
 }
 

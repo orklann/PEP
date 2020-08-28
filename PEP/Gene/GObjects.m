@@ -250,3 +250,37 @@
 }
     
 @end
+
+@implementation GHexStringsObject
+
++ (id)create {
+    GHexStringsObject *o = [[GHexStringsObject alloc] init];
+    return o;
+}
+
+- (void)setValue:(NSData*)v {
+    value = v;
+}
+
+- (NSData *)value {
+    return value;
+}
+
+- (void)parse {
+    unsigned long len = [rawContent length];
+    NSMutableData *d = [NSMutableData data];
+    while (pos + 1 < len) {
+        unsigned char ch1 = [self currentChar];
+        unsigned char ch2 = [self nextChar];
+        NSString *s = [NSString stringWithFormat:@"%c%c", ch1, ch2];
+        long result = strtol([s UTF8String], NULL, 16);
+        printf("%c", (int)result);
+        unsigned char v[2];
+        sprintf((char *)&v, "%c", (unsigned char)result);
+        [d appendBytes:&v length:1];
+        [self nextChar];
+    }
+    value = (NSData*)d;
+}
+    
+@end

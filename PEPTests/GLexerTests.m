@@ -227,7 +227,6 @@
     t = [l nextToken];
     XCTAssertEqual([t type], kHexadecimalStringsToken);
     XCTAssertEqualObjects([t content], d1);
-    
 }
 
 - (void)testGLexerNextTokenNameObjectToken {

@@ -173,4 +173,23 @@
         }
     }
 }
+
+- (void)testGParserParseHexStringsObject {
+    GParser *p = [GParser parser];
+    char *b = "<4920616d20612068657820737472696e67>";
+    char *test = "I am a hex string";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    NSData *d1 = [NSData dataWithBytes:test length:strlen(test)];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    NSInteger i = 0;
+    for (i = 0; i < [objs count]; i++) {
+        GHexStringsObject *obj = [objs objectAtIndex:i];
+        if (i == 0) {
+            XCTAssertEqual([obj type], kHexStringsObject);
+            XCTAssertEqualObjects([obj value], d1);
+        }
+    }
+}
 @end
