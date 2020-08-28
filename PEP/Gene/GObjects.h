@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
-enum {
+typedef enum {
     kUnknownObject,
     kBooleanObject,
     kNumberObject
-};
+} ObjectType;
 
 typedef enum {
     kIntSubtype,
@@ -21,7 +21,7 @@ typedef enum {
 } NumberSubtype;
 
 @interface GObject : NSObject {
-    int type;
+    ObjectType type;
     NSData *rawContent;
 }
 
