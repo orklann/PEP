@@ -80,7 +80,7 @@
     return realValue;
 }
 
-- (int)getSubtype {
+- (NumberSubtype)getSubtype {
     NSUInteger i;
     for (i = 0; i < [rawContent length]; i++) {
         if(*((unsigned char*)[rawContent bytes] + i) == '.') {
