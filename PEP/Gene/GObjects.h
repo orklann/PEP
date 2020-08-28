@@ -15,10 +15,10 @@ enum {
     kNumberObject
 };
 
-enum {
+typedef enum {
     kIntSubtype,
     kRealSubtype
-};
+} NumberSubtype;
 
 @interface GObject : NSObject {
     int type;
@@ -45,7 +45,7 @@ enum {
 @interface GNumberObject : GObject {
     int intValue;
     double realValue;
-    int subtype;
+    NumberSubtype subtype;
 }
 
 + (id)create;
