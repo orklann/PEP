@@ -132,7 +132,9 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
         [d appendBytes:(unsigned char*)&next length:1];
         next = [self nextChar];
     }
-    return [NSData dataWithBytes:([d bytes]+1) length:[d length] - 2];
+    d = [NSMutableData dataWithBytes:([d bytes]+1) length:[d length] - 2];
+    [d appendBytes:"\0" length:1];
+    return d;
 }
 
 - (NSData *)getHexadecimalStrings {

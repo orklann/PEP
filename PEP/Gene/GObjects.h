@@ -12,7 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 typedef enum {
     kUnknownObject,
     kBooleanObject,
-    kNumberObject
+    kNumberObject,
+    kLiteralStringsObject
 } ObjectType;
 
 typedef enum {
@@ -23,6 +24,7 @@ typedef enum {
 @interface GObject : NSObject {
     ObjectType type;
     NSData *rawContent;
+    unsigned int pos;
 }
 
 + (id)create;
@@ -30,6 +32,9 @@ typedef enum {
 - (ObjectType)type;
 - (void)setRawContent:(NSData*)d;
 - (NSData *)rawContent;
+- (unsigned char)currentChar;
+- (unsigned char)nextChar;
+- (unsigned char)peekNextChar;
 @end
 
 @interface GBooleanObject : GObject {
@@ -54,6 +59,16 @@ typedef enum {
 - (int)intValue;
 - (void)setRealValue:(double)v;
 - (double)realValue;
+- (void)parse;
+@end
+
+@interface GLiteralStringsObject : GObject {
+    NSString *value;
+}
+
++ (id)create;
+- (void)setValue:(NSString*)v;
+- (NSString *)value;
 - (void)parse;
 @end
 

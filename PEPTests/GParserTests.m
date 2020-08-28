@@ -91,4 +91,86 @@
     }
 }
 
+- (void)testGParserGObjectNextChar {
+    GObject *o = [GObject create];
+    char *b = "(I)";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b)];
+    [o setRawContent:d];
+    XCTAssertEqual([o peekNextChar], 'I');
+    XCTAssertEqual([o nextChar], 'I');
+    XCTAssertEqual([o nextChar], ')');
+    XCTAssertEqual([o nextChar], ')');
+}
+
+- (void)testGParserParseLiteralStringsObject {
+    GParser *p = [GParser parser];
+    char *b = "(I am a literal string)";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    NSInteger i = 0;
+    for (i = 0; i < [objs count]; i++) {
+        GLiteralStringsObject *obj = [objs objectAtIndex:i];
+        if (i == 0) {
+            XCTAssertEqual([obj type], kLiteralStringsObject);
+            XCTAssertEqualObjects([obj value], @"I am a literal string");
+        }
+    }
+    
+    // Test special characters escape
+    b = "(A CR:\\r A LF:\\n A tab:\\t and a backspace:\\b "
+        "A form feed:\\f "
+        "A Left parenthesis:\\("
+        "A right parenthesis:\\)"
+        ")";
+    char *test = "A CR:\r A LF:\n A tab:\t and a backspace:\b "
+                 "A form feed:\f "
+                 "A Left parenthesis:("
+                 "A right parenthesis:)";
+    d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    objs = [p objects];
+    for (i = 0; i < [objs count]; i++) {
+        GLiteralStringsObject *obj = [objs objectAtIndex:i];
+        if (i == 0) {
+            XCTAssertEqual([obj type], kLiteralStringsObject);
+            XCTAssertEqualObjects([obj value], [NSString stringWithCString:test encoding:NSASCIIStringEncoding]);
+        }
+    }
+    
+    
+    // Test "\\\r" "\\\r\n" "\\\n" characters escape
+    b = "(These two strings\\\n"
+        " are the same.\\\r\n"
+        ")";
+    test = "These two strings are the same.";
+    d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    objs = [p objects];
+    for (i = 0; i < [objs count]; i++) {
+        GLiteralStringsObject *obj = [objs objectAtIndex:i];
+        if (i == 0) {
+            XCTAssertEqual([obj type], kLiteralStringsObject);
+            XCTAssertEqualObjects([obj value], [NSString stringWithUTF8String:test]);
+        }
+    }
+    
+    // Test "\\40" "\\53" "\\053" characters escape
+    b = "(\\40 \\53 \\053 ABC)";
+    test = "  + + ABC";
+    d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    objs = [p objects];
+    for (i = 0; i < [objs count]; i++) {
+        GLiteralStringsObject *obj = [objs objectAtIndex:i];
+        if (i == 0) {
+            XCTAssertEqual([obj type], kLiteralStringsObject);
+            XCTAssertEqualObjects([obj value], [NSString stringWithUTF8String:test]);
+        }
+    }
+}
 @end

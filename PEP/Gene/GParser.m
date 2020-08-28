@@ -67,6 +67,16 @@
                 [objects addObject:o];
                 break;
             }
+            
+            case kLiteralStringsToken:
+            {
+                GLiteralStringsObject *o = [GLiteralStringsObject create];
+                [o setType:kLiteralStringsObject];
+                [o setRawContent:[token content]];
+                [o parse];
+                [objects addObject:o];
+                break;
+            }
             default:
                 break;
         }
