@@ -159,8 +159,8 @@
     }
     
     // Test "\\40" "\\53" "\\053" characters escape
-    b = "(\\40 \\53 \\053 ABC)";
-    test = "  + + ABC";
+    b = "(\\40 \\53 \\053ABC)";
+    test = "  + +ABC";
     d = [NSData dataWithBytes:b length:strlen(b) + 1];
     [p setStream:d];
     [p parse];
