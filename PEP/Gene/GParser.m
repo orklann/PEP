@@ -46,7 +46,7 @@
     NSUInteger i = 0;
     for (i = 0; i < [tokens count]; i++) {
         GToken *token = [tokens objectAtIndex:i];
-        int type = [token type];
+        TokenType type = [token type];
         switch (type) {
             case kBooleanToken:
             {

@@ -25,7 +25,7 @@ BOOL isWhiteSpace(unsigned char ch);
 // Test for stream content end line markers
 int isEndLineMarker(unsigned char ch1, unsigned char ch2);
 
-enum {
+typedef enum {
     kUnknownToken,
     kBooleanToken,
     kNumberToken,
@@ -38,16 +38,16 @@ enum {
     kNullObjectToken,
     kIndirectObjectContentToken,
     kEndToken,
-};
+} TokenType;
 
 @interface GToken : NSObject {
-    int type;
+    TokenType type;
     NSData *content;
 }
 
 + (id)token;
-- (void)setType:(int)t;
-- (int)type;
+- (void)setType:(TokenType)t;
+- (TokenType)type;
 - (void)setContent:(NSData *)d;
 - (NSData*)content;
 @end
