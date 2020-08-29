@@ -302,4 +302,51 @@
         }
     }
 }
+
+- (void)testGParserParseDictionaryObject {
+    GParser *p = [GParser parser];
+    char *b = "<</Name (PEP) /Subtype /DictionaryExample /Length 128 "
+              "/Subdictionary <<"
+              "/Item1 4 "
+              "/Item2 true "
+              "/LastItem (not !) /VeryLastItem (OK) >>"
+              ">>";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    NSInteger i = 0;
+    for (i = 0; i < [objs count]; i++) {
+        if (i == 0) {
+            GDictionaryObject *obj = [objs objectAtIndex:i];
+            NSMutableDictionary *dict = [obj value];
+            for (id key in dict) {
+                id v = [dict objectForKey:key];
+                if ([key isEqualToString:@"Name"]) {
+                    XCTAssertEqualObjects([(GLiteralStringsObject*)v value], @"PEP");
+                } else if ([key isEqualToString:@"Subtype"]){
+                    XCTAssertEqualObjects([(GNameObject*)v value], @"DictionaryExample");
+                } else if ([key isEqualToString:@"Length"]) {
+                    XCTAssertEqual([(GNumberObject*)v intValue], 128);
+                } else if ([key isEqualToString:@"Subdictionary"]) {
+                    XCTAssertTrue([v isKindOfClass: [GDictionaryObject class]]);
+                    NSMutableDictionary *dict2 = [(GDictionaryObject*)v value];
+                    for (id key2 in dict2) {
+                        id v2 = [dict2 objectForKey:key2];
+                        if ([key2 isEqualToString:@"Item1"]) {
+                            XCTAssertEqual([(GNumberObject*)v2 intValue], 4);
+                        } else if ([key2 isEqualToString:@"Item2"]) {
+                            XCTAssertEqual([(GBooleanObject*)v2 value], YES);
+                        } else if ([key2 isEqualToString:@"LastItem"]) {
+                            XCTAssertEqualObjects([(GLiteralStringsObject*)v2 value], @"not !");
+                        } else if ([key2 isEqualToString:@"VeryLastItem"]) {
+                            XCTAssertEqualObjects([(GLiteralStringsObject*)v2 value], @"OK");
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
 @end

@@ -99,6 +99,15 @@
                 [array addObject:o];
                 break;
             }
+            case kDictionaryObjectToken:
+            {
+                GDictionaryObject *o = [GDictionaryObject create];
+                [o setType:kDictionaryObject];
+                [o setRawContent:[token content]];
+                [o parse];
+                [array addObject:o];
+                break;
+            }
             case kEndToken:
             {
                 break;

@@ -310,6 +310,50 @@
 }
 @end
 
+@implementation GDictionaryObject
+
++ (id)create {
+    GDictionaryObject *o = [[GDictionaryObject alloc] init];
+    return o;
+}
+
+- (void)setValue:(NSMutableDictionary*)v {
+    value = v;
+}
+
+- (NSMutableDictionary *)value {
+    return value;
+}
+
+- (void)parse {
+    GParser *p = [GParser parser];
+    NSMutableData *d = [NSMutableData dataWithBytes:[rawContent bytes]
+                                             length:[rawContent length]];
+    // End stream with '\0' to ensure it will stop parsing
+    // Because GLexer need '\0' at the end to generate kEndToken
+    [d appendBytes:"\0" length:1];
+    [p setStream:d];
+    [p parse];
+    NSArray *array = [p objects];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    NSUInteger i;
+    for (i = 0; i < [array count]; i = i + 2) {
+        id key = [array objectAtIndex:i];
+        if ([(GNameObject*)key type] != kNameObject) {
+            NSException* errorKeyException = [NSException
+                    exceptionWithName:@"DictionaryErrorKeyException"
+                    reason:@"Dictionary key is not a name object!"
+                    userInfo:nil];
+            @throw errorKeyException;
+            return ;
+        }
+        id v = [array objectAtIndex:i+1];
+        [dict setValue:v forKey:[(GNameObject*)key value]];
+    }
+    value = dict;
+}
+@end
+
 @implementation GArrayObject
 
 + (id)create {
