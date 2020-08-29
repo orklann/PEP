@@ -96,12 +96,12 @@ typedef enum {
 @end
 
 @interface GArrayObject : GObject {
-    NSMutableArray *value;
+    NSArray *value;
 }
 
 + (id)create;
-- (void)setValue:(NSMutableArray*)s;
-- (NSMutableArray *)value;
+- (void)setValue:(NSArray*)s;
+- (NSArray *)value;
 - (void)parse;
 @end
 NS_ASSUME_NONNULL_END

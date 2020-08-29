@@ -318,11 +318,11 @@
     return o;
 }
 
-- (void)setValue:(NSMutableArray*)v {
+- (void)setValue:(NSArray*)v {
     value = v;
 }
 
-- (NSMutableArray *)value {
+- (NSArray *)value {
     return value;
 }
 
