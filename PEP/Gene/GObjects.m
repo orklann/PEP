@@ -284,3 +284,28 @@
 }
     
 @end
+
+@implementation GNameObject
+
++ (id)create {
+    GNameObject *o = [[GNameObject alloc] init];
+    return o;
+}
+
+- (void)setValue:(NSString*)v {
+    value = v;
+}
+
+- (NSString *)value {
+    return value;
+}
+
+- (void)parse {
+    NSMutableData* d = [NSMutableData dataWithBytes:[rawContent bytes]
+                                      length:[rawContent length]];
+    
+    [d appendBytes:"\0" length:1];
+    NSString *v = [NSString stringWithUTF8String:[d bytes]];
+    value = v;
+}
+@end

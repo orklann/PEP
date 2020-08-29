@@ -192,4 +192,55 @@
         }
     }
 }
+
+
+- (void)testGParserParseNameObject {
+    GParser *p = [GParser parser];
+    char *b = "/Name1 /ASomewhatLongerName /A;Name_With-Various***Characters? /1.2 /$$ /@pattern /.notdef /Lime#20Green /paired#28#29parentheses /The_Key_of_F#23_Minor /A#42 /";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    NSInteger i = 0;
+    for (i = 0; i < [objs count]; i++) {
+        GNameObject *obj = [objs objectAtIndex:i];
+        if (i == 0) {
+            XCTAssertEqual([obj type], kNameObject);
+            XCTAssertEqualObjects([obj value], @"Name1");
+        } else if (i == 1){
+            XCTAssertEqual([obj type], kNameObject);
+            XCTAssertEqualObjects([obj value], @"ASomewhatLongerName");
+        } else if (i == 2) {
+            XCTAssertEqual([obj type], kNameObject);
+            XCTAssertEqualObjects([obj value], @"A;Name_With-Various***Characters?");
+        } else if (i == 3) {
+            XCTAssertEqual([obj type], kNameObject);
+            XCTAssertEqualObjects([obj value], @"1.2");
+        } else if (i == 4) {
+            XCTAssertEqual([obj type], kNameObject);
+            XCTAssertEqualObjects([obj value], @"$$");
+        } else if (i == 5) {
+            XCTAssertEqual([obj type], kNameObject);
+            XCTAssertEqualObjects([obj value], @"@pattern");
+        } else if (i == 6) {
+            XCTAssertEqual([obj type], kNameObject);
+            XCTAssertEqualObjects([obj value], @".notdef");
+        } else if (i == 7) {
+            XCTAssertEqual([obj type], kNameObject);
+            XCTAssertEqualObjects([obj value], @"Lime Green");
+        } else if (i == 8) {
+            XCTAssertEqual([obj type], kNameObject);
+            XCTAssertEqualObjects([obj value], @"paired()parentheses");
+        } else if (i == 9) {
+            XCTAssertEqual([obj type], kNameObject);
+            XCTAssertEqualObjects([obj value], @"The_Key_of_F#_Minor");
+        } else if (i == 10) {
+            XCTAssertEqual([obj type], kNameObject);
+            XCTAssertEqualObjects([obj value], @"AB");
+        } else if (i == 11) {
+            XCTAssertEqual([obj type], kNameObject);
+            XCTAssertEqualObjects([obj value], @"");
+        }
+    }
+}
 @end

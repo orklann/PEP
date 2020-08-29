@@ -87,6 +87,15 @@
                 [objects addObject:o];
                 break;
             }
+            case kNameObjectToken:
+            {
+                GNameObject *o = [GNameObject create];
+                [o setType:kNameObject];
+                [o setRawContent:[token content]];
+                [o parse];
+                [objects addObject:o];
+                break;
+            }
             case kEndToken:
             {
                 break;
