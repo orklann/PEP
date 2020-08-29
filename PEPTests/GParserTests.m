@@ -246,7 +246,7 @@
 
 - (void)testGParserParseArrayObject {
     GParser *p = [GParser parser];
-    char *b = "[549 3.14 false (Ralph) /SomeName]";
+    char *b = "[549 3.14 false (Ralph) /SomeName [true 1024]]";
     NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
     [p setStream:d];
     [p parse];
@@ -281,6 +281,21 @@
                     GNameObject *obj = [[array value] objectAtIndex:j];
                     XCTAssertEqual([obj type], kNameObject);
                     XCTAssertEqualObjects([obj value], @"SomeName");
+                } else if (j == 5) {
+                    GArrayObject *subArray = [[array value] objectAtIndex:j];
+                    NSInteger k;
+                    for (k = 0; k < [[subArray value] count]; k++) {
+                        if (k == 0) {
+                            GBooleanObject *obj = [[subArray value] objectAtIndex:k];
+                            XCTAssertEqual([obj type], kBooleanObject);
+                            XCTAssertEqual([obj value], YES);
+                        } else if (k == 1) {
+                            GNumberObject *obj = [[subArray value] objectAtIndex:k];
+                            XCTAssertEqual([obj type], kNumberObject);
+                            XCTAssertEqual([obj subtype], kIntSubtype);
+                            XCTAssertEqual([obj intValue], 1024);
+                        }
+                    }
                 }
             }
 
