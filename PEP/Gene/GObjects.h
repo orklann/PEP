@@ -7,7 +7,8 @@
 //
 //
 //
-// This file implement PDF's 8 basic types of objects and some extra objects
+// This file implement PDF's 8 basic types of objects and some extra objects.
+//
 // PDF includes eight basic types of objects: Boolean values, Integer and
 // Real numbers, Strings, Names, Arrays, Dictionaries, Streams, and the
 // null object.
