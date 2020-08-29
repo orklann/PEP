@@ -331,7 +331,7 @@
     NSMutableData *d = [NSMutableData dataWithBytes:[rawContent bytes]
                                              length:[rawContent length]];
     // End stream with '\0' to ensure it will stop parsing
-    // Because GLexer need '\0' end the end to generate kEndToken
+    // Because GLexer need '\0' at the end to generate kEndToken
     [d appendBytes:"\0" length:1];
     [p setStream:d];
     [p parse];
