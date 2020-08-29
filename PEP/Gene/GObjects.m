@@ -275,7 +275,6 @@
         unsigned char ch2 = [self nextChar];
         NSString *s = [NSString stringWithFormat:@"%c%c", ch1, ch2];
         long result = strtol([s UTF8String], NULL, 16);
-        printf("%c", (int)result);
         unsigned char v[2];
         sprintf((char *)&v, "%c", (unsigned char)result);
         [d appendBytes:&v length:1];
