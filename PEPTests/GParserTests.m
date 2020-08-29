@@ -243,4 +243,48 @@
         }
     }
 }
+
+- (void)testGParserParseArrayObject {
+    GParser *p = [GParser parser];
+    char *b = "[549 3.14 false (Ralph) /SomeName]";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    NSInteger i = 0;
+    for (i = 0; i < [objs count]; i++) {
+        if (i == 0) {
+            GArrayObject *array = [objs objectAtIndex:i];
+            NSInteger j;
+            for (j = 0; j < [[array value] count]; j++) {
+                if (j == 0) {
+                    GNumberObject *obj = [[array value] objectAtIndex:j];
+                    XCTAssertEqual([obj type], kNumberObject);
+                    XCTAssertEqual([obj subtype], kIntSubtype);
+                    XCTAssertEqual([obj intValue], 549);
+                } else if (j == 1) {
+                    GNumberObject *obj = [[array value] objectAtIndex:j];
+                    XCTAssertEqual([obj type], kNumberObject);
+                    XCTAssertEqual([obj subtype], kRealSubtype);
+                    NSString* numberA = [NSString stringWithFormat:@"%.6f", [obj realValue]];
+                    NSString* numberB = [NSString stringWithFormat:@"%.6f", 3.14];
+                    XCTAssertEqualObjects(numberA, numberB);
+                } else if (j == 2) {
+                    GBooleanObject *obj = [[array value] objectAtIndex:j];
+                    XCTAssertEqual([obj type], kBooleanObject);
+                    XCTAssertEqual([obj value], NO);
+                } else if (j == 3) {
+                    GLiteralStringsObject *obj = [[array value] objectAtIndex:j];
+                    XCTAssertEqual([obj type], kLiteralStringsObject);
+                    XCTAssertEqualObjects([obj value], @"Ralph");
+                } else if (j == 4) {
+                    GNameObject *obj = [[array value] objectAtIndex:j];
+                    XCTAssertEqual([obj type], kNameObject);
+                    XCTAssertEqualObjects([obj value], @"SomeName");
+                }
+            }
+
+        }
+    }
+}
 @end

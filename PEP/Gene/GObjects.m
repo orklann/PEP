@@ -7,6 +7,7 @@
 //
 
 #import "GObjects.h"
+#import "GParser.h"
 
 @implementation GObject
 + (id)create {
@@ -307,5 +308,39 @@
     [d appendBytes:"\0" length:1];
     NSString *v = [NSString stringWithUTF8String:[d bytes]];
     value = v;
+}
+@end
+
+@implementation GArrayObject
+
++ (id)create {
+    GArrayObject *o = [[GArrayObject alloc] init];
+    return o;
+}
+
+- (void)setValue:(NSMutableArray*)v {
+    value = v;
+}
+
+- (NSMutableArray *)value {
+    return value;
+}
+
+- (void)parse {
+    GParser *p = [GParser parser];
+    GLexer *l = [GLexer lexer];
+    NSMutableData *d = [NSMutableData dataWithBytes:[rawContent bytes]
+                                             length:[rawContent length]];
+    // End stream with '\0' to ensure it will stop parsing
+    // Because GLexer need '\0' end the end to generate kEndToken
+    [d appendBytes:"\0" length:1];
+    [l setStream:d];
+    NSMutableArray *tokens = [NSMutableArray array];
+    GToken *t = [l nextToken];
+    while([t type] != kEndToken) {
+        [tokens addObject:t];
+        t = [l nextToken];
+    }
+    value = [p parseWithTokens:tokens];
 }
 @end

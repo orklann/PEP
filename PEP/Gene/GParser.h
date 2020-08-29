@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setLexer:(GLexer *)l;
 - (void)setStream:(NSData*)s;
 - (NSMutableArray*)objects;
+- (NSMutableArray*)parseWithTokens:(NSMutableArray*)tokens;
 - (void)parse; // parse tokens from lexer into GObjects array
 @end
 

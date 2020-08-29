@@ -15,7 +15,8 @@ typedef enum {
     kNumberObject,
     kLiteralStringsObject,
     kHexStringsObject,
-    kNameObject
+    kNameObject,
+    kArrayObject
 } ObjectType;
 
 typedef enum {
@@ -91,6 +92,16 @@ typedef enum {
 + (id)create;
 - (void)setValue:(NSString*)s;
 - (NSString *)value;
+- (void)parse;
+@end
+
+@interface GArrayObject : GObject {
+    NSMutableArray *value;
+}
+
++ (id)create;
+- (void)setValue:(NSMutableArray*)s;
+- (NSMutableArray *)value;
 - (void)parse;
 @end
 NS_ASSUME_NONNULL_END

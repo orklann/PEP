@@ -35,14 +35,8 @@
     return objects;
 }
 
-- (void)parse {
-    NSMutableArray *tokens = [NSMutableArray array];
-    GToken *t = [lexer nextToken];
-    while([t type] != kEndToken) {
-        [tokens addObject:t];
-        t = [lexer nextToken];
-    }
-    
+- (NSMutableArray*)parseWithTokens:(NSMutableArray*)tokens {
+    NSMutableArray *array = [NSMutableArray array];
     NSUInteger i = 0;
     for (i = 0; i < [tokens count]; i++) {
         GToken *token = [tokens objectAtIndex:i];
@@ -54,7 +48,7 @@
                 [o setType:kBooleanObject];
                 [o setRawContent:[token content]];
                 [o parse];
-                [objects addObject:o];
+                [array addObject:o];
                 break;
             }
             
@@ -64,7 +58,7 @@
                 [o setType:kNumberObject];
                 [o setRawContent:[token content]];
                 [o parse];
-                [objects addObject:o];
+                [array addObject:o];
                 break;
             }
             
@@ -74,7 +68,7 @@
                 [o setType:kLiteralStringsObject];
                 [o setRawContent:[token content]];
                 [o parse];
-                [objects addObject:o];
+                [array addObject:o];
                 break;
             }
                 
@@ -84,7 +78,7 @@
                 [o setType:kHexStringsObject];
                 [o setRawContent:[token content]];
                 [o parse];
-                [objects addObject:o];
+                [array addObject:o];
                 break;
             }
             case kNameObjectToken:
@@ -93,7 +87,16 @@
                 [o setType:kNameObject];
                 [o setRawContent:[token content]];
                 [o parse];
-                [objects addObject:o];
+                [array addObject:o];
+                break;
+            }
+            case kArrayObjectToken:
+            {
+                GArrayObject *o = [GArrayObject create];
+                [o setType:kArrayObject];
+                [o setRawContent:[token content]];
+                [o parse];
+                [array addObject:o];
                 break;
             }
             case kEndToken:
@@ -104,5 +107,16 @@
                 break;
         }
     }
+    return array;
+}
+
+- (void)parse {
+    NSMutableArray *tokens = [NSMutableArray array];
+    GToken *t = [lexer nextToken];
+    while([t type] != kEndToken) {
+        [tokens addObject:t];
+        t = [lexer nextToken];
+    }
+    objects = [self parseWithTokens:tokens];
 }
 @end
