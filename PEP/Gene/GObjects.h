@@ -26,7 +26,8 @@ typedef enum {
     kNameObject,
     kArrayObject,
     kDictionaryObject,
-    kStreamObject
+    kStreamObject,
+    kIndirectObject
 } ObjectType;
 
 typedef enum {
@@ -135,6 +136,22 @@ typedef enum {
 - (GDictionaryObject *)dictionaryObject;
 - (void)setStreamContent:(NSData *)c;
 - (NSData*)streamContent;
+- (void)parse;
+@end
+
+@interface GIndirectObject : GObject {
+    id object;
+    int objectNumber;
+    int generationNumber;
+}
+
++ (id)create;
+- (void)setObjectNumber:(int)n;
+- (int)objectNumber;
+- (void)setGenerationNumber:(int)n;
+- (int)generationNumber;
+- (void)setObject:(id)o;
+- (id)object;
 - (void)parse;
 @end
 NS_ASSUME_NONNULL_END

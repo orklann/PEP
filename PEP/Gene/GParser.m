@@ -54,6 +54,36 @@
             
             case kNumberToken:
             {
+                if (i + 2 <= [tokens count] - 1) {
+                    GToken *token2 = [tokens objectAtIndex:i+1];
+                    GToken *token3 = [tokens objectAtIndex:i+2];
+                    TokenType type3 = [token3 type];
+                    if (type3 == kIndirectObjectContentToken) {
+                        // Object number
+                        GNumberObject *objNumberObject = [GNumberObject create];
+                        [objNumberObject setType:kNumberObject];
+                        [objNumberObject setRawContent:[token content]];
+                        [objNumberObject parse];
+                        
+                        // Generation number
+                        GNumberObject *generationNumberObject = [GNumberObject create];
+                        [generationNumberObject setType:kNumberObject];
+                        [generationNumberObject setRawContent:[token2 content]];
+                        [generationNumberObject parse];
+                        
+                        // Object in indirect object
+                        // Object number
+                        GIndirectObject *indirectObj = [GIndirectObject create];
+                        [indirectObj setType:kIndirectObject];
+                        [indirectObj setObjectNumber:[objNumberObject intValue]];
+                        [indirectObj setGenerationNumber:[generationNumberObject intValue]];
+                        [indirectObj setRawContent:[token3 content]];
+                        [indirectObj parse];
+                        
+                        [array addObject:indirectObj];
+                        break;
+                    }
+                }
                 GNumberObject *o = [GNumberObject create];
                 [o setType:kNumberObject];
                 [o setRawContent:[token content]];

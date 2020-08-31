@@ -378,4 +378,35 @@
         }
     }
 }
+
+- (void)testGParserParseIndirectmObject {
+    GParser *p = [GParser parser];
+    char *b = "10 0 obj\n"
+              "<</Name (PEP) /Length 128>>"
+              "\n"
+              "endobj";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    NSInteger i = 0;
+    for (i = 0; i < [objs count]; i++) {
+        if (i == 0) {
+            GIndirectObject *obj = [objs objectAtIndex:i];
+            XCTAssertEqual([obj objectNumber], 10);
+            XCTAssertEqual([obj generationNumber], 0);
+            GDictionaryObject* contentObject = (GDictionaryObject*)[obj object];
+            for (id key in [contentObject value]) {
+                if ([key isEqualToString:@"Name"]) {
+                    GLiteralStringsObject *s = [[contentObject value] objectForKey:key];
+                    XCTAssertEqualObjects([s value], @"PEP");
+                } else if ([key isEqualToString:@"Length"]) {
+                    GNumberObject *n = [[contentObject value] objectForKey:key];
+                    XCTAssertEqual([n intValue], 128);
+                    XCTAssertNotEqual([n intValue], 0);
+                }
+            }
+        }
+    }
+}
 @end
