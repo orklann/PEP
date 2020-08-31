@@ -409,4 +409,23 @@
         }
     }
 }
+
+- (void)testGParserReturnAnyObject {
+    GParser *p = [GParser parser];
+    char *b = "10 0 obj\n"
+              "<</Name (PEP) /Length 128>>"
+              "\n"
+              "endobj";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    
+    NSInteger i = 0;
+    for (i = 0; i < [objs count]; i++) {
+        id obj = [objs objectAtIndex:0];
+        XCTAssertEqual([(GObject*)obj type], kIndirectObject);
+        XCTAssertEqual([(GIndirectObject*)obj objectNumber], 10);
+    }
+}
 @end
