@@ -27,7 +27,8 @@ typedef enum {
     kArrayObject,
     kDictionaryObject,
     kStreamObject,
-    kIndirectObject
+    kIndirectObject,
+    kNullObject
 } ObjectType;
 
 typedef enum {
@@ -153,5 +154,9 @@ typedef enum {
 - (void)setObject:(id)o;
 - (id)object;
 - (void)parse;
+@end
+
+@interface GNullObject : GObject
+
 @end
 NS_ASSUME_NONNULL_END

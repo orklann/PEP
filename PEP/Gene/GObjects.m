@@ -451,3 +451,7 @@
     object = firstObject;
 }
 @end
+
+@implementation GNullObject
+
+@end

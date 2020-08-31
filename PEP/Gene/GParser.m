@@ -47,6 +47,13 @@
         GToken *token = [tokens objectAtIndex:i];
         TokenType type = [token type];
         switch (type) {
+            case kNullObjectToken:
+            {
+                GNullObject *o = [GNullObject create];
+                [o setType:kNullObject];
+                [array addObject:o];
+                break;
+            }
             case kBooleanToken:
             {
                 GBooleanObject *o = [GBooleanObject create];

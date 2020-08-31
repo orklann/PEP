@@ -428,4 +428,19 @@
         XCTAssertEqual([(GIndirectObject*)obj objectNumber], 10);
     }
 }
+
+- (void)testGParserNullObject {
+    GParser *p = [GParser parser];
+    char *b = "null";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    
+    NSInteger i = 0;
+    for (i = 0; i < [objs count]; i++) {
+        id obj = [objs objectAtIndex:0];
+        XCTAssertEqual([(GObject*)obj type], kNullObject);
+    }
+}
 @end
