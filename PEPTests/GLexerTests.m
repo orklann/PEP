@@ -442,4 +442,26 @@
     XCTAssertEqual([t type], kIndirectObjectContentToken);
     XCTAssertEqualObjects([t content], d1);
 }
+
+- (void)testGLexerNextTokenRefToken {
+    GLexer *l = [GLexer lexer];
+    char *b = "10 0 R";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [l setStream:d];
+    
+    // Match 10
+    GToken *t = [l nextToken];
+    XCTAssertEqual([t type], kNumberToken);
+    XCTAssertEqualObjects([t content], [NSData dataWithBytes:"10" length:2]);
+    
+    // Match 0
+    t = [l nextToken];
+    XCTAssertEqual([t type], kNumberToken);
+    XCTAssertEqualObjects([t content], [NSData dataWithBytes:"0" length:1]);
+    
+    // Match `R` ref token
+    t = [l nextToken];
+    XCTAssertEqual([t type], kRefToken);
+    XCTAssertEqualObjects([t content], [NSData dataWithBytes:"R" length:1]);
+}
 @end

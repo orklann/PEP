@@ -318,6 +318,12 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     }
     
     switch (current) {
+        case 'R': // Indirect object reference
+        {
+            [token setType:kRefToken];
+            [token setContent:[NSData dataWithBytes:"R" length:1]];
+            break;
+        }
         case 'n': // 'null'
             if ([self nextChar] == 'u' && [self nextChar] == 'l' &&
                 [self nextChar] == 'l' && isWhiteSpace([self nextChar])){

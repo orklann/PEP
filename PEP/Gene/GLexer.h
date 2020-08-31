@@ -37,6 +37,7 @@ typedef enum {
     kStreamContentToken,
     kNullObjectToken,
     kIndirectObjectContentToken,
+    kRefToken,
     kEndToken,
 } TokenType;
 
