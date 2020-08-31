@@ -380,4 +380,41 @@
     [p parse];
     value = [p objects];
 }
+
+@end
+
+@implementation GStreamObject
++ (id)create {
+    GStreamObject *o = [[GStreamObject alloc] init];
+    return o;
+}
+- (void)setDictionaryObject:(GDictionaryObject*)d {
+    dictionary = d;
+}
+
+- (GDictionaryObject *)dictionaryObject {
+    return dictionary;
+}
+
+- (void)setStreamContent:(NSData *)c {
+    streamContent = c;
+}
+
+- (NSData*)streamContent {
+    return streamContent;
+}
+
+- (void)parse {
+    // Just verify that stream content length is same as indicated in the
+    // dictionary
+    int len = [(GNumberObject*)[[dictionary value] objectForKey:@"Length"] intValue];
+    if (len != [streamContent length]) {
+        NSException* errorLengthException = [NSException
+                exceptionWithName:@"StreamContentLengthErrorException"
+                reason:@"Stream content length is not the same as indicated in dictionary"
+                userInfo:nil];
+        @throw errorLengthException;
+        return ;
+    }
+}
 @end

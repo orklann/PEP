@@ -101,6 +101,25 @@
             }
             case kDictionaryObjectToken:
             {
+                if (i+1 <= [tokens count] - 1){
+                    GToken *token2 = [tokens objectAtIndex:i+1];
+                    TokenType type2 = [token2 type];
+                    if (type2 == kStreamContentToken) {
+                        GDictionaryObject *o = [GDictionaryObject create];
+                        [o setType:kDictionaryObject];
+                        [o setRawContent:[token content]];
+                        [o parse];
+                        
+                        GStreamObject *s = [GStreamObject create];
+                        [s setType:kStreamObject];
+                        [s setDictionaryObject:o];
+                        [s setStreamContent:[token2 content]];
+                        [s parse];
+                        [array addObject:s];
+                        i++;
+                    }
+                    break;
+                }
                 GDictionaryObject *o = [GDictionaryObject create];
                 [o setType:kDictionaryObject];
                 [o setRawContent:[token content]];

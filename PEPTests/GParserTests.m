@@ -347,6 +347,35 @@
             }
         }
     }
-    
+}
+
+- (void)testGParserParseStreamObject {
+    GParser *p = [GParser parser];
+    char *b = "<</Length 4 >>stream\n"
+              "q\n"
+              "Q\n"
+              "\n"
+              "endstream";
+    char *test = "q\nQ\n";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    NSData *d2 = [NSData dataWithBytes:test length:strlen(test)];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    NSInteger i = 0;
+    for (i = 0; i < [objs count]; i++) {
+        if (i == 0) {
+            GStreamObject *obj = [objs objectAtIndex:i];
+            XCTAssertEqual([obj type], kStreamObject);
+            GDictionaryObject *dict = [obj dictionaryObject];
+            for (id key in [dict value]) {
+                if ([key isEqualToString:@"Length"]) {
+                    GNumberObject *v = [[dict value] objectForKey:key];
+                    XCTAssertEqual([v intValue], 4);
+                }
+            }
+            XCTAssertEqualObjects([obj streamContent], d2);
+        }
+    }
 }
 @end

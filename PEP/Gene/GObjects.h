@@ -25,7 +25,8 @@ typedef enum {
     kHexStringsObject,
     kNameObject,
     kArrayObject,
-    kDictionaryObject
+    kDictionaryObject,
+    kStreamObject
 } ObjectType;
 
 typedef enum {
@@ -121,6 +122,19 @@ typedef enum {
 + (id)create;
 - (void)setValue:(NSMutableDictionary*)s;
 - (NSMutableDictionary *)value;
+- (void)parse;
+@end
+
+@interface GStreamObject : GObject {
+    GDictionaryObject *dictionary;
+    NSData *streamContent;
+}
+
++ (id)create;
+- (void)setDictionaryObject:(GDictionaryObject*)d;
+- (GDictionaryObject *)dictionaryObject;
+- (void)setStreamContent:(NSData *)c;
+- (NSData*)streamContent;
 - (void)parse;
 @end
 NS_ASSUME_NONNULL_END
