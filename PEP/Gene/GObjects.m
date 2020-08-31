@@ -460,7 +460,7 @@
     [p setStream:d];
     [p parse];
     
-    // Indirect objest only contains one object, which is the first one
+    // Indirect object only contains one object, which is the first one
     // from parser
     id firstObject = [[p objects] objectAtIndex:0];
     object = firstObject;
