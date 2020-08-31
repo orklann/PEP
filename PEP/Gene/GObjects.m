@@ -459,6 +459,9 @@
     [d appendBytes:"\0" length:1];
     [p setStream:d];
     [p parse];
+    
+    // Indirect objest only contains one object, which is the first one
+    // from parser
     id firstObject = [[p objects] objectAtIndex:0];
     object = firstObject;
 }
