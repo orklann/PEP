@@ -84,7 +84,6 @@
                         [generationNumberObject parse];
                         
                         // Object in indirect object
-                        // Object number
                         GIndirectObject *indirectObj = [GIndirectObject create];
                         [indirectObj setType:kIndirectObject];
                         [indirectObj setObjectNumber:[objNumberObject intValue]];
@@ -93,6 +92,29 @@
                         [indirectObj parse];
                         
                         [array addObject:indirectObj];
+                        i += 2;
+                        break;
+                    } else if (type3 == kRefToken) {
+                        // Object number
+                        GNumberObject *objNumberObject = [GNumberObject create];
+                        [objNumberObject setType:kNumberObject];
+                        [objNumberObject setRawContent:[token content]];
+                        [objNumberObject parse];
+                        
+                        // Generation number
+                        GNumberObject *generationNumberObject = [GNumberObject create];
+                        [generationNumberObject setType:kNumberObject];
+                        [generationNumberObject setRawContent:[token2 content]];
+                        [generationNumberObject parse];
+                        
+                        // Object in indirect object
+                        GRefObject *ref = [GRefObject create];
+                        [ref setType:kRefObject];
+                        [ref setObjectNumber:[objNumberObject intValue]];
+                        [ref setGenerationNumber:[generationNumberObject intValue]];
+                        [ref parse];
+                        [array addObject:ref];
+                        i += 2;
                         break;
                     }
                 }

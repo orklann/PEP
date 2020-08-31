@@ -443,4 +443,21 @@
         XCTAssertEqual([(GObject*)obj type], kNullObject);
     }
 }
+
+- (void)testGParserRefObject {
+    GParser *p = [GParser parser];
+    char *b = "10 0 R 2 0 R";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    
+    NSInteger i = 0;
+    for (i = 0; i < [objs count]; i++) {
+        GRefObject *obj = [objs objectAtIndex:0];
+        XCTAssertEqual([obj type], kRefObject);
+        XCTAssertEqual([obj objectNumber], 10);
+        XCTAssertEqual([obj generationNumber], 0);
+    }
+}
 @end

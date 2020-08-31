@@ -455,3 +455,31 @@
 @implementation GNullObject
 
 @end
+
+@implementation GRefObject
+
++ (id)create {
+    GRefObject *o = [[GRefObject alloc] init];
+    return o;
+}
+
+- (void)setObjectNumber:(int)n {
+    objectNumber = n;
+}
+
+- (int)objectNumber {
+    return objectNumber;
+}
+
+- (void)setGenerationNumber:(int)n {
+    generationNumber = n;
+}
+
+- (int)generationNumber {
+    return generationNumber;
+}
+
+- (void)parse {
+    // Does nothing
+}
+@end
