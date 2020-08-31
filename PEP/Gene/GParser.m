@@ -356,12 +356,10 @@
 }
 
 - (void)parse {
-    NSMutableArray *tokens = [NSMutableArray array];
-    GToken *t = [lexer nextToken];
-    while([t type] != kEndToken) {
-        [tokens addObject:t];
-        t = [lexer nextToken];
+    id o = [self parseNextObject];
+    while([(GObject*)o type] != kEndObject) {
+        [objects addObject:o];
+        o = [self parseNextObject];
     }
-    objects = [self parseWithTokens:tokens];
 }
 @end
