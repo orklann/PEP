@@ -384,7 +384,8 @@
     char *b = "10 0 obj\n"
               "<</Name (PEP) /Length 128>>"
               "\n"
-              "endobj";
+              "endobj"
+              "\n 10";
     NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
     [p setStream:d];
     [p parse];
