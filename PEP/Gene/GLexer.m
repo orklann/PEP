@@ -66,6 +66,10 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     return pos;
 }
 
+- (void)setPos:(unsigned int)p {
+    pos = p;
+}
+
 - (void)setStream:(NSData*)s {
     stream = s;
     pos = 0;

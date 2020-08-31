@@ -61,6 +61,7 @@ typedef enum {
 
 + (id)lexer;
 - (unsigned int)pos;
+- (void)setPos:(unsigned int)p;
 - (void)setStream:(NSData*)s;
 - (NSData*)stream;
 - (unsigned char)nextChar;

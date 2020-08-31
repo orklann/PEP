@@ -461,4 +461,118 @@
         XCTAssertEqual([obj generationNumber], 0);
     }
 }
+
+- (void)testGParserNextObject {
+    GParser *p = [GParser parser];
+    char *b = "null false true 1 2 3 10 0 R \n"
+              "10 0 obj\n"
+              "(This is an indirect obj)\n"
+              "endobj 1 2 3 \n"
+              "(Hello World) \n"
+              "<4920616d20612068657820737472696e67> \n"
+              "/Name \n"
+              "[1 2] \n"
+              "<</Name (PEP)>> \n"
+              "<</Type /Font /Length 18 >>\n"
+              "stream\n"
+              "(This is a stream)\n"
+              "endstream";
+    
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    id o;
+    o = [p parseNextObject];
+    XCTAssertEqual([(GNullObject*)o type], kNullObject);
+    
+    o = [p parseNextObject];
+    XCTAssertEqual([(GBooleanObject*)o type], kBooleanObject);
+    XCTAssertEqual([(GBooleanObject*)o value], NO);
+    
+    o = [p parseNextObject];
+    XCTAssertEqual([(GBooleanObject*)o type], kBooleanObject);
+    XCTAssertEqual([(GBooleanObject*)o value], YES);
+    
+    // 1
+    o = [p parseNextObject];
+    XCTAssertEqual([(GNumberObject*)o type], kNumberObject);
+    XCTAssertEqual([(GNumberObject*)o intValue], 1);
+    
+    // 2
+    o = [p parseNextObject];
+    XCTAssertEqual([(GNumberObject*)o type], kNumberObject);
+    XCTAssertEqual([(GNumberObject*)o intValue], 2);
+    
+    // 3
+    o = [p parseNextObject];
+    XCTAssertEqual([(GNumberObject*)o type], kNumberObject);
+    XCTAssertEqual([(GNumberObject*)o intValue], 3);
+    
+    // 10 0 R
+    o = [p parseNextObject];
+    XCTAssertEqual([(GRefObject*)o type], kRefObject);
+    XCTAssertEqual([(GRefObject*)o objectNumber], 10);
+    XCTAssertEqual([(GRefObject*)o generationNumber], 0);
+    
+    // 10 0 obj
+    o = [p parseNextObject];
+    XCTAssertEqual([(GIndirectObject*)o type], kIndirectObject);
+    XCTAssertEqual([(GIndirectObject*)o objectNumber], 10);
+    XCTAssertEqual([(GIndirectObject*)o generationNumber], 0);
+    char *test = "This is an indirect obj";
+    XCTAssertEqualObjects([(GLiteralStringsObject*)[(GIndirectObject*)o object] value],
+                          [NSString stringWithUTF8String:test]);
+    
+    // 1
+    o = [p parseNextObject];
+    XCTAssertEqual([(GNumberObject*)o type], kNumberObject);
+    XCTAssertEqual([(GNumberObject*)o intValue], 1);
+    
+    // 2
+    o = [p parseNextObject];
+    XCTAssertEqual([(GNumberObject*)o type], kNumberObject);
+    XCTAssertEqual([(GNumberObject*)o intValue], 2);
+    
+    // 3
+    o = [p parseNextObject];
+    XCTAssertEqual([(GNumberObject*)o type], kNumberObject);
+    XCTAssertEqual([(GNumberObject*)o intValue], 3);
+    
+    // (Hello World)
+    o = [p parseNextObject];
+    XCTAssertEqual([(GLiteralStringsObject*)o type], kLiteralStringsObject);
+    XCTAssertEqualObjects([(GLiteralStringsObject*)o value],
+                   [NSString stringWithUTF8String:"Hello World"]);
+    
+    // <4920616d20612068657820737472696e67>;
+    test = "I am a hex string";
+    NSData *d1 = [NSData dataWithBytes:test length:strlen(test)];
+    o = [p parseNextObject];
+    XCTAssertEqual([(GHexStringsObject*)o type], kHexStringsObject);
+    XCTAssertEqualObjects([(GHexStringsObject*)o value],
+                   d1);
+    
+    // /Name
+    o = [p parseNextObject];
+    XCTAssertEqual([(GNameObject*)o type], kNameObject);
+    XCTAssertEqualObjects([(GNameObject*)o value],
+                   [NSString stringWithUTF8String:"Name"]);
+    
+    // [1 2]
+    o = [p parseNextObject];
+    XCTAssertEqual([(GArrayObject*)o type], kArrayObject);
+    
+    // <</Name (PEP)>>, just test it's type
+    o = [p parseNextObject];
+    XCTAssertEqual([(GDictionaryObject*)o type], kDictionaryObject);
+    
+    // <</Type /Font /Length 18 >>
+    // stream
+    // (This is a stream)
+    // endstream
+    o = [p parseNextObject];
+    XCTAssertEqual([(GStreamObject*)o type], kStreamObject);
+    
+    o = [p parseNextObject];
+    XCTAssertEqual([(GEndObject*)o type], kEndObject);
+}
 @end

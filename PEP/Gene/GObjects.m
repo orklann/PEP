@@ -399,9 +399,10 @@
     // dictionary
     int len = [(GNumberObject*)[[dictionary value] objectForKey:@"Length"] intValue];
     if (len != [streamContent length]) {
+        NSString *reason = [NSString stringWithFormat:@"Stream content length is not the same as indicated in dictionary: (len: %d Length: %ld", len, [streamContent length]];
         NSException* errorLengthException = [NSException
                 exceptionWithName:@"StreamContentLengthErrorException"
-                reason:@"Stream content length is not the same as indicated in dictionary"
+                reason: reason
                 userInfo:nil];
         @throw errorLengthException;
         return ;
@@ -482,4 +483,8 @@
 - (void)parse {
     // Does nothing
 }
+@end
+
+@implementation GEndObject
+
 @end

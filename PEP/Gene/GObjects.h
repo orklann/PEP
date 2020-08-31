@@ -29,7 +29,8 @@ typedef enum {
     kStreamObject,
     kIndirectObject,
     kNullObject,
-    kRefObject
+    kRefObject,
+    kEndObject
 } ObjectType;
 
 typedef enum {
@@ -172,5 +173,9 @@ typedef enum {
 - (void)setGenerationNumber:(int)n;
 - (int)generationNumber;
 - (void)parse;
+@end
+
+@interface GEndObject : GObject
+
 @end
 NS_ASSUME_NONNULL_END
