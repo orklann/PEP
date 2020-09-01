@@ -27,12 +27,7 @@
 }
 
 - (void)setStream:(NSData*)s {
-    NSMutableData *d = [NSMutableData dataWithBytes:[s bytes]
-                                             length:[s length]];
-    // End stream with '\0' to ensure it will stop parsing
-    // Because GLexer need '\0' at the end to generate kEndToken
-    [d appendBytes:"\0" length:1];
-    [lexer setStream:d];
+    [lexer setStream:s];
     objects = [NSMutableArray array];
 }
 

@@ -327,7 +327,12 @@
 
 - (void)parse {
     GParser *p = [GParser parser];
-    [p setStream:rawContent];
+    NSMutableData *d = [NSMutableData dataWithBytes:[rawContent bytes]
+                                             length:[rawContent length]];
+    // End stream with '\0' to ensure it will stop parsing
+    // Because GLexer need '\0' at the end to generate kEndToken
+    [d appendBytes:"\0" length:1];
+    [p setStream:d];
     [p parse];
     NSArray *array = [p objects];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -366,7 +371,12 @@
 
 - (void)parse {
     GParser *p = [GParser parser];
-    [p setStream:rawContent];
+    NSMutableData *d = [NSMutableData dataWithBytes:[rawContent bytes]
+                                             length:[rawContent length]];
+    // End stream with '\0' to ensure it will stop parsing
+    // Because GLexer need '\0' at the end to generate kEndToken
+    [d appendBytes:"\0" length:1];
+    [p setStream:d];
     [p parse];
     value = [p objects];
 }
@@ -443,7 +453,12 @@
 
 - (void)parse {
     GParser *p = [GParser parser];
-    [p setStream:rawContent];
+    NSMutableData *d = [NSMutableData dataWithBytes:[rawContent bytes]
+                                             length:[rawContent length]];
+    // End stream with '\0' to ensure it will stop parsing
+    // Because GLexer need '\0' at the end to generate kEndToken
+    [d appendBytes:"\0" length:1];
+    [p setStream:d];
     [p parse];
     
     // Indirect object only contains one object, which is the first one
