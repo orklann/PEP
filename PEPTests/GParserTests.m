@@ -143,7 +143,7 @@
     
     // Test "\\\r" "\\\r\n" "\\\n" characters escape
     b = "(These two strings\\\n"
-        " are the same.\\\r\n"
+        " are\\\r the same.\\\r\n"
         ")";
     test = "These two strings are the same.";
     d = [NSData dataWithBytes:b length:strlen(b) + 1];
