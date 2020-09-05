@@ -195,4 +195,29 @@
         o = [self parseNextObject];
     }
 }
+
+- (unsigned int)getStartXRef {
+    // Set pos to the end
+    unsigned int end = (unsigned int)[[lexer stream] length] - 1;
+    [lexer setPos:end];
+    unsigned char ch = [lexer currentChar];
+    unsigned int pos = end;
+    unsigned char *bytes = (unsigned char*)[[lexer stream] bytes];
+    NSMutableData *data = [NSMutableData data];
+    while (ch != 'f') {
+        if (isdigit(ch)) {
+            [data appendBytes:(unsigned char*)&ch length:1];
+        }
+        pos -= 1;
+        ch = *(bytes + pos);
+    }
+    NSInteger i;
+    NSMutableString *s = [NSMutableString string];
+    unsigned char *bytes2 = (unsigned char*)[data bytes];
+    for (i = [data length] - 1; i >= 0; i--) {
+        unsigned char ch = *(bytes2 + i);
+        [s appendFormat:@"%c", ch];
+    }
+    return (unsigned int)[s intValue];
+}
 @end

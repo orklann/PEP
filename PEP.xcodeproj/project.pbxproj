@@ -12,6 +12,7 @@
 		931221CC24F0139300929C01 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 931221CA24F0139300929C01 /* MainMenu.xib */; };
 		931221CF24F0139300929C01 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 931221CE24F0139300929C01 /* main.m */; };
 		9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9355AEB824F12DCC00764E36 /* GLexerTests.m */; };
+		936C4305250363E800FFE547 /* test_xref.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 936C4304250363E700FFE547 /* test_xref.pdf */; };
 		93DC04C424F7B335003AC9B0 /* GParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C324F7B335003AC9B0 /* GParser.m */; };
 		93DC04C624F7B474003AC9B0 /* GParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C524F7B474003AC9B0 /* GParserTests.m */; };
 		93DC04C924F7B6EB003AC9B0 /* GObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C824F7B6EB003AC9B0 /* GObjects.m */; };
@@ -40,6 +41,7 @@
 		931221D524F0139700929C01 /* PEPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PEPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		931221DB24F0139700929C01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9355AEB824F12DCC00764E36 /* GLexerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLexerTests.m; sourceTree = "<group>"; };
+		936C4304250363E700FFE547 /* test_xref.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = test_xref.pdf; sourceTree = "<group>"; };
 		93DC04C224F7B335003AC9B0 /* GParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GParser.h; sourceTree = "<group>"; };
 		93DC04C324F7B335003AC9B0 /* GParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GParser.m; sourceTree = "<group>"; };
 		93DC04C524F7B474003AC9B0 /* GParserTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GParserTests.m; sourceTree = "<group>"; };
@@ -103,11 +105,20 @@
 		931221D824F0139700929C01 /* PEPTests */ = {
 			isa = PBXGroup;
 			children = (
+				936C4303250363AD00FFE547 /* pdf */,
 				9355AEB824F12DCC00764E36 /* GLexerTests.m */,
 				93DC04C524F7B474003AC9B0 /* GParserTests.m */,
 				931221DB24F0139700929C01 /* Info.plist */,
 			);
 			path = PEPTests;
+			sourceTree = "<group>";
+		};
+		936C4303250363AD00FFE547 /* pdf */ = {
+			isa = PBXGroup;
+			children = (
+				936C4304250363E700FFE547 /* test_xref.pdf */,
+			);
+			path = pdf;
 			sourceTree = "<group>";
 		};
 		93E336ED24F11C2500F91F74 /* Gene */ = {
@@ -212,6 +223,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				936C4305250363E800FFE547 /* test_xref.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -575,4 +575,17 @@
     o = [p parseNextObject];
     XCTAssertEqual([(GEndObject*)o type], kEndObject);
 }
+
+- (void)testGParserGetStartXRef {
+    GParser *p = [GParser parser];
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    // Even test_xref.pdf is in the `pdf` folder, we still only need to provide
+    // file name in the path, no need to provide folder name
+    NSString *path = [bundle pathForResource:@"test_xref" ofType:@"pdf"];
+    NSData *d = [NSData dataWithContentsOfFile:path];
+    [p setStream:d];
+    
+    unsigned int startXRef = [p getStartXRef];
+    XCTAssertEqual(startXRef, 16108);
+}
 @end
