@@ -616,4 +616,26 @@
         }
     }
 }
+
+- (void)testGParserWithPDF {
+    GParser *p = [GParser parser];
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    // Even test_xref.pdf is in the `pdf` folder, we still only need to provide
+    // file name in the path, no need to provide folder name
+    NSString *path = [bundle pathForResource:@"test_xref" ofType:@"pdf"];
+    NSData *d = [NSData dataWithContentsOfFile:path];
+    [p setStream:d];
+    
+    NSDictionary *dict = [p parseXRef];
+    
+    // Test `23 0 obj`: GIndirectObject -> GNumberObject
+    GXRefEntry *x = [dict objectForKey:@"23-0"];
+    unsigned int offset = [x offset];
+    [[p lexer] setPos:offset];
+    id o = [p parseNextObject];
+    XCTAssertEqual([(GObject*)o type], kIndirectObject);
+    GNumberObject *object = (GNumberObject*)[(GIndirectObject *)o object];
+    XCTAssertEqual([object subtype], kIntSubtype);
+    XCTAssertEqual([object intValue], 2862);
+}
 @end
