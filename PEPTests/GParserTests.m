@@ -600,8 +600,14 @@
     
     NSDictionary *dict = [p parseXRef];
     for (id key in dict) {
-        // Only test the last xref entry
-        if ([key isEqualTo:@"23-0"]) {
+        // Test first xref entry (object number is 1)
+        if ([key isEqualTo:@"1-0"]) {
+            GXRefEntry *x = [dict objectForKey:key];
+            XCTAssertEqual([x objectNumber], 1);
+            XCTAssertEqual([x offset], 15910);
+            XCTAssertEqual([x generationNumber], 0);
+            XCTAssertEqual([x inUse], 'n');
+        } else if ([key isEqualTo:@"23-0"]) { // Test the last xref entry
             GXRefEntry *x = [dict objectForKey:key];
             XCTAssertEqual([x objectNumber], 23);
             XCTAssertEqual([x offset], 15889);
