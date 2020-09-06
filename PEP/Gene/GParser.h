@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (id)parseNextObject;
 - (void)parse; // parse tokens from lexer into GObjects array
 - (unsigned int)getStartXRef;
+- (NSDictionary *)parseXRef;
 @end
 
 NS_ASSUME_NONNULL_END

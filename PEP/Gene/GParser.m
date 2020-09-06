@@ -220,4 +220,20 @@
     }
     return (unsigned int)[s intValue];
 }
+
+- (NSDictionary *)parseXRef {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    unsigned int startXRef = [self getStartXRef];
+    [[self lexer] setPos:startXRef];
+    
+    // Skip keyword `xref`
+    NSString *line = [[self lexer] nextLine];
+    // Skip subsection header
+    line = [[self lexer] nextLine];
+    line = [[self lexer] nextLine];
+    NSString *buf = [line substringWithRange:NSMakeRange(0, 18)];
+    printf("%s", [buf UTF8String]);
+    
+    return dict;
+}
 @end
