@@ -503,3 +503,42 @@
 @implementation GEndObject
 
 @end
+
+@implementation GXRefEntry
++ (id)create {
+    id o = [[GXRefEntry alloc] init];
+    return o;
+}
+
+- (void)setObjectNumber:(unsigned int)n {
+    objectNumber = n;
+}
+
+- (unsigned int)objectNumber {
+    return objectNumber;
+}
+
+- (void)setOffset:(unsigned int)os {
+    offset = os;
+}
+
+- (unsigned int)offset {
+    return offset;
+}
+
+- (void)setGenerationNumber:(unsigned int)g {
+    generationNumber = g;
+}
+
+- (unsigned int)generationNumber {
+    return generationNumber;
+}
+
+- (void)setInUse:(unsigned char)i {
+    inUse = i;
+}
+
+- (unsigned char)inUse {
+    return inUse;
+}
+@end

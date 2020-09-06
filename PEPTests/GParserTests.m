@@ -598,6 +598,16 @@
     NSData *d = [NSData dataWithContentsOfFile:path];
     [p setStream:d];
     
-    [p parseXRef];
+    NSDictionary *dict = [p parseXRef];
+    for (id key in dict) {
+        // Only test the last xref entry
+        if ([key isEqualTo:@"23-0"]) {
+            GXRefEntry *x = [dict objectForKey:key];
+            XCTAssertEqual([x objectNumber], 23);
+            XCTAssertEqual([x offset], 15889);
+            XCTAssertEqual([x generationNumber], 0);
+            XCTAssertEqual([x inUse], 'n');
+        }
+    }
 }
 @end

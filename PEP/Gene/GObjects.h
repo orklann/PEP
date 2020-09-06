@@ -176,6 +176,22 @@ typedef enum {
 @end
 
 @interface GEndObject : GObject
+@end
 
+@interface GXRefEntry: NSObject {
+    unsigned int objectNumber;
+    unsigned int offset;
+    unsigned int generationNumber;
+    unsigned char inUse;
+}
++ (id)create;
+- (void)setObjectNumber:(unsigned int)n;
+- (unsigned int)objectNumber;
+- (void)setOffset:(unsigned int)os;
+- (unsigned int)offset;
+- (void)setGenerationNumber:(unsigned int)g;
+- (unsigned int)generationNumber;
+- (void)setInUse:(unsigned char)i;
+- (unsigned char)inUse;
 @end
 NS_ASSUME_NONNULL_END

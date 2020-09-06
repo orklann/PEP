@@ -9,6 +9,20 @@
 #import "GParser.h"
 #import "GObjects.h"
 
+XRefType xrefType(NSString *line) {
+    if ([line containsString:@"f"] || [line containsString:@"n"]) {
+        return kXRefEntry;
+    }
+    return kXRefSubsectionHeader;
+}
+
+BOOL isTrailerLine(NSString *line) {
+    if ([line containsString:@"trailer"]) {
+        return YES;
+    }
+    return NO;
+}
+
 @implementation GParser
 
 + (id)parser {
@@ -229,11 +243,34 @@
     // Skip keyword `xref`
     NSString *line = [[self lexer] nextLine];
     // Skip subsection header
-    line = [[self lexer] nextLine];
-    line = [[self lexer] nextLine];
-    NSString *buf = [line substringWithRange:NSMakeRange(0, 18)];
-    printf("%s", [buf UTF8String]);
-    
+    while (true) {
+        line = [[self lexer] nextLine];
+        if (xrefType(line) == kXRefSubsectionHeader && !isTrailerLine(line)) {
+            NSString *buf = [line substringWithRange:NSMakeRange(0, [line length])];
+            unsigned int startObjectNumber, objectsCount;
+            sscanf((const char*)[buf UTF8String], "%d %d", &startObjectNumber, &objectsCount);
+            NSUInteger i;
+            for (i = 0; i < objectsCount; i++) {
+                // All lines here are xref entry
+                line = [[self lexer] nextLine];
+                NSString *buf = [line substringWithRange:NSMakeRange(0, 18)];
+                unsigned int offset, generationNumber;
+                unsigned char inUse;
+                sscanf((const char*)[buf UTF8String], "%d %d %c", &offset, &generationNumber, &inUse);
+                NSString *key = [NSString stringWithFormat:@"%d-%d",
+                               (unsigned int)(startObjectNumber + i), generationNumber];
+                GXRefEntry *x = [GXRefEntry create];
+                [x setObjectNumber:(unsigned int)(startObjectNumber + i)];
+                [x setOffset:offset];
+                [x setGenerationNumber:generationNumber];
+                [x setInUse:inUse];
+                [dict setValue:x forKey:key];
+            }
+        }
+        if (isTrailerLine(line)) {
+            break;
+        }
+    }
     return dict;
 }
 @end
