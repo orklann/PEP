@@ -432,4 +432,19 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     }
     return token;
 }
+
+- (NSString*)nextLine {
+    unsigned char current = [self currentChar];
+    NSMutableString *s = [NSMutableString string];
+    while (!(current == kCARRIAGE_RETURN || current == kLINE_FEED)) {
+        [s appendFormat:@"%c", current];
+        current = [self nextChar];
+    }
+    if ([self peekNextChar] == kLINE_FEED) {
+        current = [self nextChar];
+        [s appendFormat:@"%c", current];
+    }
+    [self nextChar];
+    return s;
+}
 @end

@@ -68,6 +68,9 @@ typedef enum {
 - (unsigned char)currentChar;
 - (unsigned char)peekNextChar;
 - (GToken *)nextToken;
+
+// This method return next line only for use in parsing xref entries
+- (NSString*)nextLine;
 @end
 
 NS_ASSUME_NONNULL_END
