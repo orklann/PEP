@@ -280,7 +280,6 @@ BOOL isTrailerLine(NSString *line) {
     
     // Skip keyword `xref`
     NSString *line = [[self lexer] nextLine];
-    // Skip subsection header
     while (true) {
        line = [[self lexer] nextLine];
        if (isTrailerLine(line)) {
