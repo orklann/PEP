@@ -684,4 +684,21 @@
     GNumberObject *n = [[[s dictionaryObject] value] objectForKey:@"N"];
     XCTAssertEqual([n intValue], 3);
 }
+
+- (void)testGParserGetTrailer {
+    GParser *p = [GParser parser];
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    // Even test_xref.pdf is in the `pdf` folder, we still only need to provide
+    // file name in the path, no need to provide folder name
+    NSString *path = [bundle pathForResource:@"test_xref" ofType:@"pdf"];
+    NSData *d = [NSData dataWithContentsOfFile:path];
+    [p setStream:d];
+    
+    GDictionaryObject *trailer = [p getTrailer];
+    XCTAssertEqual([trailer type], kDictionaryObject);
+    NSDictionary *dict = [trailer value];
+    // Test `/Size 24`
+    GNumberObject *size = [dict objectForKey:@"Size"];
+    XCTAssertEqual([size intValue], 24);
+}
 @end

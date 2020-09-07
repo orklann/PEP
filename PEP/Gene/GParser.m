@@ -273,4 +273,20 @@ BOOL isTrailerLine(NSString *line) {
     }
     return dict;
 }
+
+- (GDictionaryObject*)getTrailer {
+    unsigned int startXRef = [self getStartXRef];
+    [[self lexer] setPos:startXRef];
+    
+    // Skip keyword `xref`
+    NSString *line = [[self lexer] nextLine];
+    // Skip subsection header
+    while (true) {
+       line = [[self lexer] nextLine];
+       if (isTrailerLine(line)) {
+           break;
+       }
+    }
+    return (GDictionaryObject*)[self parseNextObject];
+}
 @end
