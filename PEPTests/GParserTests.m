@@ -700,5 +700,10 @@
     // Test `/Size 24`
     GNumberObject *size = [dict objectForKey:@"Size"];
     XCTAssertEqual([size intValue], 24);
+    
+    // Test `/Root 17 0 R`
+    GRefObject *root = [dict objectForKey:@"Root"];
+    XCTAssertEqual([root objectNumber], 17);
+    XCTAssertEqual([root generationNumber], 0);
 }
 @end
