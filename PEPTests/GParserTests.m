@@ -637,5 +637,51 @@
     GNumberObject *object = (GNumberObject*)[(GIndirectObject *)o object];
     XCTAssertEqual([object subtype], kIntSubtype);
     XCTAssertEqual([object intValue], 2862);
+    
+    // Test `11 0 obj`: GIndirectObject -> GDictionaryObject
+    x = [dict objectForKey:@"11-0"];
+    offset = [x offset];
+    [[p lexer] setPos:offset];
+    o = [p parseNextObject];
+    XCTAssertEqual([(GObject*)o type], kIndirectObject);
+    GDictionaryObject *obj2 = (GDictionaryObject*)[(GIndirectObject *)o object];
+    XCTAssertEqual([obj2 type], kDictionaryObject);
+    NSDictionary *dict2 = [obj2 value];
+    // /Type /ExtGState
+    GNameObject *state = [dict2 objectForKey:@"Type"];
+    XCTAssertEqualObjects([state value], @"ExtGState");
+    // /AAPL:AA false
+    GBooleanObject *boolean = [dict2 objectForKey:@"AAPL:AA"];
+    XCTAssertEqual([boolean value], NO);
+    
+    // Test `8 0 obj`: GIndirectObject -> GArrayObject
+    x = [dict objectForKey:@"8-0"];
+    offset = [x offset];
+    [[p lexer] setPos:offset];
+    o = [p parseNextObject];
+    XCTAssertEqual([(GObject*)o type], kIndirectObject);
+    GArrayObject *a = (GArrayObject*)[(GIndirectObject *)o object];
+    XCTAssertEqual([a type], kArrayObject);
+    GNameObject *a1 = [[a value] objectAtIndex:0];
+    XCTAssertEqualObjects([a1 value], @"ICCBased");
+    GIndirectObject *i1 = [[a value] objectAtIndex:1];
+    XCTAssertEqual([i1 objectNumber], 13);
+    XCTAssertEqual([i1 generationNumber], 0);
+    
+    // Test `15 0 obj`: GIndirectObject -> GStreamObject
+    x = [dict objectForKey:@"15-0"];
+    offset = [x offset];
+    [[p lexer] setPos:offset];
+    o = [p parseNextObject];
+    XCTAssertEqual([(GObject*)o type], kIndirectObject);
+    GStreamObject *s = (GStreamObject*)[(GIndirectObject *)o object];
+    XCTAssertEqual([s type], kStreamObject);
+    // `/Length`
+    GIndirectObject *i2 = [[[s dictionaryObject] value] objectForKey:@"Length"];
+    XCTAssertEqual([i2 objectNumber], 16);
+    XCTAssertEqual([i2 generationNumber], 0);
+    // `/N`
+    GNumberObject *n = [[[s dictionaryObject] value] objectForKey:@"N"];
+    XCTAssertEqual([n intValue], 3);
 }
 @end

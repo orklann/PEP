@@ -407,15 +407,21 @@
 - (void)parse {
     // Just verify that stream content length is same as indicated in the
     // dictionary
-    int len = [(GNumberObject*)[[dictionary value] objectForKey:@"Length"] intValue];
-    if (len != [streamContent length]) {
-        NSString *reason = [NSString stringWithFormat:@"Stream content length is not the same as indicated in dictionary: (len: %d Length: %ld", len, [streamContent length]];
-        NSException* errorLengthException = [NSException
-                exceptionWithName:@"StreamContentLengthErrorException"
-                reason: reason
-                userInfo:nil];
-        @throw errorLengthException;
-        return ;
+    id value = [[dictionary value] objectForKey:@"Length"];
+    int len = 0;
+    if ([(GObject*)value type] == kNumberObject) {
+        len = [(GNumberObject*)[[dictionary value] objectForKey:@"Length"] intValue];
+        if (len != [streamContent length]) {
+            NSString *reason = [NSString stringWithFormat:@"Stream content length is not the same as indicated in dictionary: (len: %d Length: %ld", len, [streamContent length]];
+            NSException* errorLengthException = [NSException
+                    exceptionWithName:@"StreamContentLengthErrorException"
+                    reason: reason
+                    userInfo:nil];
+            @throw errorLengthException;
+            return ;
+        }
+    } else if ([(GObject*)value type] == kIndirectObject) {
+        
     }
 }
 @end
