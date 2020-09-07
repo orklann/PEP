@@ -420,7 +420,7 @@
             @throw errorLengthException;
             return ;
         }
-    } else if ([(GObject*)value type] == kIndirectObject) {
+    } else if ([(GObject*)value type] == kRefObject) {
         
     }
 }
