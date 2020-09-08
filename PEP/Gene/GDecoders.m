@@ -9,6 +9,7 @@
 #include "GDecoders.h"
 #include <zlib.h>
 
+// Use zlib in system to decode 
 NSData* decodeFlate(NSData *data) {
     uLong sourceLen = (uLong)[data length];
     int multiple = 1024;
