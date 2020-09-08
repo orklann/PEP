@@ -18,6 +18,7 @@ NSData* decodeFlate(NSData *data) {
     int ret = uncompress(dest, &destLen, source, sourceLen);
     if (ret == Z_OK) {
         NSData *d = [NSData dataWithBytes:(unsigned char*)dest length:destLen];
+        free(dest);
         return d;
     }
     return nil;
