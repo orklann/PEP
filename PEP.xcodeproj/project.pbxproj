@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		930ACC9B250759780092206C /* GDecoders.m in Sources */ = {isa = PBXBuildFile; fileRef = 930ACC9A250759780092206C /* GDecoders.m */; };
+		930ACC9D250763C30092206C /* GDecodersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 930ACC9C250763C30092206C /* GDecodersTests.m */; };
 		931221C724F0137F00929C01 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 931221C624F0137F00929C01 /* AppDelegate.m */; };
 		931221C924F0139300929C01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 931221C824F0139300929C01 /* Assets.xcassets */; };
 		931221CC24F0139300929C01 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 931221CA24F0139300929C01 /* MainMenu.xib */; };
@@ -30,6 +32,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		930ACC99250759780092206C /* GDecoders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDecoders.h; sourceTree = "<group>"; };
+		930ACC9A250759780092206C /* GDecoders.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDecoders.m; sourceTree = "<group>"; };
+		930ACC9C250763C30092206C /* GDecodersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDecodersTests.m; sourceTree = "<group>"; };
 		931221C224F0137F00929C01 /* PEP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PEP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		931221C524F0137F00929C01 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		931221C624F0137F00929C01 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -108,6 +113,7 @@
 				936C4303250363AD00FFE547 /* pdf */,
 				9355AEB824F12DCC00764E36 /* GLexerTests.m */,
 				93DC04C524F7B474003AC9B0 /* GParserTests.m */,
+				930ACC9C250763C30092206C /* GDecodersTests.m */,
 				931221DB24F0139700929C01 /* Info.plist */,
 			);
 			path = PEPTests;
@@ -130,6 +136,8 @@
 				93DC04C824F7B6EB003AC9B0 /* GObjects.m */,
 				93DC04C224F7B335003AC9B0 /* GParser.h */,
 				93DC04C324F7B335003AC9B0 /* GParser.m */,
+				930ACC99250759780092206C /* GDecoders.h */,
+				930ACC9A250759780092206C /* GDecoders.m */,
 			);
 			path = Gene;
 			sourceTree = "<group>";
@@ -238,6 +246,7 @@
 				93DC04C924F7B6EB003AC9B0 /* GObjects.m in Sources */,
 				931221CF24F0139300929C01 /* main.m in Sources */,
 				93E336FD24F1265300F91F74 /* GLexer.m in Sources */,
+				930ACC9B250759780092206C /* GDecoders.m in Sources */,
 				931221C724F0137F00929C01 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -247,6 +256,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */,
+				930ACC9D250763C30092206C /* GDecodersTests.m in Sources */,
 				93DC04C624F7B474003AC9B0 /* GParserTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
