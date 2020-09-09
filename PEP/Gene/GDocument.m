@@ -37,6 +37,9 @@
     s = [[NSMutableAttributedString alloc] initWithString:@"PEPB"];
     [s addAttribute:NSFontAttributeName value:f range:NSMakeRange(0, 4)];
     [s addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0, 4)];
+    
+    CFRelease(font);
+    CFRelease(cgdata);
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
