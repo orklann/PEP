@@ -14,6 +14,8 @@
 		931221CC24F0139300929C01 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 931221CA24F0139300929C01 /* MainMenu.xib */; };
 		931221CF24F0139300929C01 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 931221CE24F0139300929C01 /* main.m */; };
 		9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9355AEB824F12DCC00764E36 /* GLexerTests.m */; };
+		9363D94A250895610075FEF0 /* GDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 9363D949250895610075FEF0 /* GDocument.m */; };
+		9363D9512508994E0075FEF0 /* test_xref.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9363D9502508994E0075FEF0 /* test_xref.pdf */; };
 		936C4305250363E800FFE547 /* test_xref.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 936C4304250363E700FFE547 /* test_xref.pdf */; };
 		93DC04C424F7B335003AC9B0 /* GParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C324F7B335003AC9B0 /* GParser.m */; };
 		93DC04C624F7B474003AC9B0 /* GParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C524F7B474003AC9B0 /* GParserTests.m */; };
@@ -46,6 +48,9 @@
 		931221D524F0139700929C01 /* PEPTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PEPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		931221DB24F0139700929C01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9355AEB824F12DCC00764E36 /* GLexerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLexerTests.m; sourceTree = "<group>"; };
+		9363D948250895610075FEF0 /* GDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDocument.h; sourceTree = "<group>"; };
+		9363D949250895610075FEF0 /* GDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDocument.m; sourceTree = "<group>"; };
+		9363D9502508994E0075FEF0 /* test_xref.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = test_xref.pdf; path = PEPTests/pdf/test_xref.pdf; sourceTree = SOURCE_ROOT; };
 		936C4304250363E700FFE547 /* test_xref.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = test_xref.pdf; sourceTree = "<group>"; };
 		93DC04C224F7B335003AC9B0 /* GParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GParser.h; sourceTree = "<group>"; };
 		93DC04C324F7B335003AC9B0 /* GParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GParser.m; sourceTree = "<group>"; };
@@ -95,6 +100,7 @@
 		931221C424F0137F00929C01 /* PEP */ = {
 			isa = PBXGroup;
 			children = (
+				9363D94B250898D60075FEF0 /* Resources */,
 				93E336ED24F11C2500F91F74 /* Gene */,
 				931221C524F0137F00929C01 /* AppDelegate.h */,
 				931221C624F0137F00929C01 /* AppDelegate.m */,
@@ -119,6 +125,14 @@
 			path = PEPTests;
 			sourceTree = "<group>";
 		};
+		9363D94B250898D60075FEF0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9363D9502508994E0075FEF0 /* test_xref.pdf */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		936C4303250363AD00FFE547 /* pdf */ = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +152,8 @@
 				93DC04C324F7B335003AC9B0 /* GParser.m */,
 				930ACC99250759780092206C /* GDecoders.h */,
 				930ACC9A250759780092206C /* GDecoders.m */,
+				9363D948250895610075FEF0 /* GDocument.h */,
+				9363D949250895610075FEF0 /* GDocument.m */,
 			);
 			path = Gene;
 			sourceTree = "<group>";
@@ -224,6 +240,7 @@
 			files = (
 				931221C924F0139300929C01 /* Assets.xcassets in Resources */,
 				931221CC24F0139300929C01 /* MainMenu.xib in Resources */,
+				9363D9512508994E0075FEF0 /* test_xref.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,6 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9363D94A250895610075FEF0 /* GDocument.m in Sources */,
 				93DC04C424F7B335003AC9B0 /* GParser.m in Sources */,
 				93DC04C924F7B6EB003AC9B0 /* GObjects.m in Sources */,
 				931221CF24F0139300929C01 /* main.m in Sources */,
