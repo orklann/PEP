@@ -48,4 +48,7 @@
     // Drawing code here.
 }
 
+- (BOOL)isFlipped {
+    return YES;
+}
 @end
