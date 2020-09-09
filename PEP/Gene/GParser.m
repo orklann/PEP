@@ -288,4 +288,13 @@ BOOL isTrailerLine(NSString *line) {
     }
     return (GDictionaryObject*)[self parseNextObject];
 }
+
+- (GIndirectObject*)getObjectByRef:(NSString*)refKey {
+    NSDictionary *xref = [self parseXRef];
+    GXRefEntry *x = [xref objectForKey:refKey];
+    unsigned int offset = [x offset];
+    [[self lexer] setPos:offset];
+    GIndirectObject* contentIndirect = (GIndirectObject*)[self parseNextObject];
+    return contentIndirect;
+}
 @end

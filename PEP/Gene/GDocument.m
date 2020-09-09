@@ -18,11 +18,7 @@
     NSData *d = [NSData dataWithContentsOfFile:path];
     [p setStream:d];
        
-    NSDictionary *xref = [p parseXRef];
-    GXRefEntry *x = [xref objectForKey:@"19-0"];
-    unsigned int offset = [x offset];
-    [[p lexer] setPos:offset];
-    GIndirectObject* contentIndirect = (GIndirectObject*)[p parseNextObject];
+    GIndirectObject *contentIndirect = [p getObjectByRef:@"19-0"];
     GStreamObject *stream = [contentIndirect object];
     NSData *fontData = [stream streamContent];
     NSData *decodedFontData = decodeFlate(fontData);

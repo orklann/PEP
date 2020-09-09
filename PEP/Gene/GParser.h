@@ -35,6 +35,7 @@ BOOL isTrailerLine(NSString *line);
 - (unsigned int)getStartXRef;
 - (NSDictionary *)parseXRef;
 - (GDictionaryObject*)getTrailer;
+- (GIndirectObject*)getObjectByRef:(NSString*)refKey;
 @end
 
 NS_ASSUME_NONNULL_END
