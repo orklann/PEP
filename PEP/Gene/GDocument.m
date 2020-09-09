@@ -29,10 +29,10 @@
     
     CGDataProviderRef cgdata = CGDataProviderCreateWithCFData((CFDataRef)decodedFontData);
     CGFontRef font = CGFontCreateWithDataProvider(cgdata);
-    NSFont *f = (NSFont*)CFBridgingRelease(CTFontCreateWithGraphicsFont(font, 46, nil, nil));
+    NSFont *f = (NSFont*)CFBridgingRelease(CTFontCreateWithGraphicsFont(font, 144, nil, nil));
     
     // change font size
-    f = [NSFont fontWithDescriptor:[f fontDescriptor] size:144];
+    // f = [NSFont fontWithDescriptor:[f fontDescriptor] size:144];
     
     s = [[NSMutableAttributedString alloc] initWithString:@"PEPB"];
     [s addAttribute:NSFontAttributeName value:f range:NSMakeRange(0, 4)];
