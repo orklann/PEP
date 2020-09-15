@@ -4,3 +4,5 @@
 
 For now, PEP is work-in-progress.
 
+Currently working on the core, a PDF engine called Gene.
+
