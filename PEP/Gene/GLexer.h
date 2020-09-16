@@ -38,6 +38,7 @@ typedef enum {
     kNullObjectToken,
     kIndirectObjectContentToken,
     kRefToken,
+    kCommandToken,
     kEndToken,
 } TokenType;
 

@@ -430,6 +430,21 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
             [token setType:kUnknownToken];
             break;
     }
+    
+    // If we get kUnknowToken here, we continue to get Command Token
+    if ([token type] == kUnknownToken) {
+        pos = start;
+        current = [self currentChar];
+        NSMutableData *data = [NSMutableData data];
+        while(!isWhiteSpace(current)) {
+            [data appendBytes:&current length:1];
+            current = [self nextChar];
+        }
+        // TODO: Check if *data is a really command string, we assume it's
+        // a command string without further checking by now
+        [token setType:kCommandToken];
+        [token setContent:data];
+    }
     return token;
 }
 

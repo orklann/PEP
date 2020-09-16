@@ -464,4 +464,24 @@
     XCTAssertEqual([t type], kRefToken);
     XCTAssertEqualObjects([t content], [NSData dataWithBytes:"R" length:1]);
 }
+
+- (void)testGLexerNextTokenCommandToken {
+    GLexer *l = [GLexer lexer];
+    char *b = "0.9790795 0 0 -0.9790795 72 720 cm";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [l setStream:d];
+    
+    // Skip 6 numbers objects
+    [l nextToken];
+    [l nextToken];
+    [l nextToken];
+    [l nextToken];
+    [l nextToken];
+    [l nextToken];
+    
+    // We match a Command token - "cm"
+    GToken *t = [l nextToken];
+    XCTAssertEqual([t type], kCommandToken);
+    XCTAssertEqualObjects([t content], [NSData dataWithBytes:"cm" length:2]);
+}
 @end
