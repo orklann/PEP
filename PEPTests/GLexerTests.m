@@ -467,7 +467,7 @@
 
 - (void)testGLexerNextTokenCommandToken {
     GLexer *l = [GLexer lexer];
-    char *b = "0.9790795 0 0 -0.9790795 72 720 cm";
+    char *b = "0.9790795 0 0 -0.9790795 72 720 cm q";
     NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
     [l setStream:d];
     
@@ -483,5 +483,10 @@
     GToken *t = [l nextToken];
     XCTAssertEqual([t type], kCommandToken);
     XCTAssertEqualObjects([t content], [NSData dataWithBytes:"cm" length:2]);
+    
+    // We match a command token - "q"
+    t = [l nextToken];
+    XCTAssertEqual([t type], kCommandToken);
+    XCTAssertEqualObjects([t content], [NSData dataWithBytes:"q" length:1]);
 }
 @end
