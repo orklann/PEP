@@ -431,7 +431,8 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
             break;
     }
     
-    // If we get kUnknowToken here, we continue to get Command Token
+    // If we get kUnknowToken here, we go back to token begining and
+    // continue to get Command Token
     if ([token type] == kUnknownToken) {
         pos = start;
         current = [self currentChar];
