@@ -1,6 +1,6 @@
 # PEP
 
-[PEP](https://macpep.org/) is an acronym for PDF Editing Program (for Mac). It's a free and open source PDF editor for Mac.
+[PEP](https://macpep.org/) is an acronym for PDF Editing Program (for Mac). It's a free and open source PDF editor for Mac. It is a lightweight alternative to Adobe Acrobat.
 
 For now, PEP is work-in-progress.
 
