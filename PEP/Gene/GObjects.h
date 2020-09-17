@@ -196,6 +196,9 @@ typedef enum {
 - (unsigned char)inUse;
 @end
 
+
+// Command Object (a.k.a operators) describe how PDF page content are shown,
+// And are in the content of PDF Page
 @interface GCommandObject : GObject {
     NSString *cmd;
     NSArray *args;
