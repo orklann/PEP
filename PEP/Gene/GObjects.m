@@ -572,6 +572,6 @@
 }
 
 - (void)parse {
-    NSLog(@"%@", cmd);
+    
 }
 @end
