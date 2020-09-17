@@ -20,6 +20,7 @@ typedef enum {
 XRefType xrefType(NSString *line);
 BOOL isTrailerLine(NSString *line);
 
+
 @interface GParser : NSObject {
     GLexer *lexer;
     NSMutableArray *objects;

@@ -706,4 +706,23 @@
     XCTAssertEqual([root objectNumber], 17);
     XCTAssertEqual([root generationNumber], 0);
 }
+
+- (void)testGParserNextObjectCommandObject {
+    GParser *p = [GParser parser];
+    char *b = "0.9790795 0 0 -0.9790795 72 720 cm";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    id o;
+    NSMutableArray *objs = [NSMutableArray array];
+    // Add 6 number objects
+    NSUInteger i;
+    for (i = 0; i < 6; i++) {
+        o = [p parseNextObject];
+        [objs addObject:o];
+    }
+
+    o = [p parseNextObject];
+    XCTAssertEqual([(GCommandObject*)o type], kCommandObject);
+    XCTAssertEqualObjects([(GCommandObject*)o cmd], @"cm");
+}
 @end

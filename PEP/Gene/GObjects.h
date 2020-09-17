@@ -30,6 +30,7 @@ typedef enum {
     kIndirectObject,
     kNullObject,
     kRefObject,
+    kCommandObject,
     kEndObject
 } ObjectType;
 
@@ -193,5 +194,18 @@ typedef enum {
 - (unsigned int)generationNumber;
 - (void)setInUse:(unsigned char)i;
 - (unsigned char)inUse;
+@end
+
+@interface GCommandObject : GObject {
+    NSString *cmd;
+    NSArray *args;
+}
+
++ (id)create;
+- (void)setCmd:(NSString *)c;
+- (NSString *)cmd;
+- (void)setArgs:(NSArray *)a;
+- (NSArray*)args;
+- (void)parse;
 @end
 NS_ASSUME_NONNULL_END

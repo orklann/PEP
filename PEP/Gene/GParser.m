@@ -190,6 +190,15 @@ BOOL isTrailerLine(NSString *line) {
             [lexer setPos:rewindPos];
             break;
         }
+        case kCommandToken:{
+            o = [GCommandObject create];
+            NSData *content = [token content];
+            NSString *cmd = [[NSString alloc] initWithData:content encoding:NSASCIIStringEncoding];
+            [(GCommandObject*)o setType:kCommandObject];
+            [(GCommandObject*)o setCmd:cmd];
+            [(GCommandObject*)o parse];
+            break;
+        }
         case kEndToken:
         {
             o = [GEndObject create];

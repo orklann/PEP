@@ -548,3 +548,30 @@
     return inUse;
 }
 @end
+
+@implementation GCommandObject
++ (id)create {
+    id o = [[GCommandObject alloc] init];
+    return o;
+}
+
+- (void)setCmd:(NSString *)c {
+    cmd = c;
+}
+
+- (NSString *)cmd {
+    return cmd;
+}
+
+- (void)setArgs:(NSArray *)a {
+    args = a;
+}
+
+- (NSArray*)args {
+    return args;
+}
+
+- (void)parse {
+    NSLog(@"%@", cmd);
+}
+@end
