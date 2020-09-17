@@ -39,6 +39,9 @@ typedef enum {
     kRealSubtype
 } NumberSubtype;
 
+// Get command arguments
+NSArray *getCommandArgs(NSArray *objects, unsigned int argsNumber);
+
 @interface GObject : NSObject {
     ObjectType type;
     NSData *rawContent;

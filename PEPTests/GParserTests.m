@@ -724,5 +724,15 @@
     o = [p parseNextObject];
     XCTAssertEqual([(GCommandObject*)o type], kCommandObject);
     XCTAssertEqualObjects([(GCommandObject*)o cmd], @"cm");
+    
+    NSArray *args = getCommandArgs(objs, 6);
+    GNumberObject *firstArg = [args firstObject];
+    NSString* numberA = [NSString stringWithFormat:@"%.7f", [firstArg realValue]];
+    NSString* numberB = [NSString stringWithFormat:@"%.7f", 0.9790795];
+    XCTAssertEqualObjects(numberA, numberB);
+    
+    GNumberObject *lastArg = [args lastObject];
+    XCTAssertEqual([lastArg type], kNumberObject);
+    XCTAssertEqual([lastArg intValue], 720);
 }
 @end

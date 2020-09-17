@@ -9,6 +9,16 @@
 #import "GObjects.h"
 #import "GParser.h"
 
+NSArray *getCommandArgs(NSArray *objects, unsigned int argsNumber) {
+    NSMutableArray *ret = [NSMutableArray array];
+    unsigned int start = (unsigned int)[objects count] - argsNumber;
+    NSUInteger i;
+    for (i = start; i < start + argsNumber; i++) {
+        [ret addObject:[objects objectAtIndex:i]];
+    }
+    return ret;
+}
+
 @implementation GObject
 + (id)create {
     GObject *o = [[GObject alloc] init];
