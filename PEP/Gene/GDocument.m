@@ -36,6 +36,53 @@
     
     CFRelease(font);
     CFRelease(cgdata);
+    
+    // Test parsePages
+    [self parsePages];
+}
+
+- (void)parsePages {
+    GParser *p = [GParser parser];
+    NSBundle *mainBundle = [NSBundle mainBundle];
+    // TODO: Use test_xref.pdf by default without ability to custom file, will
+    // do it later
+    file = [mainBundle pathForResource:@"test_xref" ofType:@"pdf"];
+    NSData *d = [NSData dataWithContentsOfFile:file];
+    [p setStream:d];
+    
+    // Get trailer
+    GDictionaryObject *trailer = [p getTrailer];
+    
+    // Get Root ref
+    GRefObject *root = [[trailer value] objectForKey:@"Root"];
+    NSString *catalogRef = [NSString stringWithFormat:@"%d-%d",
+                            [root objectNumber], [root generationNumber]];
+    GIndirectObject *catalogIndirect = [p getObjectByRef:catalogRef];
+    // Get catalog dictionary object
+    GDictionaryObject *catalogObject = [catalogIndirect object];
+    GRefObject *pagesRef = [[catalogObject value] objectForKey:@"Pages"];
+    GIndirectObject *pagesIndirect = [p getObjectByRef:
+                                    [NSString stringWithFormat:@"%d-%d",
+                                    [pagesRef objectNumber], [pagesRef generationNumber]]];
+    // Get pages dictionary object
+    GDictionaryObject *pagesObject = [pagesIndirect object];
+    GArrayObject *kids = [[pagesObject value] objectForKey:@"Kids"];
+    
+    // Get GPage array
+    pages = [NSMutableArray array];
+    NSArray *array = [kids value];
+    NSUInteger i;
+    for (i = 0; i < [array count]; i++) {
+        GRefObject *ref = (GRefObject*)[array objectAtIndex:i];
+        NSString *refString = [NSString stringWithFormat:@"%d-%d",
+                               [ref objectNumber], [ref generationNumber]];
+        GIndirectObject *indirect = [p getObjectByRef:refString];
+        GDictionaryObject *pageDict = [indirect object];
+        GPage *page = [GPage create];
+        [page setPageDictionary:pageDict];
+        [pages addObject:page];
+    }
+    NSLog(@"[GDocument parsePages] pages: %ld", [pages count]);
 }
 
 - (void)drawRect:(NSRect)dirtyRect {

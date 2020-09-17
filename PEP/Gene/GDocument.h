@@ -7,12 +7,17 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "GPage.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GDocument : NSView {
     NSMutableAttributedString *s;
+    NSString *file;
+    NSMutableArray *pages;
 }
+
+- (void)parsePages;
 @end
 
 NS_ASSUME_NONNULL_END
