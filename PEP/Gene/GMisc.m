@@ -11,8 +11,10 @@
 void printData(NSData *data) {
     NSUInteger i;
     unsigned char * bytes = (unsigned char*)[data bytes];
+    printf("\n");
     for (i = 0; i < [data length]; i++) {
         printf("%c", (unsigned char)(*(bytes+i)));
     }
+    printf("\n");
     printf("\n");
 }
