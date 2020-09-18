@@ -16,7 +16,7 @@ I update the core PDF engine (called Gene) almost everyday.
 * A parser (GParser.h|m) which parse tokens from lexer into pdf objects (String, Name, Dictionary, Stream, etc...)
 * Objects classes (GObjects.h|m) which present PDF objects
 
-### Things unfinieshed
+### Things unfinished
 * GDocument (GDocument.h|m) which loads a PDF file, and render/edit it
 * GPage (GPage.h|m) which presents a single PDF page
 * GDecoder which implement all decoders for decoding stream objects
