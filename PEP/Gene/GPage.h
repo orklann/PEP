@@ -14,12 +14,14 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GPage : NSObject {
     GDictionaryObject *pageDictionary;
     GParser *parser;
+    NSData *pageContent;
 }
 
 + (id)create;
 - (void)setPageDictionary:(GDictionaryObject*)d;
 - (GDictionaryObject*)pageDictionary;
 - (void)setParser:(GParser*)p;
+- (void)parsePageContent;
 @end
 
 NS_ASSUME_NONNULL_END

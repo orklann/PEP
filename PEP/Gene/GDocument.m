@@ -39,6 +39,9 @@
     
     // Test parsePages
     [self parsePages];
+    
+    // parse Content of first page
+    [[pages firstObject] parsePageContent];
 }
 
 - (void)parsePages {

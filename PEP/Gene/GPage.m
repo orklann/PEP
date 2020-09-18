@@ -7,6 +7,7 @@
 //
 
 #import "GPage.h"
+#import "GDecoders.h"
 
 @implementation GPage
 
@@ -25,5 +26,23 @@
 
 - (void)setParser:(GParser*)p {
     parser = p;
+}
+
+- (void)parsePageContent {
+    GRefObject *ref = [[pageDictionary value] objectForKey:@"Contents"];
+    NSString *refString = [NSString stringWithFormat:@"%d-%d",
+                           [ref objectNumber],
+                           [ref generationNumber]];
+    GIndirectObject *contentStreamIndirect = [parser getObjectByRef:refString];
+    GStreamObject *contentStream = [contentStreamIndirect object];
+    NSData *data = [contentStream streamContent];
+    pageContent = decodeFlate(data);
+    
+    NSUInteger i;
+    unsigned char * bytes = (unsigned char*)[pageContent bytes];
+    for (i = 0; i < [pageContent length]; i++) {
+        printf("%c", (unsigned char)(*(bytes+i)));
+    }
+    printf("\n");
 }
 @end
