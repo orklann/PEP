@@ -91,6 +91,7 @@
         GPage *page = [GPage create];
         [page setPageDictionary:pageDict];
         [page setParser:parser];
+        [page setDocument:self];
         [pages addObject:page];
     }
     NSLog(@"[GDocument parsePages] pages: %ld", [pages count]);
