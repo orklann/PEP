@@ -23,4 +23,4 @@ I update the core PDF engine (called Gene) almost everyday.
 
 ## Roadmap
 
-I don't have any roadmap now, but i will publish one later at the right moment. 
+I don't have any roadmap yet, but i will publish one later at the right moment. 
