@@ -8,16 +8,18 @@
 
 #import <Foundation/Foundation.h>
 #import "GObjects.h"
-
+#import "GParser.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GPage : NSObject {
     GDictionaryObject *pageDictionary;
+    GParser *parser;
 }
 
 + (id)create;
 - (void)setPageDictionary:(GDictionaryObject*)d;
 - (GDictionaryObject*)pageDictionary;
+- (void)setParser:(GParser*)p;
 @end
 
 NS_ASSUME_NONNULL_END

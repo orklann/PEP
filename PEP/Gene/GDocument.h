@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "GPage.h"
+#import "GParser.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableAttributedString *s;
     NSString *file;
     NSMutableArray *pages;
+    GParser *parser;
 }
 
 - (void)parsePages;

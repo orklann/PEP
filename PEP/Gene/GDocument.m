@@ -42,26 +42,26 @@
 }
 
 - (void)parsePages {
-    GParser *p = [GParser parser];
+    parser = [GParser parser];
     NSBundle *mainBundle = [NSBundle mainBundle];
     // TODO: Use test_xref.pdf by default without ability to custom file, will
     // do it later
     file = [mainBundle pathForResource:@"test_xref" ofType:@"pdf"];
     NSData *d = [NSData dataWithContentsOfFile:file];
-    [p setStream:d];
+    [parser setStream:d];
     
     // Get trailer
-    GDictionaryObject *trailer = [p getTrailer];
+    GDictionaryObject *trailer = [parser getTrailer];
     
     // Get Root ref
     GRefObject *root = [[trailer value] objectForKey:@"Root"];
     NSString *catalogRef = [NSString stringWithFormat:@"%d-%d",
                             [root objectNumber], [root generationNumber]];
-    GIndirectObject *catalogIndirect = [p getObjectByRef:catalogRef];
+    GIndirectObject *catalogIndirect = [parser getObjectByRef:catalogRef];
     // Get catalog dictionary object
     GDictionaryObject *catalogObject = [catalogIndirect object];
     GRefObject *pagesRef = [[catalogObject value] objectForKey:@"Pages"];
-    GIndirectObject *pagesIndirect = [p getObjectByRef:
+    GIndirectObject *pagesIndirect = [parser getObjectByRef:
                                     [NSString stringWithFormat:@"%d-%d",
                                     [pagesRef objectNumber], [pagesRef generationNumber]]];
     // Get pages dictionary object
@@ -76,10 +76,11 @@
         GRefObject *ref = (GRefObject*)[array objectAtIndex:i];
         NSString *refString = [NSString stringWithFormat:@"%d-%d",
                                [ref objectNumber], [ref generationNumber]];
-        GIndirectObject *indirect = [p getObjectByRef:refString];
+        GIndirectObject *indirect = [parser getObjectByRef:refString];
         GDictionaryObject *pageDict = [indirect object];
         GPage *page = [GPage create];
         [page setPageDictionary:pageDict];
+        [page setParser:parser];
         [pages addObject:page];
     }
     NSLog(@"[GDocument parsePages] pages: %ld", [pages count]);

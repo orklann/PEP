@@ -22,4 +22,8 @@
 - (GDictionaryObject*)pageDictionary {
     return pageDictionary;
 }
+
+- (void)setParser:(GParser*)p {
+    parser = p;
+}
 @end
