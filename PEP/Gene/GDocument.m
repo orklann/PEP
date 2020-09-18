@@ -103,12 +103,25 @@
     [bgColor set];
     NSRectFill([self bounds]);
     
+    [[NSColor whiteColor] set];
+    NSRect rect = NSMakeRect(100, 100, 100, 100);
+    rect = [self rectFromFlipped:rect];
+    NSRectFill(rect);
+    
     [s drawAtPoint:NSMakePoint(0, 0)];
     NSLog(@"drawRect called.");
     // Drawing code here.
 }
 
+- (NSRect)rectFromFlipped:(NSRect)r {
+    NSRect bounds = [self bounds];
+    float height = bounds.size.height;
+    NSPoint newOrigin = NSMakePoint(r.origin.x, height - r.origin.y);
+    NSRect ret = NSMakeRect(newOrigin.x, newOrigin.y - r.size.height, r.size.width , r.size.height);
+    return ret;
+}
+
 - (BOOL)isFlipped {
-    return YES;
+    return NO;
 }
 @end
