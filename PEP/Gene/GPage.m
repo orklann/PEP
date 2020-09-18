@@ -40,8 +40,7 @@
                            [ref generationNumber]];
     GIndirectObject *contentStreamIndirect = [parser getObjectByRef:refString];
     GStreamObject *contentStream = [contentStreamIndirect object];
-    NSData *data = [contentStream streamContent];
-    pageContent = decodeFlate(data);
+    pageContent = [contentStream getDecodedStreamContent];
     
     printData(pageContent);
 }

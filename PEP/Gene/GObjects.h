@@ -144,6 +144,7 @@ NSArray *getCommandArgs(NSArray *objects, unsigned int argsNumber);
 - (void)setStreamContent:(NSData *)c;
 - (NSData*)streamContent;
 - (void)parse;
+- (NSData*)getDecodedStreamContent;
 @end
 
 @interface GIndirectObject : GObject {

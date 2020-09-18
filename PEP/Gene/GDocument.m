@@ -27,8 +27,7 @@
        
     GIndirectObject *contentIndirect = [p getObjectByRef:@"19-0"];
     GStreamObject *stream = [contentIndirect object];
-    NSData *fontData = [stream streamContent];
-    NSData *decodedFontData = decodeFlate(fontData);
+    NSData *decodedFontData = [stream getDecodedStreamContent];
     
     CGDataProviderRef cgdata = CGDataProviderCreateWithCFData((CFDataRef)decodedFontData);
     CGFontRef font = CGFontCreateWithDataProvider(cgdata);

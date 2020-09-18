@@ -8,6 +8,7 @@
 
 #import "GObjects.h"
 #import "GParser.h"
+#import "GDecoders.h"
 
 NSArray *getCommandArgs(NSArray *objects, unsigned int argsNumber) {
     NSMutableArray *ret = [NSMutableArray array];
@@ -433,6 +434,17 @@ NSArray *getCommandArgs(NSArray *objects, unsigned int argsNumber) {
     } else if ([(GObject*)value type] == kRefObject) {
         
     }
+}
+
+- (NSData*)getDecodedStreamContent {
+    NSData *decodedData;
+    id decodeMethod = [[dictionary value] objectForKey:@"Filter"];
+    if ([(GObject*)decodeMethod type] == kNameObject) { // Single filter here
+        if ([[(GNameObject*)decodeMethod value] isEqualToString:@"FlateDecode"]) {
+            decodedData = decodeFlate(streamContent);
+        }
+    }
+    return decodedData;
 }
 @end
 
