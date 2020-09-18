@@ -113,6 +113,9 @@
     // Drawing code here.
 }
 
+// GDocument's view coordinate origin is at bottom-left which is not flipped.
+// For easy pages layout which would use flipped rect (origin at top-left),
+// and we can convert the rect from flipped to no flipped.
 - (NSRect)rectFromFlipped:(NSRect)r {
     NSRect bounds = [self bounds];
     float height = bounds.size.height;
