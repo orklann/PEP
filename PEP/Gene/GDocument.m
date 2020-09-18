@@ -12,6 +12,13 @@
 
 @implementation GDocument
 - (void)awakeFromNib {
+    // Resize window
+    NSLog(@"View: %@", NSStringFromRect(self.bounds));
+    NSRect rect = [[self window] frame];
+    rect.size = NSMakeSize(1200, 1024);
+    [[self window] setFrame: rect display: YES];
+    NSLog(@"View after resizing: %@", NSStringFromRect(self.bounds));
+    
     GParser *p = [GParser parser];
     NSBundle *mainBundle = [NSBundle mainBundle];
     NSString *path = [mainBundle pathForResource:@"test_xref" ofType:@"pdf"];
