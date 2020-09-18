@@ -98,7 +98,8 @@
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
-    [[NSColor whiteColor] set];
+    NSColor *bgColor = [NSColor colorWithRed:0.93 green:0.93 blue:0.93 alpha:1.0];
+    [bgColor set];
     NSRectFill([self bounds]);
     
     [s drawAtPoint:NSMakePoint(0, 0)];
