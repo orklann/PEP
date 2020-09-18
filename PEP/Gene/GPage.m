@@ -29,6 +29,10 @@
     parser = p;
 }
 
+- (void)setDocument:(GDocument*)d {
+    doc = d;
+}
+
 - (void)parsePageContent {
     GRefObject *ref = [[pageDictionary value] objectForKey:@"Contents"];
     NSString *refString = [NSString stringWithFormat:@"%d-%d",

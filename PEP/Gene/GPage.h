@@ -9,18 +9,23 @@
 #import <Foundation/Foundation.h>
 #import "GObjects.h"
 #import "GParser.h"
+
+@class GDocument;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GPage : NSObject {
     GDictionaryObject *pageDictionary;
     GParser *parser;
     NSData *pageContent;
+    GDocument *doc;
 }
 
 + (id)create;
 - (void)setPageDictionary:(GDictionaryObject*)d;
 - (GDictionaryObject*)pageDictionary;
 - (void)setParser:(GParser*)p;
+- (void)setDocument:(GDocument*)d;
 - (void)parsePageContent;
 @end
 
