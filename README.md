@@ -4,7 +4,7 @@
 
 For now, PEP is work-in-progress and it's constantly updated everyday.
 
-Currently working on the core, a PDF engine called Gene. You can build this app with Xcode, and see the simple rendering result, and if you are interested in 
+Currently working on the core, a PDF engine called Gene from scratch. You can build this app with Xcode, and see the simple rendering result, and if you are interested in 
 the tests, just click Test in your Xcode, if should be all pass.
 
 ## What I am working on
