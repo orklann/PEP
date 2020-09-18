@@ -8,6 +8,7 @@
 
 #import "GPage.h"
 #import "GDecoders.h"
+#import "GMisc.h"
 
 @implementation GPage
 
@@ -38,11 +39,6 @@
     NSData *data = [contentStream streamContent];
     pageContent = decodeFlate(data);
     
-    NSUInteger i;
-    unsigned char * bytes = (unsigned char*)[pageContent bytes];
-    for (i = 0; i < [pageContent length]; i++) {
-        printf("%c", (unsigned char)(*(bytes+i)));
-    }
-    printf("\n");
+    printData(pageContent);
 }
 @end
