@@ -38,8 +38,7 @@
     NSString *refString = [NSString stringWithFormat:@"%d-%d",
                            [ref objectNumber],
                            [ref generationNumber]];
-    GIndirectObject *contentStreamIndirect = [parser getObjectByRef:refString];
-    GStreamObject *contentStream = [contentStreamIndirect object];
+    GStreamObject *contentStream = [parser getObjectByRef:refString];
     pageContent = [contentStream getDecodedStreamContent];
     
     printData(pageContent);

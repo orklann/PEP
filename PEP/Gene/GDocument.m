@@ -25,8 +25,7 @@
     NSData *d = [NSData dataWithContentsOfFile:path];
     [p setStream:d];
        
-    GIndirectObject *contentIndirect = [p getObjectByRef:@"19-0"];
-    GStreamObject *stream = [contentIndirect object];
+    GStreamObject *stream = [p getObjectByRef:@"19-0"];
     NSData *decodedFontData = [stream getDecodedStreamContent];
     
     CGDataProviderRef cgdata = CGDataProviderCreateWithCFData((CFDataRef)decodedFontData);
@@ -66,15 +65,13 @@
     GRefObject *root = [[trailer value] objectForKey:@"Root"];
     NSString *catalogRef = [NSString stringWithFormat:@"%d-%d",
                             [root objectNumber], [root generationNumber]];
-    GIndirectObject *catalogIndirect = [parser getObjectByRef:catalogRef];
     // Get catalog dictionary object
-    GDictionaryObject *catalogObject = [catalogIndirect object];
+    GDictionaryObject *catalogObject = [parser getObjectByRef:catalogRef];
     GRefObject *pagesRef = [[catalogObject value] objectForKey:@"Pages"];
-    GIndirectObject *pagesIndirect = [parser getObjectByRef:
-                                    [NSString stringWithFormat:@"%d-%d",
-                                    [pagesRef objectNumber], [pagesRef generationNumber]]];
     // Get pages dictionary object
-    GDictionaryObject *pagesObject = [pagesIndirect object];
+    GDictionaryObject *pagesObject = [parser getObjectByRef:
+                                       [NSString stringWithFormat:@"%d-%d",
+                                       [pagesRef objectNumber], [pagesRef generationNumber]]];
     GArrayObject *kids = [[pagesObject value] objectForKey:@"Kids"];
     
     // Get GPage array
@@ -85,8 +82,7 @@
         GRefObject *ref = (GRefObject*)[array objectAtIndex:i];
         NSString *refString = [NSString stringWithFormat:@"%d-%d",
                                [ref objectNumber], [ref generationNumber]];
-        GIndirectObject *indirect = [parser getObjectByRef:refString];
-        GDictionaryObject *pageDict = [indirect object];
+        GDictionaryObject *pageDict = [parser getObjectByRef:refString];
         GPage *page = [GPage create];
         [page setPageDictionary:pageDict];
         [page setParser:parser];
