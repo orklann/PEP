@@ -8,7 +8,7 @@ Currently working on the core, a PDF engine called Gene. You can build this app 
 the tests, just click Test in your Xcode, if should be all pass.
 
 ## What I am working on
-I update the core PDF engine almost everyday.
+I update the core PDF engine (called Gene) almost everyday.
 
 ## What has been done
 ### Things Done
