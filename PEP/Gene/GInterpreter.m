@@ -7,6 +7,8 @@
 //
 
 #import "GInterpreter.h"
+#import "GObjects.h"
+#import "GMisc.h"
 
 BOOL isCommand(NSString *cmd, NSString *cmd2) {
     return [cmd isEqualToString:cmd2];
@@ -23,10 +25,24 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }
 
 - (void)setInput:(NSData *)d {
-    input = d;
+    NSMutableData *data = [NSMutableData dataWithData:d];
+    [data appendBytes:"\0" length:1];
+    input = data;
+}
+
+- (void)parseCommamnds {
+    commands = [NSMutableArray array];
+    GParser *cmdParser = [GParser parser];
+    [cmdParser setStream:input];
+    id obj = [cmdParser parseNextObject];
+    while([(GObject*)obj type] != kEndObject) {
+        [commands addObject:obj];
+        obj = [cmdParser parseNextObject];
+    }
 }
 
 - (void)eval:(CGContextRef)context {
+    [self parseCommamnds];
     NSLog(@"eval() %ld bytes in context: %@", [input length], context);
 }
 @end

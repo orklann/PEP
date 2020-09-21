@@ -121,19 +121,21 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     unsigned char next = [self currentChar];
     int unbalanced = 1;
     [d appendBytes:(unsigned char*)&next length:1];
+    unsigned char prev = next;
     next = [self nextChar];
-    if (next == '(') {
+    if (next == '(' && prev != '\\') { // Handle (\()
         unbalanced += 1;
-    } else if (next == ')') {
+    } else if (next == ')' && prev != '\\') { // Handle (\))
         unbalanced -= 1;
     }
     while(unbalanced != 0) {
-        if (next == '(') {
+        if (next == '(' && prev != '\\') {
             unbalanced += 1;
-        } else if (next == ')') {
+        } else if (next == ')' && prev != '\\') {
             unbalanced -= 1;
         }
         [d appendBytes:(unsigned char*)&next length:1];
+        prev = next;
         next = [self nextChar];
     }
     d = [NSMutableData dataWithBytes:([d bytes]+1) length:[d length] - 2];
