@@ -25,9 +25,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }
 
 - (void)setInput:(NSData *)d {
-    NSMutableData *data = [NSMutableData dataWithData:d];
-    [data appendBytes:"\0" length:1];
-    input = data;
+    input = d;
 }
 
 - (void)parseCommamnds {
