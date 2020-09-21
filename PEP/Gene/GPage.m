@@ -9,6 +9,7 @@
 #import "GPage.h"
 #import "GDecoders.h"
 #import "GMisc.h"
+#import "GInterpreter.h"
 
 @implementation GPage
 
@@ -42,5 +43,12 @@
     pageContent = [contentStream getDecodedStreamContent];
     
     printData(pageContent);
+}
+
+- (void)render:(CGContextRef)context {
+    GInterpreter *interpreter = [GInterpreter create];
+    [interpreter setParser:parser];
+    [interpreter setInput:pageContent];
+    [interpreter eval:context];
 }
 @end

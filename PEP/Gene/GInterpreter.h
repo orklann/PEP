@@ -11,12 +11,16 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+BOOL isCommand(NSString *cmd, NSString *cmd2);
+
 @interface GInterpreter : NSObject {
     GParser *parser;
+    NSData *input;
 }
 
 + (id)create;
 - (void)setParser:(GParser*)p;
+- (void)setInput:(NSData *)d;
 - (void)eval:(CGContextRef)context;
 @end
 

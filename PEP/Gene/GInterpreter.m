@@ -8,6 +8,10 @@
 
 #import "GInterpreter.h"
 
+BOOL isCommand(NSString *cmd, NSString *cmd2) {
+    return [cmd isEqualToString:cmd2];
+}
+
 @implementation GInterpreter
 + (id)create {
     GInterpreter *o = [[GInterpreter alloc] init];
@@ -18,7 +22,11 @@
     parser = p;
 }
 
+- (void)setInput:(NSData *)d {
+    input = d;
+}
+
 - (void)eval:(CGContextRef)context {
-    
+    NSLog(@"eval() %ld bytes in context: %@", [input length], context);
 }
 @end

@@ -105,6 +105,10 @@
     
     [s drawAtPoint:NSMakePoint(0, 0)];
     NSLog(@"drawRect called.");
+    
+    CGContextRef context = [[NSGraphicsContext currentContext] CGContext];
+    GPage *page = [pages firstObject];
+    [page render:context];
     // Drawing code here.
 }
 

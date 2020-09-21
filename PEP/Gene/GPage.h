@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setParser:(GParser*)p;
 - (void)setDocument:(GDocument*)d;
 - (void)parsePageContent;
+- (void)render:(CGContextRef)context;
 @end
 
 NS_ASSUME_NONNULL_END
