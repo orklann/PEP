@@ -52,6 +52,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             } else if (isCommand(cmd, @"gs")) { // gs
                 NSArray *args = getCommandArgs(commands, 1);
                 [(GCommandObject*)obj setArgs:args];
+            } else if (isCommand(cmd, @"cs")) { // cs
+                NSArray *args = getCommandArgs(commands, 1);
+                [(GCommandObject*)obj setArgs:args];
             }
         }
         [commands addObject:obj];
