@@ -270,43 +270,40 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
                           length: len - endStreamLength - 1];
 }
 
-- (NSData *)getIndirectObjectContent:(int)ret {
-    unsigned int start = 0;
-    unsigned int len = 1; // start with len in 1
-    unsigned char next = 0;
-    if (ret == kTWO_END_LINE_MARKERS) {
-        next = [self nextChar];
-        start = pos; // pos: the current position of stream
+- (BOOL)matchEndObj {
+    unsigned char ch = [self currentChar];
+    NSMutableString *s = [NSMutableString string];
+    [s appendFormat:@"%c", ch];
+    NSUInteger i;
+    for (i = 0; i < 5; i++) {
+        ch = [self nextChar];
+        [s appendFormat:@"%c", ch];
     }
-    
-    if (ret == kONE_END_LINE_MARKER) {
-        start = pos; // pos: the current position of stream
-        next = [self currentChar];
+    if ([s isEqualToString:@"endobj"]) {
+        return YES;
     }
-    
-    NSMutableString *endObj = [NSMutableString string];
-    NSString *endObjMarker1 = [NSString stringWithFormat:@"%c%cendobj",
-                                  kCARRIAGE_RETURN, kLINE_FEED];
-    NSString *endObjMarker2 = [NSString stringWithFormat:@"%cendobj",
-                                  kLINE_FEED];
-    while (!([endObj isEqualToString: endObjMarker1] ||
-             [endObj isEqualToString: endObjMarker2]) ) {
-        if (next == kCARRIAGE_RETURN && [self peekNextChar] == kLINE_FEED) {
-            [endObj setString:[NSString stringWithFormat:@"%c%c", next,
-                                  [self nextChar]]];
-            len += 2;
-        } else if(next == kLINE_FEED) {
-            [endObj setString:[NSString stringWithFormat:@"%c", next]];
-            len += 1;
-        } else {
-            [endObj appendFormat:@"%c", next];
-            len += 1;
+    return NO;
+}
+
+- (NSData *)getIndirectObjectContent{
+    unsigned char ch = [self nextChar];
+    unsigned int start = pos;
+    unsigned int len = 1;
+    while(true) {
+        if (ch == 'e') {
+            unsigned int keep = pos;
+            if ([self matchEndObj]) {
+                break;
+            } else {
+                pos = keep;
+            }
         }
-        next = [self nextChar];
+        ch = [self nextChar];
+        len += 1;
     }
-    NSUInteger endObjLength = [endObj length];
+    
     return [NSData dataWithBytes:[[self stream] bytes] + start
-                          length: len - endObjLength - 1];
+                          length: len - 1];
 }
 
 - (GToken *)nextToken {
@@ -420,11 +417,8 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
             
         case 'o':
             if ([self nextChar] == 'b' && [self nextChar] == 'j') {
-                int ret = isEndLineMarker([self nextChar], [self nextChar]);
-                if (ret !=  kNOT_END_LINE_MARKER) {
-                    [token setType:kIndirectObjectContentToken];
-                    [token setContent:[self getIndirectObjectContent:ret]];
-                }
+                [token setType:kIndirectObjectContentToken];
+                [token setContent:[self getIndirectObjectContent]];
             }
             break;
             

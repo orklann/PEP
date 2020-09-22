@@ -406,7 +406,7 @@
     char *b = "obj\n"
               "I am an indirect object content\n"
               "endobj";
-    char *test1 = "I am an indirect object content";
+    char *test1 = "\nI am an indirect object content\n";
     NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
     NSData *d1 = [NSData dataWithBytes:test1
                                    length:strlen(test1)];
@@ -419,6 +419,10 @@
         "I am an indirect object content\r\n"
         "endobj";
     d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    test1 = "\r\nI am an indirect object content\r\n";
+    d1 = [NSData dataWithBytes:test1
+                                   length:strlen(test1)];
+    
     [l setStream:d];
     t = [l nextToken];
     XCTAssertEqual([t type], kIndirectObjectContentToken);
@@ -428,6 +432,9 @@
         "I am an indirect object content\r\n"
         "endobj";
     d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    test1 = "\r\nI am an indirect object content\r\n";
+    d1 = [NSData dataWithBytes:test1
+                                   length:strlen(test1)];
     [l setStream:d];
     
     t = [l nextToken];
