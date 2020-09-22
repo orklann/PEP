@@ -26,7 +26,7 @@
 
 - (void)testParseCommands {
     NSString *b = @"q Q q 72 361.6569 468 358.3431 re W n /Gs1 gs /Cs1 cs 1 1 1 sc "
-                    "72 720 m";
+                    "72 720 m 540 720 l";
     NSData *data = [b dataUsingEncoding:NSASCIIStringEncoding];
     GInterpreter *interpreter = [GInterpreter create];
     [interpreter setInput:data];
@@ -69,6 +69,13 @@
     GNumberObject *first = [[m args] firstObject];
     GNumberObject *last= [[m args] lastObject];
     XCTAssertEqual([first intValue], 72);
+    XCTAssertEqual([last intValue], 720);
+    
+    // l
+    GCommandObject *l = [commands objectAtIndex:23];
+    first = [[l args] firstObject];
+    last = [[l args] lastObject];
+    XCTAssertEqual([first intValue], 540);
     XCTAssertEqual([last intValue], 720);
 }
 @end
