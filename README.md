@@ -20,7 +20,7 @@ I update the core PDF engine (called Gene) almost everyday.
 * GDocument (GDocument.h|m) which loads a PDF file, and render/edit it
 * GPage (GPage.h|m) which presents a single PDF page
 * GDecoders which implement all decoders for decoding stream objects
-* GInterpreter (GInterpreter.h|m) which renders grapchic and text of a PDF page by evaluate operators in the page content.
+* GInterpreter (GInterpreter.h|m) which renders grapchic and text of a PDF page by evaluating operators in the page content.
 
 ## Roadmap
 
