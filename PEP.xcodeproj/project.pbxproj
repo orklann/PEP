@@ -15,6 +15,8 @@
 		931221CF24F0139300929C01 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 931221CE24F0139300929C01 /* main.m */; };
 		931ECFB12518911A00E26EFA /* GInterpreter.m in Sources */ = {isa = PBXBuildFile; fileRef = 931ECFB02518911A00E26EFA /* GInterpreter.m */; };
 		9320C01A2519C7F8008F20B0 /* GInterpreterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9320C0192519C7F8008F20B0 /* GInterpreterTests.m */; };
+		9320C01C251A1552008F20B0 /* irig_keys_25.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9320C01B251A1552008F20B0 /* irig_keys_25.pdf */; };
+		9320C01E251A1569008F20B0 /* irig_keys_25.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9320C01D251A1568008F20B0 /* irig_keys_25.pdf */; };
 		9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9355AEB824F12DCC00764E36 /* GLexerTests.m */; };
 		9363D94A250895610075FEF0 /* GDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 9363D949250895610075FEF0 /* GDocument.m */; };
 		9363D9512508994E0075FEF0 /* test_xref.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9363D9502508994E0075FEF0 /* test_xref.pdf */; };
@@ -54,6 +56,8 @@
 		931ECFAF2518911A00E26EFA /* GInterpreter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GInterpreter.h; sourceTree = "<group>"; };
 		931ECFB02518911A00E26EFA /* GInterpreter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GInterpreter.m; sourceTree = "<group>"; };
 		9320C0192519C7F8008F20B0 /* GInterpreterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GInterpreterTests.m; sourceTree = "<group>"; };
+		9320C01B251A1552008F20B0 /* irig_keys_25.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = irig_keys_25.pdf; sourceTree = "<group>"; };
+		9320C01D251A1568008F20B0 /* irig_keys_25.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = irig_keys_25.pdf; path = PEPTests/pdf/irig_keys_25.pdf; sourceTree = SOURCE_ROOT; };
 		9355AEB824F12DCC00764E36 /* GLexerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLexerTests.m; sourceTree = "<group>"; };
 		9363D948250895610075FEF0 /* GDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDocument.h; sourceTree = "<group>"; };
 		9363D949250895610075FEF0 /* GDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDocument.m; sourceTree = "<group>"; };
@@ -140,6 +144,7 @@
 		9363D94B250898D60075FEF0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9320C01D251A1568008F20B0 /* irig_keys_25.pdf */,
 				9363D9502508994E0075FEF0 /* test_xref.pdf */,
 			);
 			path = Resources;
@@ -148,6 +153,7 @@
 		936C4303250363AD00FFE547 /* pdf */ = {
 			isa = PBXGroup;
 			children = (
+				9320C01B251A1552008F20B0 /* irig_keys_25.pdf */,
 				936C4304250363E700FFE547 /* test_xref.pdf */,
 			);
 			path = pdf;
@@ -256,6 +262,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9320C01E251A1569008F20B0 /* irig_keys_25.pdf in Resources */,
 				931221C924F0139300929C01 /* Assets.xcassets in Resources */,
 				931221CC24F0139300929C01 /* MainMenu.xib in Resources */,
 				9363D9512508994E0075FEF0 /* test_xref.pdf in Resources */,
@@ -266,6 +273,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9320C01C251A1552008F20B0 /* irig_keys_25.pdf in Resources */,
 				936C4305250363E800FFE547 /* test_xref.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
