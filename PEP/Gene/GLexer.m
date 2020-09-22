@@ -285,6 +285,7 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     return NO;
 }
 
+// Just get the content between `obj` and `endobj`
 - (NSData *)getIndirectObjectContent{
     unsigned char ch = [self nextChar];
     unsigned int start = pos;
