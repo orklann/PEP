@@ -77,6 +77,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             } else if (isCommand(cmd, @"Tf")) { // Tf
                 NSArray *args = getCommandArgs(commands, 2);
                 [(GCommandObject*)obj setArgs:args];
+            } else if (isCommand(cmd, @"Tj")) { // Tj
+                NSArray *args = getCommandArgs(commands, 1);
+                [(GCommandObject*)obj setArgs:args];
             }
         }
         [commands addObject:obj];
