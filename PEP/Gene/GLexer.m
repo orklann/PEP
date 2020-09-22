@@ -301,7 +301,7 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
         ch = [self nextChar];
         len += 1;
     }
-    
+    pos += 1; // consume one char to take advance into later tokens
     return [NSData dataWithBytes:[[self stream] bytes] + start
                           length: len - 1];
 }
