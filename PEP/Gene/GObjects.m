@@ -20,6 +20,19 @@ NSArray *getCommandArgs(NSArray *objects, unsigned int argsNumber) {
     return ret;
 }
 
+NSArray *getDynamicCommandArgs(NSArray *objects) {
+    NSMutableArray *ret = [NSMutableArray array];
+    NSInteger i = [objects count] - 1;
+    id obj = [objects objectAtIndex:i];
+    [ret addObject:obj];
+    while ([(GObject*)obj type] != kCommandObject && i >= 0 ) {
+        [ret addObject:obj];
+        obj = [objects objectAtIndex:i];
+        i -= 1;
+    }
+    return ret;
+}
+
 @implementation GObject
 + (id)create {
     GObject *o = [[GObject alloc] init];

@@ -42,6 +42,9 @@ typedef enum {
 // Get command arguments
 NSArray *getCommandArgs(NSArray *objects, unsigned int argsNumber);
 
+// Get dynamic command arguments
+NSArray *getDynamicCommandArgs(NSArray *objects);
+
 @interface GObject : NSObject {
     ObjectType type;
     NSData *rawContent;
