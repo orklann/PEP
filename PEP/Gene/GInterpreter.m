@@ -25,22 +25,40 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }
 
 - (void)setInput:(NSData *)d {
-    input = d;
+    NSMutableData *data = [NSMutableData dataWithData:d];
+    [data appendBytes:"\0" length:1];
+    input = data;
 }
 
-- (void)parseCommamnds {
+- (void)parseCommands {
     commands = [NSMutableArray array];
     GParser *cmdParser = [GParser parser];
     [cmdParser setStream:input];
     id obj = [cmdParser parseNextObject];
     while([(GObject*)obj type] != kEndObject) {
+        if ([(GObject*) obj type] == kCommandObject) {
+            NSString *cmd = [(GCommandObject*)obj cmd];
+            if (isCommand(cmd, @"Q")){ // Q
+                // Do nothing
+            } else if (isCommand(cmd, @"q")) { // q
+                // Do nothing
+            } else if (isCommand(cmd, @"re")) { // re
+                NSArray *args = getCommandArgs(commands, 4);
+                [(GCommandObject*)obj setArgs:args];
+            }
+        }
         [commands addObject:obj];
         obj = [cmdParser parseNextObject];
     }
+    NSLog(@"END parseCommands");
+}
+
+- (NSMutableArray*)commands {
+    return commands;
 }
 
 - (void)eval:(CGContextRef)context {
-    [self parseCommamnds];
+    [self parseCommands];
     NSLog(@"eval() %ld bytes in context: %@", [input length], context);
 }
 @end
