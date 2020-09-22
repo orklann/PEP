@@ -25,7 +25,7 @@
 }
 
 - (void)testParseCommands {
-    NSString *b = @"q Q q 72 361.6569 468 358.3431 re";
+    NSString *b = @"q Q q 72 361.6569 468 358.3431 re W n /Gs1 gs";
     NSData *data = [b dataUsingEncoding:NSASCIIStringEncoding];
     GInterpreter *interpreter = [GInterpreter create];
     [interpreter setInput:data];
@@ -33,6 +33,7 @@
     [interpreter parseCommands];
     NSArray *commands = [interpreter commands];
     
+    // re
     GCommandObject *re = [commands objectAtIndex:7];
     GNumberObject *_72 = [[re args] firstObject];
     XCTAssertEqual([_72 intValue], 72);
@@ -41,5 +42,10 @@
     NSString* numberA = [NSString stringWithFormat:@"%.7f", [lastArg realValue]];
     NSString* numberB = [NSString stringWithFormat:@"%.7f", 358.3431];
     XCTAssertEqualObjects(numberA, numberB);
+    
+    // gs
+    GCommandObject *gs = [commands objectAtIndex:11];
+    GNameObject *_Gs1 = [[gs args] firstObject];
+    XCTAssertEqualObjects([_Gs1 value], @"Gs1");
 }
 @end
