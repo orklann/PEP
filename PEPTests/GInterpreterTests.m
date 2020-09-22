@@ -27,7 +27,7 @@
 - (void)testParseCommands {
     NSString *b = @"q Q q 72 361.6569 468 358.3431 re W n /Gs1 gs /Cs1 cs 1 1 1 sc "
                     "72 720 m 540 720 l h f 0.9790795 0 0 -0.9790795 72 720 cm "
-                    "12 0 0 -12 5 11 Tm /TT1 1 Tf (:) Tj";
+                    "12 0 0 -12 5 11 Tm /TT1 1 Tf (:) Tj [ (P) 0.3 (EP) ] TJ";
     NSData *data = [b dataUsingEncoding:NSASCIIStringEncoding];
     GInterpreter *interpreter = [GInterpreter create];
     [interpreter setInput:data];
@@ -106,5 +106,17 @@
     GCommandObject *Tj = [commands objectAtIndex:44];
     GLiteralStringsObject *s = [[Tj args] firstObject];
     XCTAssertEqualObjects([s value], @":");
+    
+    // TJ
+    GCommandObject *TJ = [commands objectAtIndex:46];
+    GArrayObject *array = [[TJ args] firstObject];
+    GLiteralStringsObject *first_s = [[array value] objectAtIndex:0];
+    GNumberObject *second_r = [[array value] objectAtIndex:1];
+    GLiteralStringsObject *last_s = [[array value] lastObject];
+    XCTAssertEqualObjects([first_s value], @"P");
+    numberA = [NSString stringWithFormat:@"%.7f", [second_r realValue]];
+    numberB = [NSString stringWithFormat:@"%.7f", 0.3];
+    XCTAssertEqualObjects(numberA, numberB);
+    XCTAssertEqualObjects([last_s value], @"EP");
 }
 @end

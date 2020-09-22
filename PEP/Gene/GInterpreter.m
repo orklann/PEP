@@ -80,6 +80,11 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             } else if (isCommand(cmd, @"Tj")) { // Tj
                 NSArray *args = getCommandArgs(commands, 1);
                 [(GCommandObject*)obj setArgs:args];
+            } else if (isCommand(cmd, @"ET")) { // ET
+                // Do nothing
+            } else if (isCommand(cmd, @"TJ")) { // TJ
+                NSArray *args = getCommandArgs(commands, 1);
+                [(GCommandObject*)obj setArgs:args];
             }
         }
         [commands addObject:obj];
