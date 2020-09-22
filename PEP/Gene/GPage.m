@@ -35,6 +35,8 @@
 }
 
 - (void)parsePageContent {
+    // Contents can be a GArrayObject instead of GRefObject,
+    // TODO: Handle this case later.
     GRefObject *ref = [[pageDictionary value] objectForKey:@"Contents"];
     NSString *refString = [NSString stringWithFormat:@"%d-%d",
                            [ref objectNumber],
