@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (void)parsePages;
+- (NSRect)rectFromFlipped:(NSRect)r;
 @end
 
 NS_ASSUME_NONNULL_END

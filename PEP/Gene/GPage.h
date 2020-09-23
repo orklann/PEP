@@ -14,6 +14,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+#define kPageMargin 20
+
 @interface GPage : NSObject {
     GDictionaryObject *pageDictionary;
     GParser *parser;
@@ -28,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setDocument:(GDocument*)d;
 - (void)parsePageContent;
 - (void)render:(CGContextRef)context;
+- (NSRect)calculatePageMediaBox;
 @end
 
 NS_ASSUME_NONNULL_END

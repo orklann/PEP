@@ -83,6 +83,7 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
 - (int)intValue;
 - (void)setRealValue:(double)v;
 - (double)realValue;
+- (double)getRealValue;
 - (void)parse;
 @end
 

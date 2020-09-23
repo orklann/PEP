@@ -154,6 +154,16 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
     }
     subtype = st;
 }
+
+- (double)getRealValue {
+    double ret = 0.0;
+    if (subtype == kIntSubtype){
+        ret = (double)intValue;
+    } else if (subtype == kRealSubtype) {
+        ret = realValue;
+    }
+    return ret;
+}
 @end
 
 @implementation GLiteralStringsObject
