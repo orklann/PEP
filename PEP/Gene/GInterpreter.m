@@ -103,8 +103,30 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     return commands;
 }
 
+
+- (void)evalqCommand:(CGContextRef)context {
+    CGContextSaveGState(context);
+}
+
+- (void)evalQCommand:(CGContextRef)context {
+    CGContextRestoreGState(context);
+}
+
 - (void)eval:(CGContextRef)context {
     [self parseCommands];
+    NSUInteger i;
+    for (i = 0; i < [commands count]; i++) {
+        id obj = [commands objectAtIndex:i];
+        if ([(GObject*)obj type] == kCommandObject) {
+            GCommandObject *cmdObj = (GCommandObject*)obj;
+            NSString *cmd = [cmdObj cmd];
+            if (isCommand(cmd, @"Q")) { // eval Q
+                [self evalQCommand:context];
+            } else if (isCommand(cmd, @"q")) { // eval q
+                [self evalqCommand:context];
+            }
+        }
+    }
     NSLog(@"eval() %ld bytes in context: %@", [input length], context);
 }
 @end
