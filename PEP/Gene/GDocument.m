@@ -101,11 +101,6 @@
     [bgColor set];
     NSRectFill([self bounds]);
     
-    [[NSColor whiteColor] set];
-    NSRect rect = NSMakeRect(100, 100, 100, 100);
-    rect = [self rectFromFlipped:rect];
-    NSRectFill(rect);
-    
     [s drawAtPoint:NSMakePoint(0, 0)];
     NSLog(@"drawRect called.");
     
