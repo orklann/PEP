@@ -12,6 +12,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+// Unit in user space is 1/72 inch, and we assume device spaces PPI is
+// 96 (96 pixels per inch), so we get the scale factor is 1/72*96
+#define kScaleFactor 96.0/72.0
+
 @interface GDocument : NSView {
     NSMutableAttributedString *s;
     NSString *file;

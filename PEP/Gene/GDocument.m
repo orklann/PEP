@@ -19,6 +19,9 @@
     [[self window] setFrame: rect display: YES];
     NSLog(@"View after resizing: %@", NSStringFromRect(self.bounds));
     
+    // User space to device space scaling
+    [self scaleUnitSquareToSize:NSMakeSize(kScaleFactor, kScaleFactor)];
+    
     GParser *p = [GParser parser];
     NSBundle *mainBundle = [NSBundle mainBundle];
     NSString *path = [mainBundle pathForResource:@"test_xref" ofType:@"pdf"];
