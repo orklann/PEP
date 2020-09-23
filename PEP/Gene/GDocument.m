@@ -12,6 +12,9 @@
 
 @implementation GDocument
 - (void)awakeFromNib {
+    // Set window title:
+    [[self window] setTitle:@"test_xref.pdf"];
+    
     // Resize window
     NSLog(@"View: %@", NSStringFromRect(self.bounds));
     NSRect rect = [[self window] frame];
