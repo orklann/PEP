@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
     GParser *parser;
     NSData *pageContent;
     GDocument *doc;
+    GDictionaryObject *resources;
 }
 
 + (id)create;
@@ -29,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setParser:(GParser*)p;
 - (void)setDocument:(GDocument*)d;
 - (void)parsePageContent;
+- (void)parseResources;
 - (void)render:(CGContextRef)context;
 - (NSRect)calculatePageMediaBox;
 @end

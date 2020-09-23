@@ -549,6 +549,13 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
 - (void)parse {
     // Does nothing
 }
+
+- (NSString*)getRefString {
+    NSString *refString = [NSString stringWithFormat:@"%d-%d",
+                            [self objectNumber],
+                            [self generationNumber]];
+    return refString;
+}
 @end
 
 @implementation GEndObject

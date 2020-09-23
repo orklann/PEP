@@ -46,6 +46,14 @@
     pageContent = [contentStream getDecodedStreamContent];
     
     printData(pageContent);
+    
+    // Automatically parse resources
+    [self parseResources];
+}
+
+- (void)parseResources {
+    GRefObject *ref = [[pageDictionary value] objectForKey:@"Resources"];
+    resources = [parser getObjectByRef:[ref getRefString]];
 }
 
 - (void)render:(CGContextRef)context {
