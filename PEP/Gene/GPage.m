@@ -39,10 +39,7 @@
     // Contents can be a GArrayObject instead of GRefObject,
     // TODO: Handle this case later.
     GRefObject *ref = [[pageDictionary value] objectForKey:@"Contents"];
-    NSString *refString = [NSString stringWithFormat:@"%d-%d",
-                           [ref objectNumber],
-                           [ref generationNumber]];
-    GStreamObject *contentStream = [parser getObjectByRef:refString];
+    GStreamObject *contentStream = [parser getObjectByRef:[ref getRefString]];
     pageContent = [contentStream getDecodedStreamContent];
     
     printData(pageContent);

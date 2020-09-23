@@ -69,15 +69,11 @@
     
     // Get Root ref
     GRefObject *root = [[trailer value] objectForKey:@"Root"];
-    NSString *catalogRef = [NSString stringWithFormat:@"%d-%d",
-                            [root objectNumber], [root generationNumber]];
     // Get catalog dictionary object
-    GDictionaryObject *catalogObject = [parser getObjectByRef:catalogRef];
+    GDictionaryObject *catalogObject = [parser getObjectByRef:[root getRefString]];
     GRefObject *pagesRef = [[catalogObject value] objectForKey:@"Pages"];
     // Get pages dictionary object
-    GDictionaryObject *pagesObject = [parser getObjectByRef:
-                                       [NSString stringWithFormat:@"%d-%d",
-                                       [pagesRef objectNumber], [pagesRef generationNumber]]];
+    GDictionaryObject *pagesObject = [parser getObjectByRef:[pagesRef getRefString]];
     GArrayObject *kids = [[pagesObject value] objectForKey:@"Kids"];
     
     // Get GPage array
@@ -86,9 +82,7 @@
     NSUInteger i;
     for (i = 0; i < [array count]; i++) {
         GRefObject *ref = (GRefObject*)[array objectAtIndex:i];
-        NSString *refString = [NSString stringWithFormat:@"%d-%d",
-                               [ref objectNumber], [ref generationNumber]];
-        GDictionaryObject *pageDict = [parser getObjectByRef:refString];
+        GDictionaryObject *pageDict = [parser getObjectByRef:[ref getRefString]];
         GPage *page = [GPage create];
         [page setPageDictionary:pageDict];
         [page setParser:parser];
