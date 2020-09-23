@@ -20,6 +20,9 @@
     NSRect rect = [[self window] frame];
     rect.size = NSMakeSize(1200, 1024);
     [[self window] setFrame: rect display: YES];
+    
+    rect.size.height += 150;
+    [self setFrameSize:rect.size];
     NSLog(@"View after resizing: %@", NSStringFromRect(self.bounds));
     
     // User space to device space scaling
