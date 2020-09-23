@@ -127,7 +127,7 @@
 - (void)scrollToTop {
     NSPoint pt = NSMakePoint(0.0, [[self.enclosingScrollView documentView]
                                       bounds].size.height);
-   [self.enclosingScrollView.documentView scrollPoint:pt];
+    [self.enclosingScrollView.documentView scrollPoint:pt];
 }
 
 - (BOOL)isFlipped {
