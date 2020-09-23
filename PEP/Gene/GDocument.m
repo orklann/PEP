@@ -23,6 +23,9 @@
     
     rect.size.height += 150;
     [self setFrameSize:rect.size];
+    
+    [self scrollToTop];
+    
     NSLog(@"View after resizing: %@", NSStringFromRect(self.bounds));
     
     // User space to device space scaling
@@ -119,6 +122,12 @@
     NSPoint newOrigin = NSMakePoint(r.origin.x, height - r.origin.y);
     NSRect ret = NSMakeRect(newOrigin.x, newOrigin.y - r.size.height, r.size.width , r.size.height);
     return ret;
+}
+
+- (void)scrollToTop {
+    NSPoint pt = NSMakePoint(0.0, [[self.enclosingScrollView documentView]
+                                      bounds].size.height);
+   [self.enclosingScrollView.documentView scrollPoint:pt];
 }
 
 - (BOOL)isFlipped {
