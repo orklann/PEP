@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "GObjects.h"
 #import "GParser.h"
+#import "GTextState.h"
 
 @class GDocument;
 
@@ -22,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSData *pageContent;
     GDocument *doc;
     GDictionaryObject *resources;
+    GTextState *textState;
 }
 
 + (id)create;

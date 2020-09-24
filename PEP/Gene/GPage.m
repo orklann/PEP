@@ -59,6 +59,8 @@
     CGContextSetRGBFillColor(context, 1.0, 1.0, 1.0, 1.0);
     CGContextFillRect(context, pageRect);
     
+    textState = [GTextState create];
+    
     GInterpreter *interpreter = [GInterpreter create];
     [interpreter setParser:parser];
     [interpreter setInput:pageContent];
