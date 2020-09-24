@@ -62,6 +62,7 @@
     textState = [GTextState create];
     
     GInterpreter *interpreter = [GInterpreter create];
+    [interpreter setPage:self];
     [interpreter setParser:parser];
     [interpreter setInput:pageContent];
     [interpreter eval:context];

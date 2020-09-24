@@ -9,6 +9,7 @@
 #import "GInterpreter.h"
 #import "GObjects.h"
 #import "GMisc.h"
+#import "GPage.h"
 
 BOOL isCommand(NSString *cmd, NSString *cmd2) {
     return [cmd isEqualToString:cmd2];
@@ -18,6 +19,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 + (id)create {
     GInterpreter *o = [[GInterpreter alloc] init];
     return o;
+}
+
+- (void)setPage:(GPage*)p {
+    page = p;
 }
 
 - (void)setParser:(GParser*)p {

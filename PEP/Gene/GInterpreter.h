@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "GParser.h"
 
+@class GPage;
 NS_ASSUME_NONNULL_BEGIN
 
 BOOL isCommand(NSString *cmd, NSString *cmd2);
@@ -17,9 +18,11 @@ BOOL isCommand(NSString *cmd, NSString *cmd2);
     GParser *parser;
     NSData *input;
     NSMutableArray *commands; // We assume all content of page are commands here
+    GPage *page;
 }
 
 + (id)create;
+- (void)setPage:(GPage*)p;
 - (void)setParser:(GParser*)p;
 - (void)setInput:(NSData *)d;
 - (void)parseCommands;
