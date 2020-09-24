@@ -12,6 +12,7 @@
 #import "GTextState.h"
 
 @class GDocument;
+@class GFont;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -30,11 +31,14 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setPageDictionary:(GDictionaryObject*)d;
 - (GDictionaryObject*)pageDictionary;
 - (void)setParser:(GParser*)p;
+- (GParser*)parser;
 - (void)setDocument:(GDocument*)d;
 - (void)parsePageContent;
 - (void)parseResources;
+- (GDictionaryObject*)resources;
 - (void)render:(CGContextRef)context;
 - (NSRect)calculatePageMediaBox;
+- (GFont*)getFontByName:(NSString*)name;
 @end
 
 NS_ASSUME_NONNULL_END

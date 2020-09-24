@@ -11,6 +11,7 @@
 #import "GMisc.h"
 #import "GInterpreter.h"
 #import "GDocument.h"
+#import "GFont.h"
 
 @implementation GPage
 
@@ -29,6 +30,10 @@
 
 - (void)setParser:(GParser*)p {
     parser = p;
+}
+
+- (GParser*)parser {
+    return parser;
 }
 
 - (void)setDocument:(GDocument*)d {
@@ -53,6 +58,10 @@
     resources = [parser getObjectByRef:[ref getRefString]];
 }
 
+- (GDictionaryObject*)resources {
+    return resources;
+}
+
 - (void)render:(CGContextRef)context {
     // Draw media box (a.k.a page boundary)
     NSRect pageRect = [self calculatePageMediaBox];
@@ -60,6 +69,8 @@
     CGContextFillRect(context, pageRect);
     
     textState = [GTextState create];
+    
+    GFont *f = [self getFontByName:@"TT2"];
     
     GInterpreter *interpreter = [GInterpreter create];
     [interpreter setPage:self];
@@ -90,5 +101,10 @@
     NSRect pageRectFlipped = NSMakeRect(pageX, pageY, pageWidth, pageHeight);
     NSRect pageRect = [doc rectFromFlipped:pageRectFlipped];
     return pageRect;
+}
+
+- (GFont*)getFontByName:(NSString*)name {
+    GFont *f = [GFont fontWithName:name page:self];
+    return f;
 }
 @end
