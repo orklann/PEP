@@ -70,8 +70,6 @@
     
     textState = [GTextState create];
     
-    GFont *f = [self getFontByName:@"TT2"];
-    
     GInterpreter *interpreter = [GInterpreter create];
     [interpreter setPage:self];
     [interpreter setParser:parser];

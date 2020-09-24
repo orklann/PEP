@@ -9,6 +9,7 @@
 #import "GDocument.h"
 #import "GParser.h"
 #import "GDecoders.h"
+#import "GFont.h"
 
 @implementation GDocument
 - (void)awakeFromNib {
@@ -109,8 +110,18 @@
     
     CGContextRef context = [[NSGraphicsContext currentContext] CGContext];
     GPage *page = [pages firstObject];
+    
     [page render:context];
-    // Drawing code here.
+    
+    // TEST
+    GFont *f = [page getFontByName:@"TT2"];
+    NSFont *f2 = [f getNSFontBySize:144];
+    
+    NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:@"P"];
+    [s addAttribute:NSFontAttributeName value:f2 range:NSMakeRange(0, 1)];
+    [s addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0, 1)];
+    [s drawAtPoint:NSMakePoint(200, 200)];
+    // END TEST
 }
 
 // GDocument's view coordinate origin is at bottom-left which is not flipped.
