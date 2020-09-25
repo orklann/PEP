@@ -54,6 +54,8 @@
     CGDataProviderRef cgData = CGDataProviderCreateWithCFData((CFDataRef)fontData);
     CGFontRef font = CGFontCreateWithDataProvider(cgData);
     NSFont *f = (NSFont*)CFBridgingRelease(CTFontCreateWithGraphicsFont(font, fontSize, nil, nil));
+    CFRelease(cgData);
+    CFRelease(font);
     return f;
 }
 @end
