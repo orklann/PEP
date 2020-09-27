@@ -68,6 +68,9 @@
     CGContextSetRGBFillColor(context, 1.0, 1.0, 1.0, 1.0);
     CGContextFillRect(context, pageRect);
     
+    // Translate context origin to page media box origin
+    CGContextTranslateCTM(context, pageRect.origin.x, pageRect.origin.y);
+    
     textState = [GTextState create];
     
     GInterpreter *interpreter = [GInterpreter create];
