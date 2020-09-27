@@ -202,6 +202,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             }
         }
     }
-    NSLog(@"eval() %ld bytes in context: %@", [input length], context);
+    NSLog(@"eval() %ld bytes", [input length]);
 }
 @end
