@@ -109,12 +109,25 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }
 
 
-- (void)evalqCommand:(CGContextRef)context {
+- (void)eval_q_Command:(CGContextRef)context {
     CGContextSaveGState(context);
 }
 
-- (void)evalQCommand:(CGContextRef)context {
+- (void)eval_Q_Command:(CGContextRef)context {
     CGContextRestoreGState(context);
+}
+
+- (void)eval_cm_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    NSArray *args = [cmdObj args];
+    CGFloat a = [[args objectAtIndex:0] getRealValue];
+    CGFloat b = [[args objectAtIndex:1] getRealValue];
+    CGFloat c = [[args objectAtIndex:2] getRealValue];
+    CGFloat d = [[args objectAtIndex:3] getRealValue];
+    CGFloat e = [[args objectAtIndex:4] getRealValue];
+    CGFloat f = [[args objectAtIndex:5] getRealValue];
+    CGAffineTransform ctm = CGAffineTransformMake(a, b, c, d, e, f);
+    [[page graphicsState] setCTM:ctm];
+    CGContextConcatCTM(context, ctm);
 }
 
 - (void)eval:(CGContextRef)context {
@@ -126,9 +139,11 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             GCommandObject *cmdObj = (GCommandObject*)obj;
             NSString *cmd = [cmdObj cmd];
             if (isCommand(cmd, @"Q")) { // eval Q
-                [self evalQCommand:context];
+                [self eval_Q_Command:context];
             } else if (isCommand(cmd, @"q")) { // eval q
-                [self evalqCommand:context];
+                [self eval_q_Command:context];
+            } else if (isCommand(cmd, @"cm")) { // eval cm
+                [self eval_cm_Command:context command:cmdObj];
             }
         }
     }

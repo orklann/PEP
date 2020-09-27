@@ -105,4 +105,8 @@
     GFont *f = [GFont fontWithName:name page:self];
     return f;
 }
+
+- (GGraphicsState*)graphicsState {
+    return graphicsState;
+}
 @end
