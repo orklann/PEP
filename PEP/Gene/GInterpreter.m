@@ -130,6 +130,19 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGContextConcatCTM(context, ctm);
 }
 
+- (void)eval_Tm_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    NSArray *args = [cmdObj args];
+    CGFloat a = [[args objectAtIndex:0] getRealValue];
+    CGFloat b = [[args objectAtIndex:1] getRealValue];
+    CGFloat c = [[args objectAtIndex:2] getRealValue];
+    CGFloat d = [[args objectAtIndex:3] getRealValue];
+    CGFloat e = [[args objectAtIndex:4] getRealValue];
+    CGFloat f = [[args objectAtIndex:5] getRealValue];
+    CGAffineTransform tm = CGAffineTransformMake(a, b, c, d, e, f);
+    [[page textState] setTextMatrix:tm];
+    CGContextSetTextMatrix(context, tm);
+}
+
 - (void)eval:(CGContextRef)context {
     [self parseCommands];
     NSUInteger i;
@@ -144,6 +157,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                 [self eval_q_Command:context];
             } else if (isCommand(cmd, @"cm")) { // eval cm
                 [self eval_cm_Command:context command:cmdObj];
+            } else if (isCommand(cmd, @"Tm")) { // eval Tm
+                [self eval_Tm_Command:context command:cmdObj];
             }
         }
     }

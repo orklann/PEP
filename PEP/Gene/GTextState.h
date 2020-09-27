@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GTextState : NSObject {
     NSString *fontName;
     CGFloat fontSize;
+    CGAffineTransform textMatrix;
 }
 
 + (id)create;
@@ -20,6 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString*)fontName;
 - (void)setFontSize:(CGFloat)size;
 - (CGFloat)fontSize;
+- (void)setTextMatrix:(CGAffineTransform)tm;
+- (CGAffineTransform)textMatrix;
+
 @end
 
 NS_ASSUME_NONNULL_END

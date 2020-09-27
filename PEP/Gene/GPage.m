@@ -109,4 +109,8 @@
 - (GGraphicsState*)graphicsState {
     return graphicsState;
 }
+
+- (GTextState*)textState {
+    return textState;
+}
 @end

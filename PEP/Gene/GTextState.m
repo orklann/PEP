@@ -29,4 +29,12 @@
 - (CGFloat)fontSize {
     return fontSize;
 }
+
+- (void)setTextMatrix:(CGAffineTransform)tm {
+    textMatrix = tm;
+}
+
+- (CGAffineTransform)textMatrix {
+    return textMatrix;
+}
 @end
