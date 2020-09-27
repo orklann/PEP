@@ -150,6 +150,22 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [[page textState] setFontSize:fontSize];
 }
 
+- (void)eval_Tj_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    NSFont *font = [page getCurrentFont];
+    NSString *string = [(GLiteralStringsObject*)[[cmdObj args] objectAtIndex:0]
+                        value];
+    NSMutableAttributedString *s = [[NSMutableAttributedString alloc]
+                                    initWithString:string];
+    [s addAttribute:NSFontAttributeName value:font
+              range:NSMakeRange(0, [string length])];
+    [s addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor]
+              range:NSMakeRange(0, [string length])];
+    
+    CFAttributedStringRef attrStr = (__bridge CFAttributedStringRef)(s);
+    CTLineRef line = CTLineCreateWithAttributedString(attrStr);
+    CTLineDraw(line, context);
+}
+
 - (void)eval_TJ_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     NSFont *font = [page getCurrentFont];
     NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:@"P"];
@@ -181,6 +197,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                 [self eval_Tf_Command:context command:cmdObj];
             } else if (isCommand(cmd, @"TJ")) { // eval TJ
                 [self eval_TJ_Command:context command:cmdObj];
+            } else if (isCommand(cmd, @"Tj")) { // eval Tj
+                [self eval_Tj_Command:context command:cmdObj];
             }
         }
     }
