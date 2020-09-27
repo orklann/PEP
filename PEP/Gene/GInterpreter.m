@@ -143,6 +143,14 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGContextSetTextMatrix(context, tm);
 }
 
+- (void)eval_Tf_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    NSString *fontName = [(GNameObject*)[[cmdObj args] objectAtIndex:0] value];
+    CGFloat fontSize = [[[cmdObj args] objectAtIndex:1] getRealValue];
+    NSLog(@"font name: %@ font size: %f", fontName, fontSize);
+    [[page textState] setFontName:fontName];
+    [[page textState] setFontSize:fontSize];
+}
+
 - (void)eval:(CGContextRef)context {
     [self parseCommands];
     NSUInteger i;
@@ -159,6 +167,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                 [self eval_cm_Command:context command:cmdObj];
             } else if (isCommand(cmd, @"Tm")) { // eval Tm
                 [self eval_Tm_Command:context command:cmdObj];
+            } else if (isCommand(cmd, @"Tf")) { // eval Tf
+                [self eval_Tf_Command:context command:cmdObj];
             }
         }
     }
