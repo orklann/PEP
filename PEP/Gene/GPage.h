@@ -10,6 +10,7 @@
 #import "GObjects.h"
 #import "GParser.h"
 #import "GTextState.h"
+#import "GGraphicsState.h"
 
 @class GDocument;
 @class GFont;
@@ -25,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
     GDocument *doc;
     GDictionaryObject *resources;
     GTextState *textState;
+    GGraphicsState *graphicsState;
 }
 
 + (id)create;
