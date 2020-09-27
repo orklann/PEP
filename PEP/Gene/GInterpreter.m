@@ -146,7 +146,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 - (void)eval_Tf_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     NSString *fontName = [(GNameObject*)[[cmdObj args] objectAtIndex:0] value];
     CGFloat fontSize = [[[cmdObj args] objectAtIndex:1] getRealValue];
-    NSLog(@"font name: %@ font size: %f", fontName, fontSize);
     [[page textState] setFontName:fontName];
     [[page textState] setFontSize:fontSize];
 }
