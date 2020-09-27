@@ -109,6 +109,11 @@
     return f;
 }
 
+- (NSFont*)getCurrentFont {
+    GFont *font = [self getFontByName:[[self textState] fontName]];
+    return [font getNSFontBySize:[[self textState] fontSize]];
+}
+
 - (GGraphicsState*)graphicsState {
     return graphicsState;
 }

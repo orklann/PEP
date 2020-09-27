@@ -41,6 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)render:(CGContextRef)context;
 - (NSRect)calculatePageMediaBox;
 - (GFont*)getFontByName:(NSString*)name;
+- (NSFont*)getCurrentFont;
 - (GGraphicsState*)graphicsState;
 - (GTextState*)textState;
 @end
