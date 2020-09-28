@@ -35,6 +35,50 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     input = data;
 }
 
+- (CGFloat)drawString:(NSString*)ch font:(NSFont*)font context:(CGContextRef)context {
+    NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:ch];
+    [s addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, 1)];
+    [s addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0, 1)];
+    
+    CFAttributedStringRef attrStr = (__bridge CFAttributedStringRef)(s);
+    CTLineRef line = CTLineCreateWithAttributedString(attrStr);
+    CTLineDraw(line, context);
+    CFArrayRef runs = CTLineGetGlyphRuns(line);
+    CTRunRef firstRun = CFArrayGetValueAtIndex(runs, 0);
+    CGSize size;
+    CTRunGetAdvances(firstRun, CFRangeMake(0, 1), &size);
+    CFRelease(line);
+    return size.width;
+}
+
+- (void)layoutStrings:(NSString*)s context:(CGContextRef)context  tj:(CGFloat)tjDelta{
+    NSFont *font = [page getCurrentFont];
+    CGAffineTransform tm = [[page textState] textMatrix];
+    CGFloat fs = [[page textState] fontSize];
+    CGFloat h = 1.0; // we need this in graphics state
+    CGFloat rise = [[page textState] rise];
+    CGFloat cs = [[page textState] charSpace];
+    CGFloat wc = [[page textState] wordSpace];
+    CGAffineTransform trm = CGAffineTransformMake(fs*h, 0, 0, fs, 0, rise);
+    CGAffineTransform rm = CGAffineTransformConcat(trm, tm);
+    NSInteger i;
+    CGFloat tj = tjDelta;
+    for (i = 0; i < [s length]; i++) {
+        NSString *ch = [s substringWithRange:NSMakeRange(i, 1)];
+        CGContextSetTextMatrix(context, rm);
+        CGFloat hAdvance = [self drawString:ch font:font context:context];
+        // We don't use `getGlyphAdvanceForFont()`, because for glyphs like
+        // '(', ')', we get wrong advance
+        //CGFloat hAdvance = getGlyphAdvanceForFont(ch, font);
+        CGFloat tx = ((hAdvance - (tj/1000.0)) * fs + cs + wc) * h;
+        CGFloat ty = 0; // TODO: Handle vertical advance for vertical text layout
+        CGAffineTransform tf = CGAffineTransformMake(1, 0, 0, 1, tx, ty);
+        tm = CGAffineTransformConcat(tf, tm);
+        [[page textState] setTextMatrix:tm];
+        rm = CGAffineTransformConcat(trm, tm);
+    }
+}
+
 - (void)parseCommands {
     commands = [NSMutableArray array];
     GParser *cmdParser = [GParser parser];
@@ -168,15 +212,18 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }
 
 - (void)eval_TJ_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
-    NSFont *font = [page getCurrentFont];
-    NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:@"P"];
-    [s addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, 1)];
-    [s addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0, 1)];
-    
-    CFAttributedStringRef attrStr = (__bridge CFAttributedStringRef)(s);
-    CTLineRef line = CTLineCreateWithAttributedString(attrStr);
-    CTLineDraw(line, context);
-    CFRelease(line);
+    GArrayObject *array = [[cmdObj args] objectAtIndex:0];
+    NSUInteger i;
+    CGFloat tjDelta = 0;
+    for (i = 0; i < [[array value] count]; i++) {
+        id a = [[array value] objectAtIndex:i];
+        if ([(GObject*)a type] == kLiteralStringsObject) { // Literal strings
+            [self layoutStrings:[(GLiteralStringsObject*)a value] context:context tj:tjDelta];
+            tjDelta = 0;
+        } else if ([(GObject*)a type] == kNumberObject) { // Number object for offset
+            tjDelta = [(GNumberObject*)a getRealValue];
+        }
+    }
     // Test: Draw bounding box of glyph
 //    CGRect r = getGlyphBoundingBox(@"P", font, [[page textState] textMatrix]);
 //    CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);

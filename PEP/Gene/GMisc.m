@@ -28,13 +28,16 @@ CGFloat getGlyphAdvanceForFont(NSString *ch, NSFont *font) {
     // This advance is :1517 for example it's not relative to font size.
     // It's advance in glyph space (EM square)
     CGFontGetGlyphAdvances(f, &g, 1, &advance);
-    //NSLog(@"advance: %d", advance);
+    
+    CGSize size;
+    
+    CTFontGetAdvancesForGlyphs(ctFont, kCTFontOrientationHorizontal, &g, &size, 1);
+    NSLog(@"(*)advance: %@ %@", NSStringFromSize(size), ch);
+    NSLog(@"advance: %d : %@", advance, ch);
     int upm = CGFontGetUnitsPerEm(f);
-    //NSLog(@"upm: %d", upm);
+    NSLog(@"upm: %d", upm);
     
-    CGFloat glyphWidth = (CGFloat) (advance * [font pointSize] )/ upm;
-    
-    CFRelease(ctFont);
+    CGFloat glyphWidth = (CGFloat) (advance * [font pointSize])/ upm;
     CFRelease(f);
     return glyphWidth;
 }
