@@ -11,4 +11,6 @@
 NS_ASSUME_NONNULL_BEGIN
 // Print NSData in character strings
 void printData(NSData *data);
+CGFloat getGlyphAdvanceForFont(NSString *ch, NSFont *font);
+NSRect getGlyphBoundingBox(NSString *ch, NSFont *font, CGAffineTransform tm);
 NS_ASSUME_NONNULL_END
