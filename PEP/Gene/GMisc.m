@@ -34,6 +34,8 @@ CGFloat getGlyphAdvanceForFont(NSString *ch, NSFont *font) {
     
     CGFloat glyphWidth = (CGFloat) (advance * [font pointSize] )/ upm;
     
+    CFRelease(ctFont);
+    CFRelease(f);
     return glyphWidth;
 }
 
@@ -50,5 +52,6 @@ NSRect getGlyphBoundingBox(NSString *ch, NSFont *font, CGAffineTransform tm) {
     CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
     CGRect textRect = NSMakeRect(0, 0 - descent, glyphWidth, descent + ascent);
     CGRect r = CGRectApplyAffineTransform(textRect, tm);
+    CFRelease(line);
     return r;
 }
