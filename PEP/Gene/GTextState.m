@@ -11,7 +11,17 @@
 @implementation GTextState
 + (id)create {
     GTextState *ts = [[GTextState alloc] init];
+    [ts initTextState];
     return ts;
+}
+
+- (void)initTextState {
+    charSpace = 0;
+    wordSpace = 0;
+    scale = 100; // Notice: not 0
+    leading = 0;
+    render = 0;
+    rise = 0;
 }
 
 - (void)setFontName:(NSString*)name {
@@ -36,5 +46,53 @@
 
 - (CGAffineTransform)textMatrix {
     return textMatrix;
+}
+
+- (void)setCharSpace:(CGFloat)cs {
+    charSpace = cs;
+}
+
+- (CGFloat)charSpace {
+    return charSpace;
+}
+
+- (void)setWordSpace:(CGFloat)ws {
+    wordSpace = ws;
+}
+
+- (CGFloat)wordSpace {
+    return wordSpace;
+}
+
+- (void)setScale:(CGFloat)s {
+    scale = s;
+}
+
+- (CGFloat)scale {
+    return scale;
+}
+
+- (void)setLeading:(CGFloat)l {
+    leading = l;
+}
+
+- (CGFloat)leading {
+    return leading;
+}
+
+- (void)setRender:(CGFloat)r {
+    render = r;
+}
+
+- (CGFloat)render {
+    return render;
+}
+
+- (void)setRise:(CGFloat)r {
+    rise = r;
+}
+
+- (CGFloat)rise {
+    return rise;
 }
 @end
