@@ -19,6 +19,9 @@ void printData(NSData *data) {
     printf("\n");
 }
 
+
+// TODO: Since this method is not always returning a correct value,
+// We are considering use other methods.
 CGFloat getGlyphAdvanceForFont(NSString *ch, NSFont *font) {
     CTFontRef ctFont = (__bridge CTFontRef)font;
     CGFontRef f = CTFontCopyGraphicsFont(ctFont, nil);
@@ -42,6 +45,8 @@ CGFloat getGlyphAdvanceForFont(NSString *ch, NSFont *font) {
     return glyphWidth;
 }
 
+// TODO: Since getGlyphAdvanceForFont() is not always returning a correct value
+// We are considering rewrite this method with an advance as input parameter
 NSRect getGlyphBoundingBox(NSString *ch, NSFont *font, CGAffineTransform tm) {
     CGFloat glyphWidth = getGlyphAdvanceForFont(ch, font);
     NSMutableAttributedString *s = [[NSMutableAttributedString alloc]
