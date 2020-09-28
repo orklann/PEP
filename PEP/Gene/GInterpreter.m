@@ -164,6 +164,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CFAttributedStringRef attrStr = (__bridge CFAttributedStringRef)(s);
     CTLineRef line = CTLineCreateWithAttributedString(attrStr);
     CTLineDraw(line, context);
+    CFRelease(line);
 }
 
 - (void)eval_TJ_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -175,7 +176,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CFAttributedStringRef attrStr = (__bridge CFAttributedStringRef)(s);
     CTLineRef line = CTLineCreateWithAttributedString(attrStr);
     CTLineDraw(line, context);
-    
+    CFRelease(line);
     // Test: Draw bounding box of glyph
 //    CGRect r = getGlyphBoundingBox(@"P", font, [[page textState] textMatrix]);
 //    CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
