@@ -193,7 +193,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [[page textState] setFontName:fontName];
     [[page textState] setFontSize:fontSize];
   
-    // Get font size in user space 
+    // Get font size in user space
     CGSize size = NSMakeSize(1.0, 1.0);
     CGAffineTransform tm = [[page textState] textMatrix];
     CGAffineTransform ctm  = [[page graphicsState] ctm];
@@ -260,6 +260,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                 [self eval_TJ_Command:context command:cmdObj];
             } else if (isCommand(cmd, @"Tj")) { // eval Tj
                 [self eval_Tj_Command:context command:cmdObj];
+            } else {
+                NSLog(@"Operator %@ not eval.", cmd);
             }
         }
     }
