@@ -72,6 +72,7 @@
     CGContextTranslateCTM(context, pageRect.origin.x, pageRect.origin.y);
     
     textState = [GTextState create];
+    graphicsState = [GGraphicsState create];
     
     GInterpreter *interpreter = [GInterpreter create];
     [interpreter setPage:self];

@@ -192,6 +192,14 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGFloat fontSize = [[[cmdObj args] objectAtIndex:1] getRealValue];
     [[page textState] setFontName:fontName];
     [[page textState] setFontSize:fontSize];
+  
+    // Get font size in user space 
+    CGSize size = NSMakeSize(1.0, 1.0);
+    CGAffineTransform tm = [[page textState] textMatrix];
+    CGAffineTransform ctm  = [[page graphicsState] ctm];
+    size = CGSizeApplyAffineTransform(size, tm);
+    size = CGSizeApplyAffineTransform(size, ctm);
+    NSLog(@"size: %@", NSStringFromSize(size));
 }
 
 - (void)eval_Tj_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
