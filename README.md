@@ -28,6 +28,3 @@ I update the core PDF engine (called Gene) almost everyday.
 ## Roadmap
 
 I don't have any roadmap yet, but i will publish one later at the right moment. I hope someone will see the potential of PEP, and donate towards it to speed up the development process.
-
-## Screenshots
-![](https://raw.githubusercontent.com/orklann/PEP/master/Screenshots/render_sample_pdf.png)
