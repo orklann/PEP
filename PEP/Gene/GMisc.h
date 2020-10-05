@@ -14,5 +14,5 @@ void printData(NSData *data);
 
 // Get glyph width
 CGFloat getGlyphAdvanceForFont(NSString *ch, NSFont *font);
-NSRect getGlyphBoundingBox(NSString *ch, NSFont *font, CGAffineTransform tm);
+NSRect getGlyphBoundingBox(NSString *ch, NSFont *font, CGAffineTransform tm, CGFloat advance);
 NS_ASSUME_NONNULL_END

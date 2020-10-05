@@ -67,6 +67,14 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         NSString *ch = [s substringWithRange:NSMakeRange(i, 1)];
         CGContextSetTextMatrix(context, rm);
         CGFloat hAdvance = [self drawString:ch font:font context:context];
+        
+        //
+        // Test: Draw bounding box of glyph
+        //
+        CGRect r = getGlyphBoundingBox(ch, font, [[page textState] textMatrix], hAdvance);
+        CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
+        CGContextFillRect(context, r);
+        
         // We don't use `getGlyphAdvanceForFont()`, because for glyphs like
         // '(', ')', we get wrong advance
         //CGFloat hAdvance = getGlyphAdvanceForFont(ch, font);
@@ -203,20 +211,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }
 
 - (void)eval_Tj_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
-    NSFont *font = [page getCurrentFont];
     NSString *string = [(GLiteralStringsObject*)[[cmdObj args] objectAtIndex:0]
                         value];
-    NSMutableAttributedString *s = [[NSMutableAttributedString alloc]
-                                    initWithString:string];
-    [s addAttribute:NSFontAttributeName value:font
-              range:NSMakeRange(0, [string length])];
-    [s addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor]
-              range:NSMakeRange(0, [string length])];
-    
-    CFAttributedStringRef attrStr = (__bridge CFAttributedStringRef)(s);
-    CTLineRef line = CTLineCreateWithAttributedString(attrStr);
-    CTLineDraw(line, context);
-    CFRelease(line);
+    [self layoutStrings:string context:context tj:0];
 }
 
 - (void)eval_TJ_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -232,10 +229,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             tjDelta = [(GNumberObject*)a getRealValue];
         }
     }
-    // Test: Draw bounding box of glyph
-//    CGRect r = getGlyphBoundingBox(@"P", font, [[page textState] textMatrix]);
-//    CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
-//    CGContextFillRect(context, r);
 }
 
 - (void)eval:(CGContextRef)context {
