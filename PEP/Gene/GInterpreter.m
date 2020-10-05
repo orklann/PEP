@@ -10,6 +10,7 @@
 #import "GObjects.h"
 #import "GMisc.h"
 #import "GPage.h"
+#import "GGlyph.h"
 
 BOOL isCommand(NSString *cmd, NSString *cmd2) {
     return [cmd isEqualToString:cmd2];
@@ -52,6 +53,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }
 
 - (void)layoutStrings:(NSString*)s context:(CGContextRef)context  tj:(CGFloat)tjDelta{
+    NSMutableArray *glyphs = [page glyphs];
     NSFont *font = [page getCurrentFont];
     CGAffineTransform tm = [[page textState] textMatrix];
     CGFloat fs = [[page textState] fontSize];
@@ -74,6 +76,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         CGRect r = getGlyphBoundingBox(ch, font, [[page textState] textMatrix], hAdvance);
         CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
         CGContextFillRect(context, r);
+        GGlyph *glyph = [GGlyph create];
+        [glyph setFrame:r];
+        [glyph setContent:ch];
+        [glyphs addObject:glyph];
         
         // We don't use `getGlyphAdvanceForFont()`, because for glyphs like
         // '(', ')', we get wrong advance

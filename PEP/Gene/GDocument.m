@@ -10,6 +10,7 @@
 #import "GParser.h"
 #import "GDecoders.h"
 #import "GFont.h"
+#import "GGlyph.h"
 
 @implementation GDocument
 - (void)awakeFromNib {
@@ -129,7 +130,13 @@
     [self.enclosingScrollView.documentView scrollPoint:pt];
 }
 
-- (BOOL)isFlipped {
-    return NO;
+- (void)mouseDown:(NSEvent *)event {
+    GPage *p = [pages firstObject];
+    NSUInteger i;
+    for (i = 0; i < [[p glyphs] count]; i++) {
+        GGlyph *g = [[p glyphs] objectAtIndex:i];
+        printf("%s", [[g content] UTF8String]);
+    }
+    printf("\n");
 }
 @end

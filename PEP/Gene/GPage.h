@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
     GDictionaryObject *resources;
     GTextState *textState;
     GGraphicsState *graphicsState;
+    NSMutableArray *glyphs;
 }
 
 + (id)create;
@@ -44,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSFont*)getCurrentFont;
 - (GGraphicsState*)graphicsState;
 - (GTextState*)textState;
+- (NSMutableArray*)glyphs;
 @end
 
 NS_ASSUME_NONNULL_END
