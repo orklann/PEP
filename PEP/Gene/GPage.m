@@ -73,7 +73,7 @@
     
     textState = [GTextState create];
     graphicsState = [GGraphicsState create];
-    glyphs = [NSMutableArray array];
+    textPraser = [GTextParser create];
     
     GInterpreter *interpreter = [GInterpreter create];
     [interpreter setPage:self];
@@ -124,7 +124,7 @@
     return textState;
 }
 
-- (NSMutableArray*)glyphs {
-    return glyphs;
+- (GTextParser*)textParser {
+    return textPraser;
 }
 @end

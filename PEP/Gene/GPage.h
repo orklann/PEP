@@ -11,6 +11,7 @@
 #import "GParser.h"
 #import "GTextState.h"
 #import "GGraphicsState.h"
+#import "GTextParser.h"
 
 @class GDocument;
 @class GFont;
@@ -28,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
     GTextState *textState;
     GGraphicsState *graphicsState;
     NSMutableArray *glyphs;
+    GTextParser *textPraser;
 }
 
 + (id)create;
@@ -45,7 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSFont*)getCurrentFont;
 - (GGraphicsState*)graphicsState;
 - (GTextState*)textState;
-- (NSMutableArray*)glyphs;
+- (GTextParser*)textParser;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -14,6 +14,7 @@
 		931221CC24F0139300929C01 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 931221CA24F0139300929C01 /* MainMenu.xib */; };
 		931221CF24F0139300929C01 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 931221CE24F0139300929C01 /* main.m */; };
 		93159E5F252AEB5E00F87451 /* GGlyph.m in Sources */ = {isa = PBXBuildFile; fileRef = 93159E5E252AEB5E00F87451 /* GGlyph.m */; };
+		93159E62252B09F400F87451 /* GTextParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 93159E61252B09F400F87451 /* GTextParser.m */; };
 		931ECFB12518911A00E26EFA /* GInterpreter.m in Sources */ = {isa = PBXBuildFile; fileRef = 931ECFB02518911A00E26EFA /* GInterpreter.m */; };
 		9320C01A2519C7F8008F20B0 /* GInterpreterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9320C0192519C7F8008F20B0 /* GInterpreterTests.m */; };
 		9320C01C251A1552008F20B0 /* irig_keys_25.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9320C01B251A1552008F20B0 /* irig_keys_25.pdf */; };
@@ -59,6 +60,8 @@
 		931221DB24F0139700929C01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93159E5D252AEB5E00F87451 /* GGlyph.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GGlyph.h; sourceTree = "<group>"; };
 		93159E5E252AEB5E00F87451 /* GGlyph.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GGlyph.m; sourceTree = "<group>"; };
+		93159E60252B09F400F87451 /* GTextParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTextParser.h; sourceTree = "<group>"; };
+		93159E61252B09F400F87451 /* GTextParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTextParser.m; sourceTree = "<group>"; };
 		931ECFAF2518911A00E26EFA /* GInterpreter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GInterpreter.h; sourceTree = "<group>"; };
 		931ECFB02518911A00E26EFA /* GInterpreter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GInterpreter.m; sourceTree = "<group>"; };
 		9320C0192519C7F8008F20B0 /* GInterpreterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GInterpreterTests.m; sourceTree = "<group>"; };
@@ -192,6 +195,8 @@
 				9373EEF2251C7E840066AD2A /* GTextState.m */,
 				93159E5D252AEB5E00F87451 /* GGlyph.h */,
 				93159E5E252AEB5E00F87451 /* GGlyph.m */,
+				93159E60252B09F400F87451 /* GTextParser.h */,
+				93159E61252B09F400F87451 /* GTextParser.m */,
 				93A86928251399760033DC22 /* GPage.h */,
 				93A86929251399760033DC22 /* GPage.m */,
 				9363D948250895610075FEF0 /* GDocument.h */,
@@ -307,6 +312,7 @@
 			files = (
 				9373EEF6251C84A80066AD2A /* GFont.m in Sources */,
 				93427469252082CA00CA3DBE /* GGraphicsState.m in Sources */,
+				93159E62252B09F400F87451 /* GTextParser.m in Sources */,
 				93159E5F252AEB5E00F87451 /* GGlyph.m in Sources */,
 				9363D94A250895610075FEF0 /* GDocument.m in Sources */,
 				93DC04C424F7B335003AC9B0 /* GParser.m in Sources */,
