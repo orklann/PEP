@@ -13,7 +13,9 @@
 + (id)create {
     GTextParser *tp = [[GTextParser alloc] init];
     NSMutableArray *gs = [NSMutableArray array];
+    NSMutableArray *ws = [NSMutableArray array];
     [tp setGlyphs:gs];
+    [tp setWords:ws];
     return tp;
 }
 
@@ -23,6 +25,14 @@
 
 - (NSMutableArray*)glyphs {
     return glyphs;
+}
+
+- (void)setWords:(NSMutableArray*)ws {
+    words = ws;
+}
+
+- (NSMutableArray*)words {
+    return words;
 }
 
 - (void)makeReadOrderGlyphs {

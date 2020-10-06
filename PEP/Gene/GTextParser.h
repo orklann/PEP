@@ -12,9 +12,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GTextParser : NSObject {
     NSMutableArray *glyphs;
+    NSMutableArray *words;
 }
 + (id)create;
 - (NSMutableArray*)glyphs;
+- (NSMutableArray*)words;
 - (void)makeReadOrderGlyphs;
 @end
 
