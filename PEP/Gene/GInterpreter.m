@@ -71,7 +71,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         CGFloat hAdvance = [self drawString:ch font:font context:context];
         
         //
-        // Test: Draw bounding box of glyph
+        // Make glyphs for GTextParser
         //
         CGRect r = getGlyphBoundingBox(ch, font, [[page textState] textMatrix], hAdvance);
         CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
@@ -81,9 +81,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         [glyph setContent:ch];
         [glyphs addObject:glyph];
         
-        // We don't use `getGlyphAdvanceForFont()`, because for glyphs like
-        // '(', ')', we get wrong advance
-        //CGFloat hAdvance = getGlyphAdvanceForFont(ch, font);
+        // See "9.4.4 Text space details"
         CGFloat tx = ((hAdvance - (tj/1000.0)) * fs + cs + wc) * h;
         CGFloat ty = 0; // TODO: Handle vertical advance for vertical text layout
         CGAffineTransform tf = CGAffineTransformMake(1, 0, 0, 1, tx, ty);
