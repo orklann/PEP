@@ -21,6 +21,7 @@
 		9320C01E251A1569008F20B0 /* irig_keys_25.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9320C01D251A1568008F20B0 /* irig_keys_25.pdf */; };
 		93427469252082CA00CA3DBE /* GGraphicsState.m in Sources */ = {isa = PBXBuildFile; fileRef = 93427468252082CA00CA3DBE /* GGraphicsState.m */; };
 		9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9355AEB824F12DCC00764E36 /* GLexerTests.m */; };
+		935BCC3A252C61B900868C01 /* GWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 935BCC39252C61B900868C01 /* GWord.m */; };
 		9363D94A250895610075FEF0 /* GDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 9363D949250895610075FEF0 /* GDocument.m */; };
 		9363D9512508994E0075FEF0 /* test_xref.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9363D9502508994E0075FEF0 /* test_xref.pdf */; };
 		936C4305250363E800FFE547 /* test_xref.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 936C4304250363E700FFE547 /* test_xref.pdf */; };
@@ -70,6 +71,8 @@
 		93427467252082CA00CA3DBE /* GGraphicsState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GGraphicsState.h; sourceTree = "<group>"; };
 		93427468252082CA00CA3DBE /* GGraphicsState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GGraphicsState.m; sourceTree = "<group>"; };
 		9355AEB824F12DCC00764E36 /* GLexerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLexerTests.m; sourceTree = "<group>"; };
+		935BCC38252C61B800868C01 /* GWord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWord.h; sourceTree = "<group>"; };
+		935BCC39252C61B900868C01 /* GWord.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWord.m; sourceTree = "<group>"; };
 		9363D948250895610075FEF0 /* GDocument.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDocument.h; sourceTree = "<group>"; };
 		9363D949250895610075FEF0 /* GDocument.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDocument.m; sourceTree = "<group>"; };
 		9363D9502508994E0075FEF0 /* test_xref.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = test_xref.pdf; path = PEPTests/pdf/test_xref.pdf; sourceTree = SOURCE_ROOT; };
@@ -193,6 +196,8 @@
 				93427468252082CA00CA3DBE /* GGraphicsState.m */,
 				9373EEF1251C7E840066AD2A /* GTextState.h */,
 				9373EEF2251C7E840066AD2A /* GTextState.m */,
+				935BCC38252C61B800868C01 /* GWord.h */,
+				935BCC39252C61B900868C01 /* GWord.m */,
 				93159E5D252AEB5E00F87451 /* GGlyph.h */,
 				93159E5E252AEB5E00F87451 /* GGlyph.m */,
 				93159E60252B09F400F87451 /* GTextParser.h */,
@@ -315,6 +320,7 @@
 				93159E62252B09F400F87451 /* GTextParser.m in Sources */,
 				93159E5F252AEB5E00F87451 /* GGlyph.m in Sources */,
 				9363D94A250895610075FEF0 /* GDocument.m in Sources */,
+				935BCC3A252C61B900868C01 /* GWord.m in Sources */,
 				93DC04C424F7B335003AC9B0 /* GParser.m in Sources */,
 				93DC04C924F7B6EB003AC9B0 /* GObjects.m in Sources */,
 				931221CF24F0139300929C01 /* main.m in Sources */,
