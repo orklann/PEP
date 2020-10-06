@@ -11,6 +11,7 @@
 #import "GDecoders.h"
 #import "GFont.h"
 #import "GGlyph.h"
+#import "GWord.h"
 
 @implementation GDocument
 - (void)awakeFromNib {
@@ -148,5 +149,12 @@
         printf("%s", [[g content] UTF8String]);
     }
     printf("\n");
+    
+    NSLog(@"List of words =>");
+    NSMutableArray *words = [[p textParser] makeWords];
+    for (i = 0; i < [words count]; i++) {
+        NSLog(@"%@", [(GWord*)[words objectAtIndex:i] wordString]);
+    }
+    NSLog(@"End list of words");
 }
 @end

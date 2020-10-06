@@ -17,10 +17,12 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 + (id)create;
+- (void)setGlyphs:(NSMutableArray *)gs;
 - (void)setFrame:(NSRect)f;
 - (NSRect)frame;
 - (NSMutableArray*)glyphs;
 - (void)addGlyph:(GGlyph*)g;
+- (NSString*)wordString;
 @end
 
 NS_ASSUME_NONNULL_END

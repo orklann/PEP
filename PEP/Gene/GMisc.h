@@ -20,5 +20,9 @@ NSRect getGlyphBoundingBox(NSString *ch, NSFont *font, CGAffineTransform tm, CGF
 
 // Compare method for sorting glyphs in read order
 int compareGlyphs(GGlyph *a, GGlyph *b);
+
 void quicksortGlyphs(NSMutableArray *array, int l, int r);
+
+// Check if two glyphs separate two characters
+BOOL separateCharacters(GGlyph *a, GGlyph *b);
 NS_ASSUME_NONNULL_END
