@@ -7,6 +7,7 @@
 //
 
 #import "GTextParser.h"
+#import "GMisc.h"
 
 @implementation GTextParser
 + (id)create {
@@ -22,5 +23,9 @@
 
 - (NSMutableArray*)glyphs {
     return glyphs;
+}
+
+- (void)makeReadOrderGlyphs {
+    quicksortGlyphs(glyphs, 0, (int)([glyphs count] - 1));
 }
 @end

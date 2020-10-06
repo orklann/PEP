@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 + (id)create;
 - (NSMutableArray*)glyphs;
+- (void)makeReadOrderGlyphs;
 @end
 
 NS_ASSUME_NONNULL_END

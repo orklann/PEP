@@ -139,5 +139,14 @@
         printf("%s", [[g content] UTF8String]);
     }
     printf("\n");
+    
+    [[p textParser] makeReadOrderGlyphs];
+    
+    glyphs = [[p textParser] glyphs];
+    for (i = 0; i < [glyphs count]; i++) {
+        GGlyph *g = [glyphs objectAtIndex:i];
+        printf("%s", [[g content] UTF8String]);
+    }
+    printf("\n");
 }
 @end
