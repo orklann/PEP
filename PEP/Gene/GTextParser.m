@@ -44,6 +44,8 @@
 // Note: This method does not tested well
 // Just check back later
 - (NSMutableArray*)makeWords {
+    [self makeReadOrderGlyphs];
+    
     words = [NSMutableArray array];
     
     // Add heading space glyphs as first word

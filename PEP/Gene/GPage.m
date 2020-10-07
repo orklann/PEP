@@ -85,7 +85,6 @@
     
     // Test: draw bounding box for word
     // Test for: [GWord frame]
-    [textParser makeReadOrderGlyphs];
     NSMutableArray *words = [textParser makeWords];
     GWord *firstWord = [words objectAtIndex:1];
     NSRect f = [firstWord frame];
