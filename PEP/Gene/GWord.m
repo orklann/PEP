@@ -31,7 +31,6 @@
     for (i = 0; i < [glyphs count]; i++) {
         GGlyph *g = [glyphs objectAtIndex:i];
         NSRect f = [g frame];
-        NSLog(@"f: %@", NSStringFromRect(f));
         CGFloat xMin = NSMinX(f);
         CGFloat yMin = NSMinY(f);
         CGFloat xMax = NSMaxX(f);
