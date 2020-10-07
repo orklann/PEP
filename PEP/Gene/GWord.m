@@ -26,6 +26,22 @@
 }
 
 - (NSRect)frame {
+    CGFloat startX = INFINITY, startY = INFINITY, endX = -INFINITY, endY = -INFINITY;
+    int i;
+    for (i = 0; i < [glyphs count]; i++) {
+        GGlyph *g = [glyphs objectAtIndex:i];
+        NSRect f = [g frame];
+        NSLog(@"f: %@", NSStringFromRect(f));
+        CGFloat xMin = NSMinX(f);
+        CGFloat yMin = NSMinY(f);
+        CGFloat xMax = NSMaxX(f);
+        CGFloat yMax = NSMaxY(f);
+        startX = xMin <= startX ? xMin : startX;
+        startY = yMin <= startY ? yMin : startY;
+        endX = xMax >= endX ? xMax : endX;
+        endY = yMax >= endY ? yMax : endY;
+    }
+    frame = NSMakeRect(startX, startY, fabs(endX - startX), fabs(endY - startY));
     return frame;
 }
 

@@ -12,6 +12,8 @@
 #import "GInterpreter.h"
 #import "GDocument.h"
 #import "GFont.h"
+#import "GTextParser.h"
+#import "GWord.h"
 
 @implementation GPage
 
@@ -73,13 +75,27 @@
     
     textState = [GTextState create];
     graphicsState = [GGraphicsState create];
-    textPraser = [GTextParser create];
+    textParser = [GTextParser create];
     
     GInterpreter *interpreter = [GInterpreter create];
     [interpreter setPage:self];
     [interpreter setParser:parser];
     [interpreter setInput:pageContent];
     [interpreter eval:context];
+    
+    // Test: draw bounding box for word
+    // Test for: [GWord frame]
+    [textParser makeReadOrderGlyphs];
+    NSMutableArray *words = [textParser makeWords];
+    GWord *firstWord = [words objectAtIndex:1];
+    NSRect f = [firstWord frame];
+    CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
+    CGContextFillRect(context, f);
+    
+    GWord *lastWord = [words lastObject];
+    f = [lastWord frame];
+    CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
+    CGContextFillRect(context, f);
 }
 
 // Calculate media box for PDF page in user space coordinate
@@ -125,6 +141,6 @@
 }
 
 - (GTextParser*)textParser {
-    return textPraser;
+    return textParser;
 }
 @end

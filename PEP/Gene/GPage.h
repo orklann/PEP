@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
     GTextState *textState;
     GGraphicsState *graphicsState;
     NSMutableArray *glyphs;
-    GTextParser *textPraser;
+    GTextParser *textParser;
 }
 
 + (id)create;
