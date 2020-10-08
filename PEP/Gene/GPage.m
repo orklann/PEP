@@ -14,6 +14,7 @@
 #import "GFont.h"
 #import "GTextParser.h"
 #import "GWord.h"
+#import "GLine.h"
 
 @implementation GPage
 
@@ -85,14 +86,26 @@
     
     // Test: draw bounding box for word
     // Test for: [GWord frame]
-    NSMutableArray *words = [textParser makeWords];
-    GWord *firstWord = [words objectAtIndex:1];
-    NSRect f = [firstWord frame];
+//    NSMutableArray *words = [textParser makeWords];
+//    GWord *firstWord = [words objectAtIndex:1];
+//    NSRect f = [firstWord frame];
+//    CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
+//    CGContextFillRect(context, f);
+//
+//    GWord *lastWord = [words lastObject];
+//    f = [lastWord frame];
+//    CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
+//    CGContextFillRect(context, f);
+    
+    // Test: draw frame of first line and last line
+    NSMutableArray *lines = [textParser makeLines];
+    GLine *firstLine = [lines objectAtIndex:1];
+    NSRect f = [firstLine frame];
     CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
     CGContextFillRect(context, f);
     
-    GWord *lastWord = [words lastObject];
-    f = [lastWord frame];
+    GLine *lastLine = [lines objectAtIndex:[lines count] - 2];
+    f = [lastLine frame];
     CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
     CGContextFillRect(context, f);
 }
