@@ -149,7 +149,7 @@ BOOL separateCharacters(GGlyph *a, GGlyph *b) {
     return NO;
 }
 
-BOOL separateLines(GWord* a, GWord*b) {
+BOOL separateWords(GWord* a, GWord*b) {
     NSRect f1 = [a frame];
     NSRect f2 = [b frame];
     CGFloat yMinA = NSMinY(f1);

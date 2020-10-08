@@ -170,10 +170,10 @@
     int i;
     for (i = 1; i < [words count]; i++) {
         GWord *nextWord = [words objectAtIndex:i];
-        if (separateLines(currentWord, nextWord)) {
+        if (separateWords(currentWord, nextWord)) {
             [line addWord:nextWord];
             currentWord = nextWord;
-        } else if (!separateLines(currentWord, nextWord)) {
+        } else if (!separateWords(currentWord, nextWord)) {
             [lines addObject:line];
             currentWord = nextWord;
             line = [GLine create];

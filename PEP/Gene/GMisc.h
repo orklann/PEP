@@ -27,6 +27,6 @@ void quicksortGlyphs(NSMutableArray *array, int l, int r);
 // Check if two glyphs separate two characters
 BOOL separateCharacters(GGlyph *a, GGlyph *b);
 
-// Check if two words separate two lines
-BOOL separateLines(GWord* a, GWord*b);
+// Check if two words form a line
+BOOL separateWords(GWord* a, GWord*b);
 NS_ASSUME_NONNULL_END
