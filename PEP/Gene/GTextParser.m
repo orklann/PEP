@@ -111,7 +111,7 @@
         if ([[nextGlyph content] isEqualToString:@" "] ||
             i == [secondSplit count] - 1) {
             // End and add current word
-            if (i == [secondSplit count] - 1) {
+            if (i == [secondSplit count] - 1 && ![[nextGlyph content] isEqualToString:@" "]) {
                 [word addGlyph:nextGlyph];
             }
             [words addObject:word];
