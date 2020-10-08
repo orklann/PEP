@@ -8,6 +8,7 @@
 #import <Cocoa/Cocoa.h>
 #import "GMisc.h"
 #import "GGlyph.h"
+#import "GWord.h"
 
 void printData(NSData *data) {
     NSUInteger i;
@@ -132,6 +133,31 @@ BOOL separateCharacters(GGlyph *a, GGlyph *b) {
     CGFloat xB = NSMinX(f2);
     CGFloat widthA = NSWidth(f1);
     CGFloat widthB = NSWidth(f2);
+    CGFloat heightA = NSHeight(f1);
+    CGFloat heightB = NSHeight(f1);
+    
+    CGFloat dy = fabs(yMinA - yMinB);
+    CGFloat heightTolerance = fabs(heightA - heightB);
+    if (dy <= heightTolerance) {
+        CGFloat dx = fabs(xA - xB);
+        CGFloat widthTolerance = (widthA + widthB) / 2.0;
+        if (dx <= widthTolerance) {
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
+BOOL separateLines(GWord* a, GWord*b) {
+    NSRect f1 = [a frame];
+    NSRect f2 = [b frame];
+    CGFloat yMinA = NSMinY(f1);
+    CGFloat yMinB = NSMinY(f2);
+    CGFloat xA = NSMaxX(f1);
+    CGFloat xB = NSMinX(f2);
+    CGFloat widthA = NSWidth([[[a glyphs] lastObject] frame]);
+    CGFloat widthB = NSWidth([[[b glyphs] firstObject] frame]);
     CGFloat heightA = NSHeight(f1);
     CGFloat heightB = NSHeight(f1);
     

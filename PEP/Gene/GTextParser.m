@@ -10,14 +10,17 @@
 #import "GMisc.h"
 #import "GGlyph.h"
 #import "GWord.h"
+#import "GLine.h"
 
 @implementation GTextParser
 + (id)create {
     GTextParser *tp = [[GTextParser alloc] init];
     NSMutableArray *gs = [NSMutableArray array];
     NSMutableArray *ws = [NSMutableArray array];
+    NSMutableArray *ls = [NSMutableArray array];
     [tp setGlyphs:gs];
     [tp setWords:ws];
+    [tp setLines:ls];
     return tp;
 }
 
@@ -37,6 +40,13 @@
     return words;
 }
 
+- (void)setLines:(NSMutableArray*)ls {
+    lines = ls;
+}
+
+- (NSMutableArray*)lines {
+    return lines;
+}
 - (void)makeReadOrderGlyphs {
     quicksortGlyphs(glyphs, 0, (int)([glyphs count] - 1));
 }
@@ -147,5 +157,34 @@
         [words addObject:lastWord];
     }
     return words;
+}
+
+- (NSMutableArray*)makeLines {
+    [self makeWords];
+    
+    lines = [NSMutableArray array];
+    
+    GLine *line = [GLine create];
+    GWord *currentWord = [words firstObject];
+    [line addWord:currentWord];
+    int i;
+    for (i = 1; i < [words count]; i++) {
+        GWord *nextWord = [words objectAtIndex:i];
+        if (separateLines(currentWord, nextWord)) {
+            [line addWord:nextWord];
+            currentWord = nextWord;
+        } else if (!separateLines(currentWord, nextWord)) {
+            [lines addObject:line];
+            currentWord = nextWord;
+            line = [GLine create];
+            [line addWord:currentWord];
+        }
+    }
+    
+    // Add last line if it contains words
+    if ([[line words] count] > 0) {
+        [lines addObject:line];
+    }
+    return lines;
 }
 @end

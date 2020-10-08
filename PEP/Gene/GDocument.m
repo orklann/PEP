@@ -12,6 +12,7 @@
 #import "GFont.h"
 #import "GGlyph.h"
 #import "GWord.h"
+#import "GLine.h"
 
 @implementation GDocument
 - (void)awakeFromNib {
@@ -156,5 +157,13 @@
         NSLog(@"%@", [(GWord*)[words objectAtIndex:i] wordString]);
     }
     NSLog(@"End list of words");
+    
+    NSLog(@"List of lines:");
+    NSMutableArray *lines = [[p textParser] makeLines];
+    for (i = 0; i < [lines count]; i++) {
+        GLine *l = [lines objectAtIndex:i];
+        NSLog(@"%@", [l lineString]);
+    }
+    NSLog(@"End list of lines");
 }
 @end
