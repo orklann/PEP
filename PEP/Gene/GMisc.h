@@ -36,4 +36,8 @@ CGFloat distance(NSPoint a, NSPoint b);
 
 // Check if two lines form a text block
 BOOL separateLines(GLine *a, GLine *b);
+
+// Translate point to new origin
+// Here we assume old origin is at (0, 0) 
+NSPoint translatePoint(NSPoint p, NSPoint newOrigin);
 NS_ASSUME_NONNULL_END

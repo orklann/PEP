@@ -205,3 +205,9 @@ BOOL separateLines(GLine *a, GLine *b) {
     
     return NO;
 }
+
+NSPoint translatePoint(NSPoint p, NSPoint newOrigin) {
+    CGFloat nx = p.x + newOrigin.x;
+    CGFloat ny = p.y + newOrigin.y;
+    return NSMakePoint(nx, ny);
+}
