@@ -29,6 +29,16 @@
     return words;
 }
 
+- (NSArray*)glyphs {
+    NSMutableArray *glyphs = [NSMutableArray array];
+    int i;
+    for (i = 0; i < [words count]; i++) {
+        GWord *w = [words objectAtIndex:i];
+        [glyphs addObjectsFromArray:[w glyphs]];
+    }
+    return glyphs;
+}
+
 - (NSRect)frame {
     CGFloat startX = INFINITY, startY = INFINITY, endX = -INFINITY, endY = -INFINITY;
     int i;

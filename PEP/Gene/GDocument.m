@@ -145,28 +145,6 @@
     
     [[p textParser] makeReadOrderGlyphs];
     
-    glyphs = [[p textParser] glyphs];
-    for (i = 0; i < [glyphs count]; i++) {
-        GGlyph *g = [glyphs objectAtIndex:i];
-        printf("%s", [[g content] UTF8String]);
-    }
-    printf("\n");
-    
-    NSLog(@"List of words =>");
-    NSMutableArray *words = [[p textParser] makeWords];
-    for (i = 0; i < [words count]; i++) {
-        NSLog(@"%@", [(GWord*)[words objectAtIndex:i] wordString]);
-    }
-    NSLog(@"End list of words");
-    
-    NSLog(@"List of lines:");
-    NSMutableArray *lines = [[p textParser] makeLines];
-    for (i = 0; i < [lines count]; i++) {
-        GLine *l = [lines objectAtIndex:i];
-        NSLog(@"%@", [l lineString]);
-    }
-    NSLog(@"End list of lines");
-    
     NSLog(@"List of text blocks");
     NSMutableArray *textBlocks = [[p textParser] makeTextBlocks];
     for (i = 0; i < [textBlocks count]; i++) {

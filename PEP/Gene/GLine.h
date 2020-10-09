@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setWords:(NSMutableArray*)ws;
 - (void)addWord:(GWord*)w;
 - (NSMutableArray*)words;
+- (NSArray*)glyphs;
 - (NSRect)frame;
 - (NSString*)lineString;
 @end
