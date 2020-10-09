@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setLines:(NSMutableArray*)ls;
 - (void)addLine:(GLine*)l;
 - (NSMutableArray*)lines;
+- (NSRect)frame;
 - (NSString*)textBlockString;
 @end
 

@@ -15,6 +15,7 @@
 #import "GTextParser.h"
 #import "GWord.h"
 #import "GLine.h"
+#import "GTextBlock.h"
 
 @implementation GPage
 
@@ -98,14 +99,26 @@
 //    CGContextFillRect(context, f);
     
     // Test: draw frame of first line and last line
-    NSMutableArray *lines = [textParser makeLines];
-    GLine *firstLine = [lines objectAtIndex:1];
-    NSRect f = [firstLine frame];
+//    NSMutableArray *lines = [textParser makeLines];
+//    GLine *firstLine = [lines objectAtIndex:1];
+//    NSRect f = [firstLine frame];
+//    CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
+//    CGContextFillRect(context, f);
+//
+//    GLine *lastLine = [lines objectAtIndex:[lines count] - 2];
+//    f = [lastLine frame];
+//    CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
+//    CGContextFillRect(context, f);
+    
+    // Test: draw frame of text blocks
+    NSMutableArray *textBlocks = [textParser makeTextBlocks];
+    GTextBlock *firstTB = [textBlocks objectAtIndex:1];
+    NSRect f = [firstTB frame];
     CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
     CGContextFillRect(context, f);
     
-    GLine *lastLine = [lines objectAtIndex:[lines count] - 2];
-    f = [lastLine frame];
+    GTextBlock *lastTB = [textBlocks lastObject];
+    f = [lastTB frame];
     CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
     CGContextFillRect(context, f);
 }
