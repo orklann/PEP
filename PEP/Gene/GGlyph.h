@@ -13,10 +13,13 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GGlyph : NSObject {
     NSRect frame;
     NSString *content;
+    NSPoint point;
 }
 + (id)create;
 - (void)setFrame:(NSRect)f;
 - (NSRect)frame;
+- (void)setPoint:(NSPoint)p;
+- (NSPoint)point;
 - (void)setContent:(NSString*)s;
 - (NSString*)content;
 @end

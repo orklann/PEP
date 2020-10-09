@@ -22,6 +22,14 @@
     return frame;
 }
 
+- (void)setPoint:(NSPoint)p {
+    point = p;
+}
+
+- (NSPoint)point {
+    return point;
+}
+
 - (void)setContent:(NSString*)s {
     content = s;
 }

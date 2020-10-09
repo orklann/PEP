@@ -82,8 +82,13 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         // Apply current context matrix to get the right frame of glyph
         r = CGRectApplyAffineTransform(r, [[page graphicsState] ctm]);
         
+        NSPoint p = CGContextGetTextPosition(context);
+        // Apply current context matrix to get the right point for glyph
+        p = CGPointApplyAffineTransform(p, [[page graphicsState] ctm]);
+        
         GGlyph *glyph = [GGlyph create];
         [glyph setFrame:r];
+        [glyph setPoint:p];
         [glyph setContent:ch];
         [glyphs addObject:glyph];
         
