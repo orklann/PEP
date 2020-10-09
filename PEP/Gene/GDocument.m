@@ -143,8 +143,6 @@
     }
     printf("\n");
     
-    [[p textParser] makeReadOrderGlyphs];
-    
     NSLog(@"List of text blocks");
     NSMutableArray *textBlocks = [[p textParser] makeTextBlocks];
     for (i = 0; i < [textBlocks count]; i++) {
@@ -153,5 +151,12 @@
         NSLog(@"%@", [tb textBlockString]);
     }
     NSLog(@"End list of text blocks");
+    
+    GTextBlock *lastTB = [textBlocks lastObject];
+    NSArray *glyphsArray = [lastTB glyphs];
+    for (i = 0; i < [glyphsArray count]; i++) {
+        GGlyph *g = [glyphsArray objectAtIndex:i];
+        NSLog(@"%@", [g content]);
+    }
 }
 @end

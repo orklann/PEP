@@ -22,6 +22,16 @@
     return lines;
 }
 
+- (NSArray*)glyphs {
+    NSMutableArray *glyphs = [NSMutableArray array];
+    int i;
+    for (i = 0; i < [lines count]; i++) {
+        GLine *l = [lines objectAtIndex:i];
+        [glyphs addObjectsFromArray:[l glyphs]];
+    }
+    return glyphs;
+}
+
 - (void)setLines:(NSMutableArray*)ls {
     lines = ls;
 }
