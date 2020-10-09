@@ -18,6 +18,10 @@
     return tb;
 }
 
+- (NSMutableArray*)lines {
+    return lines;
+}
+
 - (void)setLines:(NSMutableArray*)ls {
     lines = ls;
 }

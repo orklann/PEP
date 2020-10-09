@@ -11,6 +11,7 @@
 #import "GGlyph.h"
 #import "GWord.h"
 #import "GLine.h"
+#import "GTextBlock.h"
 
 @implementation GTextParser
 + (id)create {
@@ -186,5 +187,34 @@
         [lines addObject:line];
     }
     return lines;
+}
+
+- (NSMutableArray*)makeTextBlocks {
+    [self makeLines];
+    textBlocks = [NSMutableArray array];
+    
+    GTextBlock *textBlock = [GTextBlock create];
+    GLine *currentLine = [lines firstObject];
+    int i;
+    [textBlock addLine:currentLine];
+    for (i = 1; i < [lines count]; i++) {
+        GLine *nextLine = [lines objectAtIndex:i];
+        if (separateLines(currentLine, nextLine)) {
+            [textBlock addLine:nextLine];
+            currentLine = nextLine;
+        } else {
+            [textBlocks addObject:textBlock];
+            currentLine = nextLine;
+            textBlock = [GTextBlock create];
+            [textBlock addLine:currentLine];
+        }
+    }
+    
+    // Add last text block if it contains any line
+    if ([[textBlock lines] count] > 0) {
+        [textBlocks addObject:textBlock];
+    }
+    
+    return textBlocks;
 }
 @end

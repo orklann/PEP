@@ -13,6 +13,7 @@
 #import "GGlyph.h"
 #import "GWord.h"
 #import "GLine.h"
+#import "GTextBlock.h"
 
 @implementation GDocument
 - (void)awakeFromNib {
@@ -165,5 +166,14 @@
         NSLog(@"%@", [l lineString]);
     }
     NSLog(@"End list of lines");
+    
+    NSLog(@"List of text blocks");
+    NSMutableArray *textBlocks = [[p textParser] makeTextBlocks];
+    for (i = 0; i < [textBlocks count]; i++) {
+        GTextBlock *tb = [textBlocks objectAtIndex:i];
+        NSLog(@"*****");
+        NSLog(@"%@", [tb textBlockString]);
+    }
+    NSLog(@"End list of text blocks");
 }
 @end

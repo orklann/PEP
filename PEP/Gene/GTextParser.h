@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *glyphs;
     NSMutableArray *words;
     NSMutableArray *lines;
+    NSMutableArray *textBlocks;
 }
 + (id)create;
 - (NSMutableArray*)glyphs;
@@ -21,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)makeReadOrderGlyphs;
 - (NSMutableArray*)makeWords;
 - (NSMutableArray*)makeLines;
+- (NSMutableArray*)makeTextBlocks;
 @end
 
 NS_ASSUME_NONNULL_END
