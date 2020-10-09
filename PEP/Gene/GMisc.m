@@ -9,6 +9,7 @@
 #import "GMisc.h"
 #import "GGlyph.h"
 #import "GWord.h"
+#import "GLine.h"
 
 void printData(NSData *data) {
     NSUInteger i;
@@ -169,6 +170,37 @@ BOOL separateWords(GWord* a, GWord*b) {
         if (dx <= widthTolerance) {
             return YES;
         }
+    }
+    
+    return NO;
+}
+
+CGFloat distance(NSPoint a, NSPoint b) {
+    CGFloat dx = MAX(a.x - b.x, 0);
+    CGFloat dy = MAX(a.y - b.y, 0);
+    return sqrt((dx*dx) + (dy*dy));
+}
+
+BOOL separateLines(GLine *a, GLine *b) {
+    NSRect f1 = [a frame];
+    NSRect f2 = [b frame];
+    CGFloat xA = NSMinX(f1);
+    CGFloat xB = NSMinX(f2);
+    
+    NSPoint pa = NSMakePoint(xA, NSMinY(f1));
+    NSPoint pb = NSMakePoint(xB, NSMaxY(f2));
+    
+    CGFloat heightA = NSHeight([a frame]);
+    CGFloat heightB = NSHeight([b frame]);
+    
+    
+    CGFloat xTolerance = 5; // Fix value: 5 points
+    CGFloat heightTolerance = 0.05; // Percentage
+    CGFloat yTolerance = (heightA + heightB) / 2;
+    
+    if (fabs(xA - xB) <= xTolerance && distance(pa, pb) <= yTolerance
+        && fabs(heightA - heightB) / ((heightA + heightB) / 2) <= heightTolerance) {
+        return YES;
     }
     
     return NO;

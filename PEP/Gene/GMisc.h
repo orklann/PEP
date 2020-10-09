@@ -10,6 +10,7 @@
 
 @class GGlyph;
 @class GWord;
+@class GLine;
 
 NS_ASSUME_NONNULL_BEGIN
 // Print NSData in character strings
@@ -29,4 +30,10 @@ BOOL separateCharacters(GGlyph *a, GGlyph *b);
 
 // Check if two words form a line
 BOOL separateWords(GWord* a, GWord*b);
+
+// Distance between to points;
+CGFloat distance(NSPoint a, NSPoint b);
+
+// Check if two lines form a text block
+BOOL separateLines(GLine *a, GLine *b);
 NS_ASSUME_NONNULL_END
