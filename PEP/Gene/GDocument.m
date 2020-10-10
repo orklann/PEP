@@ -14,6 +14,7 @@
 #import "GWord.h"
 #import "GLine.h"
 #import "GTextBlock.h"
+#import "GMisc.h"
 
 @implementation GDocument
 - (void)awakeFromNib {
@@ -158,5 +159,13 @@
         GGlyph *g = [glyphsArray objectAtIndex:i];
         NSLog(@"%@", [g content]);
     }
+    
+    NSRect f = [lastTB frame];
+    NSPoint origin = f.origin;
+    origin = translatePoint(origin, [p origin]);
+    f.origin = origin;
+    
+    NSTextView *textView = [[NSTextView alloc] initWithFrame:f];
+    [self addSubview:textView];
 }
 @end

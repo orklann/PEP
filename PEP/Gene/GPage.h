@@ -30,11 +30,13 @@ NS_ASSUME_NONNULL_BEGIN
     GGraphicsState *graphicsState;
     NSMutableArray *glyphs;
     GTextParser *textParser;
+    NSPoint origin;
 }
 
 + (id)create;
 - (void)setPageDictionary:(GDictionaryObject*)d;
 - (GDictionaryObject*)pageDictionary;
+- (NSPoint)origin;
 - (void)setParser:(GParser*)p;
 - (GParser*)parser;
 - (void)setDocument:(GDocument*)d;

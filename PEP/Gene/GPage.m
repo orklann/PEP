@@ -37,6 +37,12 @@
     parser = p;
 }
 
+- (NSPoint)origin {
+    NSRect pageRect = [self calculatePageMediaBox];
+    origin = pageRect.origin;
+    return origin;
+}
+
 - (GParser*)parser {
     return parser;
 }
