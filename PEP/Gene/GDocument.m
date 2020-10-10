@@ -149,7 +149,7 @@
     for (i = 0; i < [textBlocks count]; i++) {
         GTextBlock *tb = [textBlocks objectAtIndex:i];
         NSLog(@"*****");
-        NSLog(@"%@", [tb textBlockString]);
+        NSLog(@"%@", [tb textBlockStringWithLineFeed]);
     }
     NSLog(@"End list of text blocks");
     

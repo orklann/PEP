@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray*)glyphs;
 - (NSRect)frame;
 - (NSString*)textBlockString;
+- (NSString*)textBlockStringWithLineFeed;
 @end
 
 NS_ASSUME_NONNULL_END

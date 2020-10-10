@@ -65,9 +65,18 @@
     for (i = 0; i < [lines count]; i++) {
         GLine *l = [lines objectAtIndex:i];
         [s appendString:[l lineString]];
+    }
+    return s;
+}
+
+- (NSString*)textBlockStringWithLineFeed {
+    NSMutableString *s = [NSMutableString string];
+    int i;
+    for (i = 0; i < [lines count]; i++) {
+        GLine *l = [lines objectAtIndex:i];
+        [s appendString:[l lineString]];
         [s appendString:@"\n"];
     }
     return s;
-
 }
 @end
