@@ -167,5 +167,24 @@
     
     NSTextView *textView = [[NSTextView alloc] initWithFrame:f];
     [self addSubview:textView];
+    
+    
+    // Test get glyphs & line fragment metrics and it works as expected
+    NSFont *font = [NSFont fontWithName:@"Limelight" size:47];
+    NSMutableAttributedString *mas = [[NSMutableAttributedString alloc] initWithString:[lastTB textBlockString]];
+    [mas addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [mas length])];
+    [mas addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0, [mas length])];
+    
+    [[textView textStorage] setAttributedString:mas];
+    NSLayoutManager *lm = [textView layoutManager];
+    NSPoint pt = [lm locationForGlyphAtIndex:0];
+    NSLog(@"0: %@", NSStringFromPoint(pt));
+    NSRect rect = [lm lineFragmentRectForGlyphAtIndex:0 effectiveRange:NULL];
+    NSLog(@"0 rect: %@", NSStringFromRect(rect));
+    
+    pt = [lm locationForGlyphAtIndex:24];
+    NSLog(@"24: %@", NSStringFromPoint(pt));
+    rect = [lm lineFragmentRectForGlyphAtIndex:24 effectiveRange:NULL];
+    NSLog(@"24 rect: %@", NSStringFromRect(rect));
 }
 @end
