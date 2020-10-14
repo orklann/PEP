@@ -189,7 +189,8 @@
 }
 
 - (NSRect)rectFromPageToView:(NSRect)rect {
-    return NSMakeRect(rect.origin.x + origin.x, rect.origin.y + origin.y,
+    NSPoint o = [self origin];
+    return NSMakeRect(rect.origin.x + o.x, rect.origin.y + o.y,
                       rect.size.width, rect.size.height);
 }
 @end
