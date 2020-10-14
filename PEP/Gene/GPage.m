@@ -105,29 +105,6 @@
     if (textEditor != nil) {
         [textEditor draw:context];
     }
-    
-    // Test: draw glyphs position
-    NSMutableArray *glyphs = [textParser glyphs];
-    int i;
-    for (i = 0; i < [glyphs count]; i++) {
-        GGlyph *g = [glyphs objectAtIndex:i];
-        NSPoint pt = [g point];
-        NSRect f = NSMakeRect(pt.x, pt.y, 4, 4);
-        CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
-        CGContextFillRect(context, f);
-    }
-    
-    // Test: draw frame of text blocks
-//    NSMutableArray *textBlocks = [textParser makeTextBlocks];
-//    GTextBlock *firstTB = [textBlocks objectAtIndex:1];
-//    NSRect f = [firstTB frame];
-//    CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
-//    CGContextFillRect(context, f);
-//
-//    GTextBlock *lastTB = [textBlocks lastObject];
-//    f = [lastTB frame];
-//    CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
-//    CGContextFillRect(context, f);
 }
 
 // Calculate media box for PDF page in user space coordinate
