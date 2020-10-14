@@ -156,12 +156,35 @@
     for (i = 0; i < [glyphs count]; i++) {
         GGlyph *g = [glyphs objectAtIndex:i];
         NSRect frame = [g frame];
-        frame = [self.page  rectFromPageToView:frame];
+        frame = [self.page rectFromPageToView:frame];
         if (NSPointInRect(p, frame)) {
             ret = i;
-            NSLog(@"ret: %d", ret);
-            break;
+            return ret;
         }
+    }
+    
+    // Move insertion point to last glyph of line, if clicking at the end area
+    // of that line
+    for (i = 0; i < [[textBlock lines] count]; i++) {
+        GLine *line = [[textBlock lines] objectAtIndex:i];
+        NSRect lineFrame = [line frame];
+        lineFrame = [self.page rectFromPageToView:lineFrame];
+        CGFloat maxX = NSMaxX(lineFrame);
+        CGFloat y = lineFrame.origin.y;
+        NSRect blockFrame = [textBlock frame];
+        NSSize blockSize = blockFrame.size;
+        CGFloat width = blockSize.width - lineFrame.size.width;
+        NSRect rect = NSMakeRect(maxX, y, width, lineFrame.size.height);
+        
+        if (NSPointInRect(p, rect)) {
+            GGlyph *last = [[line glyphs] lastObject];
+            if (last.indexOfPageGlyphs == [glyphs count] - 1) {
+                ret = last.indexOfPageGlyphs;
+            } else {
+                ret = last.indexOfPageGlyphs - 1;
+            }
+        }
+        
     }
     return ret;
 }
@@ -169,8 +192,8 @@
 - (void)mouseDown:(NSEvent*)event {
     NSPoint location = [event locationInWindow];
     NSPoint point = [self.page.doc convertPoint:location fromView:nil];
-    int glyphIndex = [self nearestGlyphInPosition:point];
     [textBlock makeIndexInfoForGlyphs];
+    int glyphIndex = [self nearestGlyphInPosition:point];
     if (glyphIndex != -1) { // Successfully checked glyph in point
         NSArray *glyphs = [textBlock glyphs];
         GGlyph *g = [glyphs objectAtIndex:glyphIndex];
