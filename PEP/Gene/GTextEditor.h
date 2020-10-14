@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
 @class GTextBlock;
 @class GPage;
@@ -25,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (GTextEditor*)initWithPage:(GPage *)p textBlock:(GTextBlock*)tb;
 - (void)draw:(CGContextRef)context;
 - (NSRect)getInsertionPoint;
+- (void)keyDown:(NSEvent*)event;
 @end
 
 NS_ASSUME_NONNULL_END

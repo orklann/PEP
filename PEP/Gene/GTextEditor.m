@@ -12,6 +12,11 @@
 #import "GGlyph.h"
 #import "GDocument.h"
 
+#define kLeftArrow 123
+#define kRightArrow 124
+#define kDonwArrow 125
+#define kUpArrow 126`
+
 @implementation GTextEditor
 + (id)textEditorWithPage:(GPage *)p textBlock:(GTextBlock *)tb {
     GTextEditor *editor = [[GTextEditor alloc] initWithPage:p textBlock:tb];
@@ -24,16 +29,20 @@
     textBlock = tb;
     insertionPointIndex = 0;
     self.drawInsertionPoint = YES;
-    blinkTimer = [NSTimer scheduledTimerWithTimeInterval:0.6 repeats:YES block:^(NSTimer * _Nonnull timer) {
-        GDocument *doc = (GDocument*)[(GPage*)self.page doc];
+    blinkTimer = [NSTimer scheduledTimerWithTimeInterval:0.4 repeats:YES block:^(NSTimer * _Nonnull timer) {
         if (self.drawInsertionPoint) {
             self.drawInsertionPoint = NO;
         } else {
             self.drawInsertionPoint = YES;
         }
-        [doc setNeedsDisplay:YES];
+        [self redraw];
     }];
     return self;
+}
+
+- (void)redraw {
+    GDocument *doc = (GDocument*)[(GPage*)self.page doc];
+    [doc setNeedsDisplay:YES];
 }
 
 - (void)draw:(CGContextRef)context {
@@ -62,5 +71,21 @@
         ret = NSMakeRect(maxX, minY, 1, height);
     }
     return ret;
+}
+
+- (void)keyDown:(NSEvent*)event {
+    NSArray *glyphs = [textBlock glyphs];
+    int keyCode = [event keyCode];
+    if (keyCode == kLeftArrow) {
+        if (insertionPointIndex - 1 >= 0) {
+            insertionPointIndex--;
+        }
+    } else if (keyCode == kRightArrow) {
+        if (insertionPointIndex + 1 <= [glyphs count] - 1) {
+            insertionPointIndex++;
+        }
+    }
+    
+    [self redraw];
 }
 @end

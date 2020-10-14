@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 #import "GObjects.h"
 #import "GParser.h"
 #import "GTextState.h"
@@ -53,6 +54,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (GGraphicsState*)graphicsState;
 - (GTextState*)textState;
 - (GTextParser*)textParser;
+- (void)keyDown:(NSEvent*)event;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -175,4 +175,10 @@
 - (GTextParser*)textParser {
     return textParser;
 }
+
+- (void)keyDown:(NSEvent*)event {
+    if (textEditor) {
+        [textEditor keyDown:event];
+    }
+}
 @end

@@ -165,4 +165,13 @@
     origin = translatePoint(origin, [p origin]);
     f.origin = origin;
 }
+
+- (void)keyDown:(NSEvent *)event {
+    GPage *p = [pages firstObject];
+    [p keyDown:event];
+}
+
+- (BOOL)acceptsFirstResponder {
+    return YES;
+}
 @end

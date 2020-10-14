@@ -15,6 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *content;
     NSPoint point;
 }
+
+@property (readwrite) int indexOfLine;
+@property (readwrite) int indexOfPageGlyphs;
+
 + (id)create;
 - (void)setFrame:(NSRect)f;
 - (NSRect)frame;
