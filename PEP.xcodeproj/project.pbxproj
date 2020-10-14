@@ -31,6 +31,7 @@
 		938A4E6F252EEFDF00504235 /* GLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 938A4E6E252EEFDF00504235 /* GLine.m */; };
 		93A8692A251399760033DC22 /* GPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A86929251399760033DC22 /* GPage.m */; };
 		93A8692D25147ECA0033DC22 /* GMisc.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A8692C25147ECA0033DC22 /* GMisc.m */; };
+		93D48C1E2536CAAA002DD41B /* GTextEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D48C1D2536CAAA002DD41B /* GTextEditor.m */; };
 		93DC04C424F7B335003AC9B0 /* GParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C324F7B335003AC9B0 /* GParser.m */; };
 		93DC04C624F7B474003AC9B0 /* GParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C524F7B474003AC9B0 /* GParserTests.m */; };
 		93DC04C924F7B6EB003AC9B0 /* GObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C824F7B6EB003AC9B0 /* GObjects.m */; };
@@ -91,6 +92,8 @@
 		93A86929251399760033DC22 /* GPage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GPage.m; sourceTree = "<group>"; };
 		93A8692B25147ECA0033DC22 /* GMisc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMisc.h; sourceTree = "<group>"; };
 		93A8692C25147ECA0033DC22 /* GMisc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GMisc.m; sourceTree = "<group>"; };
+		93D48C1C2536CAAA002DD41B /* GTextEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTextEditor.h; sourceTree = "<group>"; };
+		93D48C1D2536CAAA002DD41B /* GTextEditor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTextEditor.m; sourceTree = "<group>"; };
 		93DC04C224F7B335003AC9B0 /* GParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GParser.h; sourceTree = "<group>"; };
 		93DC04C324F7B335003AC9B0 /* GParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GParser.m; sourceTree = "<group>"; };
 		93DC04C524F7B474003AC9B0 /* GParserTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GParserTests.m; sourceTree = "<group>"; };
@@ -212,6 +215,8 @@
 				9346A86025305B2800804506 /* GTextBlock.m */,
 				93159E60252B09F400F87451 /* GTextParser.h */,
 				93159E61252B09F400F87451 /* GTextParser.m */,
+				93D48C1C2536CAAA002DD41B /* GTextEditor.h */,
+				93D48C1D2536CAAA002DD41B /* GTextEditor.m */,
 				93A86928251399760033DC22 /* GPage.h */,
 				93A86929251399760033DC22 /* GPage.m */,
 				9363D948250895610075FEF0 /* GDocument.h */,
@@ -328,6 +333,7 @@
 				9373EEF6251C84A80066AD2A /* GFont.m in Sources */,
 				93427469252082CA00CA3DBE /* GGraphicsState.m in Sources */,
 				93159E62252B09F400F87451 /* GTextParser.m in Sources */,
+				93D48C1E2536CAAA002DD41B /* GTextEditor.m in Sources */,
 				93159E5F252AEB5E00F87451 /* GGlyph.m in Sources */,
 				9363D94A250895610075FEF0 /* GDocument.m in Sources */,
 				935BCC3A252C61B900868C01 /* GWord.m in Sources */,

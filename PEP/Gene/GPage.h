@@ -12,6 +12,7 @@
 #import "GTextState.h"
 #import "GGraphicsState.h"
 #import "GTextParser.h"
+#import "GTextEditor.h"
 
 @class GDocument;
 @class GFont;
@@ -31,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *glyphs;
     GTextParser *textParser;
     NSPoint origin;
+    GTextEditor *textEditor;
 }
 
 + (id)create;

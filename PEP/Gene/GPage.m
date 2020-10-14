@@ -92,6 +92,13 @@
     [interpreter setInput:pageContent];
     [interpreter eval:context];
     
+    GTextBlock *last  = [[textParser makeTextBlocks] lastObject];
+    
+    textEditor = [GTextEditor textEditorWithPage:self textBlock:last];
+    
+    if (textEditor != nil) {
+        [textEditor draw:context];
+    }
     
     // Test: draw glyphs position
     NSMutableArray *glyphs = [textParser glyphs];
