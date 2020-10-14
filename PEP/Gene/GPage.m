@@ -120,7 +120,7 @@
     CGFloat w = [widthObj getRealValue];
     CGFloat h = [heightObj getRealValue];
     NSRect mediaBoxRect = NSMakeRect(x, y, w, h);
-    NSLog(@"%@", NSStringFromRect(mediaBoxRect));
+    NSLog(@"Page media box: %@", NSStringFromRect(mediaBoxRect));
     NSRect bounds = [doc bounds];
     CGFloat pageX = NSMidX(bounds) - (w / 2);
     CGFloat pageY = kPageMargin;
