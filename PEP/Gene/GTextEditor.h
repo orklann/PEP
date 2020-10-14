@@ -14,13 +14,17 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GTextEditor : NSObject {
     int insertionPointIndex;
-    GPage *page;
     GTextBlock *textBlock;
+    NSTimer *blinkTimer;
 }
+
+@property (readwrite) BOOL drawInsertionPoint;
+@property (readwrite) GPage *page;
 
 + (id)textEditorWithPage:(GPage *)p textBlock:(GTextBlock *)tb;
 - (GTextEditor*)initWithPage:(GPage *)p textBlock:(GTextBlock*)tb;
 - (void)draw:(CGContextRef)context;
+- (NSRect)getInsertionPoint;
 @end
 
 NS_ASSUME_NONNULL_END

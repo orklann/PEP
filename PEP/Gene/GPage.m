@@ -47,6 +47,10 @@
     return parser;
 }
 
+- (GDocument*)doc {
+    return doc;
+}
+
 - (void)setDocument:(GDocument*)d {
     doc = d;
 }
@@ -94,7 +98,9 @@
     
     GTextBlock *last  = [[textParser makeTextBlocks] lastObject];
     
-    textEditor = [GTextEditor textEditorWithPage:self textBlock:last];
+    if (textEditor == nil) {
+        textEditor = [GTextEditor textEditorWithPage:self textBlock:last];
+    }
     
     if (textEditor != nil) {
         [textEditor draw:context];

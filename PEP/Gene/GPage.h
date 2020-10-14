@@ -41,6 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSPoint)origin;
 - (void)setParser:(GParser*)p;
 - (GParser*)parser;
+- (GDocument*)doc;
 - (void)setDocument:(GDocument*)d;
 - (void)parsePageContent;
 - (void)parseResources;
