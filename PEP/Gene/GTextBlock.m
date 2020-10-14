@@ -8,7 +8,8 @@
 
 #import "GTextBlock.h"
 #import "GLine.h"
-
+#import "GWord.h"
+#import "GGlyph.h"
 
 @implementation GTextBlock
 + (id)create {
@@ -78,5 +79,56 @@
         [s appendString:@"\n"];
     }
     return s;
+}
+
+- (void)makeIndexInfoForGlyphs {
+    NSArray *glyphs = [self glyphs];
+    int i;
+    for (i = 0; i < [glyphs count]; i++) {
+        GGlyph *g = [glyphs objectAtIndex:i];
+        g.indexOfPageGlyphs = i;
+    }
+}
+
+- (int)getLineOfGlyphIndex:(int)index {
+    int i;
+    int indexFull = 0;
+    for (i = 0; i < [lines count]; i++) {
+        GLine *l = [lines objectAtIndex:i];
+        int j;
+        for (j = 0; j < [[l words] count]; j++) {
+            GWord *w = [[l words] objectAtIndex:j];
+            int k;
+            for (k = 0; k < [[w glyphs] count]; k++) {
+                if (index == indexFull) {
+                    return i;
+                }
+                indexFull++;
+            }
+        }
+    }
+    return -1;
+}
+
+- (int)indexOfLine:(int)line forFullGlyphsIndex:(int)index {
+    int i;
+    int indexFull = 0;
+    for (i = 0; i < [lines count]; i++) {
+        GLine *l = [lines objectAtIndex:i];
+        int j;
+        int indexInLine = 0;
+        for (j = 0; j < [[l words] count]; j++) {
+            GWord *w = [[l words] objectAtIndex:j];
+            int k;
+            for (k = 0; k < [[w glyphs] count]; k++) {
+                if (index == indexFull) {
+                    return indexInLine;
+                }
+                indexFull++;
+                indexInLine++;
+            }
+        }
+    }
+    return -1;
 }
 @end

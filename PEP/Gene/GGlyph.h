@@ -16,7 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
     NSPoint point;
 }
 
-@property (readwrite) int indexOfLine;
 @property (readwrite) int indexOfPageGlyphs;
 
 + (id)create;

@@ -10,12 +10,13 @@
 #import "GPage.h"
 #import "GTextBlock.h"
 #import "GGlyph.h"
+#import "GLine.h"
 #import "GDocument.h"
 
 #define kLeftArrow 123
 #define kRightArrow 124
 #define kDonwArrow 125
-#define kUpArrow 126`
+#define kUpArrow 126
 
 @implementation GTextEditor
 + (id)textEditorWithPage:(GPage *)p textBlock:(GTextBlock *)tb {
@@ -83,6 +84,24 @@
     } else if (keyCode == kRightArrow) {
         if (insertionPointIndex + 1 <= [glyphs count] - 1) {
             insertionPointIndex++;
+        }
+    } else if (keyCode == kUpArrow) {
+        // construct glyphs index in glyph class as a property
+        [textBlock makeIndexInfoForGlyphs];
+        int currentLineIndex = [textBlock getLineOfGlyphIndex:insertionPointIndex];
+        if (currentLineIndex != -1) { // No errors
+            if (currentLineIndex - 1 >= 0) {
+                int previousLineIndex = currentLineIndex - 1;
+                GLine *prevLine = [[textBlock lines] objectAtIndex:previousLineIndex];
+                int glyphIndexInCurrentLine = [textBlock indexOfLine:currentLineIndex
+                                             forFullGlyphsIndex:insertionPointIndex];
+                if (glyphIndexInCurrentLine > (int)[[prevLine glyphs] count] - 1) {
+                    glyphIndexInCurrentLine = (int)[[prevLine glyphs] count] - 1;
+                }
+                int glyphIndexInPrevLine = glyphIndexInCurrentLine;
+                GGlyph *currentGlyph = [[prevLine glyphs] objectAtIndex:glyphIndexInPrevLine];
+                insertionPointIndex = currentGlyph.indexOfPageGlyphs;
+            }
         }
     }
     
