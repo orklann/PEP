@@ -168,7 +168,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         [commands addObject:obj];
         obj = [cmdParser parseNextObject];
     }
-    NSLog(@"END parseCommands");
 }
 
 - (NSMutableArray*)commands {
@@ -222,7 +221,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGAffineTransform ctm  = [[page graphicsState] ctm];
     size = CGSizeApplyAffineTransform(size, tm);
     size = CGSizeApplyAffineTransform(size, ctm);
-    NSLog(@"size: %@", NSStringFromSize(size));
 }
 
 - (void)eval_Tj_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -273,6 +271,5 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             }
         }
     }
-    NSLog(@"eval() %ld bytes", [input length]);
 }
 @end

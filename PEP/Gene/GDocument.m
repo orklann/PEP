@@ -113,8 +113,6 @@
     CGContextRef context = [[NSGraphicsContext currentContext] CGContext];
     GPage *page = [pages firstObject];
     [page render:context];
-    
-    NSLog(@"drawRect called.");
 }
 
 // GDocument's view coordinate origin is at bottom-left which is not flipped.

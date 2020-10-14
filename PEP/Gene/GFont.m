@@ -47,7 +47,6 @@
     ref = [[descriptor value] objectForKey:@"FontFile2"];
     GStreamObject *fontProgram = [parser getObjectByRef:[ref getRefString]];
     fontData = [fontProgram getDecodedStreamContent];
-    NSLog(@"GFont:fontData with %ld bytes", [fontData length]);
 }
 
 - (NSFont*)getNSFontBySize:(CGFloat)fontSize {

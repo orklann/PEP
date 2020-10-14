@@ -47,7 +47,6 @@
 }
 
 - (void)draw:(CGContextRef)context {
-    NSLog(@"GTextEditor insertion point index: %d", insertionPointIndex);
     if (self.drawInsertionPoint) {
         NSRect rect = [self getInsertionPoint];
         CGContextSetRGBFillColor(context, 0.0, 0.0, 0.0, 1.0);
@@ -57,15 +56,17 @@
 
 - (NSRect)getInsertionPoint {
     NSArray *glyphs = [textBlock glyphs];
-    GGlyph *g = [glyphs objectAtIndex:insertionPointIndex];
-    NSRect rect = [g frame];
     NSRect ret;
-    if (insertionPointIndex < [glyphs count] - 1) {
+    if (insertionPointIndex <= [glyphs count] - 1) {
+        GGlyph *g = [glyphs objectAtIndex:insertionPointIndex];
+        NSRect rect = [g frame];
         CGFloat minX = NSMinX(rect);
         CGFloat minY = NSMinY(rect);
         CGFloat height = NSHeight(rect);
         ret = NSMakeRect(minX, minY, 1, height);
     } else {
+        GGlyph *g = [glyphs lastObject];
+        NSRect rect = [g frame];
         CGFloat maxX = NSMaxX(rect);
         CGFloat minY = NSMinY(rect);
         CGFloat height = NSHeight(rect);
@@ -82,7 +83,7 @@
             insertionPointIndex--;
         }
     } else if (keyCode == kRightArrow) {
-        if (insertionPointIndex + 1 <= [glyphs count] - 1) {
+        if (insertionPointIndex + 1 <= [glyphs count]) {
             insertionPointIndex++;
         }
     } else if (keyCode == kUpArrow) {
@@ -101,6 +102,22 @@
                 int glyphIndexInPrevLine = glyphIndexInCurrentLine;
                 GGlyph *currentGlyph = [[prevLine glyphs] objectAtIndex:glyphIndexInPrevLine];
                 insertionPointIndex = currentGlyph.indexOfPageGlyphs;
+            }
+        } else if (insertionPointIndex == [glyphs count]) {
+            int currentLineIndex = [textBlock getLineOfGlyphIndex:insertionPointIndex - 1];
+            if (currentLineIndex != -1) { // No errors
+                if (currentLineIndex - 1 >= 0) {
+                    int previousLineIndex = currentLineIndex - 1;
+                    GLine *prevLine = [[textBlock lines] objectAtIndex:previousLineIndex];
+                    int glyphIndexInCurrentLine = [textBlock indexOfLine:currentLineIndex
+                                                 forFullGlyphsIndex:insertionPointIndex-1];
+                    if (glyphIndexInCurrentLine > (int)[[prevLine glyphs] count] - 1) {
+                        glyphIndexInCurrentLine = (int)[[prevLine glyphs] count] - 1;
+                    }
+                    int glyphIndexInPrevLine = glyphIndexInCurrentLine;
+                    GGlyph *currentGlyph = [[prevLine glyphs] objectAtIndex:glyphIndexInPrevLine];
+                    insertionPointIndex = currentGlyph.indexOfPageGlyphs + 1;
+                }
             }
         }
     }
