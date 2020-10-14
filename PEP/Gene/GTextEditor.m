@@ -15,7 +15,7 @@
 
 #define kLeftArrow 123
 #define kRightArrow 124
-#define kDonwArrow 125
+#define kDownArrow 125
 #define kUpArrow 126
 
 @implementation GTextEditor
@@ -103,7 +103,7 @@
                 GGlyph *currentGlyph = [[prevLine glyphs] objectAtIndex:glyphIndexInPrevLine];
                 insertionPointIndex = currentGlyph.indexOfPageGlyphs;
             }
-        } else if (insertionPointIndex == [glyphs count]) {
+        } else if (insertionPointIndex == [glyphs count]) { // Edge case: insertion point is at the end of text
             int currentLineIndex = [textBlock getLineOfGlyphIndex:insertionPointIndex - 1];
             if (currentLineIndex != -1) { // No errors
                 if (currentLineIndex - 1 >= 0) {
@@ -119,6 +119,30 @@
                     insertionPointIndex = currentGlyph.indexOfPageGlyphs + 1;
                 }
             }
+        }
+    } else if (keyCode == kDownArrow) {
+        // construct glyphs index in glyph class as a property
+        [textBlock makeIndexInfoForGlyphs];
+        int currentLineIndex = [textBlock getLineOfGlyphIndex:insertionPointIndex];
+        if (currentLineIndex != -1) { // No errors
+            if (currentLineIndex + 1 <= [[textBlock lines] count] - 1) {
+                int nextLineIndex = currentLineIndex + 1;
+                GLine *nextLine = [[textBlock lines] objectAtIndex:nextLineIndex];
+                int glyphIndexInCurrentLine = [textBlock indexOfLine:currentLineIndex
+                                             forFullGlyphsIndex:insertionPointIndex];
+                
+                
+                if (glyphIndexInCurrentLine >= (int)[[nextLine glyphs] count]) {
+                    insertionPointIndex = (int)[glyphs count];
+                } else {
+                    int glyphIndexInNextLine = glyphIndexInCurrentLine;
+                    GGlyph *currentGlyph = [[nextLine glyphs] objectAtIndex:glyphIndexInNextLine];
+                    insertionPointIndex = currentGlyph.indexOfPageGlyphs;
+                }
+            }
+        } else if (insertionPointIndex == [glyphs count]) {
+            // No need to handle insertion point in last position, because we
+            // have no next line to move to
         }
     }
     
