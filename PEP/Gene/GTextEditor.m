@@ -12,6 +12,8 @@
 #import "GGlyph.h"
 #import "GLine.h"
 #import "GDocument.h"
+#import "GMisc.h"
+#import "GConstants.h"
 
 #define kLeftArrow 123
 #define kRightArrow 124
@@ -47,6 +49,13 @@
 }
 
 - (void)draw:(CGContextRef)context {
+    // Draw text editor border with 1 pixel width;
+    NSRect frame = [textBlock frame];
+    frame = NSInsetRect(frame, 0.5, 0.5);
+    CGContextSetLineWidth(context, 1.0 / (kScaleFactor));
+    CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
+    CGContextStrokeRect(context, frame);
+    
     if (self.drawInsertionPoint) {
         NSRect rect = [self getInsertionPoint];
         CGContextSetRGBFillColor(context, 0.0, 0.0, 0.0, 1.0);
