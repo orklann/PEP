@@ -134,6 +134,9 @@
 
 - (void)mouseDown:(NSEvent *)event {
     GPage *p = [pages firstObject];
+   
+    [p mouseDown:event];
+    
     NSUInteger i;
     NSMutableArray *glyphs = [[p textParser] glyphs];
     for (i = 0; i < [glyphs count]; i++) {

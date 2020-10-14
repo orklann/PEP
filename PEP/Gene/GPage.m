@@ -181,4 +181,15 @@
         [textEditor keyDown:event];
     }
 }
+
+- (void)mouseDown:(NSEvent*)event {
+    if (textEditor) {
+        [textEditor mouseDown:event];
+    }
+}
+
+- (NSRect)rectFromPageToView:(NSRect)rect {
+    return NSMakeRect(rect.origin.x + origin.x, rect.origin.y + origin.y,
+                      rect.size.width, rect.size.height);
+}
 @end

@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)draw:(CGContextRef)context;
 - (NSRect)getInsertionPoint;
 - (void)keyDown:(NSEvent*)event;
+- (void)mouseDown:(NSEvent*)event;
 @end
 
 NS_ASSUME_NONNULL_END

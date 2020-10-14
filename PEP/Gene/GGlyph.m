@@ -18,6 +18,9 @@
     frame = f;
 }
 
+// return frame in GPage coordinate
+// In some case, we need view coordinate, just call [GPage rectFromPageToView:]
+// to convert to view coordinate
 - (NSRect)frame {
     return frame;
 }

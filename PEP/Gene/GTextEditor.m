@@ -148,4 +148,45 @@
     
     [self redraw];
 }
+
+- (int)nearestGlyphInPosition:(NSPoint)p {
+    int ret = -1;
+    NSArray *glyphs = [textBlock glyphs];
+    int i;
+    for (i = 0; i < [glyphs count]; i++) {
+        GGlyph *g = [glyphs objectAtIndex:i];
+        NSRect frame = [g frame];
+        frame = [self.page  rectFromPageToView:frame];
+        if (NSPointInRect(p, frame)) {
+            ret = i;
+            NSLog(@"ret: %d", ret);
+            break;
+        }
+    }
+    return ret;
+}
+
+- (void)mouseDown:(NSEvent*)event {
+    NSPoint location = [event locationInWindow];
+    NSPoint point = [self.page.doc convertPoint:location fromView:nil];
+    int glyphIndex = [self nearestGlyphInPosition:point];
+    [textBlock makeIndexInfoForGlyphs];
+    if (glyphIndex != -1) { // Successfully checked glyph in point
+        NSArray *glyphs = [textBlock glyphs];
+        GGlyph *g = [glyphs objectAtIndex:glyphIndex];
+        NSRect frame = [g frame];
+        frame = [self.page  rectFromPageToView:frame];
+        CGFloat midX = NSMidX(frame);
+        if (point.x <= midX) {
+            insertionPointIndex = [g indexOfPageGlyphs];
+        } else {
+            insertionPointIndex = [g indexOfPageGlyphs] + 1;
+        }
+        if (insertionPointIndex > (int)[glyphs count]) {
+            insertionPointIndex = (int)[glyphs count];
+        }
+        self.drawInsertionPoint = YES;
+        [self redraw];
+    }
+}
 @end

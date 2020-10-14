@@ -55,6 +55,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (GTextState*)textState;
 - (GTextParser*)textParser;
 - (void)keyDown:(NSEvent*)event;
+- (void)mouseDown:(NSEvent*)event;
+- (NSRect)rectFromPageToView:(NSRect)rect;
 @end
 
 NS_ASSUME_NONNULL_END
