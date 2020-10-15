@@ -68,16 +68,17 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     for (i = 0; i < [s length]; i++) {
         NSString *ch = [s substringWithRange:NSMakeRange(i, 1)];
         CGContextSetTextMatrix(context, rm);
-        CGFloat hAdvance = [self drawString:ch font:font context:context];
+        [self drawString:ch font:font context:context];
         
+        CGFloat hAdvance = getGlyphAdvanceForFont(ch, font);
         //
         // Make glyphs for GTextParser
         //
         CGRect r = getGlyphBoundingBox(ch, font, [[page textState] textMatrix], hAdvance);
         
         // Test: draw bounding box for glyph
-        //CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
-        //CGContextFillRect(context, r);
+        CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
+        CGContextFillRect(context, r);
         
         // Apply current context matrix to get the right frame of glyph
         r = CGRectApplyAffineTransform(r, [[page graphicsState] ctm]);

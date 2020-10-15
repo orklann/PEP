@@ -22,34 +22,21 @@ void printData(NSData *data) {
     printf("\n");
 }
 
-
-// TODO: Since this method is not always returning a correct value,
-// We are considering use other methods.
 CGFloat getGlyphAdvanceForFont(NSString *ch, NSFont *font) {
-    CTFontRef ctFont = (__bridge CTFontRef)font;
-    CGFontRef f = CTFontCopyGraphicsFont(ctFont, nil);
-    
-    CGGlyph g = CGFontGetGlyphWithGlyphName(f, (__bridge CFStringRef)ch);
-    int advance;
-    // This advance is :1517 for example it's not relative to font size.
-    // It's advance in glyph space (EM square)
-    CGFontGetGlyphAdvances(f, &g, 1, &advance);
-    
+    NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:ch];
+    [s addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, 1)];
+    [s addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0, 1)];
+
+    CFAttributedStringRef attrStr = (__bridge CFAttributedStringRef)(s);
+    CTLineRef line = CTLineCreateWithAttributedString(attrStr);
+    CFArrayRef runs = CTLineGetGlyphRuns(line);
+    CTRunRef firstRun = CFArrayGetValueAtIndex(runs, 0);
     CGSize size;
-    
-    CTFontGetAdvancesForGlyphs(ctFont, kCTFontOrientationHorizontal, &g, &size, 1);
-    NSLog(@"(*)advance: %@ %@", NSStringFromSize(size), ch);
-    NSLog(@"advance: %d : %@", advance, ch);
-    int upm = CGFontGetUnitsPerEm(f);
-    NSLog(@"upm: %d", upm);
-    
-    CGFloat glyphWidth = (CGFloat) (advance * [font pointSize])/ upm;
-    CFRelease(f);
-    return glyphWidth;
+    CTRunGetAdvances(firstRun, CFRangeMake(0, 1), &size);
+    CFRelease(line);
+    return size.width;
 }
 
-// TODO: Since getGlyphAdvanceForFont() is not always returning a correct value
-// We are considering rewrite this method with an advance as input parameter
 NSRect getGlyphBoundingBox(NSString *ch, NSFont *font, CGAffineTransform tm,
                            CGFloat advance) {
     CGFloat glyphWidth = advance;
