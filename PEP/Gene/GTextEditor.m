@@ -48,6 +48,17 @@
     [doc setNeedsDisplay:YES];
 }
 
+- (void)drawInsertionPoint:(CGContextRef)context {
+    NSRect rect = [self getInsertionPoint];
+    NSPoint start = NSMakePoint(NSMinX(rect), NSMinY(rect));
+    NSPoint end = NSMakePoint(NSMinX(rect), NSMaxY(rect));
+    CGContextSetRGBFillColor(context, 0.0, 0.0, 0.0, 1.0);
+    CGContextSetLineWidth(context, 1.0 / (kScaleFactor));
+    CGContextMoveToPoint(context, (int)(start.x) + 0.5, (int)(start.y) - 0.5);
+    CGContextAddLineToPoint(context, (int)(end.x) + 0.5, (int)(end.y) - 0.5);
+    CGContextStrokePath(context);
+}
+
 - (void)draw:(CGContextRef)context {
     // Draw text editor border with 1 pixel width;
     NSRect frame = [textBlock frame];
@@ -57,9 +68,7 @@
     CGContextStrokeRect(context, frame);
     
     if (self.drawInsertionPoint) {
-        NSRect rect = [self getInsertionPoint];
-        CGContextSetRGBFillColor(context, 0.0, 0.0, 0.0, 1.0);
-        CGContextFillRect(context, rect);
+        [self drawInsertionPoint:context];
     }
 }
 
