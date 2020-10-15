@@ -87,10 +87,17 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         // Apply current context matrix to get the right point for glyph
         p = CGPointApplyAffineTransform(p, [[page graphicsState] ctm]);
         
+        // Convert glyph width from glyph space to text space
+        // Glyph space are defined by EM square and glyph origin
+        // hAdvance is a floating point here = width / unitsPerEM
+        NSSize s = NSMakeSize(hAdvance, 0);
+        s = CGSizeApplyAffineTransform(s, [[page textState] textMatrix]);
+        
         GGlyph *glyph = [GGlyph create];
         [glyph setFrame:r];
         [glyph setPoint:p];
         [glyph setContent:ch];
+        [glyph setWidth:s.width];
         [glyphs addObject:glyph];
         
         // See "9.4.4 Text space details"

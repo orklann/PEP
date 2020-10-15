@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 @property (readwrite) int indexOfPageGlyphs;
+@property (readwrite) CGFloat width;
 
 + (id)create;
 - (void)setFrame:(NSRect)f;
