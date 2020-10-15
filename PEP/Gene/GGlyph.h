@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readwrite) int indexOfPageGlyphs;
 @property (readwrite) CGFloat width;
+@property (readwrite) CGAffineTransform ctm;
+@property (readwrite) CGAffineTransform textMatrix;
 
 + (id)create;
 - (void)setFrame:(NSRect)f;

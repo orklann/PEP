@@ -98,6 +98,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         [glyph setPoint:p];
         [glyph setContent:ch];
         [glyph setWidth:s.width];
+        [glyph setCtm:[[page graphicsState] ctm]];
+        [glyph setTextMatrix:[[page textState] textMatrix]];
         [glyphs addObject:glyph];
         
         // See "9.4.4 Text space details"
