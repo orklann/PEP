@@ -74,7 +74,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         //
         // Make glyphs for GTextParser
         //
-        CGRect r = getGlyphBoundingBox(ch, font, [[page textState] textMatrix], hAdvance);
+        CGRect r = getGlyphBoundingBox(ch, font, [[page textState] textMatrix]);
         
         // Test: draw bounding box for glyph
         //CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);

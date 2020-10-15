@@ -18,7 +18,7 @@ void printData(NSData *data);
 
 // Get glyph width
 CGFloat getGlyphAdvanceForFont(NSString *ch, NSFont *font);
-NSRect getGlyphBoundingBox(NSString *ch, NSFont *font, CGAffineTransform tm, CGFloat advance);
+NSRect getGlyphBoundingBox(NSString *ch, NSFont *font, CGAffineTransform tm);
 
 // Compare method for sorting glyphs in read order
 int compareGlyphs(GGlyph *a, GGlyph *b);

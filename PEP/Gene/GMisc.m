@@ -37,9 +37,8 @@ CGFloat getGlyphAdvanceForFont(NSString *ch, NSFont *font) {
     return size.width;
 }
 
-NSRect getGlyphBoundingBox(NSString *ch, NSFont *font, CGAffineTransform tm,
-                           CGFloat advance) {
-    CGFloat glyphWidth = advance;
+NSRect getGlyphBoundingBox(NSString *ch, NSFont *font, CGAffineTransform tm) {
+    CGFloat glyphWidth = getGlyphAdvanceForFont(ch, font);
     NSMutableAttributedString *s = [[NSMutableAttributedString alloc]
                                     initWithString:ch];
     [s addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [ch length])];
