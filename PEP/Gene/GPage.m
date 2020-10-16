@@ -77,6 +77,11 @@
     return resources;
 }
 
+- (void)translateToPageOrigin:(CGContextRef)context {
+    NSPoint o = [self origin];
+    CGContextTranslateCTM(context, o.x, o.y);
+}
+
 - (void)render:(CGContextRef)context {
     // Draw media box (a.k.a page boundary)
     NSRect pageRect = [self calculatePageMediaBox];
@@ -84,7 +89,7 @@
     CGContextFillRect(context, pageRect);
     
     // Translate context origin to page media box origin
-    CGContextTranslateCTM(context, pageRect.origin.x, pageRect.origin.y);
+    [self translateToPageOrigin:context];
     
     textState = [GTextState create];
     graphicsState = [GGraphicsState create];
@@ -96,11 +101,6 @@
     [interpreter setInput:pageContent];
     [interpreter eval:context];
     
-    GTextBlock *last  = [[textParser makeTextBlocks] lastObject];
-    
-    if (textEditor == nil) {
-        textEditor = [GTextEditor textEditorWithPage:self textBlock:last];
-    }
     
     if (textEditor != nil) {
         [textEditor draw:context];
@@ -128,6 +128,7 @@
     CGFloat pageHeight = h;
     NSRect pageRectFlipped = NSMakeRect(pageX, pageY, pageWidth, pageHeight);
     NSRect pageRect = [doc rectFromFlipped:pageRectFlipped];
+    NSLog(@"page rect: %@", NSStringFromRect(pageRect));
     return pageRect;
 }
 
@@ -163,11 +164,37 @@
     if (textEditor) {
         [textEditor mouseDown:event];
     }
+    
+    GTextBlock *last  = [[textParser makeTextBlocks] lastObject];
+    textEditor = [GTextEditor textEditorWithPage:self textBlock:last];
 }
 
 - (NSRect)rectFromPageToView:(NSRect)rect {
     NSPoint o = [self origin];
     return NSMakeRect(rect.origin.x + o.x, rect.origin.y + o.y,
                       rect.size.width, rect.size.height);
+}
+
+- (void)buildPageContent {
+    NSMutableString *ret = [NSMutableString string];
+    
+    // q Q q
+    [ret appendString:@" q Q q "];
+
+    int i;
+    for (i = 0; i < [[textParser glyphs] count]; i++) {
+        GGlyph *g = [[textParser glyphs] objectAtIndex:i];
+        [ret appendString:[g complieToOperators]];
+    }
+    
+    // Q
+    // TODO: Fix context origin restore to (bottom, left) that causes
+    //       text block frame not drawn at the right position, due to
+    //       two Q (Q Q)
+    [ret appendString:@"Q\n"];
+    pageContent = [ret dataUsingEncoding:NSASCIIStringEncoding];
+    NSLog(@"New Page Content");
+    printData(pageContent);
+    NSLog(@"END New Page Content");
 }
 @end

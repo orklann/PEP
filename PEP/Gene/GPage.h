@@ -57,6 +57,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)keyDown:(NSEvent*)event;
 - (void)mouseDown:(NSEvent*)event;
 - (NSRect)rectFromPageToView:(NSRect)rect;
+- (void)buildPageContent;
+- (void)translateToPageOrigin:(CGContextRef)context;
 @end
 
 NS_ASSUME_NONNULL_END

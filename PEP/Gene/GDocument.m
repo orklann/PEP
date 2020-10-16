@@ -165,6 +165,9 @@
     NSPoint origin = f.origin;
     origin = translatePoint(origin, [p origin]);
     f.origin = origin;
+    
+    [p buildPageContent];
+    //[self setNeedsDisplay:YES];
 }
 
 - (void)keyDown:(NSEvent *)event {

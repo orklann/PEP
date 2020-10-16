@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) CGFloat width;
 @property (readwrite) CGAffineTransform ctm;
 @property (readwrite) CGAffineTransform textMatrix;
+@property (readwrite) NSString *fontName;
+@property (readwrite) CGFloat fontSize;
 
 + (id)create;
 - (void)setFrame:(NSRect)f;
@@ -28,6 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSPoint)point;
 - (void)setContent:(NSString*)s;
 - (NSString*)content;
+- (NSString*)literalString;
+- (NSString*)complieToOperators;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -100,6 +100,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         [glyph setWidth:s.width];
         [glyph setCtm:[[page graphicsState] ctm]];
         [glyph setTextMatrix:[[page textState] textMatrix]];
+        NSString *fontName = [NSString stringWithFormat:@"/%@",
+                              [[page textState] fontName]];
+        [glyph setFontName:fontName];
+        [glyph setFontSize:[[page textState] fontSize]];
         [glyphs addObject:glyph];
         
         // See "9.4.4 Text space details"
@@ -172,7 +176,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                 [(GCommandObject*)obj setArgs:args];
             }
             else {
-                NSLog(@"GInterpreter:parseCommands not handle %@ operator", cmd);
+                //NSLog(@"GInterpreter:parseCommands not handle %@ operator", cmd);
             }
         }
         [commands addObject:obj];
@@ -277,7 +281,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             } else if (isCommand(cmd, @"Tj")) { // eval Tj
                 [self eval_Tj_Command:context command:cmdObj];
             } else {
-                NSLog(@"Operator %@ not eval.", cmd);
+                //NSLog(@"Operator %@ not eval.", cmd);
             }
         }
     }
