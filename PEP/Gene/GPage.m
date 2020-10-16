@@ -167,6 +167,8 @@
     
     GTextBlock *last  = [[textParser makeTextBlocks] lastObject];
     textEditor = [GTextEditor textEditorWithPage:self textBlock:last];
+    
+    [self redraw];
 }
 
 - (NSRect)rectFromPageToView:(NSRect)rect {
@@ -196,5 +198,9 @@
     NSLog(@"New Page Content");
     printData(pageContent);
     NSLog(@"END New Page Content");
+}
+
+- (void)redraw {
+    [[self doc] setNeedsDisplay:YES];
 }
 @end

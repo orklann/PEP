@@ -59,6 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSRect)rectFromPageToView:(NSRect)rect;
 - (void)buildPageContent;
 - (void)translateToPageOrigin:(CGContextRef)context;
+- (void)redraw;
 @end
 
 NS_ASSUME_NONNULL_END
