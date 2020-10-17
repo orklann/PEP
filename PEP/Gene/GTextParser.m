@@ -73,8 +73,8 @@
 // Note: This method does not tested well
 // Just check back later
 - (NSMutableArray*)makeWords {
-    [self makeIndexInfoForGlyphs];
     [self makeReadOrderGlyphs];
+    [self makeIndexInfoForGlyphs];
     
     words = [NSMutableArray array];
     
