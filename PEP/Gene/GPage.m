@@ -142,6 +142,11 @@
     return [font getNSFontBySize:[[self textState] fontSize]];
 }
 
+- (NSFont*)getFontByName:(NSString*)name size:(CGFloat)size {
+    GFont *font = [self getFontByName:name];
+    return [font getNSFontBySize:size];
+}
+
 - (GGraphicsState*)graphicsState {
     return graphicsState;
 }

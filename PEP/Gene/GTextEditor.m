@@ -117,7 +117,7 @@
                 }
                 int glyphIndexInPrevLine = glyphIndexInCurrentLine;
                 GGlyph *currentGlyph = [[prevLine glyphs] objectAtIndex:glyphIndexInPrevLine];
-                insertionPointIndex = currentGlyph.indexOfPageGlyphs;
+                insertionPointIndex = currentGlyph.indexOfLine;
             }
         } else if (insertionPointIndex == [glyphs count]) { // Edge case: insertion point is at the end of text
             int currentLineIndex = [textBlock getLineOfGlyphIndex:insertionPointIndex - 1];
@@ -132,7 +132,7 @@
                     }
                     int glyphIndexInPrevLine = glyphIndexInCurrentLine;
                     GGlyph *currentGlyph = [[prevLine glyphs] objectAtIndex:glyphIndexInPrevLine];
-                    insertionPointIndex = currentGlyph.indexOfPageGlyphs + 1;
+                    insertionPointIndex = currentGlyph.indexOfLine + 1;
                 }
             }
         }
@@ -151,7 +151,7 @@
                 } else {
                     int glyphIndexInNextLine = glyphIndexInCurrentLine;
                     GGlyph *currentGlyph = [[nextLine glyphs] objectAtIndex:glyphIndexInNextLine];
-                    insertionPointIndex = currentGlyph.indexOfPageGlyphs;
+                    insertionPointIndex = currentGlyph.indexOfLine;
                 }
             }
         } else if (insertionPointIndex == [glyphs count]) {
@@ -160,6 +160,12 @@
         }
     }
     
+    // Test: press m key to insert character into text editor
+    if ([[event characters] isEqualToString:@"m"]) {
+        // Test insert character into text editor
+        [self insertChar:@"E" font:nil];
+        [self.page buildPageContent];
+    }
     [self redraw];
 }
 
@@ -192,10 +198,10 @@
         
         if (NSPointInRect(p, rect)) {
             GGlyph *last = [[line glyphs] lastObject];
-            if (last.indexOfPageGlyphs == [glyphs count] - 1) {
-                ret = last.indexOfPageGlyphs;
+            if (last.indexOfLine == [glyphs count] - 1) {
+                ret = last.indexOfLine;
             } else {
-                ret = last.indexOfPageGlyphs - 1;
+                ret = last.indexOfLine - 1;
             }
         }
         
@@ -214,15 +220,66 @@
         frame = [self.page  rectFromPageToView:frame];
         CGFloat midX = NSMidX(frame);
         if (point.x <= midX) {
-            insertionPointIndex = [g indexOfPageGlyphs];
+            insertionPointIndex = [g indexOfLine];
         } else {
-            insertionPointIndex = [g indexOfPageGlyphs] + 1;
+            insertionPointIndex = [g indexOfLine] + 1;
         }
         if (insertionPointIndex > (int)[glyphs count]) {
             insertionPointIndex = (int)[glyphs count];
         }
         self.drawInsertionPoint = YES;
         [self redraw];
+    }
+}
+
+- (void)insertChar:(NSString *)ch font:(NSFont*)f {
+    // ignore parameter f by now
+    // TODO: need to take account with f
+    NSLog(@"Insertiong point: %d", insertionPointIndex);
+    GGlyph *g = [[textBlock glyphs] objectAtIndex: insertionPointIndex];
+    if (insertionPointIndex - 1 < 0) {
+        return ;
+    }
+    int index = g.indexOfPageGlyphs;
+    NSMutableArray *glyphs = [self.page.textParser glyphs];
+    int prevIndex = index - 1;
+    if (prevIndex >= 0) {
+        GGlyph *prevGlyph = [glyphs objectAtIndex:prevIndex];
+        CGAffineTransform ctm = prevGlyph.ctm;
+        CGAffineTransform tm = prevGlyph.textMatrix;
+        NSString *fontName = prevGlyph.fontName;
+        CGFloat fontSize = prevGlyph.fontSize;
+        CGFloat glyphWidth = prevGlyph.width;
+        tm.tx += glyphWidth;
+        GGlyph *g = [GGlyph create];
+        [g setContent:ch];
+        [g setCtm:ctm];
+        [g setTextMatrix:tm];
+        [g setFontName:fontName];
+        [g setFontSize:fontSize];
+        [glyphs addObject:g];
+        
+        // Adjust glyphs text matrix (for tx) after insertion point in this line
+        GGlyph *currentGlyph = [[textBlock glyphs] objectAtIndex:insertionPointIndex];
+        int currentLineIndex = currentGlyph.lineIndex;
+        GLine *line = [[textBlock lines] objectAtIndex:currentLineIndex];
+        NSArray *lineGlyphs = [line glyphs];
+        NSFont *font = [self.page getFontByName:fontName size:fontSize];
+        CGFloat hAdvance = getGlyphAdvanceForFont(ch, font);
+        NSSize s = NSMakeSize(hAdvance, 0);
+        s = CGSizeApplyAffineTransform(s, tm);
+        int i;
+        for (i = 0; i < [lineGlyphs count]; i++) {
+            GGlyph *tmp = [lineGlyphs objectAtIndex:i];
+            if (tmp.indexOfLine >= currentGlyph.indexOfLine) {
+                GGlyph *laterGlyph = [lineGlyphs objectAtIndex:i];
+                int gIndex = laterGlyph.indexOfPageGlyphs;
+                CGAffineTransform textMatrix = laterGlyph.textMatrix;
+                textMatrix.tx += s.width;
+                laterGlyph = [[[self.page textParser] glyphs] objectAtIndex:gIndex];
+                [laterGlyph setTextMatrix:textMatrix];
+            }
+        }
     }
 }
 @end

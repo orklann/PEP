@@ -166,7 +166,7 @@
     origin = translatePoint(origin, [p origin]);
     f.origin = origin;
     
-    [p buildPageContent];
+    //[p buildPageContent];
     //[self setNeedsDisplay:YES];
 }
 

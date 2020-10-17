@@ -52,9 +52,19 @@
     quicksortGlyphs(glyphs, 0, (int)([glyphs count] - 1));
 }
 
+- (void)makeIndexInfoForGlyphs {
+    NSArray *glyphs = [self glyphs];
+    int i;
+    for (i = 0; i < [glyphs count]; i++) {
+        GGlyph *g = [glyphs objectAtIndex:i];
+        g.indexOfPageGlyphs = i;
+    }
+}
+
 // Note: This method does not tested well
 // Just check back later
 - (NSMutableArray*)makeWords {
+    [self makeIndexInfoForGlyphs];
     [self makeReadOrderGlyphs];
     
     words = [NSMutableArray array];

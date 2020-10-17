@@ -100,8 +100,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         [glyph setWidth:s.width];
         [glyph setCtm:[[page graphicsState] ctm]];
         [glyph setTextMatrix:[[page textState] textMatrix]];
-        NSString *fontName = [NSString stringWithFormat:@"/%@",
-                              [[page textState] fontName]];
+        NSString *fontName = [[page textState] fontName];
         [glyph setFontName:fontName];
         [glyph setFontSize:[[page textState] fontSize]];
         [glyphs addObject:glyph];

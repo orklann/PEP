@@ -23,7 +23,7 @@
     return lines;
 }
 
-- (NSArray*)glyphs {
+- (NSMutableArray*)glyphs {
     NSMutableArray *glyphs = [NSMutableArray array];
     int i;
     for (i = 0; i < [lines count]; i++) {
@@ -88,7 +88,7 @@
     int i;
     for (i = 0; i < [glyphs count]; i++) {
         GGlyph *g = [glyphs objectAtIndex:i];
-        g.indexOfPageGlyphs = i;
+        g.indexOfLine = i;
     }
 }
 

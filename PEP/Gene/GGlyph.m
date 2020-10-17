@@ -74,7 +74,7 @@
     [ret appendString:tm];
     
     // Font
-    [ret appendFormat:@"%@ %f Tf ", [self fontName], [self fontSize]];
+    [ret appendFormat:@"/%@ %f Tf ", [self fontName], [self fontSize]];
     
     // Tj
     [ret appendFormat:@"(%@) Tj ", [self literalString]];
