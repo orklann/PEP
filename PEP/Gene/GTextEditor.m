@@ -167,7 +167,8 @@
     // Test: press m key to insert character into text editor
     if ([[event characters] isEqualToString:@"m"]) {
         // Test insert character into text editor
-        [self insertChar:@"E" font:nil];
+        // Fixme: use any font here, font is not useful by now
+        [self insertChar:@"E" font:[NSFont fontWithName:@"Arial" size:1]];
         [self.page buildPageContent];
     }
     [self redraw];

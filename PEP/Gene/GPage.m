@@ -111,16 +111,16 @@
 // Return rect with origin in bottom left
 - (NSRect)calculatePageMediaBox {
     GArrayObject *mediaBox = [[pageDictionary value] objectForKey:@"MediaBox"];
-    GNumberObject *xObj = [[mediaBox value] objectAtIndex:0];
-    GNumberObject *yObj = [[mediaBox value] objectAtIndex:1];
+    //GNumberObject *xObj = [[mediaBox value] objectAtIndex:0];
+    //GNumberObject *yObj = [[mediaBox value] objectAtIndex:1];
     GNumberObject *widthObj = [[mediaBox value] objectAtIndex:2];
     GNumberObject *heightObj = [[mediaBox value] objectAtIndex:3];
-    CGFloat x = [xObj getRealValue];
-    CGFloat y = [yObj getRealValue];
+//    CGFloat x = [xObj getRealValue];
+//    CGFloat y = [yObj getRealValue];
     CGFloat w = [widthObj getRealValue];
     CGFloat h = [heightObj getRealValue];
-    NSRect mediaBoxRect = NSMakeRect(x, y, w, h);
-    NSLog(@"Page media box: %@", NSStringFromRect(mediaBoxRect));
+//    NSRect mediaBoxRect = NSMakeRect(x, y, w, h);
+//    NSLog(@"Page media box: %@", NSStringFromRect(mediaBoxRect));
     NSRect bounds = [doc bounds];
     CGFloat pageX = NSMidX(bounds) - (w / 2);
     CGFloat pageY = kPageMargin;
@@ -128,7 +128,7 @@
     CGFloat pageHeight = h;
     NSRect pageRectFlipped = NSMakeRect(pageX, pageY, pageWidth, pageHeight);
     NSRect pageRect = [doc rectFromFlipped:pageRectFlipped];
-    NSLog(@"page rect: %@", NSStringFromRect(pageRect));
+    //NSLog(@"page rect: %@", NSStringFromRect(pageRect));
     return pageRect;
 }
 
