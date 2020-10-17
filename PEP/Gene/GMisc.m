@@ -59,21 +59,47 @@ int compareGlyphs(GGlyph *a, GGlyph *b) {
     NSPoint pa = [a frame].origin;
     NSPoint pb = [b frame].origin;
     
+    CGFloat aMaxY = NSMaxY([a frame]);
+    CGFloat bMaxY = NSMaxY([b frame]);
+    CGFloat aMaxX = NSMaxX([a frame]);
+    CGFloat bMaxX = NSMaxX([a frame]);
+    
+    // if two glyphs are located at more or less the same y coordinate,
+    // the one to the left goes before, if not, else the one which start
+    // higher up is sorted first.
+    CGFloat tolerance = 0.04f;
+    CGFloat percent = fabs(pa.y - pb.y) / (pa.y + pb.y);
+    int ret = -1;
+    if (percent <= tolerance) {
+       if (pa.x < pb.x) {
+           ret = -1;
+           return ret;
+       } else {
+           ret = 1;
+           return ret;
+       }
+    }
+    
     // if one glyph is located above another, it goese before
-    if (pa.y >= pb.y) {
+    if (aMaxY > pb.y) {
         return -1;
-    } else if (pb.y > pa.y){
+    }
+    
+    if (pa.y < bMaxY) {
         return 1;
     }
+    
     
     // if one glyph is to the left, is goese befor
-    if (pa.x <= pb.x) {
+    if (aMaxX < pb.x) {
         return -1;
-    } else if (pb.x < pa.x) {
+    }
+    
+    if (pa.x > bMaxX) {
         return 1;
     }
     
-    return -1;
+    return ret;
 }
 
 void quicksortGlyphs(NSMutableArray *array, int l, int r) {
@@ -109,6 +135,25 @@ void quicksortGlyphs(NSMutableArray *array, int l, int r) {
     // (Hence, the cnt-2 when recursively sorting the left side of pivot)
     quicksortGlyphs(array, l, cnt-2); // Recursively sort the left side of pivot
     quicksortGlyphs(array, cnt, r);   // Recursively sort the right side of pivot
+}
+
+NSMutableArray *sortGlyphsInReadOrder(NSMutableArray *glyphs) {
+    NSMutableArray *sorted = [NSMutableArray array];
+    while([glyphs count] > 0) {
+        GGlyph *smallest = [glyphs firstObject];
+        int i;
+        int smallestIndex = 0;
+        for (i = 1; i < [glyphs count]; i++) {
+            GGlyph *g = [glyphs objectAtIndex:i];
+            if (compareGlyphs(smallest, g) == 1) {
+                smallestIndex = i;
+                smallest = [glyphs objectAtIndex:smallestIndex];
+            }
+        }
+        [sorted addObject:smallest];
+        [glyphs removeObject:smallest];
+    }
+    return sorted;
 }
 
 BOOL separateCharacters(GGlyph *a, GGlyph *b) {

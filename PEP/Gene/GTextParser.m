@@ -48,8 +48,17 @@
 - (NSMutableArray*)lines {
     return lines;
 }
+
 - (void)makeReadOrderGlyphs {
-    quicksortGlyphs(glyphs, 0, (int)([glyphs count] - 1));
+    glyphs = sortGlyphsInReadOrder(glyphs);
+    NSMutableString *s = [NSMutableString string];
+    int i;
+    for (i = 0; i < [glyphs count]; i++) {
+        GGlyph *g = [glyphs objectAtIndex:i];
+        [s appendString:[g content]];
+    }
+    printf("====\n");
+    printf("%s\n", [s UTF8String]);
 }
 
 - (void)makeIndexInfoForGlyphs {
