@@ -60,6 +60,10 @@
 }
 
 - (void)draw:(CGContextRef)context {
+    // Update text block to make sure text editor updated as well.
+    // Fixed: text editor not updated after insert char
+    textBlock = [[[self.page textParser] makeTextBlocks] lastObject];
+    
     // Draw text editor border with 1 pixel width;
     NSRect frame = [textBlock frame];
     frame = NSInsetRect(frame, 0.5, 0.5);
