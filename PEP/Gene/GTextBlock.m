@@ -39,6 +39,7 @@
 
 - (void)addLine:(GLine*)l {
     [lines addObject:l];
+    [self setLineIndexForGlyphs];
 }
 
 - (NSRect)frame {
@@ -87,6 +88,20 @@
     for (i = 0; i < [glyphs count]; i++) {
         GGlyph *g = [glyphs objectAtIndex:i];
         g.indexOfPageGlyphs = i;
+    }
+}
+
+- (void)setLineIndexForGlyphs {
+    NSArray *lines = [self lines];
+    int i;
+    for (i = 0; i < [lines count]; i++) {
+        GLine *l = [lines objectAtIndex:i];
+        NSArray *glyphsForLine = [l glyphs];
+        int j;
+        for (j = 0; j < [glyphsForLine count]; j++) {
+            GGlyph *g = [glyphsForLine objectAtIndex:j];
+            [g setLineIndex:i];
+        }
     }
 }
 

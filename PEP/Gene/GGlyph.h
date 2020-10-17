@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) CGAffineTransform textMatrix;
 @property (readwrite) NSString *fontName;
 @property (readwrite) CGFloat fontSize;
+@property (readwrite) int lineIndex;
 
 + (id)create;
 - (void)setFrame:(NSRect)f;

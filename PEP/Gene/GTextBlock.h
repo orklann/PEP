@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString*)textBlockString;
 - (NSString*)textBlockStringWithLineFeed;
 - (void)makeIndexInfoForGlyphs;
+- (void)setLineIndexForGlyphs;
 - (int)getLineOfGlyphIndex:(int)index;
 - (int)indexOfLine:(int)line forFullGlyphsIndex:(int)index;
 @end
