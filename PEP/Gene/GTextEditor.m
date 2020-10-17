@@ -105,8 +105,6 @@
             insertionPointIndex++;
         }
     } else if (keyCode == kUpArrow) {
-        // construct glyphs index in glyph class as a property
-        [textBlock makeIndexInfoForGlyphs];
         int currentLineIndex = [textBlock getLineOfGlyphIndex:insertionPointIndex];
         if (currentLineIndex != -1) { // No errors
             if (currentLineIndex - 1 >= 0) {
@@ -139,8 +137,6 @@
             }
         }
     } else if (keyCode == kDownArrow) {
-        // construct glyphs index in glyph class as a property
-        [textBlock makeIndexInfoForGlyphs];
         int currentLineIndex = [textBlock getLineOfGlyphIndex:insertionPointIndex];
         if (currentLineIndex != -1) { // No errors
             if (currentLineIndex + 1 <= [[textBlock lines] count] - 1) {
@@ -210,7 +206,6 @@
 - (void)mouseDown:(NSEvent*)event {
     NSPoint location = [event locationInWindow];
     NSPoint point = [self.page.doc convertPoint:location fromView:nil];
-    [textBlock makeIndexInfoForGlyphs];
     int glyphIndex = [self nearestGlyphInPosition:point];
     if (glyphIndex != -1) { // Successfully checked glyph in point
         NSArray *glyphs = [textBlock glyphs];

@@ -39,6 +39,7 @@
 
 - (void)addLine:(GLine*)l {
     [lines addObject:l];
+    [self makeIndexInfoForGlyphs];
     [self setLineIndexForGlyphs];
 }
 
