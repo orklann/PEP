@@ -237,22 +237,44 @@
 - (void)insertChar:(NSString *)ch font:(NSFont*)f {
     // ignore parameter f by now
     // TODO: need to take account with f
-    NSLog(@"Insertiong point: %d", insertionPointIndex);
-    GGlyph *g = [[textBlock glyphs] objectAtIndex: insertionPointIndex];
-    if (insertionPointIndex - 1 < 0) {
-        return ;
+    GGlyph *currentGlyph;
+    if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
+        currentGlyph = [[textBlock glyphs] lastObject];
+    } else {
+        currentGlyph = [[textBlock glyphs] objectAtIndex:insertionPointIndex];
     }
-    int index = g.indexOfPageGlyphs;
+    
+    int currentIndexInLine = [textBlock indexOfLineForGlyphIndex:insertionPointIndex];
+    int lineIndex = [textBlock getLineOfGlyphIndex:insertionPointIndex];
+    GLine *currentLine = [[textBlock lines] objectAtIndex:lineIndex];
+    NSArray *lineGlyphs = [currentLine glyphs];
     NSMutableArray *glyphs = [self.page.textParser glyphs];
-    int prevIndex = index - 1;
+    int prevIndex = currentIndexInLine - 1;
+    
+    // Insertion point is at the beginning of line
+    if (prevIndex < 0) {
+        prevIndex = 0;
+    }
+    
+    if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
+        // Advance by 1 glyph, because substract by 1 from currentIndexInLine,
+        // we need to go foward 1 glyph in this case (insertion point is at the end of text block)
+        prevIndex += 1;
+    }
+    
+    NSLog(@"line: %d prev index: %d", lineIndex, prevIndex);
+    
     if (prevIndex >= 0) {
-        GGlyph *prevGlyph = [glyphs objectAtIndex:prevIndex];
+        GGlyph *prevGlyph = [[currentLine glyphs] objectAtIndex:prevIndex];
         CGAffineTransform ctm = prevGlyph.ctm;
         CGAffineTransform tm = prevGlyph.textMatrix;
         NSString *fontName = prevGlyph.fontName;
         CGFloat fontSize = prevGlyph.fontSize;
         CGFloat glyphWidth = prevGlyph.width;
-        tm.tx += glyphWidth;
+        if (currentIndexInLine > 0) {
+            tm.tx += glyphWidth;
+        }
+        
         GGlyph *g = [GGlyph create];
         [g setContent:ch];
         [g setCtm:ctm];
@@ -261,11 +283,14 @@
         [g setFontSize:fontSize];
         [glyphs addObject:g];
         
+        // We don't need to care about later glyphs, since insertion point is
+        // at the end of text block
+        if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
+            insertionPointIndex++;
+            return ;
+        }
+        
         // Adjust glyphs text matrix (for tx) after insertion point in this line
-        GGlyph *currentGlyph = [[textBlock glyphs] objectAtIndex:insertionPointIndex];
-        int currentLineIndex = currentGlyph.lineIndex;
-        GLine *line = [[textBlock lines] objectAtIndex:currentLineIndex];
-        NSArray *lineGlyphs = [line glyphs];
         NSFont *font = [self.page getFontByName:fontName size:fontSize];
         CGFloat hAdvance = getGlyphAdvanceForFont(ch, font);
         NSSize s = NSMakeSize(hAdvance, 0);
@@ -274,14 +299,16 @@
         for (i = 0; i < [lineGlyphs count]; i++) {
             GGlyph *tmp = [lineGlyphs objectAtIndex:i];
             if (tmp.indexOfBlock >= currentGlyph.indexOfBlock) {
+                NSLog(@"index: %d %@", i, [tmp content]);
                 GGlyph *laterGlyph = [lineGlyphs objectAtIndex:i];
-                int gIndex = laterGlyph.indexOfPageGlyphs;
+                int indexOfPage = laterGlyph.indexOfPageGlyphs;
                 CGAffineTransform textMatrix = laterGlyph.textMatrix;
                 textMatrix.tx += s.width;
-                laterGlyph = [[[self.page textParser] glyphs] objectAtIndex:gIndex];
+                laterGlyph = [[[self.page textParser] glyphs] objectAtIndex:indexOfPage];
                 [laterGlyph setTextMatrix:textMatrix];
             }
         }
     }
+    insertionPointIndex++;
 }
 @end

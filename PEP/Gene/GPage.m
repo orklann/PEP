@@ -200,9 +200,6 @@
     //       two Q (Q Q)
     [ret appendString:@"Q\n"];
     pageContent = [ret dataUsingEncoding:NSASCIIStringEncoding];
-    NSLog(@"New Page Content");
-    printData(pageContent);
-    NSLog(@"END New Page Content");
 }
 
 - (void)redraw {

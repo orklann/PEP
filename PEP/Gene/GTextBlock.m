@@ -123,7 +123,7 @@
             }
         }
     }
-    return -1;
+    return (int)[lines count] - 1;
 }
 
 - (int)indexOfLineForGlyphIndex:(int)index {
@@ -145,6 +145,6 @@
             }
         }
     }
-    return -1;
+    return (int)[[[lines lastObject] glyphs] count] - 1;
 }
 @end
