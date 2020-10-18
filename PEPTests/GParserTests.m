@@ -605,13 +605,13 @@
         if ([key isEqualTo:@"1-0"]) {     // Test first xref entry (object number is 1)
             GXRefEntry *x = [dict objectForKey:key];
             XCTAssertEqual([x objectNumber], 1);
-            XCTAssertEqual([x offset], 27210);
+            XCTAssertEqual([x offset], 44968);
             XCTAssertEqual([x generationNumber], 0);
             XCTAssertEqual([x inUse], 'n');
-        } else if ([key isEqualTo:@"24-0"]) { // Test 24 xref entry (object number is 24)
+        } else if ([key isEqualTo:@"38-0"]) { // Test 24 xref entry (object number is 24)
             GXRefEntry *x = [dict objectForKey:key];
-            XCTAssertEqual([x objectNumber], 24);
-            XCTAssertEqual([x offset], 16746);
+            XCTAssertEqual([x objectNumber], 38);
+            XCTAssertEqual([x offset], 34371);
             XCTAssertEqual([x generationNumber], 0);
             XCTAssertEqual([x inUse], 'n');
         }
@@ -624,13 +624,13 @@
         if ([key isEqualTo:@"1-0"]) {
             GXRefEntry *x = [prev objectForKey:key];
             XCTAssertEqual([x objectNumber], 1);
-            XCTAssertEqual([x offset], 15910);
+            XCTAssertEqual([x offset], 33784);
             XCTAssertEqual([x generationNumber], 0);
             XCTAssertEqual([x inUse], 'n');
-        } else if ([key isEqualTo:@"23-0"]) { // Test the last xref entry
+        } else if ([key isEqualTo:@"31-0"]) {
             GXRefEntry *x = [prev objectForKey:key];
-            XCTAssertEqual([x objectNumber], 23);
-            XCTAssertEqual([x offset], 15889);
+            XCTAssertEqual([x objectNumber], 31);
+            XCTAssertEqual([x offset], 25638);
             XCTAssertEqual([x generationNumber], 0);
             XCTAssertEqual([x inUse], 'n');
         }
