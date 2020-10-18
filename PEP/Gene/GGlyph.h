@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 @property (readwrite) int indexOfPageGlyphs;
-@property (readwrite) int indexOfLine;
+@property (readwrite) int indexOfBlock;
 @property (readwrite) CGFloat width;
 @property (readwrite) CGAffineTransform ctm;
 @property (readwrite) CGAffineTransform textMatrix;

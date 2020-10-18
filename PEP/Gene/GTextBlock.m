@@ -88,7 +88,7 @@
     int i;
     for (i = 0; i < [glyphs count]; i++) {
         GGlyph *g = [glyphs objectAtIndex:i];
-        g.indexOfLine = i;
+        g.indexOfBlock = i;
     }
 }
 

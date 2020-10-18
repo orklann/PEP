@@ -121,7 +121,7 @@
                 }
                 int glyphIndexInPrevLine = glyphIndexInCurrentLine;
                 GGlyph *currentGlyph = [[prevLine glyphs] objectAtIndex:glyphIndexInPrevLine];
-                insertionPointIndex = currentGlyph.indexOfLine;
+                insertionPointIndex = currentGlyph.indexOfBlock;
             }
         } else if (insertionPointIndex == [glyphs count]) { // Edge case: insertion point is at the end of text
             int currentLineIndex = [textBlock getLineOfGlyphIndex:insertionPointIndex - 1];
@@ -136,7 +136,7 @@
                     }
                     int glyphIndexInPrevLine = glyphIndexInCurrentLine;
                     GGlyph *currentGlyph = [[prevLine glyphs] objectAtIndex:glyphIndexInPrevLine];
-                    insertionPointIndex = currentGlyph.indexOfLine + 1;
+                    insertionPointIndex = currentGlyph.indexOfBlock + 1;
                 }
             }
         }
@@ -155,7 +155,7 @@
                 } else {
                     int glyphIndexInNextLine = glyphIndexInCurrentLine;
                     GGlyph *currentGlyph = [[nextLine glyphs] objectAtIndex:glyphIndexInNextLine];
-                    insertionPointIndex = currentGlyph.indexOfLine;
+                    insertionPointIndex = currentGlyph.indexOfBlock;
                 }
             }
         } else if (insertionPointIndex == [glyphs count]) {
@@ -203,10 +203,10 @@
         
         if (NSPointInRect(p, rect)) {
             GGlyph *last = [[line glyphs] lastObject];
-            if (last.indexOfLine == [glyphs count] - 1) {
-                ret = last.indexOfLine;
+            if (last.indexOfBlock == [glyphs count] - 1) {
+                ret = last.indexOfBlock;
             } else {
-                ret = last.indexOfLine - 1;
+                ret = last.indexOfBlock - 1;
             }
         }
         
@@ -225,9 +225,9 @@
         frame = [self.page  rectFromPageToView:frame];
         CGFloat midX = NSMidX(frame);
         if (point.x <= midX) {
-            insertionPointIndex = [g indexOfLine];
+            insertionPointIndex = [g indexOfBlock];
         } else {
-            insertionPointIndex = [g indexOfLine] + 1;
+            insertionPointIndex = [g indexOfBlock] + 1;
         }
         if (insertionPointIndex > (int)[glyphs count]) {
             insertionPointIndex = (int)[glyphs count];
@@ -276,7 +276,7 @@
         int i;
         for (i = 0; i < [lineGlyphs count]; i++) {
             GGlyph *tmp = [lineGlyphs objectAtIndex:i];
-            if (tmp.indexOfLine >= currentGlyph.indexOfLine) {
+            if (tmp.indexOfBlock >= currentGlyph.indexOfBlock) {
                 GGlyph *laterGlyph = [lineGlyphs objectAtIndex:i];
                 int gIndex = laterGlyph.indexOfPageGlyphs;
                 CGAffineTransform textMatrix = laterGlyph.textMatrix;
