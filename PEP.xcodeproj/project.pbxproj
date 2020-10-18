@@ -31,6 +31,8 @@
 		938A4E6F252EEFDF00504235 /* GLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 938A4E6E252EEFDF00504235 /* GLine.m */; };
 		93A8692A251399760033DC22 /* GPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A86929251399760033DC22 /* GPage.m */; };
 		93A8692D25147ECA0033DC22 /* GMisc.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A8692C25147ECA0033DC22 /* GMisc.m */; };
+		93C91E24253C2D7300FC5AEA /* PEP_incremental.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93C91E23253C2D7200FC5AEA /* PEP_incremental.pdf */; };
+		93C91E26253C2D9900FC5AEA /* PEP_incremental.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93C91E25253C2D9900FC5AEA /* PEP_incremental.pdf */; };
 		93D48C1E2536CAAA002DD41B /* GTextEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D48C1D2536CAAA002DD41B /* GTextEditor.m */; };
 		93DC04C424F7B335003AC9B0 /* GParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C324F7B335003AC9B0 /* GParser.m */; };
 		93DC04C624F7B474003AC9B0 /* GParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C524F7B474003AC9B0 /* GParserTests.m */; };
@@ -93,6 +95,8 @@
 		93A86929251399760033DC22 /* GPage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GPage.m; sourceTree = "<group>"; };
 		93A8692B25147ECA0033DC22 /* GMisc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMisc.h; sourceTree = "<group>"; };
 		93A8692C25147ECA0033DC22 /* GMisc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GMisc.m; sourceTree = "<group>"; };
+		93C91E23253C2D7200FC5AEA /* PEP_incremental.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PEP_incremental.pdf; sourceTree = "<group>"; };
+		93C91E25253C2D9900FC5AEA /* PEP_incremental.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = PEP_incremental.pdf; path = PEPTests/pdf/PEP_incremental.pdf; sourceTree = SOURCE_ROOT; };
 		93D48C1C2536CAAA002DD41B /* GTextEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTextEditor.h; sourceTree = "<group>"; };
 		93D48C1D2536CAAA002DD41B /* GTextEditor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTextEditor.m; sourceTree = "<group>"; };
 		93DC04C224F7B335003AC9B0 /* GParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GParser.h; sourceTree = "<group>"; };
@@ -172,6 +176,7 @@
 		9363D94B250898D60075FEF0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				93C91E25253C2D9900FC5AEA /* PEP_incremental.pdf */,
 				9320C01D251A1568008F20B0 /* irig_keys_25.pdf */,
 				9363D9502508994E0075FEF0 /* test_xref.pdf */,
 			);
@@ -181,6 +186,7 @@
 		936C4303250363AD00FFE547 /* pdf */ = {
 			isa = PBXGroup;
 			children = (
+				93C91E23253C2D7200FC5AEA /* PEP_incremental.pdf */,
 				9320C01B251A1552008F20B0 /* irig_keys_25.pdf */,
 				936C4304250363E700FFE547 /* test_xref.pdf */,
 			);
@@ -311,6 +317,7 @@
 			files = (
 				9320C01E251A1569008F20B0 /* irig_keys_25.pdf in Resources */,
 				931221C924F0139300929C01 /* Assets.xcassets in Resources */,
+				93C91E26253C2D9900FC5AEA /* PEP_incremental.pdf in Resources */,
 				931221CC24F0139300929C01 /* MainMenu.xib in Resources */,
 				9363D9512508994E0075FEF0 /* test_xref.pdf in Resources */,
 			);
@@ -322,6 +329,7 @@
 			files = (
 				9320C01C251A1552008F20B0 /* irig_keys_25.pdf in Resources */,
 				936C4305250363E800FFE547 /* test_xref.pdf in Resources */,
+				93C91E24253C2D7300FC5AEA /* PEP_incremental.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
