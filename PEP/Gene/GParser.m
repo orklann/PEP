@@ -319,6 +319,11 @@ BOOL isTrailerLine(NSString *line) {
 - (id)getObjectByRef:(NSString *)refKey inXRef:(NSMutableDictionary*)xref {
     GXRefEntry *x = [xref objectForKey:refKey];
     NSMutableDictionary *prev = [xref objectForKey:@"PrevXRef"];
+    
+    //
+    // If no xref entry is found for refKey, and current xref dictionary
+    // has a previous xref, just try to find in previous xref with refKey
+    // 
     if (x == nil && prev != nil) {
         return [self getObjectByRef:refKey inXRef:prev];
     }
