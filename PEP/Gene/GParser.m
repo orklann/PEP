@@ -323,7 +323,8 @@ BOOL isTrailerLine(NSString *line) {
     //
     // If no xref entry is found for refKey, and current xref dictionary
     // has a previous xref, just try to find in previous xref with refKey
-    // 
+    // resursively.
+    //
     if (x == nil && prev != nil) {
         return [self getObjectByRef:refKey inXRef:prev];
     }
