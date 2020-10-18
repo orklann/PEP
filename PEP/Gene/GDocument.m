@@ -19,7 +19,7 @@
 @implementation GDocument
 - (void)awakeFromNib {
     // Set window title:
-    [[self window] setTitle:@"test_xref.pdf"];
+    [[self window] setTitle:@"PEP_incremental.pdf"];
     
     // Resize window
     NSLog(@"View: %@", NSStringFromRect(self.bounds));
@@ -39,7 +39,7 @@
     
     GParser *p = [GParser parser];
     NSBundle *mainBundle = [NSBundle mainBundle];
-    NSString *path = [mainBundle pathForResource:@"test_xref" ofType:@"pdf"];
+    NSString *path = [mainBundle pathForResource:@"PEP_incremental" ofType:@"pdf"];
     NSData *d = [NSData dataWithContentsOfFile:path];
     [p setStream:d];
        
