@@ -244,9 +244,8 @@ BOOL isTrailerLine(NSString *line) {
     return (unsigned int)[s intValue];
 }
 
-- (NSDictionary *)parseXRef {
+- (NSDictionary *)parseXRef:(int)startXRef {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    unsigned int startXRef = [self getStartXRef];
     [[self lexer] setPos:startXRef];
     
     // Skip keyword `xref`
@@ -281,10 +280,10 @@ BOOL isTrailerLine(NSString *line) {
         }
     }
     return dict;
+
 }
 
-- (GDictionaryObject*)getTrailer {
-    unsigned int startXRef = [self getStartXRef];
+- (GDictionaryObject*)getTrailer:(int)startXRef {
     [[self lexer] setPos:startXRef];
     
     // Skip keyword `xref`
@@ -296,6 +295,16 @@ BOOL isTrailerLine(NSString *line) {
        }
     }
     return (GDictionaryObject*)[self parseNextObject];
+}
+
+- (NSDictionary *)parseXRef {
+    unsigned int startXRef = [self getStartXRef];
+    return [self parseXRef:startXRef];
+}
+
+- (GDictionaryObject*)getTrailer {
+    unsigned int startXRef = [self getStartXRef];
+    return [self getTrailer:startXRef];
 }
 
 - (id)getObjectByRef:(NSString*)refKey {
