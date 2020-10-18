@@ -316,12 +316,20 @@ BOOL isTrailerLine(NSString *line) {
     return [self getTrailer:startXRef];
 }
 
-- (id)getObjectByRef:(NSString*)refKey {
-    NSDictionary *xref = [self parseXRef];
+- (id)getObjectByRef:(NSString *)refKey inXRef:(NSMutableDictionary*)xref {
     GXRefEntry *x = [xref objectForKey:refKey];
+    NSMutableDictionary *prev = [xref objectForKey:@"PrevXRef"];
+    if (x == nil && prev != nil) {
+        return [self getObjectByRef:refKey inXRef:prev];
+    }
     unsigned int offset = [x offset];
     [[self lexer] setPos:offset];
     GIndirectObject* contentIndirect = (GIndirectObject*)[self parseNextObject];
     return [contentIndirect object];
+}
+
+- (id)getObjectByRef:(NSString*)refKey {
+    NSMutableDictionary *xref = [self parseXRef];
+    return [self getObjectByRef:refKey inXRef:xref];
 }
 @end
