@@ -126,7 +126,7 @@
     return -1;
 }
 
-- (int)indexOfLine:(int)line forFullGlyphsIndex:(int)index {
+- (int)indexOfLineForFullGlyphsIndex:(int)index {
     int i;
     int indexFull = 0;
     for (i = 0; i < [lines count]; i++) {
