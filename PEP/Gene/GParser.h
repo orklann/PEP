@@ -34,7 +34,7 @@ BOOL isTrailerLine(NSString *line);
 - (id)parseNextObject;
 - (void)parse; // parse tokens from lexer into GObjects array
 - (unsigned int)getStartXRef;
-- (NSDictionary *)parseXRef;
+- (NSMutableDictionary *)parseXRef;
 - (GDictionaryObject*)getTrailer;
 - (id)getObjectByRef:(NSString*)refKey;
 @end

@@ -594,21 +594,41 @@
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     // Even test_xref.pdf is in the `pdf` folder, we still only need to provide
     // file name in the path, no need to provide folder name
-    NSString *path = [bundle pathForResource:@"test_xref" ofType:@"pdf"];
+    NSString *path = [bundle pathForResource:@"PEP_incremental" ofType:@"pdf"];
     NSData *d = [NSData dataWithContentsOfFile:path];
     [p setStream:d];
     
-    NSDictionary *dict = [p parseXRef];
+    NSMutableDictionary *dict = [p parseXRef];
+    
+    // Test latest XRef
     for (id key in dict) {
+        if ([key isEqualTo:@"1-0"]) {     // Test first xref entry (object number is 1)
+            GXRefEntry *x = [dict objectForKey:key];
+            XCTAssertEqual([x objectNumber], 1);
+            XCTAssertEqual([x offset], 27210);
+            XCTAssertEqual([x generationNumber], 0);
+            XCTAssertEqual([x inUse], 'n');
+        } else if ([key isEqualTo:@"24-0"]) { // Test 24 xref entry (object number is 24)
+            GXRefEntry *x = [dict objectForKey:key];
+            XCTAssertEqual([x objectNumber], 24);
+            XCTAssertEqual([x offset], 16746);
+            XCTAssertEqual([x generationNumber], 0);
+            XCTAssertEqual([x inUse], 'n');
+        }
+    }
+    
+    // Test previous XRef
+    NSMutableDictionary *prev = [dict objectForKey:@"PrevXRef"];
+    for (id key in prev) {
         // Test first xref entry (object number is 1)
         if ([key isEqualTo:@"1-0"]) {
-            GXRefEntry *x = [dict objectForKey:key];
+            GXRefEntry *x = [prev objectForKey:key];
             XCTAssertEqual([x objectNumber], 1);
             XCTAssertEqual([x offset], 15910);
             XCTAssertEqual([x generationNumber], 0);
             XCTAssertEqual([x inUse], 'n');
         } else if ([key isEqualTo:@"23-0"]) { // Test the last xref entry
-            GXRefEntry *x = [dict objectForKey:key];
+            GXRefEntry *x = [prev objectForKey:key];
             XCTAssertEqual([x objectNumber], 23);
             XCTAssertEqual([x offset], 15889);
             XCTAssertEqual([x generationNumber], 0);
