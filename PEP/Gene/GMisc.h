@@ -46,4 +46,7 @@ BOOL separateLines(GLine *a, GLine *b);
 // Translate point to new origin
 // Here we assume old origin is at (0, 0) 
 NSPoint translatePoint(NSPoint p, NSPoint newOrigin);
+
+// NSSet to NSString
+NSString *setToString(NSSet* set);
 NS_ASSUME_NONNULL_END

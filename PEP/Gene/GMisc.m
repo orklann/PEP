@@ -242,3 +242,8 @@ NSPoint translatePoint(NSPoint p, NSPoint newOrigin) {
     CGFloat ny = p.y + newOrigin.y;
     return NSMakePoint(nx, ny);
 }
+
+NSString* setToString(NSSet* set) {
+    NSString *chars = [[set allObjects] componentsJoinedByString:@""];
+    return chars;
+}
