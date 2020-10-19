@@ -22,6 +22,7 @@
 
 + (id)create {
     GPage *p = [[GPage alloc] init];
+    [p setNeedUpdate:YES];
     return p;
 }
 
@@ -101,6 +102,7 @@
     [interpreter setInput:pageContent];
     [interpreter eval:context];
     
+    [self setNeedUpdate:NO];
     
     if (textEditor != nil) {
         [textEditor draw:context];

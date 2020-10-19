@@ -37,6 +37,8 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *commands;
 }
 
+@property (readwrite) BOOL needUpdate;
+
 + (id)create;
 - (void)setPageDictionary:(GDictionaryObject*)d;
 - (GDictionaryObject*)pageDictionary;

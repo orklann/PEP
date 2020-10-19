@@ -167,6 +167,7 @@
         // Fixme: use any font here, font is not useful by now
         [self insertChar:@"E" font:[NSFont fontWithName:@"Arial" size:1]];
         [self.page buildPageContent];
+        [self.page setNeedUpdate:YES];
     }
     [self redraw];
 }
