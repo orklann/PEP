@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
     GTextParser *textParser;
     NSPoint origin;
     GTextEditor *textEditor;
+    NSMutableArray *commands;
 }
 
 + (id)create;
@@ -61,6 +62,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)buildPageContent;
 - (void)translateToPageOrigin:(CGContextRef)context;
 - (void)redraw;
+- (void)initCommands;
+- (NSMutableArray *)commands;
 @end
 
 NS_ASSUME_NONNULL_END

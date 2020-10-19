@@ -115,8 +115,14 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     }
 }
 
+- (NSMutableArray*)commands {
+    NSMutableArray *commands = [page commands];
+    return commands;
+}
+
 - (void)parseCommands {
-    commands = [NSMutableArray array];
+    [page initCommands];
+    NSMutableArray* commands = [self commands];
     GParser *cmdParser = [GParser parser];
     [cmdParser setStream:input];
     id obj = [cmdParser parseNextObject];
@@ -182,11 +188,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         obj = [cmdParser parseNextObject];
     }
 }
-
-- (NSMutableArray*)commands {
-    return commands;
-}
-
 
 - (void)eval_q_Command:(CGContextRef)context {
     CGContextSaveGState(context);
@@ -259,6 +260,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 
 - (void)eval:(CGContextRef)context {
     [self parseCommands];
+    NSMutableArray *commands = [self commands];
     NSUInteger i;
     for (i = 0; i < [commands count]; i++) {
         id obj = [commands objectAtIndex:i];

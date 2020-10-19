@@ -205,4 +205,12 @@
 - (void)redraw {
     [[self doc] setNeedsDisplay:YES];
 }
+
+- (void)initCommands {
+    commands = [NSMutableArray array];
+}
+
+- (NSMutableArray *)commands {
+    return commands;
+}
 @end
