@@ -67,6 +67,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGFloat tj = tjDelta;
     for (i = 0; i < [s length]; i++) {
         NSString *ch = [s substringWithRange:NSMakeRange(i, 1)];
+        
+        // Add glyph chars for font in GPage
+        [page addGlyph:ch font:[[page textState] fontName]];
+        
         CGContextSetTextMatrix(context, rm);
         [self drawString:ch font:font context:context];
         

@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *commands;
 }
 
+@property (readwrite) NSMutableDictionary *glyphsForFontDict;
 @property (readwrite) BOOL needUpdate;
 
 + (id)create;
@@ -66,6 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)redraw;
 - (void)initCommands;
 - (NSMutableArray *)commands;
+- (void)addGlyph:(NSString*)glyphChar font:(NSString*)keyFontName;
 @end
 
 NS_ASSUME_NONNULL_END

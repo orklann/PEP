@@ -84,6 +84,10 @@
 }
 
 - (void)render:(CGContextRef)context {
+    if (self.needUpdate) {
+        [self initGlyphsForFontDict];
+    }
+    
     // Draw media box (a.k.a page boundary)
     NSRect pageRect = [self calculatePageMediaBox];
     CGContextSetRGBFillColor(context, 1.0, 1.0, 1.0, 1.0);
@@ -214,5 +218,20 @@
 
 - (NSMutableArray *)commands {
     return commands;
+}
+
+- (void)initGlyphsForFontDict {
+    self.glyphsForFontDict = [NSMutableDictionary dictionary];
+}
+
+- (void)addGlyph:(NSString*)glyphChar font:(NSString*)keyFontName {
+    NSMutableSet *set = [self.glyphsForFontDict objectForKey:keyFontName];
+    if (set == nil) {
+        set = [NSMutableSet set];
+        [set addObject:glyphChar];
+        [self.glyphsForFontDict setObject:set forKey:keyFontName];
+    } else {
+        [set addObject:glyphChar];
+    }
 }
 @end
