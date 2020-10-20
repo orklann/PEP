@@ -49,4 +49,7 @@ NSPoint translatePoint(NSPoint p, NSPoint newOrigin);
 
 // NSSet to NSString
 NSString *setToString(NSSet* set);
+
+// Print all table tags for a CGFont
+void printTableTagsForCGFont(CGFontRef font);
 NS_ASSUME_NONNULL_END

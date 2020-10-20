@@ -247,3 +247,20 @@ NSString* setToString(NSSet* set) {
     NSString *chars = [[set allObjects] componentsJoinedByString:@""];
     return chars;
 }
+
+void printTableTagsForCGFont(CGFontRef font) {
+    CFArrayRef tags = CGFontCopyTableTags(font);
+    int tableCount = (int)CFArrayGetCount(tags);
+    for (int index = 0; index < tableCount; ++index) {
+        uint32_t aTag = (uint32_t)CFArrayGetValueAtIndex(tags, index);
+
+        unsigned char bytes[4];
+        unsigned long n = aTag;
+
+        bytes[0] = (n >> 24) & 0xFF;
+        bytes[1] = (n >> 16) & 0xFF;
+        bytes[2] = (n >> 8) & 0xFF;
+        bytes[3] = n & 0xFF;
+        NSLog(@"%c%c%c%c", bytes[0], bytes[1], bytes[2], bytes[3]);
+    }
+}

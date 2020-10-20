@@ -50,6 +50,9 @@
     CGFontRef font = CGFontCreateWithDataProvider(cgdata);
     NSFont *f = (NSFont*)CFBridgingRelease(CTFontCreateWithGraphicsFont(font, 144, nil, nil));
     
+    // Test tables
+    printTableTagsForCGFont(font);
+    
     // change font size
     // f = [NSFont fontWithDescriptor:[f fontDescriptor] size:144];
     
