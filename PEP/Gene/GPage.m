@@ -114,6 +114,12 @@
     if (textEditor != nil) {
         [textEditor draw:context];
     }
+    
+    // Test 
+    //NSFont *font = [NSFont fontWithName:@"Limelight" size:47];
+    //[self addFont:font withPDFFontName:@"TT2"];
+    //GBinaryData *first = [self.dataToUpdate firstObject];
+    //NSLog(@"%d %d obj", first.objectNumber, first.generationNumber);
 }
 
 // Calculate media box for PDF page in user space coordinate
@@ -241,10 +247,14 @@
 #pragma mark Adding stuff as GBinaryData to page
 - (void)addFont:(NSFont*)font withPDFFontName:(NSString*)fontKey {
     GDictionaryObject *fontDict = [[resources value] objectForKey:@"Font"];
-    GRefObject *fontValue = [[fontDict value] objectForKey:fontKey];
-    int objectNumber = [fontValue objectNumber];
-    int generationNumber = [fontValue generationNumber];
-    
+    GRefObject *fontRef = [[fontDict value] objectForKey:fontKey];
+    GDictionaryObject *fontObject = [self.parser getObjectByRef:[fontRef getRefString]];
+    GRefObject *fontDescriptorRef = [[fontObject value] objectForKey:@"FontDescriptor"];
+    GDictionaryObject *fontDescriptor = [self.parser getObjectByRef:[fontDescriptorRef getRefString]];
+    GRefObject *fontFileRef = [[fontDescriptor value] objectForKey:@"FontFile2"];
+    int objectNumber = [fontFileRef objectNumber];
+    int generationNumber = [fontFileRef generationNumber];
+        
     CGFontRef cgFont = CTFontCopyGraphicsFont((CTFontRef)font, nil);
     NSData *fontData = fontDataForCGFont(cgFont);
     int length = (int)[fontData length];
