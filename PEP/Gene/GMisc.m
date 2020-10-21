@@ -296,6 +296,8 @@ static uint32_t CalcTableCheckSum(const uint32_t *table, uint32_t numberOfBytesI
 //    return CalcTableCheckSum(dataBuff, dataLength);
 //}
 
+// Original code from here: https://gist.github.com/Jyczeal/1892760
+
 NSData* fontDataForCGFont(CGFontRef cgFont) {
     if (!cgFont) {
         return nil;
