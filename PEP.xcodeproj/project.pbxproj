@@ -38,6 +38,7 @@
 		93DC04C624F7B474003AC9B0 /* GParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C524F7B474003AC9B0 /* GParserTests.m */; };
 		93DC04C924F7B6EB003AC9B0 /* GObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C824F7B6EB003AC9B0 /* GObjects.m */; };
 		93DEC33D25401C3D00E280B0 /* GEncoders.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DEC33C25401C3D00E280B0 /* GEncoders.m */; };
+		93DEC33F25401E1700E280B0 /* GEncodersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DEC33E25401E1700E280B0 /* GEncodersTests.m */; };
 		93E336FD24F1265300F91F74 /* GLexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E336F824F1254300F91F74 /* GLexer.m */; };
 /* End PBXBuildFile section */
 
@@ -107,6 +108,7 @@
 		93DC04C824F7B6EB003AC9B0 /* GObjects.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GObjects.m; sourceTree = "<group>"; };
 		93DEC33B25401C3D00E280B0 /* GEncoders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GEncoders.h; sourceTree = "<group>"; };
 		93DEC33C25401C3D00E280B0 /* GEncoders.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GEncoders.m; sourceTree = "<group>"; };
+		93DEC33E25401E1700E280B0 /* GEncodersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GEncodersTests.m; sourceTree = "<group>"; };
 		93E336F824F1254300F91F74 /* GLexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLexer.m; sourceTree = "<group>"; };
 		93E336FC24F1256000F91F74 /* GLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLexer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -169,8 +171,9 @@
 				936C4303250363AD00FFE547 /* pdf */,
 				9355AEB824F12DCC00764E36 /* GLexerTests.m */,
 				93DC04C524F7B474003AC9B0 /* GParserTests.m */,
-				930ACC9C250763C30092206C /* GDecodersTests.m */,
 				9320C0192519C7F8008F20B0 /* GInterpreterTests.m */,
+				930ACC9C250763C30092206C /* GDecodersTests.m */,
+				93DEC33E25401E1700E280B0 /* GEncodersTests.m */,
 				931221DB24F0139700929C01 /* Info.plist */,
 			);
 			path = PEPTests;
@@ -376,6 +379,7 @@
 				9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */,
 				930ACC9D250763C30092206C /* GDecodersTests.m in Sources */,
 				93DC04C624F7B474003AC9B0 /* GParserTests.m in Sources */,
+				93DEC33F25401E1700E280B0 /* GEncodersTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
