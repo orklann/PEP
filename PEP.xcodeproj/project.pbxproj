@@ -37,6 +37,7 @@
 		93DC04C424F7B335003AC9B0 /* GParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C324F7B335003AC9B0 /* GParser.m */; };
 		93DC04C624F7B474003AC9B0 /* GParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C524F7B474003AC9B0 /* GParserTests.m */; };
 		93DC04C924F7B6EB003AC9B0 /* GObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C824F7B6EB003AC9B0 /* GObjects.m */; };
+		93DEC33D25401C3D00E280B0 /* GEncoders.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DEC33C25401C3D00E280B0 /* GEncoders.m */; };
 		93E336FD24F1265300F91F74 /* GLexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E336F824F1254300F91F74 /* GLexer.m */; };
 /* End PBXBuildFile section */
 
@@ -104,6 +105,8 @@
 		93DC04C524F7B474003AC9B0 /* GParserTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GParserTests.m; sourceTree = "<group>"; };
 		93DC04C724F7B6EB003AC9B0 /* GObjects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GObjects.h; sourceTree = "<group>"; };
 		93DC04C824F7B6EB003AC9B0 /* GObjects.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GObjects.m; sourceTree = "<group>"; };
+		93DEC33B25401C3D00E280B0 /* GEncoders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GEncoders.h; sourceTree = "<group>"; };
+		93DEC33C25401C3D00E280B0 /* GEncoders.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GEncoders.m; sourceTree = "<group>"; };
 		93E336F824F1254300F91F74 /* GLexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLexer.m; sourceTree = "<group>"; };
 		93E336FC24F1256000F91F74 /* GLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLexer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -202,6 +205,8 @@
 				93DC04C824F7B6EB003AC9B0 /* GObjects.m */,
 				93DC04C224F7B335003AC9B0 /* GParser.h */,
 				93DC04C324F7B335003AC9B0 /* GParser.m */,
+				93DEC33B25401C3D00E280B0 /* GEncoders.h */,
+				93DEC33C25401C3D00E280B0 /* GEncoders.m */,
 				930ACC99250759780092206C /* GDecoders.h */,
 				930ACC9A250759780092206C /* GDecoders.m */,
 				931ECFAF2518911A00E26EFA /* GInterpreter.h */,
@@ -352,6 +357,7 @@
 				93DC04C924F7B6EB003AC9B0 /* GObjects.m in Sources */,
 				931221CF24F0139300929C01 /* main.m in Sources */,
 				931ECFB12518911A00E26EFA /* GInterpreter.m in Sources */,
+				93DEC33D25401C3D00E280B0 /* GEncoders.m in Sources */,
 				93E336FD24F1265300F91F74 /* GLexer.m in Sources */,
 				9346A86125305B2800804506 /* GTextBlock.m in Sources */,
 				930ACC9B250759780092206C /* GDecoders.m in Sources */,
