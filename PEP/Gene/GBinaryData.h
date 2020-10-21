@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (id)create;
 - (NSString*)getIndirectObjectHeader;
+- (NSData*)getDataAsIndirectObject;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -18,4 +18,16 @@
     return [NSString stringWithFormat:@"%d %d obj\n", self.objectNumber,
             self.generationNumber];
 }
+
+- (NSData*)getDataAsIndirectObject {
+    NSMutableData *data = [NSMutableData data];
+    // Add indirect object header
+    [data appendData:[[self getIndirectObjectHeader] dataUsingEncoding:NSASCIIStringEncoding]];
+    // Add content
+    [data appendData:self.data];
+    // Add end
+    NSString *end = @"endobj\n";
+    [data appendData:[end dataUsingEncoding:NSASCIIStringEncoding]];
+    return data;
+}
 @end
