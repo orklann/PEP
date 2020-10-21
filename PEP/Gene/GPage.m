@@ -114,13 +114,6 @@
     if (textEditor != nil) {
         [textEditor draw:context];
     }
-
-    NSFont *f = [NSFont fontWithName:@"Limelight" size:47];
-    [self addFont:f withPDFFontName:@""];
-    
-    GBinaryData *d = [self.dataToUpdate firstObject];
-    NSData *out = [d getDataAsIndirectObject];
-    [out writeToFile:@"/Users/aaron/Downloads/font2.txt" atomically:YES];
 }
 
 // Calculate media box for PDF page in user space coordinate
