@@ -9,6 +9,10 @@
 #import "GBinaryData.h"
 
 @implementation GBinaryData
++ (id)create {
+    GBinaryData *d = [[GBinaryData alloc] init];
+    return d;
+}
 
 - (NSString*)getIndirectObjectHeader {
     return [NSString stringWithFormat:@"%d %d obj\n", self.objectNumber,

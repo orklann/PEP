@@ -8,6 +8,7 @@
 
 #import "GPage.h"
 #import "GDecoders.h"
+#import "GEncoders.h"
 #import "GMisc.h"
 #import "GInterpreter.h"
 #import "GDocument.h"
@@ -17,12 +18,14 @@
 #import "GLine.h"
 #import "GTextBlock.h"
 #import "GGlyph.h"
+#import "GBinaryData.h"
 
 @implementation GPage
 
 + (id)create {
     GPage *p = [[GPage alloc] init];
     [p setNeedUpdate:YES];
+    p.dataToUpdate = [NSMutableArray array];
     return p;
 }
 
@@ -111,24 +114,7 @@
     if (textEditor != nil) {
         [textEditor draw:context];
     }
-    
-//    Test: fontDataForCGFont()
-//    NSFont *f = [NSFont fontWithName:@"Limelight" size:47];
-//    CGFontRef cgFont = CTFontCopyGraphicsFont((CTFontRef)f, nil);
-//    NSData *data = fontDataForCGFont(cgFont);
-//
-//    CGDataProviderRef cgdata = CGDataProviderCreateWithCFData((CFDataRef)data);
-//    CGFontRef font = CGFontCreateWithDataProvider(cgdata);
-//    NSFont *f2 = (NSFont*)CFBridgingRelease(CTFontCreateWithGraphicsFont(font, 144, nil, nil));
-//
-//    // Test tables
-//    printTableTagsForCGFont(font);
-//
-//    NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:@"PEPD"];
-//    [s addAttribute:NSFontAttributeName value:f2 range:NSMakeRange(0, 4)];
-//    [s addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0, 4)];
-//
-//    [s drawAtPoint:NSZeroPoint];
+
 }
 
 // Calculate media box for PDF page in user space coordinate
@@ -251,5 +237,35 @@
     } else {
         [set addObject:glyphChar];
     }
+}
+
+#pragma mark Adding stuff as GBinaryData to page
+- (void)addFont:(NSFont*)font withPDFFontName:(NSString*)fontKey {
+    GDictionaryObject *fontDict = [[resources value] objectForKey:@"Font"];
+    GRefObject *fontValue = [[fontDict value] objectForKey:fontKey];
+    int objectNumber = [fontValue objectNumber];
+    int generationNumber = [fontValue generationNumber];
+    
+    CGFontRef cgFont = CTFontCopyGraphicsFont((CTFontRef)font, nil);
+    NSData *fontData = fontDataForCGFont(cgFont);
+    int length = (int)[fontData length];
+    NSData *encodedFontData = encodeFlate(fontData);
+    
+    NSString *header = [NSString stringWithFormat:@"<< /Length %d /Length1 %d /Filter /FlateDecode >>\nstream\n",
+                        length, length];
+    NSMutableData *stream = [NSMutableData data];
+    [stream appendData:[header dataUsingEncoding:NSASCIIStringEncoding]];
+    [stream appendData:encodedFontData];
+    NSString *end = @"\nendstream\n";
+    [stream appendData:[end dataUsingEncoding:NSASCIIStringEncoding]];
+
+    // Create a instance of GBinaryData
+    GBinaryData *binary = [GBinaryData create];
+    [binary setObjectNumber:objectNumber];
+    [binary setGenerationNumber:generationNumber];
+    [binary setData:stream];
+    
+    [self.dataToUpdate addObject:binary];
+    
 }
 @end

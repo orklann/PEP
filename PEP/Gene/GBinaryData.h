@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) NSData *data;
 @property (readwrite) int offset;
 
++ (id)create;
 - (NSString*)getIndirectObjectHeader;
 @end
 

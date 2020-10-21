@@ -39,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readwrite) NSMutableDictionary *glyphsForFontDict;
 @property (readwrite) BOOL needUpdate;
+@property (readwrite) NSMutableArray *dataToUpdate;
 
 + (id)create;
 - (void)setPageDictionary:(GDictionaryObject*)d;
@@ -68,6 +69,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)initCommands;
 - (NSMutableArray *)commands;
 - (void)addGlyph:(NSString*)glyphChar font:(NSString*)keyFontName;
+
+#pragma mark Adding stuff as GBinaryData to page
+- (void)addFont:(NSFont*)font withPDFFontName:(NSString*)fontKey;
+
 @end
 
 NS_ASSUME_NONNULL_END
