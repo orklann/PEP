@@ -111,6 +111,24 @@
     if (textEditor != nil) {
         [textEditor draw:context];
     }
+    
+//    Test: fontDataForCGFont()
+//    NSFont *f = [NSFont fontWithName:@"Limelight" size:47];
+//    CGFontRef cgFont = CTFontCopyGraphicsFont((CTFontRef)f, nil);
+//    NSData *data = fontDataForCGFont(cgFont);
+//
+//    CGDataProviderRef cgdata = CGDataProviderCreateWithCFData((CFDataRef)data);
+//    CGFontRef font = CGFontCreateWithDataProvider(cgdata);
+//    NSFont *f2 = (NSFont*)CFBridgingRelease(CTFontCreateWithGraphicsFont(font, 144, nil, nil));
+//
+//    // Test tables
+//    printTableTagsForCGFont(font);
+//
+//    NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:@"PEPD"];
+//    [s addAttribute:NSFontAttributeName value:f2 range:NSMakeRange(0, 4)];
+//    [s addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0, 4)];
+//
+//    [s drawAtPoint:NSZeroPoint];
 }
 
 // Calculate media box for PDF page in user space coordinate

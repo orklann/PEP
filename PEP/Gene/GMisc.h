@@ -52,4 +52,7 @@ NSString *setToString(NSSet* set);
 
 // Print all table tags for a CGFont
 void printTableTagsForCGFont(CGFontRef font);
+
+// Build CGFont into NSData which can be saved as ttf, otf font
+NSData* fontDataForCGFont(CGFontRef cgFont);
 NS_ASSUME_NONNULL_END
