@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 
+#import "GPage.h"
 #import "GInterpreter.h"
 
 @interface GInterpreterTests : XCTestCase
@@ -30,7 +31,9 @@
                     "12 0 0 -12 5 11 Tm /TT1 1 Tf (:) Tj [ (P) 0.3 (EP) ] TJ -0.0003 Tc";
     NSData *data = [b dataUsingEncoding:NSASCIIStringEncoding];
     GInterpreter *interpreter = [GInterpreter create];
+    GPage *page = [GPage create];
     [interpreter setInput:data];
+    [interpreter setPage:page];
     
     [interpreter parseCommands];
     NSArray *commands = [interpreter commands];
