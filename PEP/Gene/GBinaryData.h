@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) int objectNumber;
 @property (readwrite) int generationNumber;
 @property (readwrite) NSData *data;
+@property (readwrite) int offset;
 
 - (NSString*)getIndirectObjectHeader;
 @end
