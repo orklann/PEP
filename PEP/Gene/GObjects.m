@@ -386,6 +386,14 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
     }
     value = dict;
 }
+
+- (NSString*)getRawContentString {
+    NSMutableString *s = [NSMutableString string];
+    [s appendString:@"<< "];
+    [s appendString:[[NSString alloc] initWithData:rawContent encoding:NSASCIIStringEncoding]];
+    [s appendString:@" >>"];
+    return s;
+}
 @end
 
 @implementation GArrayObject

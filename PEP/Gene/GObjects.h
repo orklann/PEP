@@ -135,6 +135,7 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
 - (void)setValue:(NSMutableDictionary*)s;
 - (NSMutableDictionary *)value;
 - (void)parse;
+- (NSString*)getRawContentString;
 @end
 
 @interface GStreamObject : GObject {
