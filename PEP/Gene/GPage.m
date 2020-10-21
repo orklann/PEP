@@ -251,6 +251,8 @@
     GDictionaryObject *fontObject = [self.parser getObjectByRef:[fontRef getRefString]];
     GRefObject *fontDescriptorRef = [[fontObject value] objectForKey:@"FontDescriptor"];
     GDictionaryObject *fontDescriptor = [self.parser getObjectByRef:[fontDescriptorRef getRefString]];
+    
+    // TODO: Key "FontFile2" is not always the right key, we should handle other font file keys later
     GRefObject *fontFileRef = [[fontDescriptor value] objectForKey:@"FontFile2"];
     int objectNumber = [fontFileRef objectNumber];
     int generationNumber = [fontFileRef generationNumber];
