@@ -25,7 +25,7 @@
     [data appendData:[[self getIndirectObjectHeader] dataUsingEncoding:NSASCIIStringEncoding]];
     // Add content
     [data appendData:self.data];
-    // Add end
+    // Add end marker
     NSString *end = @"endobj\n";
     [data appendData:[end dataUsingEncoding:NSASCIIStringEncoding]];
     return data;
