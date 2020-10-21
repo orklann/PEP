@@ -14,6 +14,7 @@
 #import "GDocument.h"
 #import "GMisc.h"
 #import "GConstants.h"
+#import "GBinaryData.h"
 
 #define kLeftArrow 123
 #define kRightArrow 124

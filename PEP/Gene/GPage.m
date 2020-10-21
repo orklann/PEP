@@ -279,4 +279,32 @@
     [self.dataToUpdate addObject:binary];
     
 }
+
+- (void)addPageStream {
+    id contents = [[pageDictionary value] objectForKey:@"Contents"];
+    int objectNumber = 0, generationNumber = 0;
+    if ([(GObject*)contents type] == kRefObject) { // contents is a ref object
+        GRefObject *contentRef = (GRefObject*)contents;
+        objectNumber = [contentRef objectNumber];
+        generationNumber = [contentRef generationNumber];
+    } else { // contents is a GArrayObject, TODO: handle this later
+        
+    }
+    
+    int length = (int)[pageContent length];
+    NSMutableData *stream = [NSMutableData data];
+    NSString *header = [NSString stringWithFormat:@"<< /Length %d /Filter /FlateDecode >>\n", length];
+    [stream appendData:[header dataUsingEncoding:NSASCIIStringEncoding]];
+    [stream appendData:pageContent];
+    NSString *end = @"\nendstream\n";
+    [stream appendData:[end dataUsingEncoding:NSASCIIStringEncoding]];
+    
+    // Create a instance of GBinaryData
+    GBinaryData *binary = [GBinaryData create];
+    [binary setObjectNumber:objectNumber];
+    [binary setGenerationNumber:generationNumber];
+    [binary setData:stream];
+    
+    [self.dataToUpdate addObject:binary];
+}
 @end

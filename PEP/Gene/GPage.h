@@ -71,7 +71,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addGlyph:(NSString*)glyphChar font:(NSString*)keyFontName;
 
 #pragma mark Adding stuff as GBinaryData to page
+// Add new font into dataToUpdate, later use it to update GDocument stream
 - (void)addFont:(NSFont*)font withPDFFontName:(NSString*)fontKey;
+
+// Add page stream into dataToUpdate, later use it to update GDocument stream
+- (void)addPageStream;
 
 @end
 
