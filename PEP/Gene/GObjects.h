@@ -97,6 +97,7 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
 - (void)setValue:(NSString*)v;
 - (NSString *)value;
 - (void)parse;
+- (NSString*)toString;
 @end
 
 @interface GHexStringsObject : GObject {

@@ -303,7 +303,10 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
     
     value = (NSString *)s;
 }
-    
+
+- (NSString*)toString {
+    return value;
+}
 @end
 
 @implementation GHexStringsObject

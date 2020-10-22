@@ -53,4 +53,16 @@
     GNumberObject *second = [objs lastObject];
     XCTAssertEqualObjects([second toString], @"3.141500");
 }
+
+- (void)testGLiteralStringsObjectToString {
+    GParser *p = [GParser parser];
+    char *b = "(I am a literal string)";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    
+    GLiteralStringsObject *first = [objs firstObject];
+    XCTAssertEqualObjects([first toString], @"I am a literal string");
+}
 @end
