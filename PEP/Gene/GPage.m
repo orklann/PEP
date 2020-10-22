@@ -307,4 +307,67 @@
     
     [self.dataToUpdate addObject:binary];
 }
+
+- (NSData*)buildNewXRefTable {
+    self.dataToUpdate = sortedGBinaryDataArray(self.dataToUpdate);
+    NSMutableString *xrefTable = [NSMutableString string];
+    NSMutableString *subTable = [NSMutableString string];
+    [xrefTable appendString:@"xref\r\n"];
+    int len = (int)[self.dataToUpdate count];
+    GBinaryData *firstEntry = [self.dataToUpdate firstObject];
+    int startIndex = [firstEntry objectNumber];
+    int objectNumber = [firstEntry objectNumber];
+    
+    NSString *entry = buildXRefEntry([firstEntry offset], [firstEntry generationNumber], @"n");
+    [subTable appendFormat:@"%@", entry];
+    
+    int count = 1;
+    int i;
+    for (i = 1; i < len; i++) {
+        GBinaryData *b = [self.dataToUpdate objectAtIndex:i];
+        if ([b objectNumber] == objectNumber + 1) {
+            NSString *entry = buildXRefEntry([b offset], [b generationNumber], @"n");
+            [subTable appendFormat:@"%@", entry];
+            objectNumber = [b objectNumber];
+            count++;
+            
+            // Handle edge case when current entry is last entry, and object number
+            // is one bigger than previous entry
+            if (i == len - 1) {
+                NSString *subTableHeader = [NSString stringWithFormat:@"%d %d\r\n",
+                                            startIndex, count];
+                [xrefTable appendString:subTableHeader];
+                [xrefTable appendString:subTable];
+            }
+        } else { // Add sub table
+            NSString *subTableHeader = [NSString stringWithFormat:@"%d %d\r\n",
+                                        startIndex, count];
+            [xrefTable appendString:subTableHeader];
+            [xrefTable appendString:subTable];
+            
+            // We have other sub tables, start new sub table
+            if (i + 1 < len && i != len - 1) {
+                GBinaryData *next = [self.dataToUpdate objectAtIndex:i+1];
+                startIndex = [next objectNumber];
+                count = 1;
+                objectNumber = [next objectNumber];
+                subTable = [NSMutableString string];
+            }
+            
+            // Handle edge case when current entry is last entry
+            if (i == len - 1) {
+                startIndex = [b objectNumber];
+                count = 1;
+                NSMutableString *subTable = [NSMutableString string];
+                NSString *entry = buildXRefEntry([b offset], [b generationNumber], @"n");
+                [subTable appendFormat:@"%@", entry];
+                NSString *subTableHeader = [NSString stringWithFormat:@"%d %d\r\n",
+                                            startIndex, count];
+                [xrefTable appendString:subTableHeader];
+                [xrefTable appendString:subTable];
+            }
+        }
+    }
+    return [xrefTable dataUsingEncoding:NSASCIIStringEncoding];
+}
 @end

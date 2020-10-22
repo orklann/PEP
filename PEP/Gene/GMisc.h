@@ -64,4 +64,7 @@ NSString* paddingTenZero(int offset);
 
 // Padding total 5 zero for generation number in XRef entry
 NSString* paddingFiveZero(int generationNumber);
+
+// Build XRef entry, example: "0000012345 00000 n\r\n"
+NSString *buildXRefEntry(int offset, int generationNumber, NSString *state);
 NS_ASSUME_NONNULL_END

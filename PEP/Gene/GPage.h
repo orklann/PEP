@@ -77,6 +77,8 @@ NS_ASSUME_NONNULL_BEGIN
 // Add page stream into dataToUpdate, later use it to update GDocument stream
 - (void)addPageStream;
 
+// Build new xref table
+- (NSData*)buildNewXRefTable;
 @end
 
 NS_ASSUME_NONNULL_END

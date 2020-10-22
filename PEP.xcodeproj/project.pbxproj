@@ -23,6 +23,7 @@
 		93427469252082CA00CA3DBE /* GGraphicsState.m in Sources */ = {isa = PBXBuildFile; fileRef = 93427468252082CA00CA3DBE /* GGraphicsState.m */; };
 		9346A86125305B2800804506 /* GTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346A86025305B2800804506 /* GTextBlock.m */; };
 		9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9355AEB824F12DCC00764E36 /* GLexerTests.m */; };
+		9359739625416F1000BB217D /* GPageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9359739525416F1000BB217D /* GPageTests.m */; };
 		935BCC3A252C61B900868C01 /* GWord.m in Sources */ = {isa = PBXBuildFile; fileRef = 935BCC39252C61B900868C01 /* GWord.m */; };
 		9363D94A250895610075FEF0 /* GDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 9363D949250895610075FEF0 /* GDocument.m */; };
 		9363D9512508994E0075FEF0 /* test_xref.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9363D9502508994E0075FEF0 /* test_xref.pdf */; };
@@ -83,6 +84,7 @@
 		9346A85F25305B2800804506 /* GTextBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTextBlock.h; sourceTree = "<group>"; };
 		9346A86025305B2800804506 /* GTextBlock.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTextBlock.m; sourceTree = "<group>"; };
 		9355AEB824F12DCC00764E36 /* GLexerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLexerTests.m; sourceTree = "<group>"; };
+		9359739525416F1000BB217D /* GPageTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GPageTests.m; sourceTree = "<group>"; };
 		935BCC38252C61B800868C01 /* GWord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWord.h; sourceTree = "<group>"; };
 		935BCC39252C61B900868C01 /* GWord.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWord.m; sourceTree = "<group>"; };
 		935CC18025374A23005758B5 /* GConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GConstants.h; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				936C4303250363AD00FFE547 /* pdf */,
 				9355AEB824F12DCC00764E36 /* GLexerTests.m */,
 				93DC04C524F7B474003AC9B0 /* GParserTests.m */,
+				9359739525416F1000BB217D /* GPageTests.m */,
 				9320C0192519C7F8008F20B0 /* GInterpreterTests.m */,
 				930ACC9C250763C30092206C /* GDecodersTests.m */,
 				93DEC33E25401E1700E280B0 /* GEncodersTests.m */,
@@ -388,6 +391,7 @@
 				9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */,
 				930ACC9D250763C30092206C /* GDecodersTests.m in Sources */,
 				93DC04C624F7B474003AC9B0 /* GParserTests.m in Sources */,
+				9359739625416F1000BB217D /* GPageTests.m in Sources */,
 				93DEC33F25401E1700E280B0 /* GEncodersTests.m in Sources */,
 				930B09BB25412AEE00ED00BD /* GMiscTests.m in Sources */,
 			);

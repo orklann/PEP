@@ -419,3 +419,13 @@ NSString* paddingFiveZero(int generationNumber) {
     [ret appendString:numberString];
     return ret;
 }
+
+NSString *buildXRefEntry(int offset, int generationNumber, NSString *state) {
+    NSMutableString *entry = [NSMutableString string];
+    NSString *offsetString = paddingTenZero(offset);
+    NSString *generationString = paddingFiveZero(generationNumber);
+    [entry appendFormat:@"%@ ", offsetString];
+    [entry appendFormat:@"%@ ", generationString];
+    [entry appendFormat:@"%@\r\n", state];
+    return entry;
+}
