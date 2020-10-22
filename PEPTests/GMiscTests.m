@@ -48,4 +48,14 @@
     NSString *two = paddingTenZero(objectNumber);
     XCTAssertEqualObjects(two, @"0000012345");
 }
+
+- (void)testPaddingFiveZero {
+    int number = 1;
+    NSString *one = paddingFiveZero(number);
+    XCTAssertEqualObjects(one, @"00001");
+    
+    number = 0;
+    NSString *two = paddingFiveZero(number);
+    XCTAssertEqualObjects(two, @"00000");
+}
 @end

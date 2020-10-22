@@ -407,3 +407,15 @@ NSString* paddingTenZero(int objectNumber) {
     [ret appendString:numberString];
     return ret;
 }
+
+NSString* paddingFiveZero(int generationNumber) {
+    NSString *numberString = [NSString stringWithFormat:@"%d", generationNumber];
+    NSMutableString *ret = [NSMutableString string];
+    int left = 5 - (int)[numberString length];
+    int i;
+    for (i = 0; i < left; i++) {
+        [ret appendString:@"0"];
+    }
+    [ret appendString:numberString];
+    return ret;
+}

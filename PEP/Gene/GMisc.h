@@ -61,4 +61,7 @@ NSMutableArray *sortedGBinaryDataArray(NSMutableArray *array);
 
 // Padding total 10 zero for object number in XRef entry
 NSString* paddingTenZero(int objectNumber);
+
+// Padding total 5 zero for generation number in XRef entry
+NSString* paddingFiveZero(int generationNumber);
 NS_ASSUME_NONNULL_END
