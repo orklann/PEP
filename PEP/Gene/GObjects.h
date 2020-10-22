@@ -108,6 +108,7 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
 - (void)setValue:(NSData*)v;
 - (NSData *)value;
 - (void)parse;
+- (NSString*)toString;
 @end
 
 @interface GNameObject : GObject {

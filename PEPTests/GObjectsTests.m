@@ -65,4 +65,16 @@
     GLiteralStringsObject *first = [objs firstObject];
     XCTAssertEqualObjects([first toString], @"I am a literal string");
 }
+
+- (void)testGHexStringsObjectToString {
+    GParser *p = [GParser parser];
+    char *b = "<4920616d20612068657820737472696e67>";
+    NSString *test = @"<4920616d20612068657820737472696e67>";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    GHexStringsObject *first = [objs firstObject];
+    XCTAssertEqualObjects([first toString], test);
+}
 @end
