@@ -570,7 +570,14 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
 @end
 
 @implementation GNullObject
++ (id)create {
+    GNullObject *o = [[GNullObject alloc] init];
+    return o;
+}
 
+- (NSString*)toString {
+    return @"null";
+}
 @end
 
 @implementation GRefObject

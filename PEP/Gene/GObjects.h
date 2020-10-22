@@ -176,7 +176,8 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
 @end
 
 @interface GNullObject : GObject
-
++ (id)create;
+- (NSString*)toString;
 @end
 
 @interface GRefObject : GObject {

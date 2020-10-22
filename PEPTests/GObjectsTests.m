@@ -99,4 +99,16 @@
     XCTAssertEqualObjects([n4 toString], @"/");
 
 }
+
+- (void)testGNullObjectToString {
+    GParser *p = [GParser parser];
+    char *b = "null";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    
+    GNullObject *first = [objs firstObject];
+    XCTAssertEqualObjects([first toString], @"null");
+}
 @end
