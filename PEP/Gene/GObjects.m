@@ -613,6 +613,13 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
                             [self generationNumber]];
     return refString;
 }
+
+- (NSString*)toString {
+    NSString *refString = [NSString stringWithFormat:@"%d %d R",
+                            [self objectNumber],
+                            [self generationNumber]];
+    return refString;
+}
 @end
 
 @implementation GEndObject

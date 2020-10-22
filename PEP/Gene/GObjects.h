@@ -192,6 +192,7 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
 - (int)generationNumber;
 - (void)parse;
 - (NSString*)getRefString;
+- (NSString*)toString;
 @end
 
 @interface GEndObject : GObject

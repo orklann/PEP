@@ -111,4 +111,16 @@
     GNullObject *first = [objs firstObject];
     XCTAssertEqualObjects([first toString], @"null");
 }
+
+- (void)testGRefObjectToString {
+    GParser *p = [GParser parser];
+    char *b = "1 0 R";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    
+    GRefObject *first = [objs firstObject];
+    XCTAssertEqualObjects([first toString], @"1 0 R");
+}
 @end
