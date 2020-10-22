@@ -10,6 +10,7 @@
 #import "GGlyph.h"
 #import "GWord.h"
 #import "GLine.h"
+#import "GBinaryData.h"
 
 void printData(NSData *data) {
     NSUInteger i;
@@ -376,4 +377,21 @@ NSData* fontDataForCGFont(CGFontRef cgFont) {
                                             length:totalSize
                                       freeWhenDone:YES];
     return fontData;
+}
+
+NSMutableArray *sortedGBinaryDataArray(NSMutableArray *array) {
+    NSMutableArray *ret = [NSMutableArray array];
+    while([array count] > 0) {
+        GBinaryData *smallest = [array firstObject];
+        int i;
+        for (i = 1; i < [array count]; i++) {
+            GBinaryData *b = [array objectAtIndex:i];
+            if (smallest.objectNumber > b.objectNumber) {
+                smallest = b;
+            }
+        }
+        [ret addObject:smallest];
+        [array removeObject:smallest];
+    }
+    return ret;
 }

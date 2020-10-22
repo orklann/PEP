@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		930ACC9B250759780092206C /* GDecoders.m in Sources */ = {isa = PBXBuildFile; fileRef = 930ACC9A250759780092206C /* GDecoders.m */; };
 		930ACC9D250763C30092206C /* GDecodersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 930ACC9C250763C30092206C /* GDecodersTests.m */; };
+		930B09BB25412AEE00ED00BD /* GMiscTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 930B09BA25412AEE00ED00BD /* GMiscTests.m */; };
 		931221C724F0137F00929C01 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 931221C624F0137F00929C01 /* AppDelegate.m */; };
 		931221C924F0139300929C01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 931221C824F0139300929C01 /* Assets.xcassets */; };
 		931221CC24F0139300929C01 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 931221CA24F0139300929C01 /* MainMenu.xib */; };
@@ -57,6 +58,7 @@
 		930ACC99250759780092206C /* GDecoders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDecoders.h; sourceTree = "<group>"; };
 		930ACC9A250759780092206C /* GDecoders.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDecoders.m; sourceTree = "<group>"; };
 		930ACC9C250763C30092206C /* GDecodersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDecodersTests.m; sourceTree = "<group>"; };
+		930B09BA25412AEE00ED00BD /* GMiscTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GMiscTests.m; sourceTree = "<group>"; };
 		931221C224F0137F00929C01 /* PEP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PEP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		931221C524F0137F00929C01 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		931221C624F0137F00929C01 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				9320C0192519C7F8008F20B0 /* GInterpreterTests.m */,
 				930ACC9C250763C30092206C /* GDecodersTests.m */,
 				93DEC33E25401E1700E280B0 /* GEncodersTests.m */,
+				930B09BA25412AEE00ED00BD /* GMiscTests.m */,
 				931221DB24F0139700929C01 /* Info.plist */,
 			);
 			path = PEPTests;
@@ -386,6 +389,7 @@
 				930ACC9D250763C30092206C /* GDecodersTests.m in Sources */,
 				93DC04C624F7B474003AC9B0 /* GParserTests.m in Sources */,
 				93DEC33F25401E1700E280B0 /* GEncodersTests.m in Sources */,
+				930B09BB25412AEE00ED00BD /* GMiscTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
