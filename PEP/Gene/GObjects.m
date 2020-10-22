@@ -305,7 +305,7 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
 }
 
 - (NSString*)toString {
-    return value;
+    return [NSString stringWithFormat:@"(%@)", value];
 }
 @end
 
@@ -436,6 +436,10 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
     [s appendString:@" >>"];
     return s;
 }
+
+- (NSString*)toString {
+    return @"";
+}
 @end
 
 @implementation GArrayObject
@@ -463,6 +467,40 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
     [p setStream:d];
     [p parse];
     value = [p objects];
+}
+
+- (NSString*)toString {
+    NSMutableString *ret = [NSMutableString string];
+    [ret appendString:@"["];
+    int i;
+    for (i = 0; i < [value count]; i++) {
+        GObject *o = (GObject*)[value objectAtIndex:i];
+        if (i != 0) {
+            [ret appendString:@" "];
+        }
+        
+        if ([o type] == kBooleanObject) {
+            [ret appendFormat:@"%@", [(GBooleanObject*)o toString]];
+        } else if ([o type] == kNumberObject) {
+            [ret appendFormat:@"%@", [(GNumberObject*)o toString]];
+        } else if ([o type] == kLiteralStringsObject) {
+            [ret appendFormat:@"%@", [(GLiteralStringsObject*)o toString]];
+        } else if ([o type] == kHexStringsObject) {
+            [ret appendFormat:@"%@", [(GHexStringsObject*)o toString]];
+        } else if ([o type] == kNameObject) {
+            [ret appendFormat:@"%@", [(GNameObject*)o toString]];
+        } else if ([o type] == kArrayObject) {
+            [ret appendFormat:@"%@", [(GArrayObject*)o toString]];
+        } else if ([o type] == kNullObject) {
+            [ret appendFormat:@"%@", [(GNullObject*)o toString]];
+        } else if ([o type] == kDictionaryObject) {
+            [ret appendFormat:@"%@", [(GDictionaryObject*)o toString]];
+        } else if ([o type] == kRefObject) {
+            [ret appendFormat:@"%@", [(GRefObject*)o toString]];
+        }
+    }
+    [ret appendFormat:@"]"];
+    return ret;
 }
 
 @end

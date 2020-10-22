@@ -132,6 +132,7 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
 - (void)setValue:(NSArray*)s;
 - (NSArray *)value;
 - (void)parse;
+- (NSString*)toString;
 @end
 
 @interface GDictionaryObject : GObject {
@@ -143,6 +144,7 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
 - (NSMutableDictionary *)value;
 - (void)parse;
 - (NSString*)getRawContentString;
+- (NSString*)toString;
 @end
 
 @interface GStreamObject : GObject {

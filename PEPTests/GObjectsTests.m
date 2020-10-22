@@ -63,7 +63,7 @@
     NSMutableArray *objs = [p objects];
     
     GLiteralStringsObject *first = [objs firstObject];
-    XCTAssertEqualObjects([first toString], @"I am a literal string");
+    XCTAssertEqualObjects([first toString], @"(I am a literal string)");
 }
 
 - (void)testGHexStringsObjectToString {
@@ -122,5 +122,18 @@
     
     GRefObject *first = [objs firstObject];
     XCTAssertEqualObjects([first toString], @"1 0 R");
+}
+
+- (void)testGArrayObjectToString {
+    GParser *p = [GParser parser];
+    char *b = "[1 0 R 549 3.14 false (Ralph) /SomeName [true 1024] null <4920616d20612068657820737472696e67>]";
+    NSString *test = [NSString stringWithUTF8String:"[1 0 R 549 3.140000 false (Ralph) /SomeName [true 1024] null <4920616d20612068657820737472696e67>]"];
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    
+    GArrayObject *first = [objs firstObject];
+    XCTAssertEqualObjects([first toString], test);
 }
 @end
