@@ -357,6 +357,10 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
     return o;
 }
 
+- (void)setLexerRawContent:(NSData*)d {
+    lexerRawContent = d;
+}
+
 - (void)setValue:(NSString*)v {
     value = v;
 }
@@ -373,6 +377,13 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
     NSString *v = [NSString stringWithUTF8String:[d bytes]];
     value = v;
 }
+
+- (NSString*)toString {
+    NSString *rawString =  [[NSString alloc] initWithData:lexerRawContent
+                                                 encoding:NSASCIIStringEncoding];
+    return [NSString stringWithFormat:@"/%@", rawString];
+}
+
 @end
 
 @implementation GDictionaryObject

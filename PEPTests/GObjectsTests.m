@@ -77,4 +77,26 @@
     GHexStringsObject *first = [objs firstObject];
     XCTAssertEqualObjects([first toString], test);
 }
+
+- (void)testGNameObjectToString {
+    GParser *p = [GParser parser];
+    char *b = "/Name1 /A;Name_With-Various***Characters?  /Lime#20Green /";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    
+    GNumberObject *n1 = [objs firstObject];
+    XCTAssertEqualObjects([n1 toString], @"/Name1");
+    
+    GNumberObject *n2 = [objs objectAtIndex:1];
+    XCTAssertEqualObjects([n2 toString], @"/A;Name_With-Various***Characters?");
+    
+    GNumberObject *n3 = [objs objectAtIndex:2];
+    XCTAssertEqualObjects([n3 toString], @"/Lime#20Green");
+    
+    GNumberObject *n4 = [objs objectAtIndex:3];
+    XCTAssertEqualObjects([n4 toString], @"/");
+
+}
 @end

@@ -45,6 +45,7 @@ typedef enum {
 @interface GToken : NSObject {
     TokenType type;
     NSData *content;
+    NSData *originalContent;
 }
 
 + (id)token;
@@ -52,6 +53,8 @@ typedef enum {
 - (TokenType)type;
 - (void)setContent:(NSData *)d;
 - (NSData*)content;
+- (void)setOriginalContent:(NSData*)d;
+- (NSData*)originalContent;
 @end
 
 

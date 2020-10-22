@@ -54,6 +54,14 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
 - (NSData*)content {
     return content;
 }
+
+- (void)setOriginalContent:(NSData*)d {
+    originalContent = d;
+}
+
+- (NSData*)originalContent {
+    return originalContent;
+}
 @end
 
 @implementation GLexer
@@ -178,6 +186,18 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
         }
         next = [self nextChar];
     }
+    return (NSData*)d;
+}
+
+- (NSData*)getNameOriginal {
+    int savedOffset = [self pos];
+    NSMutableData *d = [NSMutableData dataWithCapacity:100];
+    unsigned char next = [self nextChar];
+    while(!isWhiteSpace(next)) {
+        [d appendBytes:(unsigned char*)&next length:1];
+        next = [self nextChar];
+    }
+    pos = savedOffset;
     return (NSData*)d;
 }
 
@@ -396,6 +416,9 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
         
         case '/': // name object
             [token setType:kNameObjectToken];
+            // [self getNameOriginal] must be called before [self getName]
+            // Because we restore lexer's pos in former method
+            [token setOriginalContent:[self getNameOriginal]];
             [token setContent:[self getName]];
             break;
         

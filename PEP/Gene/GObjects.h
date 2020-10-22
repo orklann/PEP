@@ -113,12 +113,15 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
 
 @interface GNameObject : GObject {
     NSString *value;
+    NSData *lexerRawContent;
 }
 
 + (id)create;
+- (void)setLexerRawContent:(NSData*)d;
 - (void)setValue:(NSString*)s;
 - (NSString *)value;
 - (void)parse;
+- (NSString*)toString;
 @end
 
 @interface GArrayObject : GObject {

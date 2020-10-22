@@ -149,6 +149,7 @@ BOOL isTrailerLine(NSString *line) {
         {
             o = [GNameObject create];
             [(GNameObject *)o setType:kNameObject];
+            [(GNameObject *)o setLexerRawContent:[token originalContent]];
             [(GNameObject *)o setRawContent:[token content]];
             [(GNameObject *)o parse];
             break;
