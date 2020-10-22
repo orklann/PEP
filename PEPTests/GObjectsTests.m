@@ -136,4 +136,24 @@
     GArrayObject *first = [objs firstObject];
     XCTAssertEqualObjects([first toString], test);
 }
+
+- (void)testGDictionaryObjectToString {
+    GParser *p = [GParser parser];
+    char *b = "<</Name (PEP) /Subtype /DictionaryExample /Length 128 "
+            "/Subdictionary <<"
+            "/Item1 4 "
+            "/Item2 true "
+            "/LastItem (not !) /VeryLastItem (OK)>>"
+            ">>";
+    
+    // Hard coded this test string for keys orders in NSDictionary
+    NSString *test = @"<</Subtype /DictionaryExample /Name (PEP) /Subdictionary <</Item2 true /Item1 4 /LastItem (not !) /VeryLastItem (OK)>> /Length 128>>";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    
+    GArrayObject *first = [objs firstObject];
+    XCTAssertEqualObjects([first toString], test);
+}
 @end

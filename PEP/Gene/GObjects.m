@@ -438,7 +438,39 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
 }
 
 - (NSString*)toString {
-    return @"";
+    NSMutableString *ret = [NSMutableString string];
+    [ret appendString:@"<<"];
+    int i;
+    for (i = 0; i < [[value allKeys] count]; i++) {
+        NSString *key = [[value allKeys] objectAtIndex:i];
+        GObject *o = (GObject*)[value objectForKey:key];
+        if (i != 0) {
+            [ret appendString:@" "];
+        }
+        
+        [ret appendFormat:@"/%@ ", key];
+        if ([o type] == kBooleanObject) {
+            [ret appendFormat:@"%@", [(GBooleanObject*)o toString]];
+        } else if ([o type] == kNumberObject) {
+            [ret appendFormat:@"%@", [(GNumberObject*)o toString]];
+        } else if ([o type] == kLiteralStringsObject) {
+            [ret appendFormat:@"%@", [(GLiteralStringsObject*)o toString]];
+        } else if ([o type] == kHexStringsObject) {
+            [ret appendFormat:@"%@", [(GHexStringsObject*)o toString]];
+        } else if ([o type] == kNameObject) {
+            [ret appendFormat:@"%@", [(GNameObject*)o toString]];
+        } else if ([o type] == kArrayObject) {
+            [ret appendFormat:@"%@", [(GArrayObject*)o toString]];
+        } else if ([o type] == kNullObject) {
+            [ret appendFormat:@"%@", [(GNullObject*)o toString]];
+        } else if ([o type] == kDictionaryObject) {
+            [ret appendFormat:@"%@", [(GDictionaryObject*)o toString]];
+        } else if ([o type] == kRefObject) {
+            [ret appendFormat:@"%@", [(GRefObject*)o toString]];
+        }
+    }
+    [ret appendFormat:@">>"];
+    return ret;
 }
 @end
 
