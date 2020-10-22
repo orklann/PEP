@@ -121,6 +121,10 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
     return o;
 }
 
+- (void)setSubtype:(NumberSubtype)s {
+    subtype = s;
+}
+
 - (NumberSubtype)subtype {
     return subtype;
 }

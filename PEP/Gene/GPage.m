@@ -370,4 +370,29 @@
     }
     return [xrefTable dataUsingEncoding:NSASCIIStringEncoding];
 }
+
+- (NSData*)buildNewTrailer:(GDictionaryObject*)trailerDict
+             prevStartXRef:(int)prevStartXRef
+              newStartXRef:(int)newStartXRef {
+    NSMutableString *ret = [NSMutableString string];
+    [ret appendString:@"trailer\r\n"];
+    
+    // Add "\Prev" key
+    GNumberObject *prev = [[trailerDict value] objectForKey:@"Prev"];
+    if (!prev) {
+        GNumberObject *addedPrev = [GNumberObject create];
+        NSString *s = [NSString stringWithFormat:@"%d", prevStartXRef];
+        [addedPrev setType:kNumberObject];
+        [addedPrev setRawContent:[s dataUsingEncoding:NSASCIIStringEncoding]];
+        [addedPrev parse];
+        [[trailerDict value] setObject:addedPrev forKey:@"Prev"];
+    } else {
+        // NOTE: Check if it works as expected later
+        [prev setIntValue:prevStartXRef];
+    }
+    [ret appendString:[trailerDict toString]];
+    NSString *startXRef = [NSString stringWithFormat:@"\r\nstartxref\r\n%d\r\n%%EOF\r\n", newStartXRef];
+    [ret appendString:startXRef];
+    return [ret dataUsingEncoding:NSASCIIStringEncoding];
+}
 @end

@@ -79,6 +79,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Build new xref table
 - (NSData*)buildNewXRefTable;
+- (NSData*)buildNewTrailer:(GDictionaryObject*)trailerDict
+             prevStartXRef:(int)prevStartXRef
+              newStartXRef:(int)newStartXRef;
 @end
 
 NS_ASSUME_NONNULL_END
