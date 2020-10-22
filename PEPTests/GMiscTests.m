@@ -41,11 +41,11 @@
 }
 
 - (void)testPaddingTenZero {
-    int objectNumber = 1;
-    NSString *one = paddingTenZero(objectNumber);
+    int offset = 1;
+    NSString *one = paddingTenZero(offset);
     XCTAssertEqualObjects(one, @"0000000001");
-    objectNumber = 12345;
-    NSString *two = paddingTenZero(objectNumber);
+    offset = 12345;
+    NSString *two = paddingTenZero(offset);
     XCTAssertEqualObjects(two, @"0000012345");
 }
 

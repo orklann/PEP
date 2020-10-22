@@ -396,8 +396,8 @@ NSMutableArray *sortedGBinaryDataArray(NSMutableArray *array) {
     return ret;
 }
 
-NSString* paddingTenZero(int objectNumber) {
-    NSString *numberString = [NSString stringWithFormat:@"%d", objectNumber];
+NSString* paddingTenZero(int offset) {
+    NSString *numberString = [NSString stringWithFormat:@"%d", offset];
     NSMutableString *ret = [NSMutableString string];
     int left = 10 - (int)[numberString length];
     int i;
