@@ -59,15 +59,15 @@ typedef enum {
 
 
 @interface GLexer : NSObject {
-    NSData *stream;
+    NSMutableData *stream;
     unsigned int pos;
 }
 
 + (id)lexer;
 - (unsigned int)pos;
 - (void)setPos:(unsigned int)p;
-- (void)setStream:(NSData*)s;
-- (NSData*)stream;
+- (void)setStream:(NSMutableData*)s;
+- (NSMutableData*)stream;
 - (unsigned char)nextChar;
 - (unsigned char)currentChar;
 - (unsigned char)peekNextChar;

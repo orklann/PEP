@@ -64,7 +64,7 @@
     // TODO: Handle this case later.
     GRefObject *ref = [[pageDictionary value] objectForKey:@"Contents"];
     GStreamObject *contentStream = [parser getObjectByRef:[ref getRefString]];
-    pageContent = [contentStream getDecodedStreamContent];
+    pageContent = (NSMutableData*)[contentStream getDecodedStreamContent];
     
     printData(pageContent);
     
@@ -214,7 +214,7 @@
     //       text block frame not drawn at the right position, due to
     //       two Q (Q Q)
     [ret appendString:@"Q\n"];
-    pageContent = [ret dataUsingEncoding:NSASCIIStringEncoding];
+    pageContent = (NSMutableData*)[ret dataUsingEncoding:NSASCIIStringEncoding];
 }
 
 - (void)redraw {

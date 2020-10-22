@@ -25,7 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GPage : NSObject {
     GDictionaryObject *pageDictionary;
     GParser *parser;
-    NSData *pageContent;
+    NSMutableData *pageContent;
     GDocument *doc;
     GDictionaryObject *resources;
     GTextState *textState;

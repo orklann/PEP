@@ -17,14 +17,14 @@ BOOL isCommand(NSString *cmd, NSString *cmd2);
 
 @interface GInterpreter : NSObject {
     GParser *parser;
-    NSData *input;
+    NSMutableData *input;
     GPage *page;
 }
 
 + (id)create;
 - (void)setPage:(GPage*)p;
 - (void)setParser:(GParser*)p;
-- (void)setInput:(NSData *)d;
+- (void)setInput:(NSMutableData *)d;
 - (NSMutableArray*)commands;
 - (void)parseCommands;
 - (void)eval:(CGContextRef)context;

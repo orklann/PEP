@@ -40,7 +40,7 @@
     GParser *p = [GParser parser];
     NSBundle *mainBundle = [NSBundle mainBundle];
     NSString *path = [mainBundle pathForResource:@"PEP_incremental" ofType:@"pdf"];
-    NSData *d = [NSData dataWithContentsOfFile:path];
+    NSMutableData *d = [NSMutableData dataWithContentsOfFile:path];
     [p setStream:d];
        
     GStreamObject *stream = [p getObjectByRef:@"19-0"];
@@ -76,7 +76,7 @@
     // TODO: Use test_xref.pdf by default without ability to custom file, will
     // do it later
     file = [mainBundle pathForResource:@"test_xref" ofType:@"pdf"];
-    NSData *d = [NSData dataWithContentsOfFile:file];
+    NSMutableData *d = [NSMutableData dataWithContentsOfFile:file];
     [parser setStream:d];
     
     // Get trailer
