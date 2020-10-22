@@ -56,6 +56,6 @@ void printTableTagsForCGFont(CGFontRef font);
 // Build CGFont into NSData which can be saved as ttf, otf font
 NSData* fontDataForCGFont(CGFontRef cgFont);
 
-// Sort GBinaryData array
+// Sort GBinaryData array by comparing objectNumber of GBinaryData
 NSMutableArray *sortedGBinaryDataArray(NSMutableArray *array);
 NS_ASSUME_NONNULL_END
