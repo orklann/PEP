@@ -174,6 +174,16 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
     }
     return ret;
 }
+
+- (NSString*)toString {
+    NSString *ret = @"";
+    if (subtype == kIntSubtype) {
+        ret = [NSString stringWithFormat:@"%d", intValue];
+    } else if (subtype == kRealSubtype) {
+        ret = [NSString stringWithFormat:@"%.6f", realValue];
+    }
+    return ret;
+}
 @end
 
 @implementation GLiteralStringsObject

@@ -86,6 +86,7 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
 - (double)realValue;
 - (double)getRealValue;
 - (void)parse;
+- (NSString*)toString;
 @end
 
 @interface GLiteralStringsObject : GObject {

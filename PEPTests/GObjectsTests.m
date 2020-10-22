@@ -38,4 +38,19 @@
     GBooleanObject *t = [objs lastObject];
     XCTAssertEqualObjects([t toString], @"true");
 }
+
+- (void)testGNumberObjectToString {
+    GParser *p = [GParser parser];
+    char *b = "1 3.1415";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    
+    GNumberObject *first = [objs firstObject];
+    XCTAssertEqualObjects([first toString], @"1");
+    
+    GNumberObject *second = [objs lastObject];
+    XCTAssertEqualObjects([second toString], @"3.141500");
+}
 @end
