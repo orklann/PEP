@@ -69,6 +69,7 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
 - (void)setValue:(BOOL)v;
 - (BOOL)value;
 - (void)parse;
+- (NSString*)toString;
 @end
 
 @interface GNumberObject : GObject {

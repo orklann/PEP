@@ -103,6 +103,16 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
          [self setValue:YES];
      }
 }
+
+- (NSString*)toString {
+    NSString *ret = @"true";
+    if (value) {
+        ret = @"true";
+    } else {
+        ret = @"false";
+    }
+    return ret;
+}
 @end
 
 @implementation GNumberObject
