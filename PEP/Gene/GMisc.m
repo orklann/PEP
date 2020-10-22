@@ -395,3 +395,15 @@ NSMutableArray *sortedGBinaryDataArray(NSMutableArray *array) {
     }
     return ret;
 }
+
+NSString* paddingTenZero(int objectNumber) {
+    NSString *numberString = [NSString stringWithFormat:@"%d", objectNumber];
+    NSMutableString *ret = [NSMutableString string];
+    int left = 10 - (int)[numberString length];
+    int i;
+    for (i = 0; i < left; i++) {
+        [ret appendString:@"0"];
+    }
+    [ret appendString:numberString];
+    return ret;
+}
