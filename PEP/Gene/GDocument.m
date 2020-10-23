@@ -103,6 +103,7 @@
         [page setParser:parser];
         [page setDocument:self];
         [pages addObject:page];
+        [page setLastStreamOffset:(unsigned int)[[[parser lexer] stream] length]];
     }
     NSLog(@"[GDocument parsePages] pages: %ld", [pages count]);
 }

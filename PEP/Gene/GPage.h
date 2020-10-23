@@ -35,8 +35,10 @@ NS_ASSUME_NONNULL_BEGIN
     NSPoint origin;
     GTextEditor *textEditor;
     NSMutableArray *commands;
+    
 }
 
+@property (readwrite) unsigned int lastStreamOffset;
 @property (readwrite) NSMutableDictionary *cachedFonts;
 @property (readwrite) NSMutableDictionary *glyphsForFontDict;
 @property (readwrite) BOOL needUpdate;

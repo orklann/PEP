@@ -33,7 +33,7 @@
     textBlock = tb;
     insertionPointIndex = 0;
     self.drawInsertionPoint = YES;
-    blinkTimer = [NSTimer scheduledTimerWithTimeInterval:0.4 repeats:YES block:^(NSTimer * _Nonnull timer) {
+    blinkTimer = [NSTimer scheduledTimerWithTimeInterval:0.3 repeats:YES block:^(NSTimer * _Nonnull timer) {
         if (self.drawInsertionPoint) {
             self.drawInsertionPoint = NO;
         } else {

@@ -87,7 +87,7 @@
     CGContextTranslateCTM(context, o.x, o.y);
 }
 
-- (void)render:(CGContextRef)context {    
+- (void)render:(CGContextRef)context {
     if (self.needUpdate) {
         [self initGlyphsForFontDict];
     }
@@ -411,10 +411,11 @@
 }
 
 - (void)incrementalUpdate {
-    int prevStartXRef = [[self parser] getStartXRef];
-        
     NSMutableData *stream = [self.parser stream];
+    // remove last added content from stream
+    [stream setLength:self.lastStreamOffset];
     
+    int prevStartXRef = [[self parser] getStartXRef];
     GDictionaryObject *trailerDict = [[self parser] getTrailer];
 
     // Append GBinaryData array data into parser/lexer stream
