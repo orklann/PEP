@@ -27,7 +27,6 @@
     [p setNeedUpdate:YES];
     p.dataToUpdate = [NSMutableArray array];
     p.cachedFonts = [NSMutableDictionary dictionary];
-    p.rendering = YES;
     return p;
 }
 
@@ -88,11 +87,7 @@
     CGContextTranslateCTM(context, o.x, o.y);
 }
 
-- (void)render:(CGContextRef)context {
-    if (!self.rendering) {
-        return ;
-    }
-    
+- (void)render:(CGContextRef)context {    
     if (self.needUpdate) {
         [self initGlyphsForFontDict];
     }

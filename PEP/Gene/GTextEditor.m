@@ -45,10 +45,8 @@
 }
 
 - (void)redraw {
-    if (self.page.rendering) {
-        GDocument *doc = (GDocument*)[(GPage*)self.page doc];
-        [doc setNeedsDisplay:YES];
-    }
+    GDocument *doc = (GDocument*)[(GPage*)self.page doc];
+    [doc setNeedsDisplay:YES];
 }
 
 - (void)drawInsertionPoint:(CGContextRef)context {
@@ -163,8 +161,6 @@
             // have no next line to move to
         }
     } else {
-        [self.page setRendering:NO];
-        [self.page setNeedUpdate:NO];
         NSString *ch =[event characters];
         // Test insert character into text editor
         // Fixme: use any font here, font is not useful by now
@@ -174,7 +170,6 @@
         [self.page addFont:font withPDFFontName:@"TT2"];
         [self.page addPageStream];
         [self.page incrementalUpdate];
-        [self.page setRendering:YES];
         [self.page setNeedUpdate:YES];
     }
     

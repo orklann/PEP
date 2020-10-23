@@ -37,7 +37,6 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *commands;
 }
 
-@property (readwrite) BOOL rendering;
 @property (readwrite) NSMutableDictionary *cachedFonts;
 @property (readwrite) NSMutableDictionary *glyphsForFontDict;
 @property (readwrite) BOOL needUpdate;
