@@ -26,6 +26,7 @@
     GPage *p = [[GPage alloc] init];
     [p setNeedUpdate:YES];
     p.dataToUpdate = [NSMutableArray array];
+    p.cachedFonts = [NSMutableDictionary dictionary];
     return p;
 }
 
@@ -109,11 +110,11 @@
     [interpreter setInput:pageContent];
     [interpreter eval:context];
     
-    [self setNeedUpdate:NO];
-    
     if (textEditor != nil) {
         [textEditor draw:context];
     }
+    
+    [self setNeedUpdate:NO];
     
     // Test 
     //NSFont *font = [NSFont fontWithName:@"Limelight" size:47];
@@ -153,7 +154,16 @@
 }
 
 - (NSFont*)getCurrentFont {
-    GFont *font = [self getFontByName:[[self textState] fontName]];
+    GFont *font;
+    NSString *fontKey = [[self textState] fontName];
+    if (!self.needUpdate) {
+        font = [self.cachedFonts objectForKey:fontKey];
+    } else {
+        font = [self getFontByName:[[self textState] fontName]];
+    }
+    if (self.needUpdate) {
+        [self.cachedFonts setObject:font forKey:fontKey];
+    }
     return [font getNSFontBySize:[[self textState] fontSize]];
 }
 
