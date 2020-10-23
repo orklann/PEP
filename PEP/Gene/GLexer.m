@@ -434,7 +434,16 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
                 int ret = isEndLineMarker([self nextChar], [self nextChar]);
                 if (ret !=  kNOT_END_LINE_MARKER) {
                     [token setType:kStreamContentToken];
-                    [token setContent:[self getStreamContent:ret]];
+                    unsigned int start = 0;
+                    if (ret == kTWO_END_LINE_MARKERS) {
+                        [self nextChar];
+                        start = pos; // pos: the current position of stream
+                    }
+                    
+                    if (ret == kONE_END_LINE_MARKER) {
+                        start = pos; // pos: the current position of stream
+                    }
+                    [token setStartPos:start];
                 }
             }
             break;

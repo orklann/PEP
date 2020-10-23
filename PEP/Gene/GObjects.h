@@ -154,6 +154,10 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
     NSData *streamContent;
 }
 
+// Start position in stream of stream content
+@property (readwrite) unsigned int startContentPos;
+@property (readwrite) GParser *parser;
+
 + (id)create;
 - (void)setDictionaryObject:(GDictionaryObject*)d;
 - (GDictionaryObject *)dictionaryObject;

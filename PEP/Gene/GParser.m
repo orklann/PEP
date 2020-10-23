@@ -184,7 +184,8 @@ BOOL isTrailerLine(NSString *line) {
                     GStreamObject *s = [GStreamObject create];
                     [s setType:kStreamObject];
                     [s setDictionaryObject:dict];
-                    [s setStreamContent:[token2 content]];
+                    [s setParser:self];
+                    [s setStartContentPos:[token2 startPos]];
                     [s parse];
                     
                     o = s;

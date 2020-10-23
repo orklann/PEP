@@ -569,18 +569,21 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
     int len = 0;
     if ([(GObject*)value type] == kNumberObject) {
         len = [(GNumberObject*)[[dictionary value] objectForKey:@"Length"] intValue];
-        if (len != [streamContent length]) {
-            NSString *reason = [NSString stringWithFormat:@"Stream content length is not the same as indicated in dictionary: (len: %d Length: %ld", len, [streamContent length]];
-            NSException* errorLengthException = [NSException
-                    exceptionWithName:@"StreamContentLengthErrorException"
-                    reason: reason
-                    userInfo:nil];
-            @throw errorLengthException;
-            return ;
-        }
     } else if ([(GObject*)value type] == kRefObject) {
         
     }
+    
+    NSLog(@"len: %d", len);
+    GLexer *l = [self.parser lexer];
+    // Parse stream content, we also modify lexers pos
+    char *bytes = (char*)[[l stream] bytes];
+    streamContent = [NSData dataWithBytes:(char*)(bytes + self.startContentPos) length:len];
+    [l setPos:self.startContentPos + len];
+    char next = [l nextChar];
+    while (next != 'm') { // `m` at the end of `endstream`
+        next = [l nextChar];
+    }
+    next = [l nextChar];
 }
 
 - (NSData*)getDecodedStreamContent {
