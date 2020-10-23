@@ -382,11 +382,17 @@
 - (void)testGParserParseIndirectmObject {
     GParser *p = [GParser parser];
     char *b = "10 0 obj\n"
-              "<</Name (PEP) /Length 128>>"
+              "<</Length 4 >>stream\n"
+              "q\n"
+              "Q\n"
+              "\n"
+              "endstream"
               "\n"
               "endobj"
               "\n 10";
     NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    char *test = "q\nQ\n";
+    NSData *d2 = [NSData dataWithBytes:test length:strlen(test)];
     [p setStream:d];
     [p parse];
     NSMutableArray *objs = [p objects];
@@ -396,17 +402,18 @@
             GIndirectObject *obj = [objs objectAtIndex:i];
             XCTAssertEqual([obj objectNumber], 10);
             XCTAssertEqual([obj generationNumber], 0);
-            GDictionaryObject* contentObject = (GDictionaryObject*)[obj object];
-            for (id key in [contentObject value]) {
+            GStreamObject* contentObject = (GStreamObject*)[obj object];
+            for (id key in [[contentObject dictionaryObject] value]) {
                 if ([key isEqualToString:@"Name"]) {
-                    GLiteralStringsObject *s = [[contentObject value] objectForKey:key];
+                    GLiteralStringsObject *s = [[[contentObject dictionaryObject] value] objectForKey:key];
                     XCTAssertEqualObjects([s value], @"PEP");
                 } else if ([key isEqualToString:@"Length"]) {
-                    GNumberObject *n = [[contentObject value] objectForKey:key];
-                    XCTAssertEqual([n intValue], 128);
+                    GNumberObject *n = [[[contentObject dictionaryObject] value] objectForKey:key];
+                    XCTAssertEqual([n intValue], 4);
                     XCTAssertNotEqual([n intValue], 0);
                 }
             }
+            XCTAssertEqualObjects([contentObject streamContent], d2);
         }
     }
 }
