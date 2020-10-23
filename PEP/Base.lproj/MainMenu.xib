@@ -696,7 +696,7 @@
                             <rect key="frame" x="1" y="1" width="480" height="360"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <view id="Bho-M0-3ar">
+                                <view id="Bho-M0-3ar" customClass="GDocument">
                                     <rect key="frame" x="0.0" y="0.0" width="465" height="345"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>

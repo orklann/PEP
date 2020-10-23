@@ -563,17 +563,16 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
 }
 
 - (void)parse {
-    // Just verify that stream content length is same as indicated in the
-    // dictionary
     id value = [[dictionary value] objectForKey:@"Length"];
     int len = 0;
     if ([(GObject*)value type] == kNumberObject) {
         len = [(GNumberObject*)[[dictionary value] objectForKey:@"Length"] intValue];
     } else if ([(GObject*)value type] == kRefObject) {
-        
+        GRefObject* ref = (GRefObject*)value;
+        GNumberObject *lenObject = [self.parser getObjectByRef:[ref getRefString]];
+        len = [lenObject intValue];
     }
-    
-    NSLog(@"len: %d", len);
+
     GLexer *l = [self.parser lexer];
     // Parse stream content, we also modify lexers pos
     char *bytes = (char*)[[l stream] bytes];
