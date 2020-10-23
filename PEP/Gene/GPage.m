@@ -259,8 +259,10 @@
         
     CGFontRef cgFont = CTFontCopyGraphicsFont((CTFontRef)font, nil);
     NSData *fontData = fontDataForCGFont(cgFont);
-    int length = (int)[fontData length];
+    
     NSData *encodedFontData = encodeFlate(fontData);
+    
+    int length = (int)[encodedFontData length];
     
     NSString *header = [NSString stringWithFormat:@"<< /Length %d /Length1 %d /Filter /FlateDecode >>\nstream\n",
                         length, length];
@@ -291,11 +293,12 @@
         
     }
     
-    int length = (int)[pageContent length];
+    NSData *encodedFontData = encodeFlate(pageContent);
+    int length = (int)[encodedFontData length];
     NSMutableData *stream = [NSMutableData data];
-    NSString *header = [NSString stringWithFormat:@"<< /Length %d /Filter /FlateDecode >>\n", length];
+    NSString *header = [NSString stringWithFormat:@"<< /Length %d /Filter /FlateDecode >>\nstream\n", length];
     [stream appendData:[header dataUsingEncoding:NSASCIIStringEncoding]];
-    [stream appendData:pageContent];
+    [stream appendData:encodedFontData];
     NSString *end = @"\nendstream\n";
     [stream appendData:[end dataUsingEncoding:NSASCIIStringEncoding]];
     
@@ -394,5 +397,35 @@
     NSString *startXRef = [NSString stringWithFormat:@"\r\nstartxref\r\n%d\r\n%%EOF\r\n", newStartXRef];
     [ret appendString:startXRef];
     return [ret dataUsingEncoding:NSASCIIStringEncoding];
+}
+
+- (void)incrementalUpdate {
+    int prevStartXRef = [[self parser] getStartXRef];
+        
+    NSMutableData *stream = [self.parser stream];
+    
+    GDictionaryObject *trailerDict = [[self parser] getTrailer];
+
+    // Append GBinaryData array data into parser/lexer stream
+    int i;
+    for (i = 0; i < [self.dataToUpdate count]; i++) {
+        int offset = (int)[stream length];
+        GBinaryData *b = [self.dataToUpdate objectAtIndex:i];
+        [b setOffset:offset];
+        NSData *d = [b getDataAsIndirectObject];
+        [stream appendData:d];
+    }
+    
+    // Append XRef table
+    int startXRef = (int)[stream length];
+    NSData *data = [self buildNewXRefTable];
+    [stream appendData:data];
+    
+    data = [self buildNewTrailer:trailerDict
+                   prevStartXRef:prevStartXRef
+                    newStartXRef:startXRef];
+    
+    [stream appendData:data];
+    [self.dataToUpdate removeAllObjects];
 }
 @end

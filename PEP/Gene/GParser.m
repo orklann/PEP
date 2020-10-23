@@ -40,6 +40,10 @@ BOOL isTrailerLine(NSString *line) {
     return lexer;
 }
 
+- (NSMutableData*)stream {
+    return [lexer stream];
+}
+
 - (void)setStream:(NSMutableData*)s {
     [lexer setStream:s];
     objects = [NSMutableArray array];

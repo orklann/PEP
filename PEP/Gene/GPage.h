@@ -82,6 +82,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSData*)buildNewTrailer:(GDictionaryObject*)trailerDict
              prevStartXRef:(int)prevStartXRef
               newStartXRef:(int)newStartXRef;
+
+// Incremental update
+- (void)incrementalUpdate;
 @end
 
 NS_ASSUME_NONNULL_END

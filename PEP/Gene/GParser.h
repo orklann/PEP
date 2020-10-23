@@ -29,6 +29,7 @@ BOOL isTrailerLine(NSString *line);
 + (id)parser;
 - (GLexer*)lexer;
 - (void)setLexer:(GLexer *)l;
+- (NSMutableData*)stream;
 - (void)setStream:(NSMutableData*)s;
 - (NSMutableArray*)objects;
 - (id)parseNextObject;

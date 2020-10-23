@@ -160,16 +160,31 @@
             // No need to handle insertion point in last position, because we
             // have no next line to move to
         }
-    }
-    
-    // Test: press m key to insert character into text editor
-    if ([[event characters] isEqualToString:@"m"]) {
+    } else {
+        NSString *ch =[event characters];
         // Test insert character into text editor
         // Fixme: use any font here, font is not useful by now
-        [self insertChar:@"E" font:[NSFont fontWithName:@"Arial" size:1]];
+        [self insertChar:ch font:[NSFont fontWithName:@"Limelight" size:1]];
         [self.page buildPageContent];
+        NSFont *font = [NSFont fontWithName:@"Limelight" size:47];
+        [self.page addFont:font withPDFFontName:@"TT2"];
+        [self.page addPageStream];
+        [self.page incrementalUpdate];
         [self.page setNeedUpdate:YES];
     }
+    
+//    // Test: press m key to insert character into text editor
+//    if ([[event characters] isEqualToString:@"m"]) {
+//        // Test insert character into text editor
+//        // Fixme: use any font here, font is not useful by now
+//        [self insertChar:@"Q" font:[NSFont fontWithName:@"Limelight" size:1]];
+//        [self.page buildPageContent];
+//        NSFont *font = [NSFont fontWithName:@"Limelight" size:47];
+//        [self.page addFont:font withPDFFontName:@"TT2"];
+//        [self.page addPageStream];
+//        [self.page incrementalUpdate];
+//        [self.page setNeedUpdate:YES];
+//    }
     [self redraw];
 }
 
