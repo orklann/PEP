@@ -54,7 +54,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 
 - (void)layoutStrings:(NSString*)s context:(CGContextRef)context  tj:(CGFloat)tjDelta{
     NSMutableArray *glyphs = [[page textParser] glyphs];
-    NSFont *font = [page getCurrentFont];
+    NSFont *font = [page getCurrentFont:s];
     CGAffineTransform tm = [[page textState] textMatrix];
     CGFloat fs = [[page textState] fontSize];
     CGFloat h = 1.0; // we need this in graphics state

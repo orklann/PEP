@@ -58,7 +58,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSRect)calculatePageMediaBox;
 - (GFont*)getFontByName:(NSString*)name;
 - (NSFont*)getFontByName:(NSString*)name size:(CGFloat)size;
-- (NSFont*)getCurrentFont;
+- (NSFont*)getCurrentFont:(NSString*)s;
 - (GGraphicsState*)graphicsState;
 - (GTextState*)textState;
 - (GTextParser*)textParser;
@@ -87,6 +87,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Incremental update
 - (void)incrementalUpdate;
+
+// Build cached fonts for this page
+- (void)buildCachedFonts;
 @end
 
 NS_ASSUME_NONNULL_END

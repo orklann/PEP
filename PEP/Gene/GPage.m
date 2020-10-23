@@ -92,6 +92,7 @@
     if (!self.rendering) {
         return ;
     }
+    
     if (self.needUpdate) {
         [self initGlyphsForFontDict];
     }
@@ -112,6 +113,13 @@
     [interpreter setPage:self];
     [interpreter setParser:parser];
     [interpreter setInput:pageContent];
+    
+    if (self.needUpdate) {
+        // Build cached fonts for all Tf commands at this time, we have commands
+        [interpreter parseCommands]; // commands are saved in this page
+        [self buildCachedFonts];
+    }
+    
     [interpreter eval:context];
     
     if (textEditor != nil) {
@@ -157,18 +165,13 @@
     return f;
 }
 
-- (NSFont*)getCurrentFont {
-    GFont *font;
-    NSString *fontKey = [[self textState] fontName];
-    if (!self.needUpdate) {
-        font = [self.cachedFonts objectForKey:fontKey];
-    } else {
-        font = [self getFontByName:[[self textState] fontName]];
-    }
-    if (self.needUpdate) {
-        [self.cachedFonts setObject:font forKey:fontKey];
-    }
-    return [font getNSFontBySize:[[self textState] fontSize]];
+- (NSFont*)getCurrentFont:(NSString*)s {
+    NSFont *f;
+    NSString *fontName = [[self textState] fontName];
+    CGFloat fontSize = [[self textState] fontSize];
+    NSString *fontKey = [NSString stringWithFormat:@"%@-%f", fontName, fontSize];
+    f = [self.cachedFonts objectForKey:fontKey];
+    return f;
 }
 
 - (NSFont*)getFontByName:(NSString*)name size:(CGFloat)size {
@@ -440,5 +443,29 @@
     
     [stream appendData:data];
     [self.dataToUpdate removeAllObjects];
+}
+
+- (void)setCachedFont:(NSString*)fontName fontSize:(CGFloat)fontSize {
+    NSString *fontKey = [NSString stringWithFormat:@"%@-%f", fontName, fontSize];
+    GFont *font = [GFont fontWithName:fontName page:self];
+    NSFont *f = [font getNSFontBySize:fontSize];
+    [self.cachedFonts setObject:f forKey:fontKey];
+}
+
+- (void)buildCachedFonts {
+    NSMutableArray *commands = [self commands];
+    NSUInteger i;
+    for (i = 0; i < [commands count]; i++) {
+        id obj = [commands objectAtIndex:i];
+        if ([(GObject*) obj type] == kCommandObject) {
+            GCommandObject *cmdObj = (GCommandObject*)obj;
+            NSString *cmd = [cmdObj cmd];
+            if (isCommand(cmd, @"Tf")) { // eval Tf
+                NSString *fontName = [(GNameObject*)[[cmdObj args] objectAtIndex:0] value];
+                CGFloat fontSize = [[[cmdObj args] objectAtIndex:1] getRealValue];
+                [self setCachedFont:fontName fontSize:fontSize];
+            }
+        }
+    }
 }
 @end

@@ -45,8 +45,10 @@
 }
 
 - (void)redraw {
-    GDocument *doc = (GDocument*)[(GPage*)self.page doc];
-    [doc setNeedsDisplay:YES];
+    if (self.page.rendering) {
+        GDocument *doc = (GDocument*)[(GPage*)self.page doc];
+        [doc setNeedsDisplay:YES];
+    }
 }
 
 - (void)drawInsertionPoint:(CGContextRef)context {
@@ -162,6 +164,7 @@
         }
     } else {
         [self.page setRendering:NO];
+        [self.page setNeedUpdate:NO];
         NSString *ch =[event characters];
         // Test insert character into text editor
         // Fixme: use any font here, font is not useful by now
