@@ -161,6 +161,7 @@
             // have no next line to move to
         }
     } else {
+        [self.page setRendering:NO];
         NSString *ch =[event characters];
         // Test insert character into text editor
         // Fixme: use any font here, font is not useful by now
@@ -170,6 +171,7 @@
         [self.page addFont:font withPDFFontName:@"TT2"];
         [self.page addPageStream];
         [self.page incrementalUpdate];
+        [self.page setRendering:YES];
         [self.page setNeedUpdate:YES];
     }
     

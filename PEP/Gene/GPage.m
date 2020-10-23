@@ -27,6 +27,7 @@
     [p setNeedUpdate:YES];
     p.dataToUpdate = [NSMutableArray array];
     p.cachedFonts = [NSMutableDictionary dictionary];
+    p.rendering = YES;
     return p;
 }
 
@@ -88,6 +89,9 @@
 }
 
 - (void)render:(CGContextRef)context {
+    if (!self.rendering) {
+        return ;
+    }
     if (self.needUpdate) {
         [self initGlyphsForFontDict];
     }
@@ -289,7 +293,6 @@
     [binary setData:stream];
     
     [self.dataToUpdate addObject:binary];
-    
 }
 
 - (void)addPageStream {
