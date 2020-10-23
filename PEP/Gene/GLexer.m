@@ -78,8 +78,8 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     pos = p;
 }
 
-- (void)setStream:(NSMutableData*)s {
-    stream = s;
+- (void)setStream:(NSData*)s {
+    stream = [NSMutableData dataWithData:s];
     pos = 0;
 }
 

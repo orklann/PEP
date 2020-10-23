@@ -30,7 +30,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     parser = p;
 }
 
-- (void)setInput:(NSMutableData *)d {
+- (void)setInput:(NSData *)d {
     NSMutableData *data = [NSMutableData dataWithData:d];
     [data appendBytes:"\0" length:1];
     input = data;

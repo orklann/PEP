@@ -30,7 +30,7 @@ BOOL isTrailerLine(NSString *line);
 - (GLexer*)lexer;
 - (void)setLexer:(GLexer *)l;
 - (NSMutableData*)stream;
-- (void)setStream:(NSMutableData*)s;
+- (void)setStream:(NSData*)s;
 - (NSMutableArray*)objects;
 - (id)parseNextObject;
 - (void)parse; // parse tokens from lexer into GObjects array

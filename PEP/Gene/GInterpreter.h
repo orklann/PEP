@@ -24,7 +24,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2);
 + (id)create;
 - (void)setPage:(GPage*)p;
 - (void)setParser:(GParser*)p;
-- (void)setInput:(NSMutableData *)d;
+- (void)setInput:(NSData *)d;
 - (NSMutableArray*)commands;
 - (void)parseCommands;
 - (void)eval:(CGContextRef)context;

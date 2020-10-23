@@ -44,7 +44,7 @@ BOOL isTrailerLine(NSString *line) {
     return [lexer stream];
 }
 
-- (void)setStream:(NSMutableData*)s {
+- (void)setStream:(NSData*)s {
     [lexer setStream:s];
     objects = [NSMutableArray array];
 }
