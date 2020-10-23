@@ -97,7 +97,10 @@ BOOL isTrailerLine(NSString *line) {
                     [indirectObj setType:kIndirectObject];
                     [indirectObj setObjectNumber:[objNumberObject intValue]];
                     [indirectObj setGenerationNumber:[generationNumberObject intValue]];
-                    [indirectObj setRawContent:[token3 content]];
+                    [indirectObj setParser:self];
+                    [indirectObj setStartPos:[token3 startPos]];
+                    // TODO: Remove me
+                    //[indirectObj setRawContent:[token3 content]];
                     [indirectObj parse];
                     
                     o = indirectObj;

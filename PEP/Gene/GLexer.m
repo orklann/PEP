@@ -442,7 +442,9 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
         case 'o':
             if ([self nextChar] == 'b' && [self nextChar] == 'j') {
                 [token setType:kIndirectObjectContentToken];
-                [token setContent:[self getIndirectObjectContent]];
+                [token setStartPos:pos+1];
+                // TODO: Remove me
+                //[token setContent:[self getIndirectObjectContent]];
             }
             break;
             

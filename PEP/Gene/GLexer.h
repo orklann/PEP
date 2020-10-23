@@ -48,6 +48,8 @@ typedef enum {
     NSData *originalContent;
 }
 
+@property (readwrite) unsigned int startPos;
+
 + (id)token;
 - (void)setType:(TokenType)t;
 - (TokenType)type;

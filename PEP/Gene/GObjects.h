@@ -16,6 +16,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class GParser;
+
 NS_ASSUME_NONNULL_BEGIN
 typedef enum {
     kUnknownObject,
@@ -166,6 +168,9 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
     int objectNumber;
     int generationNumber;
 }
+
+@property (readwrite) unsigned int startPos;
+@property (readwrite) GParser *parser;
 
 + (id)create;
 - (void)setObjectNumber:(int)n;

@@ -472,9 +472,7 @@
 - (void)testGParserNextObject {
     GParser *p = [GParser parser];
     char *b = "null false true 1 2 3 10 0 R \n"
-              "10 0 obj\n"
-              "(This is an indirect obj)\n"
-              "endobj 1 2 3 \n"
+              " 1 2 3 \n"
               "(Hello World) \n"
               "<4920616d20612068657820737472696e67> \n"
               "/Name \n"
@@ -520,15 +518,6 @@
     XCTAssertEqual([(GRefObject*)o objectNumber], 10);
     XCTAssertEqual([(GRefObject*)o generationNumber], 0);
     
-    // 10 0 obj
-    o = [p parseNextObject];
-    XCTAssertEqual([(GIndirectObject*)o type], kIndirectObject);
-    XCTAssertEqual([(GIndirectObject*)o objectNumber], 10);
-    XCTAssertEqual([(GIndirectObject*)o generationNumber], 0);
-    char *test = "This is an indirect obj";
-    XCTAssertEqualObjects([(GLiteralStringsObject*)[(GIndirectObject*)o object] value],
-                          [NSString stringWithUTF8String:test]);
-    
     // 1
     o = [p parseNextObject];
     XCTAssertEqual([(GNumberObject*)o type], kNumberObject);
@@ -551,7 +540,7 @@
                    [NSString stringWithUTF8String:"Hello World"]);
     
     // <4920616d20612068657820737472696e67>;
-    test = "I am a hex string";
+    char *test = "I am a hex string";
     NSData *d1 = [NSData dataWithBytes:test length:strlen(test)];
     o = [p parseNextObject];
     XCTAssertEqual([(GHexStringsObject*)o type], kHexStringsObject);
