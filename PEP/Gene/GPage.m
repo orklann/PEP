@@ -443,12 +443,16 @@
 
 - (void)setCachedFont:(NSString*)fontName fontSize:(CGFloat)fontSize {
     NSString *fontKey = [NSString stringWithFormat:@"%@-%f", fontName, fontSize];
+    NSFont *existFont = [self.cachedFonts objectForKey:fontKey];
+    if (existFont) return ;
     GFont *font = [GFont fontWithName:fontName page:self];
     NSFont *f = [font getNSFontBySize:fontSize];
+    
     [self.cachedFonts setObject:f forKey:fontKey];
 }
 
 - (void)buildCachedFonts {
+    [self.cachedFonts removeAllObjects];
     NSMutableArray *commands = [self commands];
     NSUInteger i;
     for (i = 0; i < [commands count]; i++) {
