@@ -4,26 +4,14 @@
 
 For now, PEP is work-in-progress and it's constantly updated everyday.
 
-Currently working on the core, a PDF engine called Gene from scratch. You can build this app with Xcode, and see the simple rendering result, **PEP is able to render a sample PDF now.** (See the PDF: test_xref.pdf)
+Currently working on the core, a PDF engine called Gene from scratch.
 
-If you are interested in the tests, just click Test in your Xcode, if should be all pass.
+**PEP** is now able to edit the sample PDF, and save as new PDF, please check it out in
+the [download](https://macpep.org/download) page for the prototype alpha version.
+
 
 ## What I am working on
-I update the core PDF engine (called Gene) almost everyday.
-
-## What has been done
-### Things Done
-* A lexer (GLexer.h|m) which turns pdf content into tokens
-* A parser (GParser.h|m) which parse tokens from lexer into pdf objects (String, Name, Dictionary, Stream, etc...)
-* Objects classes (GObjects.h|m) which present PDF objects
-
-### Things unfinished
-* GDocument (GDocument.h|m) which loads a PDF file, and render/edit it
-* GPage (GPage.h|m) which presents a single PDF page
-* GDecoders which implement all decoders for decoding stream objects
-* GInterpreter (GInterpreter.h|m) which renders grapchic and text of a PDF page by evaluating operators in the page content.
-* GTextState (GTextState.h|m) which store text state parameters for PDF page
-* GFont (GFont.h|m) which store font program in PDF page resources and other parameters.
+I update PEP almost everyday. Please check out the official website ([PEP](https://macpep.org/)) to see news and downloads.
 
 ## Roadmap
 
