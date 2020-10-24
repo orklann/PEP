@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 - (IBAction)saveDocumentAs:(id)sender;
+
+- (void)saveAs:(NSString*)path;
 - (void)parsePages;
 - (NSRect)rectFromFlipped:(NSRect)r;
 - (void)scrollToTop;

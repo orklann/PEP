@@ -25,10 +25,14 @@
     [panel beginWithCompletionHandler:^(NSInteger result){
         if (result == NSModalResponseOK) {
             NSString *path = [[panel URL] path];
-            [[self->parser stream] writeToFile:path atomically:YES];
+            [self saveAs:path];
             return ;
          }
     }];
+}
+
+- (void)saveAs:(NSString*)path {
+    [[parser stream] writeToFile:path atomically:YES];
 }
 
 - (void)awakeFromNib {
