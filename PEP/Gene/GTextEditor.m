@@ -68,7 +68,7 @@
         textBlock = [blocks objectAtIndex:self.textBlockIndex];
         
         // Draw text editor border with 1 pixel width;
-        NSRect frame = [textBlock frame];
+        NSRect frame = [self enlargedFrame];
         frame = NSInsetRect(frame, 0.5, 0.5);
         CGContextSetLineWidth(context, 1.0 / (kScaleFactor));
         CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
@@ -82,6 +82,10 @@
 
 - (NSRect)frame {
     return [textBlock frame];
+}
+
+- (NSRect)enlargedFrame {
+    return NSInsetRect([self frame], -3, -3);
 }
 
 - (NSRect)getInsertionPoint {

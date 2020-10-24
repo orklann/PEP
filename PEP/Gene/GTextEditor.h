@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)keyDown:(NSEvent*)event;
 - (void)mouseDown:(NSEvent*)event;
 - (NSRect)frame;
+- (NSRect)enlargedFrame;
 
 // Insert character in insertion point
 - (void)insertChar:(NSString *)ch font:(NSFont*)font;
