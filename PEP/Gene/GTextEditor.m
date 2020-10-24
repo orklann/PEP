@@ -164,10 +164,11 @@
         NSString *ch =[event characters];
         // Test insert character into text editor
         // Fixme: use any font here, font is not useful by now
-        NSFont *font = [NSFont fontWithName:@"Limelight" size:1];
+        GGlyph *g = [self getCurrentGlyph];
+        NSFont *font = [NSFont fontWithName:@"Gill Sans" size:[g fontSize]];
         [self insertChar:ch font:font];
         [self.page buildPageContent];
-        [self.page addFont:font withPDFFontName:@"TT2"];
+        [self.page addFont:font withPDFFontName:[g fontName]];
         [self.page addPageStream];
         [self.page incrementalUpdate];
         [self.page setNeedUpdate:YES];
@@ -311,5 +312,15 @@
         }
     }
     insertionPointIndex++;
+}
+
+- (GGlyph*)getCurrentGlyph {
+    GGlyph *currentGlyph;
+    if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
+        currentGlyph = [[textBlock glyphs] lastObject];
+    } else {
+        currentGlyph = [[textBlock glyphs] objectAtIndex:insertionPointIndex];
+    }
+    return currentGlyph;
 }
 @end

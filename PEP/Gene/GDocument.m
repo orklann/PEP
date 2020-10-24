@@ -19,7 +19,7 @@
 @implementation GDocument
 - (void)awakeFromNib {
     // Set window title:
-    [[self window] setTitle:@"PEP_incremental.pdf"];
+    [[self window] setTitle:@"PEP_GillSans.pdf"];
     
     // Resize window
     NSLog(@"View: %@", NSStringFromRect(self.bounds));
@@ -75,7 +75,7 @@
     NSBundle *mainBundle = [NSBundle mainBundle];
     // TODO: Use test_xref.pdf by default without ability to custom file, will
     // do it later
-    file = [mainBundle pathForResource:@"test_xref" ofType:@"pdf"];
+    file = [mainBundle pathForResource:@"PEP_GillSans" ofType:@"pdf"];
     NSMutableData *d = [NSMutableData dataWithContentsOfFile:file];
     [parser setStream:d];
     

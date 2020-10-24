@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 
+@class GGlyph;
 @class GTextBlock;
 @class GPage;
 NS_ASSUME_NONNULL_BEGIN
@@ -31,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Insert character in insertion point
 - (void)insertChar:(NSString *)ch font:(NSFont*)font;
+- (GGlyph*)getCurrentGlyph;
 @end
 
 NS_ASSUME_NONNULL_END
