@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)mouseDown:(NSEvent*)event;
 
 // Insert character in insertion point
-- (void)insertChar:(NSString *)ch font:(NSFont*)f;
+- (void)insertChar:(NSString *)ch font:(NSFont*)font;
 @end
 
 NS_ASSUME_NONNULL_END

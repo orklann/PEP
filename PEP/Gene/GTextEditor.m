@@ -172,19 +172,6 @@
         [self.page incrementalUpdate];
         [self.page setNeedUpdate:YES];
     }
-    
-//    // Test: press m key to insert character into text editor
-//    if ([[event characters] isEqualToString:@"m"]) {
-//        // Test insert character into text editor
-//        // Fixme: use any font here, font is not useful by now
-//        [self insertChar:@"Q" font:[NSFont fontWithName:@"Limelight" size:1]];
-//        [self.page buildPageContent];
-//        NSFont *font = [NSFont fontWithName:@"Limelight" size:47];
-//        [self.page addFont:font withPDFFontName:@"TT2"];
-//        [self.page addPageStream];
-//        [self.page incrementalUpdate];
-//        [self.page setNeedUpdate:YES];
-//    }
     [self redraw];
 }
 
@@ -251,9 +238,7 @@
     }
 }
 
-- (void)insertChar:(NSString *)ch font:(NSFont*)f {
-    // ignore parameter f by now
-    // TODO: need to take account with f
+- (void)insertChar:(NSString *)ch font:(NSFont*)font {
     GGlyph *currentGlyph;
     if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
         currentGlyph = [[textBlock glyphs] lastObject];
@@ -308,7 +293,6 @@
         }
         
         // Adjust glyphs text matrix (for tx) after insertion point in this line
-        NSFont *font = f;
         CGFloat hAdvance = getGlyphAdvanceForFont(ch, font);
         NSSize s = NSMakeSize(hAdvance, 0);
         s = CGSizeApplyAffineTransform(s, tm);
