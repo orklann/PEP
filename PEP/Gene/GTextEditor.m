@@ -164,9 +164,9 @@
         NSString *ch =[event characters];
         // Test insert character into text editor
         // Fixme: use any font here, font is not useful by now
-        [self insertChar:ch font:[NSFont fontWithName:@"Limelight" size:1]];
+        NSFont *font = [NSFont fontWithName:@"Limelight" size:1];
+        [self insertChar:ch font:font];
         [self.page buildPageContent];
-        NSFont *font = [NSFont fontWithName:@"Limelight" size:47];
         [self.page addFont:font withPDFFontName:@"TT2"];
         [self.page addPageStream];
         [self.page incrementalUpdate];
@@ -308,7 +308,7 @@
         }
         
         // Adjust glyphs text matrix (for tx) after insertion point in this line
-        NSFont *font = [self.page getFontByName:fontName size:fontSize];
+        NSFont *font = f;
         CGFloat hAdvance = getGlyphAdvanceForFont(ch, font);
         NSSize s = NSMakeSize(hAdvance, 0);
         s = CGSizeApplyAffineTransform(s, tm);
