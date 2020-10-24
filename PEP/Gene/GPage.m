@@ -121,13 +121,13 @@
         [textEditor draw:context];
     }
     
+    // Draw highlith text block border
+    CGContextSetLineWidth(context, 1.0 / (kScaleFactor));
+    CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
+    CGContextStrokeRect(context, highlightBlockFrame);
+    
     [self setNeedUpdate:NO];
     
-    // Test 
-    //NSFont *font = [NSFont fontWithName:@"Limelight" size:47];
-    //[self addFont:font withPDFFontName:@"TT2"];
-    //GBinaryData *first = [self.dataToUpdate firstObject];
-    //NSLog(@"%d %d obj", first.objectNumber, first.generationNumber);
 }
 
 // Calculate media box for PDF page in user space coordinate
@@ -200,6 +200,22 @@
     GTextBlock *last  = [[textParser makeTextBlocks] lastObject];
     textEditor = [GTextEditor textEditorWithPage:self textBlock:last];
     
+    [self redraw];
+}
+
+- (void)mouseMoved:(NSEvent*)event {
+    NSPoint location = [event locationInWindow];
+    NSPoint point = [self.doc convertPoint:location fromView:nil];
+    NSArray *blocks = [[self textParser] makeTextBlocks];
+    highlightBlockFrame = NSZeroRect;
+    for (GTextBlock *tb in blocks) {
+        NSRect frame = [tb frame];
+        NSRect viewFrame = [self rectFromPageToView:frame];
+        if (NSPointInRect(point, viewFrame)) {
+            highlightBlockFrame = frame;
+            break;
+        }
+    }
     [self redraw];
 }
 

@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSPoint origin;
     GTextEditor *textEditor;
     NSMutableArray *commands;
-    
+    NSRect highlightBlockFrame;
 }
 
 @property (readwrite) unsigned int lastStreamOffset;
@@ -64,6 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (GTextState*)textState;
 - (GTextParser*)textParser;
 - (void)keyDown:(NSEvent*)event;
+- (void)mouseMoved:(NSEvent*)event;
 - (void)mouseDown:(NSEvent*)event;
 - (NSRect)rectFromPageToView:(NSRect)rect;
 - (void)buildPageContent;

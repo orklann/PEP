@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *file;
     NSMutableArray *pages;
     GParser *parser;
+    NSTrackingArea *trackingArea;
 }
 
 - (void)parsePages;

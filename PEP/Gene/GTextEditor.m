@@ -224,7 +224,7 @@
         NSArray *glyphs = [textBlock glyphs];
         GGlyph *g = [glyphs objectAtIndex:glyphIndex];
         NSRect frame = [g frame];
-        frame = [self.page  rectFromPageToView:frame];
+        frame = [self.page rectFromPageToView:frame];
         CGFloat midX = NSMidX(frame);
         if (point.x <= midX) {
             insertionPointIndex = [g indexOfBlock];

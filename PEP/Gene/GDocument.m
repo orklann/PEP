@@ -68,6 +68,24 @@
     
     // parse Content of first page
     [[pages firstObject] parsePageContent];
+    
+    // Make all mouse events work
+    [self updateTrackingAreas];
+    
+}
+
+- (void)updateTrackingAreas {
+    if(trackingArea != nil) {
+        [self removeTrackingArea:trackingArea];
+    }
+    
+    int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways | NSTrackingMouseMoved | NSTrackingInVisibleRect);
+    trackingArea = [ [NSTrackingArea alloc] initWithRect:[self bounds]
+                                                 options:opts
+                                                   owner:self
+                                                userInfo:nil];
+    [self addTrackingArea:trackingArea];
+    [self.window invalidateCursorRectsForView:self];
 }
 
 - (void)parsePages {
@@ -134,6 +152,11 @@
     NSPoint pt = NSMakePoint(0.0, [[self.enclosingScrollView documentView]
                                       bounds].size.height);
     [self.enclosingScrollView.documentView scrollPoint:pt];
+}
+
+- (void)mouseMoved:(NSEvent *)event {
+     GPage *p = [pages firstObject];
+     [p mouseMoved:event];
 }
 
 - (void)mouseDown:(NSEvent *)event {
