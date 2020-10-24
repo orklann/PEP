@@ -27,6 +27,7 @@
     [p setNeedUpdate:YES];
     p.dataToUpdate = [NSMutableArray array];
     p.cachedFonts = [NSMutableDictionary dictionary];
+    p.isEditing = NO;
     return p;
 }
 
@@ -193,17 +194,46 @@
 }
 
 - (void)mouseDown:(NSEvent*)event {
-    if (textEditor) {
+    NSPoint location = [event locationInWindow];
+    NSPoint point = [self.doc convertPoint:location fromView:nil];
+    
+    if (textEditor && self.isEditing) {
         [textEditor mouseDown:event];
+        NSRect frame = [textEditor frame];
+        NSRect viewFrame = [self rectFromPageToView:frame];
+        if (!NSPointInRect(point, viewFrame)) {
+            textEditor = nil;
+            self.isEditing = NO;
+        }
+        [self redraw];
     }
     
-    GTextBlock *last  = [[textParser makeTextBlocks] lastObject];
-    textEditor = [GTextEditor textEditorWithPage:self textBlock:last];
+    if (self.isEditing) {
+        return ;
+    }
     
-    [self redraw];
+    NSArray *blocks = [[self textParser] makeTextBlocks];
+    highlightBlockFrame = NSZeroRect;
+    for (GTextBlock *tb in blocks) {
+        NSRect frame = [tb frame];
+        NSRect viewFrame = [self rectFromPageToView:frame];
+        if (NSPointInRect(point, viewFrame)) {
+            textEditor = [GTextEditor textEditorWithPage:self textBlock:tb];
+            unsigned int index = (unsigned int)[blocks indexOfObject:tb];
+            [textEditor setTextBlockIndex:index];
+            self.isEditing = YES;
+            [self redraw];
+            return ;
+        }
+    }
+
 }
 
 - (void)mouseMoved:(NSEvent*)event {
+    if (self.isEditing) {
+        [self redraw];
+        return ;
+    }
     NSPoint location = [event locationInWindow];
     NSPoint point = [self.doc convertPoint:location fromView:nil];
     NSArray *blocks = [[self textParser] makeTextBlocks];

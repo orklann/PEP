@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSTimer *blinkTimer;
 }
 
+@property (readwrite) unsigned int textBlockIndex;
 @property (readwrite) BOOL drawInsertionPoint;
 @property (readwrite) GPage *page;
 
@@ -29,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSRect)getInsertionPoint;
 - (void)keyDown:(NSEvent*)event;
 - (void)mouseDown:(NSEvent*)event;
+- (NSRect)frame;
 
 // Insert character in insertion point
 - (void)insertChar:(NSString *)ch font:(NSFont*)font;

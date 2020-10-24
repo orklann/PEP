@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSRect highlightBlockFrame;
 }
 
+@property (readwrite) BOOL isEditing;
 @property (readwrite) unsigned int lastStreamOffset;
 @property (readwrite) NSMutableDictionary *cachedFonts;
 @property (readwrite) NSMutableDictionary *glyphsForFontDict;

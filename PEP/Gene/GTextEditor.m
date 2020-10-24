@@ -61,20 +61,25 @@
 }
 
 - (void)draw:(CGContextRef)context {
-    // Update text block to make sure text editor updated as well.
-    // Fixed: text editor not updated after insert char
-    textBlock = [[[self.page textParser] makeTextBlocks] lastObject];
-    
-    // Draw text editor border with 1 pixel width;
-    NSRect frame = [textBlock frame];
-    frame = NSInsetRect(frame, 0.5, 0.5);
-    CGContextSetLineWidth(context, 1.0 / (kScaleFactor));
-    CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
-    CGContextStrokeRect(context, frame);
+    NSArray *blocks = [[self.page textParser] makeTextBlocks];
+    if ([blocks count] > 0) {
+        textBlock = [blocks objectAtIndex:self.textBlockIndex];
+        
+        // Draw text editor border with 1 pixel width;
+        NSRect frame = [textBlock frame];
+        frame = NSInsetRect(frame, 0.5, 0.5);
+        CGContextSetLineWidth(context, 1.0 / (kScaleFactor));
+        CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
+        CGContextStrokeRect(context, frame);
+    }
     
     if (self.drawInsertionPoint) {
         [self drawInsertionPoint:context];
     }
+}
+
+- (NSRect)frame {
+    return [textBlock frame];
 }
 
 - (NSRect)getInsertionPoint {
