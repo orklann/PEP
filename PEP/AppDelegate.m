@@ -7,13 +7,17 @@
 //
 
 #import "AppDelegate.h"
-
+#import "GDocument.h"
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
 @end
 
 @implementation AppDelegate
+
+- (IBAction)saveDocumentAs:(id)sender {
+    [(GDocument*)self.window.contentView saveDocumentAs:sender];
+}
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application

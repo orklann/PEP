@@ -10,6 +10,6 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
-
+- (IBAction)saveDocumentAs:(id)sender;
 @end
 

@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSTrackingArea *trackingArea;
 }
 
+- (IBAction)saveDocumentAs:(id)sender;
 - (void)parsePages;
 - (NSRect)rectFromFlipped:(NSRect)r;
 - (void)scrollToTop;

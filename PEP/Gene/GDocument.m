@@ -17,6 +17,20 @@
 #import "GMisc.h"
 
 @implementation GDocument
+
+- (IBAction)saveDocumentAs:(id)sender {
+    NSSavePanel *panel = [NSSavePanel savePanel];
+    NSArray *types = @[@"pdf"];
+    [panel setAllowedFileTypes:types];
+    [panel beginWithCompletionHandler:^(NSInteger result){
+        if (result == NSModalResponseOK) {
+            NSString *path = [[panel URL] path];
+            [[self->parser stream] writeToFile:path atomically:YES];
+            return ;
+         }
+    }];
+}
+
 - (void)awakeFromNib {
     // Set window title:
     [[self window] setTitle:@"PEP_GillSans.pdf"];
