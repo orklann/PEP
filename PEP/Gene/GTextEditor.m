@@ -63,6 +63,8 @@
 - (void)draw:(CGContextRef)context {
     NSArray *blocks = [[self.page textParser] makeTextBlocks];
     if ([blocks count] > 0) {
+        // NOTE: Update text block here, in draw, because text blocks are
+        // updated in [GPage render], and it will call this method afterwards
         textBlock = [blocks objectAtIndex:self.textBlockIndex];
         
         // Draw text editor border with 1 pixel width;
