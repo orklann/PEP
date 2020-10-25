@@ -37,6 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 // Insert character in insertion point
 - (void)insertChar:(NSString *)ch font:(NSFont*)font;
 - (void)insertChar:(NSString *)ch;
+
+// Insert string in insertion point
+// NOTE: Not use yet, but it's useful later
 - (void)insertString:(NSString*)string font:(NSFont*)font;
 - (void)insertString:(NSString*)string;
 - (GGlyph*)getCurrentGlyph;

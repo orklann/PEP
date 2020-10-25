@@ -25,6 +25,19 @@ void printData(NSData *data) {
 }
 
 CGFloat getGlyphAdvanceForFont(NSString *ch, NSFont *font) {
+    // Handle tab character width, because it's not correct to get it with
+    // CTRunGetAdvances().
+    if ([ch isEqualToString:@"\t"]) {
+        CGRect rect;
+        CGFontRef cgFont = CTFontCopyGraphicsFont((CTFontRef)font, nil);
+        CGGlyph g = CGFontGetGlyphWithGlyphName(cgFont, (CFStringRef)@"\t");
+        CGFontGetGlyphBBoxes(cgFont, &g, 1, &rect);
+
+        CGFloat hAdvance = rect.size.width / CGFontGetUnitsPerEm(cgFont) * font.pointSize;
+        NSLog(@"*width:%f", hAdvance);
+        return hAdvance;
+    }
+    
     NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:ch];
     [s addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, 1)];
     [s addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0, 1)];

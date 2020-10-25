@@ -47,6 +47,8 @@
         ret = @"\\(";
     } else if ([content isEqualToString:@")"]) {
         ret = @"\\)";
+    } else if ([content isEqualToString:@"\t"]) {
+        ret = @"\\t";
     } else {
         ret = content;
     }

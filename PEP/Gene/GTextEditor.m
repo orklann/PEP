@@ -174,11 +174,7 @@
         }
     } else {
         NSString *ch =[event characters];
-        if ([ch isEqualToString:@"\t"]) {
-            [self insertString:@"    "];
-        } else {
-            [self insertChar:ch];
-        }
+        [self insertChar:ch];
     }
     [self redraw];
 }
@@ -300,9 +296,21 @@
             return ;
         }
         
-        CGFloat hAdvance = getGlyphAdvanceForFont(ch, font);
-        
-        NSSize s = NSMakeSize(hAdvance, 0);
+        CGFloat hAdvance = 0;
+        NSSize s;
+        if ([ch isEqualToString:@"\t"]) {
+            CGRect rect;
+            CGFontRef cgFont = CTFontCopyGraphicsFont((CTFontRef)font, nil);
+            CGGlyph g = CGFontGetGlyphWithGlyphName(cgFont, CFSTR("\t"));
+            CGFontGetGlyphBBoxes(cgFont, &g, 1, &rect);
+
+            hAdvance = rect.size.width / CGFontGetUnitsPerEm(cgFont) * fontSize;
+            NSLog(@"width: %f", hAdvance);
+        } else {
+            hAdvance = getGlyphAdvanceForFont(ch, font);
+        }
+
+        s = NSMakeSize(hAdvance, 0);
         s = CGSizeApplyAffineTransform(s, tm);
         
         int i;
