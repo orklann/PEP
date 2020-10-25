@@ -255,6 +255,8 @@
 }
 
 - (void)insertChar:(NSString *)ch font:(NSFont*)font {
+    ch = [self glyphReplace:ch];
+    
     GGlyph *currentGlyph;
     if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
         currentGlyph = [[textBlock glyphs] lastObject];
@@ -308,10 +310,11 @@
             return ;
         }
         
-        // Adjust glyphs text matrix (for tx) after insertion point in this line
         CGFloat hAdvance = getGlyphAdvanceForFont(ch, font);
+        
         NSSize s = NSMakeSize(hAdvance, 0);
         s = CGSizeApplyAffineTransform(s, tm);
+        
         int i;
         for (i = 0; i < [lineGlyphs count]; i++) {
             GGlyph *tmp = [lineGlyphs objectAtIndex:i];
@@ -337,5 +340,15 @@
         currentGlyph = [[textBlock glyphs] objectAtIndex:insertionPointIndex];
     }
     return currentGlyph;
+}
+
+- (NSString*)glyphReplace:(NSString *)ch {
+    // Adjust glyphs text matrix (for tx) after insertion point in this line
+    // NOTE: `\t' (tab) glyph width is so large, so we use space width for it
+    // Fixme: Inspect why \t glyph width is so large
+    if ([ch isEqualToString:@"\t"]) {
+        ch = @" ";
+    }
+    return ch;
 }
 @end

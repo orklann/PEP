@@ -37,6 +37,9 @@ NS_ASSUME_NONNULL_BEGIN
 // Insert character in insertion point
 - (void)insertChar:(NSString *)ch font:(NSFont*)font;
 - (GGlyph*)getCurrentGlyph;
+
+// Remove tab key to space
+- (NSString*)glyphReplace:(NSString *)ch;
 @end
 
 NS_ASSUME_NONNULL_END
