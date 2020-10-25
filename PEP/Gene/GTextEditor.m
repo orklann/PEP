@@ -179,7 +179,7 @@
          *        PDF reader.
          */
         if ([ch isEqualToString:@"\t"]) {
-            ch = @" ";
+            ch = @" ";  // NOTE: ch is now a Tab character, not a space
         }
         [self insertChar:ch];
     }
