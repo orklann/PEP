@@ -39,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 @property (readwrite) BOOL isEditingMode;
+@property (readwrite) BOOL isRendering;
 @property (readwrite) unsigned int lastStreamOffset;
 @property (readwrite) NSMutableDictionary *cachedFonts;
 @property (readwrite) NSMutableDictionary *glyphsForFontDict;

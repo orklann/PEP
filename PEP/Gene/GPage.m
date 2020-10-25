@@ -28,6 +28,7 @@
     p.dataToUpdate = [NSMutableArray array];
     p.cachedFonts = [NSMutableDictionary dictionary];
     p.isEditingMode = NO;
+    p.isRendering = NO;
     return p;
 }
 
@@ -89,6 +90,10 @@
 }
 
 - (void)render:(CGContextRef)context {
+    if (self.isRendering) {
+        return ;
+    }
+    self.isRendering = YES;
     if (self.needUpdate) {
         [self initGlyphsForFontDict];
     }
@@ -128,6 +133,7 @@
     CGContextStrokeRect(context, highlightBlockFrame);
     
     [self setNeedUpdate:NO];
+    self.isRendering = NO;
     
 }
 
