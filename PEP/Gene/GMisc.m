@@ -448,7 +448,7 @@ void prettyLogForTextBlock(GTextBlock* textBlock) {
         GLine *l = [lines objectAtIndex:i];
         printf("%s\n", [[l lineString] UTF8String]);
     }
-    printf("***End Lines\n");
+    printf("***End Lines***\n");
     printf("====End Text Block====\n");
 }
 
