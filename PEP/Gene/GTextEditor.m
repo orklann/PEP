@@ -345,7 +345,8 @@
 - (NSString*)glyphReplace:(NSString *)ch {
     // Adjust glyphs text matrix (for tx) after insertion point in this line
     // NOTE: `\t' (tab) glyph width is so large, so we use space width for it
-    // Fixme: Inspect why \t glyph width is so large
+    // Fixme: Inspect why \t glyph width is so large, handle tab key in an elegant
+    //        way.
     if ([ch isEqualToString:@"\t"]) {
         ch = @" ";
     }
