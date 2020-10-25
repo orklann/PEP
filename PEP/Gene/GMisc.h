@@ -76,6 +76,9 @@ void prettyLogForTextBlock(GTextBlock* _Nullable textBlock);
 // Better log for GWords array
 void prettyLogForWords(NSArray * _Nullable words);
 
+// Better log char codes for GWords array
+void prettyLogCharCodesForWords(NSArray * _Nullable words);
+
 // Check for white space
 BOOL isWhiteSpaceChar(char c);
 

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
+@class GWord;
 @class GGlyph;
 
 @interface GTextParser : NSObject {
@@ -17,11 +18,14 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *lines;
     NSMutableArray *textBlocks;
     unsigned int glyphPos;
+    unsigned int wordPos;
 }
 + (id)create;
 - (NSMutableArray*)glyphs;
 - (GGlyph*)nextGlyph;
 - (GGlyph*)currentGlyph;
+- (GWord*)nextWord;
+- (GWord*)currentWord;
 - (NSMutableArray*)words;
 - (void)makeReadOrderGlyphs;
 - (NSMutableArray*)makeWords;

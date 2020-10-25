@@ -452,6 +452,7 @@ void prettyLogForTextBlock(GTextBlock* textBlock) {
     printf("====End Text Block====\n");
 }
 
+
 void prettyLogForWords(NSArray *words) {
     printf("====Words====\n");
     int i;
@@ -468,6 +469,23 @@ void prettyLogForWords(NSArray *words) {
             }
         }
         printf(" ");
+    }
+    printf("\n====End Words====\n");
+}
+
+void prettyLogCharCodesForWords(NSArray * _Nullable words) {
+    printf("====Words====\n");
+    int i;
+    for (i = 0; i < [words count]; i++) {
+        GWord *w = [words objectAtIndex:i];
+        NSString *s = [w wordString];
+        int index = 0;
+        printf(" <");
+        for (index = 0; index < [s length]; ++index) {
+            char ch = [s characterAtIndex:index];
+            printf(" [%d - %c] ", ch, ch);
+        }
+        printf("> ");
     }
     printf("\n====End Words====\n");
 }

@@ -45,6 +45,18 @@
     return nil;
 }
 
+- (GWord*)nextWord {
+    wordPos += 1;
+    return [self currentWord];
+}
+
+- (GWord*)currentWord {
+    if (wordPos < [words count]) {
+        return [words objectAtIndex:wordPos];
+    }
+    return nil;
+}
+
 - (void)setWords:(NSMutableArray*)ws {
     words = ws;
 }
@@ -97,15 +109,24 @@
     GGlyph *nextGlyph = [self nextGlyph];
     while(nextGlyph != nil) {
         if (isWhiteSpaceGlyph(nextGlyph)) {
+            // Add previous word
             [words addObject:currentWord];
-            currentWord = [GWord create];
-            [currentWord addGlyph:nextGlyph];
-            [words addObject:currentWord];
+            
+            // Handle edge case: where more than two white spaces stick
+            // together. We add each white space as a single word until we
+            // reach a none white space
+            //nextGlyph = [self nextGlyph];
+            while (isWhiteSpaceGlyph(nextGlyph)) {
+                currentWord = [GWord create];
+                [currentWord addGlyph:nextGlyph];
+                [words addObject:currentWord];
+                nextGlyph = [self nextGlyph];
+            }
             currentWord = [GWord create];
         } else {
             [currentWord addGlyph:nextGlyph];
+            nextGlyph = [self nextGlyph];
         }
-        nextGlyph = [self nextGlyph];
     }
     
     if ([[currentWord glyphs] count] > 0) {
@@ -120,29 +141,60 @@
     
     lines = [NSMutableArray array];
     
-    GLine *line = [GLine create];
-    GWord *currentWord = [words firstObject];
-    [line addWord:currentWord];
-    int i;
-    for (i = 1; i < [words count]; i++) {
-        GWord *nextWord = [words objectAtIndex:i];
+    wordPos = 0;
+    
+    GLine *currentLine = [GLine create];
+    GWord *currentWord = [self currentWord];
+    [currentLine addWord:currentWord];
+    GWord *nextWord = [self nextWord];
+    while(nextWord != nil) {
         if (separateWords(currentWord, nextWord)) {
-            [line addWord:nextWord];
+            [currentLine addWord:nextWord];
             currentWord = nextWord;
-        } else if (!separateWords(currentWord, nextWord)) {
-            [lines addObject:line];
+        } else { // In this case, line breaks happens
+            [lines addObject:currentLine];
             currentWord = nextWord;
-            line = [GLine create];
-            [line addWord:currentWord];
+            currentLine = [GLine create];
+            [currentLine addWord:currentWord];
         }
+        nextWord = [self nextWord];
     }
     
-    // Add last line if it contains words
-    if ([[line words] count] > 0) {
-        [lines addObject:line];
+    if ([[currentLine words] count] > 0) {
+        [lines addObject:currentLine];
     }
+    
     return lines;
 }
+
+//- (NSMutableArray*)makeLines {
+//    [self makeWords];
+//
+//    lines = [NSMutableArray array];
+//
+//    GLine *line = [GLine create];
+//    GWord *currentWord = [words firstObject];
+//    [line addWord:currentWord];
+//    int i;
+//    for (i = 1; i < [words count]; i++) {
+//        GWord *nextWord = [words objectAtIndex:i];
+//        if (separateWords(currentWord, nextWord)) {
+//            [line addWord:nextWord];
+//            currentWord = nextWord;
+//        } else if (!separateWords(currentWord, nextWord)) {
+//            [lines addObject:line];
+//            currentWord = nextWord;
+//            line = [GLine create];
+//            [line addWord:currentWord];
+//        }
+//    }
+//
+//    // Add last line if it contains words
+//    if ([[line words] count] > 0) {
+//        [lines addObject:line];
+//    }
+//    return lines;
+//}
 
 - (NSMutableArray*)makeTextBlocks {
     [self makeLines];

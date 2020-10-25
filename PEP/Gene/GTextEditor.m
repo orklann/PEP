@@ -63,8 +63,6 @@
 
 - (void)draw:(CGContextRef)context {
     NSArray *blocks = [[self.page textParser] makeTextBlocks];
-    NSArray *words = [[self.page textParser] makeWords];
-    prettyLogForWords(words);
     if ([blocks count] > 0) {
         // NOTE: Update text block here, in draw, because text blocks are
         // updated in [GPage render], and it will call this method afterwards
@@ -77,9 +75,7 @@
         CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
         CGContextStrokeRect(context, frame);
     }
-    
-    prettyLogForTextBlock(textBlock);
-    
+        
     if (self.drawInsertionPoint) {
         [self drawInsertionPoint:context];
     }
