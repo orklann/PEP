@@ -72,3 +72,9 @@ NS_ASSUME_NONNULL_END
 
 // Better log for GTextBlock
 void prettyLogForTextBlock(GTextBlock* _Nullable textBlock);
+
+// Better log for GWords array
+void prettyLogForWords(NSArray * _Nullable words);
+
+// Check for white space
+BOOL isWhiteSpaceChar(char c);

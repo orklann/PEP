@@ -451,3 +451,32 @@ void prettyLogForTextBlock(GTextBlock* textBlock) {
     printf("***End Lines\n");
     printf("====End Text Block====\n");
 }
+
+void prettyLogForWords(NSArray *words) {
+    printf("====Words====\n");
+    int i;
+    for (i = 0; i < [words count]; i++) {
+        GWord *w = [words objectAtIndex:i];
+        NSString *s = [w wordString];
+        int index = 0;
+        for (index = 0; index < [s length]; ++index) {
+            char ch = [s characterAtIndex:index];
+            if (isWhiteSpaceChar(ch)) {
+                printf("%s", [@"☀️" UTF8String]);
+            } else {
+                printf("%c", ch);
+            }
+        }
+        printf(" ");
+    }
+    printf("\n====End Words====\n");
+}
+
+BOOL isWhiteSpaceChar(char c) {
+    if (c == ' ' ||
+        c == '\t' ||
+        c == '\n' || c == '\r' ) {
+        return YES;
+    }
+    return NO;
+}
