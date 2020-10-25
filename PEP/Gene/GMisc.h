@@ -78,3 +78,6 @@ void prettyLogForWords(NSArray * _Nullable words);
 
 // Check for white space
 BOOL isWhiteSpaceChar(char c);
+
+// Check for white space glyph
+BOOL isWhiteSpaceGlyph(GGlyph * _Nullable glyph);

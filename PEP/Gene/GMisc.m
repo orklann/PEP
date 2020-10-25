@@ -480,3 +480,8 @@ BOOL isWhiteSpaceChar(char c) {
     }
     return NO;
 }
+
+BOOL isWhiteSpaceGlyph(GGlyph *glyph) {
+    char ch = [[glyph content] characterAtIndex:0];
+    return isWhiteSpaceChar(ch);
+}

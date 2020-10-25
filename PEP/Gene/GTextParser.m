@@ -33,6 +33,18 @@
     return glyphs;
 }
 
+- (GGlyph*)nextGlyph {
+    glyphPos += 1;
+    return [self currentGlyph];
+}
+
+- (GGlyph*)currentGlyph {
+    if (glyphPos < [glyphs count]) {
+        return [glyphs objectAtIndex:glyphPos];
+    }
+    return nil;
+}
+
 - (void)setWords:(NSMutableArray*)ws {
     words = ws;
 }
@@ -75,107 +87,31 @@
 - (NSMutableArray*)makeWords {
     [self makeReadOrderGlyphs];
     [self makeIndexInfoForGlyphs];
-    
     words = [NSMutableArray array];
     
-    // Add heading space glyphs as first word
-    int start = 0;
-    GWord *firstWord = [GWord create];
-    GGlyph *currentGlyph = [glyphs objectAtIndex:start];
-    while(start <= [glyphs count] - 1){
-        if ([[currentGlyph content] isEqualToString:@" "]) {
-            [firstWord addGlyph:currentGlyph];
+    glyphPos = 0;
+    
+    GGlyph *currentGlyph = [self currentGlyph];
+    GWord *currentWord = [GWord create];
+    [currentWord addGlyph:currentGlyph];
+    GGlyph *nextGlyph = [self nextGlyph];
+    while(nextGlyph != nil) {
+        if (isWhiteSpaceGlyph(nextGlyph)) {
+            [words addObject:currentWord];
+            currentWord = [GWord create];
+            [currentWord addGlyph:nextGlyph];
+            [words addObject:currentWord];
+            currentWord = [GWord create];
         } else {
-            break;
+            [currentWord addGlyph:nextGlyph];
         }
-        start++;
-        currentGlyph = [glyphs objectAtIndex:start];
+        nextGlyph = [self nextGlyph];
     }
     
-    // Add first word
-    [words addObject:firstWord];
-    
-    // Remove heading space glyphs by splitting glyphs array
-    int splitStart = start;
-    int len = (int)([glyphs count] - splitStart);
-    NSArray *firstSplit = [glyphs subarrayWithRange:NSMakeRange(splitStart, len)];
-    
-    // Add trailing space glyphs as last word
-    start = (int)[glyphs count] - 1;
-    len = 0;
-    GWord *lastWord = [GWord create];
-    currentGlyph = [glyphs objectAtIndex:start];
-    while(start >= 0) {
-        if ([[currentGlyph content] isEqualToString:@" "]) {
-            [lastWord addGlyph:currentGlyph];
-            len++;
-        } else {
-            break;
-        }
-        start--;
-        currentGlyph = [glyphs objectAtIndex:start];
+    if ([[currentWord glyphs] count] > 0) {
+        [words addObject:currentWord];
     }
     
-    // Remove trailing space glyphs by splitting glyphs array
-    len = (int)[firstSplit count] - len;
-    NSArray *secondSplit = [firstSplit subarrayWithRange:NSMakeRange(0, len)];
-    
-    // Normal process to add words (spaces are treated as one word)
-    // Continuous spaces are treated as one word
-    currentGlyph = [secondSplit objectAtIndex:0];
-    GWord *word = [GWord create];
-    [word addGlyph:currentGlyph];
-    int i;
-    for (i = 1; i < [secondSplit count]; i++) {
-        GGlyph *nextGlyph = [secondSplit objectAtIndex:i];
-        if ([[nextGlyph content] isEqualToString:@" "] ||
-            i == [secondSplit count] - 1) {
-            // End and add current word
-            if (i == [secondSplit count] - 1 && ![[nextGlyph content] isEqualToString:@" "]) {
-                [word addGlyph:nextGlyph];
-            }
-            [words addObject:word];
-            
-            // Add spaces glyphs into one word
-            if ([[nextGlyph content] isEqualToString:@" "]) {
-                word = [GWord create];
-                [word addGlyph:nextGlyph];
-                nextGlyph = [secondSplit objectAtIndex:i+1];
-                if ([[nextGlyph content] isEqualToString:@" "]) {
-                    i++;
-                }
-                
-                while ([[nextGlyph content] isEqualToString:@" "]) {
-                    [word addGlyph:nextGlyph];
-                    i++;
-                    nextGlyph = [secondSplit objectAtIndex:i];
-                }
-                
-                [words addObject:word];
-            }
-
-            // Start next word
-            word = [GWord create];
-            if (i + 1 <= [secondSplit count] - 1) {
-                currentGlyph = [secondSplit objectAtIndex:i+1];
-                [word addGlyph:currentGlyph];
-            }
-            i++;
-            continue;
-        }
-        
-        // Current glyph and next glyph can be two continue characters
-        // Just add next glyph into current word
-        if (separateCharacters(currentGlyph, nextGlyph)) {
-            [word addGlyph:nextGlyph];
-            currentGlyph = nextGlyph;
-        }
-    }
-    
-    // Add last word if it contains any glyphs
-    if ([[lastWord glyphs] count] > 0) {
-        [words addObject:lastWord];
-    }
     return words;
 }
 
