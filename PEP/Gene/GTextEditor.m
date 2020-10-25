@@ -173,20 +173,8 @@
             // have no next line to move to
         }
     } else {
-        if (self.isEditing) return ;
-        self.isEditing = YES;
         NSString *ch =[event characters];
-        // Test insert character into text editor
-        // Fixme: use any font here, font is not useful by now
-        GGlyph *g = [self getCurrentGlyph];
-        NSFont *font = [NSFont fontWithName:@"Gill Sans" size:[g fontSize]];
-        [self insertChar:ch font:font];
-        [self.page buildPageContent];
-        [self.page addFont:font withPDFFontName:[g fontName]];
-        [self.page addPageStream];
-        [self.page incrementalUpdate];
-        [self.page setNeedUpdate:YES];
-        self.isEditing = NO;
+        [self insertChar:ch];
     }
     [self redraw];
 }
@@ -255,8 +243,6 @@
 }
 
 - (void)insertChar:(NSString *)ch font:(NSFont*)font {
-    ch = [self glyphReplace:ch];
-    
     GGlyph *currentGlyph;
     if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
         currentGlyph = [[textBlock glyphs] lastObject];
@@ -332,6 +318,22 @@
     insertionPointIndex++;
 }
 
+- (void)insertChar:(NSString *)ch {
+    if (self.isEditing) return ;
+    self.isEditing = YES;
+    // Test insert character into text editor
+    // Fixme: use any font here, font is not useful by now
+    GGlyph *g = [self getCurrentGlyph];
+    NSFont *font = [NSFont fontWithName:@"Gill Sans" size:[g fontSize]];
+    [self insertChar:ch font:font];
+    [self.page buildPageContent];
+    [self.page addFont:font withPDFFontName:[g fontName]];
+    [self.page addPageStream];
+    [self.page incrementalUpdate];
+    [self.page setNeedUpdate:YES];
+    self.isEditing = NO;
+}
+
 - (GGlyph*)getCurrentGlyph {
     GGlyph *currentGlyph;
     if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
@@ -340,16 +342,5 @@
         currentGlyph = [[textBlock glyphs] objectAtIndex:insertionPointIndex];
     }
     return currentGlyph;
-}
-
-- (NSString*)glyphReplace:(NSString *)ch {
-    // Adjust glyphs text matrix (for tx) after insertion point in this line
-    // NOTE: `\t' (tab) glyph width is so large, so we use space width for it
-    // Fixme: Inspect why \t glyph width is so large, handle tab key in an elegant
-    //        way.
-    if ([ch isEqualToString:@"\t"]) {
-        ch = @" ";
-    }
-    return ch;
 }
 @end
