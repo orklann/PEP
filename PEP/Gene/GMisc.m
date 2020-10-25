@@ -438,7 +438,7 @@ void prettyLogForTextBlock(GTextBlock* textBlock) {
     int i;
     for (i = 0; i < [glyphs count]; i++) {
         GGlyph *g = [glyphs objectAtIndex:i];
-        printf("%s ", [[g content] UTF8String]);
+        printf("%s", [[g content] UTF8String]);
     }
     printf("\n***End Glyphs***\n");
     
