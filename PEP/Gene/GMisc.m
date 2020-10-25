@@ -434,13 +434,13 @@ NSString *buildXRefEntry(int offset, int generationNumber, NSString *state) {
 void prettyLogForTextBlock(GTextBlock* textBlock) {
     printf("====Text Block====\n");
     NSMutableArray *glyphs = [textBlock glyphs];
-    printf("***Glyhphs***\n");
+    printf("***Glyhphs***\n[");
     int i;
     for (i = 0; i < [glyphs count]; i++) {
         GGlyph *g = [glyphs objectAtIndex:i];
         printf("%s", [[g content] UTF8String]);
     }
-    printf("\n***End Glyphs***\n");
+    printf("]\n***End Glyphs***\n");
     
     printf("***Lines***\n");
     NSMutableArray *lines = [textBlock lines];
