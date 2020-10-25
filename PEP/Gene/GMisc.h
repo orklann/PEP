@@ -68,3 +68,6 @@ NSString* paddingFiveZero(int generationNumber);
 // Build XRef entry, example: "0000012345 00000 n\r\n"
 NSString *buildXRefEntry(int offset, int generationNumber, NSString *state);
 NS_ASSUME_NONNULL_END
+
+// Better log for GTextBlock
+void prettyLogForTextBlock(GTextBlock* textBlock);

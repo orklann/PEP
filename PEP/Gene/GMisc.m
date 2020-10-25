@@ -429,3 +429,24 @@ NSString *buildXRefEntry(int offset, int generationNumber, NSString *state) {
     [entry appendFormat:@"%@\r\n", state];
     return entry;
 }
+
+void prettyLogForTextBlock(GTextBlock* textBlock) {
+    printf("====Text Block====\n");
+    NSMutableArray *glyphs = [textBlock glyphs];
+    printf("***Glyhphs***\n");
+    int i;
+    for (i = 0; i < [glyphs count]; i++) {
+        GGlyph *g = [glyphs objectAtIndex:i];
+        printf("%s ", [[g content] UTF8String]);
+    }
+    printf("\n***End Glyphs***\n");
+    
+    printf("***Lines***\n");
+    NSMutableArray *lines = [textBlock lines];
+    for (i = 0; i < [lines count]; i++) {
+        GLine *l = [lines objectAtIndex:i];
+        printf("%s\n", [[l lineString] UTF8String]);
+    }
+    printf("***End Lines\n");
+    printf("====End Text Block====\n");
+}
