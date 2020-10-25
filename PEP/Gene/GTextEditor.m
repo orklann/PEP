@@ -174,6 +174,13 @@
         }
     } else {
         NSString *ch =[event characters];
+        /*
+         * Fixed: Tab character is reandered as a box while opened with other
+         *        PDF reader.
+         */
+        if ([ch isEqualToString:@"\t"]) {
+            ch = @" ";
+        }
         [self insertChar:ch];
     }
     [self redraw];
@@ -298,14 +305,19 @@
         
         CGFloat hAdvance = 0;
         NSSize s;
+        
         if ([ch isEqualToString:@"\t"]) {
+            // NOTE: (TAB) This clause will never reach because when a \t is entered,
+            // We convert it into a '   '.
+            // But I will leave this code her for alternative method to
+            // get glyph width
             CGRect rect;
             CGFontRef cgFont = CTFontCopyGraphicsFont((CTFontRef)font, nil);
             CGGlyph g = CGFontGetGlyphWithGlyphName(cgFont, CFSTR("\t"));
             CGFontGetGlyphBBoxes(cgFont, &g, 1, &rect);
 
             hAdvance = rect.size.width / CGFontGetUnitsPerEm(cgFont) * fontSize;
-            NSLog(@"width: %f", hAdvance);
+            NSLog(@"(TAB) width: %f", hAdvance);
         } else {
             hAdvance = getGlyphAdvanceForFont(ch, font);
         }

@@ -28,13 +28,17 @@ CGFloat getGlyphAdvanceForFont(NSString *ch, NSFont *font) {
     // Handle tab character width, because it's not correct to get it with
     // CTRunGetAdvances().
     if ([ch isEqualToString:@"\t"]) {
+        // NOTE: (TAB) This clause will never reach because when a \t is entered,
+        // We convert it into a '   '.
+        // But I will leave this code her for alternative method to
+        // get glyph width
         CGRect rect;
         CGFontRef cgFont = CTFontCopyGraphicsFont((CTFontRef)font, nil);
         CGGlyph g = CGFontGetGlyphWithGlyphName(cgFont, (CFStringRef)@"\t");
         CGFontGetGlyphBBoxes(cgFont, &g, 1, &rect);
 
         CGFloat hAdvance = rect.size.width / CGFontGetUnitsPerEm(cgFont) * font.pointSize;
-        NSLog(@"*width:%f", hAdvance);
+        NSLog(@"*(TAB) width:%f", hAdvance);
         return hAdvance;
     }
     
