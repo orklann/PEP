@@ -33,6 +33,7 @@
     textBlock = tb;
     insertionPointIndex = 0;
     self.drawInsertionPoint = YES;
+    self.isEditing = NO;
     blinkTimer = [NSTimer scheduledTimerWithTimeInterval:0.4 repeats:YES block:^(NSTimer * _Nonnull timer) {
         if (self.drawInsertionPoint) {
             self.drawInsertionPoint = NO;
@@ -172,6 +173,8 @@
             // have no next line to move to
         }
     } else {
+        if (self.isEditing) return ;
+        self.isEditing = YES;
         NSString *ch =[event characters];
         // Test insert character into text editor
         // Fixme: use any font here, font is not useful by now
@@ -183,6 +186,7 @@
         [self.page addPageStream];
         [self.page incrementalUpdate];
         [self.page setNeedUpdate:YES];
+        self.isEditing = NO;
     }
     [self redraw];
 }

@@ -27,7 +27,7 @@
     [p setNeedUpdate:YES];
     p.dataToUpdate = [NSMutableArray array];
     p.cachedFonts = [NSMutableDictionary dictionary];
-    p.isEditing = NO;
+    p.isEditingMode = NO;
     return p;
 }
 
@@ -197,18 +197,18 @@
     NSPoint location = [event locationInWindow];
     NSPoint point = [self.doc convertPoint:location fromView:nil];
     
-    if (textEditor && self.isEditing) {
+    if (textEditor && self.isEditingMode) {
         [textEditor mouseDown:event];
         NSRect frame = [textEditor frame];
         NSRect viewFrame = [self rectFromPageToView:frame];
         if (!NSPointInRect(point, viewFrame)) {
             textEditor = nil;
-            self.isEditing = NO;
+            self.isEditingMode = NO;
         }
         [self redraw];
     }
     
-    if (self.isEditing) {
+    if (self.isEditingMode) {
         return ;
     }
     
@@ -221,7 +221,7 @@
             textEditor = [GTextEditor textEditorWithPage:self textBlock:tb];
             unsigned int index = (unsigned int)[blocks indexOfObject:tb];
             [textEditor setTextBlockIndex:index];
-            self.isEditing = YES;
+            self.isEditingMode = YES;
             [self redraw];
             return ;
         }
@@ -230,7 +230,7 @@
 }
 
 - (void)mouseMoved:(NSEvent*)event {
-    if (self.isEditing) {
+    if (self.isEditingMode) {
         [self redraw];
         return ;
     }

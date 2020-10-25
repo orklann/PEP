@@ -10,6 +10,7 @@
 #import "GGlyph.h"
 #import "GWord.h"
 #import "GLine.h"
+#import "GTextBlock.h"
 #import "GBinaryData.h"
 
 void printData(NSData *data) {

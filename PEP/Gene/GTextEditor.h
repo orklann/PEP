@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) unsigned int textBlockIndex;
 @property (readwrite) BOOL drawInsertionPoint;
 @property (readwrite) GPage *page;
+@property (readwrite) BOOL isEditing;
 
 + (id)textEditorWithPage:(GPage *)p textBlock:(GTextBlock *)tb;
 - (GTextEditor*)initWithPage:(GPage *)p textBlock:(GTextBlock*)tb;

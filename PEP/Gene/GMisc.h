@@ -11,6 +11,7 @@
 @class GGlyph;
 @class GWord;
 @class GLine;
+@class GTextBlock;
 
 NS_ASSUME_NONNULL_BEGIN
 // Print NSData in character strings
@@ -70,4 +71,4 @@ NSString *buildXRefEntry(int offset, int generationNumber, NSString *state);
 NS_ASSUME_NONNULL_END
 
 // Better log for GTextBlock
-void prettyLogForTextBlock(GTextBlock* textBlock);
+void prettyLogForTextBlock(GTextBlock* _Nullable textBlock);
