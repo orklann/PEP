@@ -167,35 +167,6 @@
     return lines;
 }
 
-//- (NSMutableArray*)makeLines {
-//    [self makeWords];
-//
-//    lines = [NSMutableArray array];
-//
-//    GLine *line = [GLine create];
-//    GWord *currentWord = [words firstObject];
-//    [line addWord:currentWord];
-//    int i;
-//    for (i = 1; i < [words count]; i++) {
-//        GWord *nextWord = [words objectAtIndex:i];
-//        if (separateWords(currentWord, nextWord)) {
-//            [line addWord:nextWord];
-//            currentWord = nextWord;
-//        } else if (!separateWords(currentWord, nextWord)) {
-//            [lines addObject:line];
-//            currentWord = nextWord;
-//            line = [GLine create];
-//            [line addWord:currentWord];
-//        }
-//    }
-//
-//    // Add last line if it contains words
-//    if ([[line words] count] > 0) {
-//        [lines addObject:line];
-//    }
-//    return lines;
-//}
-
 - (NSMutableArray*)makeTextBlocks {
     [self makeLines];
     textBlocks = [NSMutableArray array];
