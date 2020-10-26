@@ -217,14 +217,19 @@
         }
     } else {
         NSString *ch =[event characters];
-        /*
-         * Fixed: Tab character is reandered as a box while opened with other
-         *        PDF reader.
-         */
-        if ([ch isEqualToString:@"\t"]) {
-            ch = @" ";  // NOTE: ch is now a Tab character, not a space
+        unichar key = [ch characterAtIndex:0];
+        if(key == NSDeleteCharacter) {
+            // TODO: Handle delete key
+        } else {
+            /*
+             * Fixed: Tab character is reandered as a box while opened with other
+             *        PDF reader.
+             */
+            if ([ch isEqualToString:@"\t"]) {
+                ch = @" ";  // NOTE: ch is now a Tab character, not a space
+            }
+            [self insertChar:ch];
         }
-        [self insertChar:ch];
     }
     [self redraw];
 }
