@@ -98,20 +98,12 @@
     printf("====@@@@@@@@@@@@@@@@=====\n");
 }
 
-- (void)makeIndexInfoForGlyphs {
-    NSArray *gs = readOrderGlyphs;
-    int i;
-    for (i = 0; i < [gs count]; i++) {
-        GGlyph *g = [gs objectAtIndex:i];
-        g.indexOfPageGlyphs = i;
-    }
-}
 
 // Note: This method does not tested well
 // Just check back later
-- (NSMutableArray*)makeWords {
+- (NSMutableArray*)makeWords{
     [self makeReadOrderGlyphs];
-    [self makeIndexInfoForGlyphs];
+    
     words = [NSMutableArray array];
     
     glyphPos = 0;
@@ -207,5 +199,14 @@
     }
     
     return textBlocks;
+}
+
+- (GTextBlock *)mergeLinesToTextblock {
+    [self makeLines];
+    GTextBlock *textBlock = [GTextBlock create];
+    for (GLine *l in lines) {
+        [textBlock addLine:l];
+    }
+    return textBlock;
 }
 @end

@@ -16,7 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
     NSPoint point;
 }
 
-@property (readwrite) int indexOfPageGlyphs;
 @property (readwrite) int indexOfBlock;
 @property (readwrite) CGFloat width;
 @property (readwrite) CGAffineTransform ctm;

@@ -10,11 +10,13 @@
 #import "GPage.h"
 #import "GTextBlock.h"
 #import "GGlyph.h"
+#import "GWord.h"
 #import "GLine.h"
 #import "GDocument.h"
 #import "GMisc.h"
 #import "GConstants.h"
 #import "GBinaryData.h"
+#import "GTextParser.h"
 
 #define kLeftArrow 123
 #define kRightArrow 124
@@ -34,11 +36,12 @@
     insertionPointIndex = 0;
     self.drawInsertionPoint = YES;
     self.isEditing = NO;
+    self.firstUsed = YES;
     self.editingGlyphs = [NSMutableArray array];
+    // First time draw the text, we must ensure to save editing glyphs
+    // Other time to save it is after editing text.
+    // Call [self insertChar:font:] etc.
     [self saveEditingGlyphs];
-    logGlyphsIndex(self.editingGlyphs);
-    [self restoreEditingGlyphsToGlyphs];
-    logGlyphsContent(glyphs);
     blinkTimer = [NSTimer scheduledTimerWithTimeInterval:0.4 repeats:YES block:^(NSTimer * _Nonnull timer) {
         if (self.drawInsertionPoint) {
             self.drawInsertionPoint = NO;
@@ -76,6 +79,20 @@
     }
 }
 
+- (GTextBlock*)getTextBlock {
+    if (self.firstUsed) {
+        self.firstUsed = NO;
+        return textBlock;
+    } else {
+        // By this, we get glyphs read for GTextParser to get the text block
+        [self restoreEditingGlyphsToGlyphs];
+        GTextParser *textParser = [GTextParser create];
+        [textParser setGlyphs:glyphs];
+        GTextBlock *tb = [textParser mergeLinesToTextblock];
+        return tb;
+    }
+}
+
 - (void)redraw {
     GDocument *doc = (GDocument*)[(GPage*)self.page doc];
     [doc setNeedsDisplay:YES];
@@ -93,19 +110,14 @@
 }
 
 - (void)draw:(CGContextRef)context {
-    NSArray *blocks = [[self.page textParser] makeTextBlocks];
-    if ([blocks count] > 0) {
-        // NOTE: Update text block here, in draw, because text blocks are
-        // updated in [GPage render], and it will call this method afterwards
-        textBlock = [blocks objectAtIndex:self.textBlockIndex];
-        
-        // Draw text editor border with 1 pixel width;
-        NSRect frame = [self enlargedFrame];
-        frame = NSInsetRect(frame, 0.5, 0.5);
-        CGContextSetLineWidth(context, 1.0 / (kScaleFactor));
-        CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
-        CGContextStrokeRect(context, frame);
-    }
+    textBlock = [self getTextBlock];
+    
+    // Draw text editor border with 1 pixel width;
+    NSRect frame = [self enlargedFrame];
+    frame = NSInsetRect(frame, 0.5, 0.5);
+    CGContextSetLineWidth(context, 1.0 / (kScaleFactor));
+    CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
+    CGContextStrokeRect(context, frame);
     
     if (self.drawInsertionPoint) {
         [self drawInsertionPoint:context];
@@ -325,7 +337,11 @@
         [g setTextMatrix:tm];
         [g setFontName:fontName];
         [g setFontSize:fontSize];
-        [glyphs addObject:g];
+        [glyphs addObject:g]; // Add this new glyph at the end
+        
+        // Add the new glyph index to text editor's editing glyphs
+        [self addGlyphIndexToEditingGlyphs:(int)[glyphs count] - 1];
+        
         
         // We don't need to care about later glyphs, since insertion point is
         // at the end of text block
@@ -362,10 +378,10 @@
             if (tmp.indexOfBlock >= currentGlyph.indexOfBlock) {
                 NSLog(@"index: %d %@", i, [tmp content]);
                 GGlyph *laterGlyph = [lineGlyphs objectAtIndex:i];
-                int indexOfPage = laterGlyph.indexOfPageGlyphs;
+                int indexOfPage = (int)[[[self.page textParser] glyphs] indexOfObject:tmp];
                 CGAffineTransform textMatrix = laterGlyph.textMatrix;
                 textMatrix.tx += s.width;
-                laterGlyph = [[[self.page textParser] readOrderGlyphs] objectAtIndex:indexOfPage];
+                laterGlyph = [[[self.page textParser] glyphs] objectAtIndex:indexOfPage];
                 [laterGlyph setTextMatrix:textMatrix];
             }
         }
@@ -468,10 +484,10 @@
             if (tmp.indexOfBlock >= currentGlyph.indexOfBlock) {
                 NSLog(@"index: %d %@", i, [tmp content]);
                 GGlyph *laterGlyph = [lineGlyphs objectAtIndex:i];
-                int indexOfPage = laterGlyph.indexOfPageGlyphs;
+                int indexOfPage = (int)[[[self.page textParser] glyphs] indexOfObject:tmp];
                 CGAffineTransform textMatrix = laterGlyph.textMatrix;
                 textMatrix.tx += width;
-                laterGlyph = [[[self.page textParser] readOrderGlyphs] objectAtIndex:indexOfPage];
+                laterGlyph = [[[self.page textParser] glyphs] objectAtIndex:indexOfPage];
                 [laterGlyph setTextMatrix:textMatrix];
             }
         }

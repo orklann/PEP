@@ -34,12 +34,12 @@
 }
 
 - (NSArray*)words {
-    NSMutableArray *words = [NSMutableArray array];
+    NSArray *words = [NSMutableArray array];
     NSMutableArray *lines = [self lines];
     int i;
     for (i = 0; i < [lines count]; ++i) {
         GLine *l = [lines objectAtIndex:i];
-        [words arrayByAddingObjectsFromArray:[l words]];
+        words = [words arrayByAddingObjectsFromArray:[l words]];
     }
     return words;
 }

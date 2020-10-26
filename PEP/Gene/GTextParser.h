@@ -11,6 +11,8 @@
 NS_ASSUME_NONNULL_BEGIN
 @class GWord;
 @class GGlyph;
+@class GTextBlock;
+@class GPage;
 
 @interface GTextParser : NSObject {
     NSMutableArray *glyphs;
@@ -21,8 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
     unsigned int glyphPos;
     unsigned int wordPos;
 }
+
 + (id)create;
 - (NSMutableArray*)glyphs;
+- (void)setGlyphs:(NSMutableArray*)gs;
 - (NSMutableArray*)readOrderGlyphs;
 - (GGlyph*)nextGlyph;
 - (GGlyph*)currentGlyph;
@@ -34,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSMutableArray*)makeWords;
 - (NSMutableArray*)makeLines;
 - (NSMutableArray*)makeTextBlocks;
+- (GTextBlock *)mergeLinesToTextblock;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *glyphs;
 }
 
+@property (readwrite) BOOL firstUsed;
 @property (readwrite) NSMutableArray *editingGlyphs;
 @property (readwrite) unsigned int textBlockIndex;
 @property (readwrite) BOOL drawInsertionPoint;
