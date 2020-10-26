@@ -378,6 +378,10 @@
             if (tmp.indexOfBlock >= currentGlyph.indexOfBlock) {
                 NSLog(@"index: %d %@", i, [tmp content]);
                 GGlyph *laterGlyph = [lineGlyphs objectAtIndex:i];
+                
+                // NOTE: We remove indexOfPage in GGlyph
+                // TODO: Maybe we need indexOfPage in GGlyph later.
+                // Find the index of original page glyphs, and update the glyph
                 int indexOfPage = (int)[[[self.page textParser] glyphs] indexOfObject:tmp];
                 CGAffineTransform textMatrix = laterGlyph.textMatrix;
                 textMatrix.tx += s.width;
