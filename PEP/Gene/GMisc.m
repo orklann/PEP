@@ -521,3 +521,23 @@ BOOL isWhiteSpaceGlyph(GGlyph *glyph) {
     char ch = [[glyph content] characterAtIndex:0];
     return isWhiteSpaceChar(ch);
 }
+
+void logGlyphsIndex(NSArray * _Nullable glyphs) {
+    printf("====Glyphs Index====\n");
+    printf("Index => [");
+    for (NSNumber *n in glyphs) {
+        printf("%d ", [n intValue]);
+    }
+    printf("]");
+    printf("\n");
+}
+
+void logGlyphsContent(NSArray * _Nullable glyphs) {
+    printf("====Glyphs Content====\n");
+    printf("Content => [");
+    for (GGlyph *g in glyphs) {
+        printf("%s", [[g content] UTF8String]);
+    }
+    printf("]");
+    printf("\n");
+}

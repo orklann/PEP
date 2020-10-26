@@ -84,3 +84,8 @@ BOOL isWhiteSpaceChar(char c);
 
 // Check for white space glyph
 BOOL isWhiteSpaceGlyph(GGlyph * _Nullable glyph);
+
+// Log glyphs index in GTextEditor's editingGlyphs array
+void logGlyphsIndex(NSArray * _Nullable glyphs);
+// Log glyphs content in GTextEditor's glyphs
+void logGlyphsContent(NSArray * _Nullable glyphs);

@@ -34,6 +34,11 @@
     insertionPointIndex = 0;
     self.drawInsertionPoint = YES;
     self.isEditing = NO;
+    self.editingGlyphs = [NSMutableArray array];
+    [self saveEditingGlyphs];
+    logGlyphsIndex(self.editingGlyphs);
+    [self restoreEditingGlyphsToGlyphs];
+    logGlyphsContent(glyphs);
     blinkTimer = [NSTimer scheduledTimerWithTimeInterval:0.4 repeats:YES block:^(NSTimer * _Nonnull timer) {
         if (self.drawInsertionPoint) {
             self.drawInsertionPoint = NO;
@@ -43,6 +48,32 @@
         [self redraw];
     }];
     return self;
+}
+
+- (void)addGlyphIndexToEditingGlyphs:(int)index {
+    NSNumber *n = [NSNumber numberWithInt:index];
+    [self.editingGlyphs addObject:n];
+}
+
+- (void)saveEditingGlyphs {
+    NSArray *localGlyphs = [textBlock glyphs];
+    /* Original glyphs in page */
+    NSArray *pageGlyphs = [[self.page textParser] glyphs];
+    for (GGlyph *g in localGlyphs) {
+        int index = (int)[pageGlyphs indexOfObject:g];
+        [self addGlyphIndexToEditingGlyphs:index];
+    }
+}
+
+- (void)restoreEditingGlyphsToGlyphs {
+    glyphs = [NSMutableArray array];
+    /* Original glyphs in page */
+    NSArray *pageGlyphs = [[self.page textParser] glyphs];
+    for (NSNumber *n in self.editingGlyphs) {
+        int index = [n intValue];
+        GGlyph *g = [pageGlyphs objectAtIndex:index];
+        [glyphs addObject:g];
+    }
 }
 
 - (void)redraw {

@@ -18,8 +18,10 @@ NS_ASSUME_NONNULL_BEGIN
     int insertionPointIndex;
     GTextBlock *textBlock;
     NSTimer *blinkTimer;
+    NSMutableArray *glyphs;
 }
 
+@property (readwrite) NSMutableArray *editingGlyphs;
 @property (readwrite) unsigned int textBlockIndex;
 @property (readwrite) BOOL drawInsertionPoint;
 @property (readwrite) GPage *page;
