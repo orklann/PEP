@@ -33,14 +33,18 @@
     return glyphs;
 }
 
+- (NSMutableArray*)readOrderGlyphs {
+    return readOrderGlyphs;
+}
+
 - (GGlyph*)nextGlyph {
     glyphPos += 1;
     return [self currentGlyph];
 }
 
 - (GGlyph*)currentGlyph {
-    if (glyphPos < [glyphs count]) {
-        return [glyphs objectAtIndex:glyphPos];
+    if (glyphPos < [readOrderGlyphs count]) {
+        return [readOrderGlyphs objectAtIndex:glyphPos];
     }
     return nil;
 }
@@ -74,22 +78,31 @@
 }
 
 - (void)makeReadOrderGlyphs {
-    glyphs = sortGlyphsInReadOrder(glyphs);
+    readOrderGlyphs = sortGlyphsInReadOrder(glyphs);
     NSMutableString *s = [NSMutableString string];
     int i;
+    for (i = 0; i < [readOrderGlyphs count]; i++) {
+        GGlyph *g = [readOrderGlyphs objectAtIndex:i];
+        [s appendString:[g content]];
+    }
+    printf("====Read Order Glyphs====\n");
+    printf("%s\n", [s UTF8String]);
+    
+    s = [NSMutableString string];
     for (i = 0; i < [glyphs count]; i++) {
         GGlyph *g = [glyphs objectAtIndex:i];
         [s appendString:[g content]];
     }
-    printf("====\n");
+    printf("====Original Glyphs======\n");
     printf("%s\n", [s UTF8String]);
+    printf("====@@@@@@@@@@@@@@@@=====\n");
 }
 
 - (void)makeIndexInfoForGlyphs {
-    NSArray *glyphs = [self glyphs];
+    NSArray *gs = readOrderGlyphs;
     int i;
-    for (i = 0; i < [glyphs count]; i++) {
-        GGlyph *g = [glyphs objectAtIndex:i];
+    for (i = 0; i < [gs count]; i++) {
+        GGlyph *g = [gs objectAtIndex:i];
         g.indexOfPageGlyphs = i;
     }
 }

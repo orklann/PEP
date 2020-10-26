@@ -75,7 +75,7 @@
         CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
         CGContextStrokeRect(context, frame);
     }
-        
+    
     if (self.drawInsertionPoint) {
         [self drawInsertionPoint:context];
     }
@@ -334,12 +334,12 @@
                 int indexOfPage = laterGlyph.indexOfPageGlyphs;
                 CGAffineTransform textMatrix = laterGlyph.textMatrix;
                 textMatrix.tx += s.width;
-                laterGlyph = [[[self.page textParser] glyphs] objectAtIndex:indexOfPage];
+                laterGlyph = [[[self.page textParser] readOrderGlyphs] objectAtIndex:indexOfPage];
                 [laterGlyph setTextMatrix:textMatrix];
             }
         }
+        insertionPointIndex++;
     }
-    insertionPointIndex++;
 }
 
 - (void)insertChar:(NSString *)ch {
@@ -440,7 +440,7 @@
                 int indexOfPage = laterGlyph.indexOfPageGlyphs;
                 CGAffineTransform textMatrix = laterGlyph.textMatrix;
                 textMatrix.tx += width;
-                laterGlyph = [[[self.page textParser] glyphs] objectAtIndex:indexOfPage];
+                laterGlyph = [[[self.page textParser] readOrderGlyphs] objectAtIndex:indexOfPage];
                 [laterGlyph setTextMatrix:textMatrix];
             }
         }

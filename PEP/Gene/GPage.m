@@ -134,7 +134,7 @@
     
     [self setNeedUpdate:NO];
     self.isRendering = NO;
-    
+
 }
 
 // Calculate media box for PDF page in user space coordinate

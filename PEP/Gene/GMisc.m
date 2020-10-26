@@ -157,20 +157,21 @@ void quicksortGlyphs(NSMutableArray *array, int l, int r) {
 }
 
 NSMutableArray *sortGlyphsInReadOrder(NSMutableArray *glyphs) {
+    NSMutableArray *workingGlyphs = [NSMutableArray arrayWithArray:glyphs];
     NSMutableArray *sorted = [NSMutableArray array];
-    while([glyphs count] > 0) {
-        GGlyph *smallest = [glyphs firstObject];
+    while([workingGlyphs count] > 0) {
+        GGlyph *smallest = [workingGlyphs firstObject];
         int i;
         int smallestIndex = 0;
-        for (i = 1; i < [glyphs count]; i++) {
-            GGlyph *g = [glyphs objectAtIndex:i];
+        for (i = 1; i < [workingGlyphs count]; i++) {
+            GGlyph *g = [workingGlyphs objectAtIndex:i];
             if (compareGlyphs(smallest, g) == 1) {
                 smallestIndex = i;
-                smallest = [glyphs objectAtIndex:smallestIndex];
+                smallest = [workingGlyphs objectAtIndex:smallestIndex];
             }
         }
         [sorted addObject:smallest];
-        [glyphs removeObject:smallest];
+        [workingGlyphs removeObject:smallest];
     }
     return sorted;
 }
