@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
     GTextBlock *textBlock;
     NSTimer *blinkTimer;
     NSMutableArray *glyphs;
+    NSRect firstGlyphFrame;
 }
 
 @property (readwrite) BOOL firstUsed;

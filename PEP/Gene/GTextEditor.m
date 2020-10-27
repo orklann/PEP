@@ -137,7 +137,15 @@
 
 - (NSRect)frame {
     if (textBlock == nil) {
-        return NSZeroRect;
+        return firstGlyphFrame;
+    }
+    
+    NSArray *glyphs = [textBlock glyphs];
+    
+    // Update firstGlyphFrame daynamically
+    if ([glyphs count] >= 1) { // if we have at least one glyph
+        GGlyph *firstGlyph = [glyphs firstObject];
+        firstGlyphFrame = [firstGlyph frame];
     }
     return [textBlock frame];
 }
@@ -147,8 +155,17 @@
 }
 
 - (NSRect)getInsertionPoint {
-    NSArray *glyphs = [textBlock glyphs];
     NSRect ret;
+    if (textBlock == nil) {
+        NSRect rect = firstGlyphFrame;
+        CGFloat minX = NSMinX(rect);
+        CGFloat minY = NSMinY(rect);
+        CGFloat height = NSHeight(rect);
+        ret = NSMakeRect(minX, minY, 1, height);
+        return ret;
+    }
+    
+    NSArray *glyphs = [textBlock glyphs];
     if (insertionPointIndex <= [glyphs count] - 1) {
         GGlyph *g = [glyphs objectAtIndex:insertionPointIndex];
         NSRect rect = [g frame];
