@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
     NSRect firstGlyphFrame;
 }
 
+@property (readwrite) NSString *pdfFontName;
+@property (readwrite) CGFloat fontSize;
 @property (readwrite) BOOL firstUsed;
 @property (readwrite) NSMutableArray *editingGlyphs;
 @property (readwrite) unsigned int textBlockIndex;

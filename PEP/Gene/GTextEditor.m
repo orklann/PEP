@@ -34,6 +34,8 @@
     self.page = p;
     textBlock = tb;
     insertionPointIndex = 0;
+    // Update font name, font size
+    [self updateFontNameAndFontSize];
     self.drawInsertionPoint = YES;
     self.isEditing = NO;
     self.firstUsed = YES;
@@ -83,7 +85,6 @@
     /* Original glyphs in page */
     NSArray *pageGlyphs = [[self.page textParser] glyphs];
     for (NSNumber *n in self.editingGlyphs) {
-        NSLog(@"Number: %@", n);
         int index = [n intValue];
         GGlyph *g = [pageGlyphs objectAtIndex:index];
         [glyphs addObject:g];
@@ -191,10 +192,12 @@
         if (insertionPointIndex - 1 >= 0) {
             insertionPointIndex--;
         }
+        [self updateFontNameAndFontSize];
     } else if (keyCode == kRightArrow) {
         if (insertionPointIndex + 1 <= [glyphs count]) {
             insertionPointIndex++;
         }
+        [self updateFontNameAndFontSize];
     } else if (keyCode == kUpArrow) {
         int currentLineIndex = [textBlock getLineOfGlyphIndex:insertionPointIndex];
         if (currentLineIndex != -1) { // No errors
@@ -225,6 +228,7 @@
                 }
             }
         }
+        [self updateFontNameAndFontSize];
     } else if (keyCode == kDownArrow) {
         int currentLineIndex = [textBlock getLineOfGlyphIndex:insertionPointIndex];
         if (currentLineIndex != -1) { // No errors
@@ -246,6 +250,7 @@
             // No need to handle insertion point in last position, because we
             // have no next line to move to
         }
+        [self updateFontNameAndFontSize];
     } else {
         NSString *ch =[event characters];
         unichar key = [ch characterAtIndex:0];
@@ -639,5 +644,27 @@
             insertionPointIndex = 0;
         }
     }
+}
+
+- (void)updateFontNameAndFontSize {
+    // Don't update, it's at the end of text block
+    if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
+        return ;
+    }
+    GGlyph *g = [[textBlock glyphs] objectAtIndex:insertionPointIndex];
+    int lineIndex = [g lineIndex];
+    GLine *line = [[textBlock lines] objectAtIndex:lineIndex];
+    NSArray *lineGlyphs = [line glyphs];
+    int indexOfLine = (int)[lineGlyphs indexOfObject:g];
+    // Don't update it's at the end of current line
+    if (indexOfLine >  [lineGlyphs count] - 1) {
+        return ;
+    }
+    
+    // Let's update font name, and font size
+    self.pdfFontName = [g fontName];
+    self.fontSize = [g fontSize];
+    
+    //NSLog(@"Text Editor font name: %@ font size: %f", self.pdfFontName, self.fontSize);
 }
 @end
