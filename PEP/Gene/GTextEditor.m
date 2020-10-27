@@ -627,6 +627,9 @@
         [textBlock removeGlyph:prevGlyph];
         [self saveEditingGlyphs];
         insertionPointIndex--;
+        if (insertionPointIndex < 0) {
+            insertionPointIndex = 0;
+        }
     }
 }
 @end
