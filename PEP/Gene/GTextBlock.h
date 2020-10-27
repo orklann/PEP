@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+@class GGlyph;
 @class GLine;
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSMutableArray*)lines;
 - (NSArray*)words;
 - (NSMutableArray*)glyphs;
+- (void)removeGlyph:(GGlyph*)gl;
 - (NSRect)frame;
 - (NSString*)textBlockString;
 - (NSString*)textBlockStringWithLineFeed;

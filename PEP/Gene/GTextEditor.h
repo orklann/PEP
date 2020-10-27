@@ -46,6 +46,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)insertString:(NSString*)string font:(NSFont*)font;
 - (void)insertString:(NSString*)string;
 - (GGlyph*)getCurrentGlyph;
+
+// Delete current character in insertion point
+- (void)deleteCharacter;
+- (void)deleteCharacterInInsertionPoint;
 @end
 
 NS_ASSUME_NONNULL_END

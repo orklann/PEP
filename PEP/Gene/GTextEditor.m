@@ -68,6 +68,7 @@
 }
 
 - (void)saveEditingGlyphs {
+    self.editingGlyphs = [NSMutableArray array];
     NSArray *localGlyphs = [textBlock glyphs];
     /* Original glyphs in page */
     NSArray *pageGlyphs = [[self.page textParser] glyphs];
@@ -82,6 +83,7 @@
     /* Original glyphs in page */
     NSArray *pageGlyphs = [[self.page textParser] glyphs];
     for (NSNumber *n in self.editingGlyphs) {
+        NSLog(@"Number: %@", n);
         int index = [n intValue];
         GGlyph *g = [pageGlyphs objectAtIndex:index];
         [glyphs addObject:g];
@@ -134,6 +136,9 @@
 }
 
 - (NSRect)frame {
+    if (textBlock == nil) {
+        return NSZeroRect;
+    }
     return [textBlock frame];
 }
 
@@ -228,7 +233,7 @@
         NSString *ch =[event characters];
         unichar key = [ch characterAtIndex:0];
         if(key == NSDeleteCharacter) {
-            // TODO: Handle delete key
+            [self deleteCharacter];
         } else {
             /*
              * Fixed: Tab character is reandered as a box while opened with other
@@ -537,5 +542,74 @@
         currentGlyph = [[textBlock glyphs] objectAtIndex:insertionPointIndex];
     }
     return currentGlyph;
+}
+
+- (void)deleteCharacter {
+    if (self.isEditing) return ;
+    self.isEditing = YES;
+    [self deleteCharacterInInsertionPoint];
+    [self.page buildPageContent];
+    [self.page addPageStream];
+    [self.page incrementalUpdate];
+    [self.page setNeedUpdate:YES];
+    self.isEditing = NO;
+}
+
+- (void)deleteCharacterInInsertionPoint {
+    GGlyph *currentGlyph;
+    if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
+        currentGlyph = [[textBlock glyphs] lastObject];
+    } else {
+        currentGlyph = [[textBlock glyphs] objectAtIndex:insertionPointIndex];
+    }
+    
+    int currentIndexInLine = [textBlock indexOfLineForGlyphIndex:insertionPointIndex];
+    int lineIndex = [textBlock getLineOfGlyphIndex:insertionPointIndex];
+    GLine *currentLine = [[textBlock lines] objectAtIndex:lineIndex];
+    NSArray *lineGlyphs = [currentLine glyphs];
+    int prevIndex = currentIndexInLine - 1;
+
+    
+    if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
+        // Advance by 1 glyph, because substract by 1 from currentIndexInLine,
+        // we need to go foward 1 glyph in this case (insertion point is at the end of text block)
+        prevIndex += 1;
+    }
+    
+    NSLog(@"line: %d prev index: %d", lineIndex, prevIndex);
+    
+    NSMutableArray *glyphs = [[self.page textParser] glyphs];
+    
+    // Only handle prev glyph index >= 0, index < 0 means insertion point is
+    // at the beggining of line, we don't delete characters
+    if (prevIndex >= 0) {
+        GGlyph *prevGlyph = [[currentLine glyphs] objectAtIndex:prevIndex];
+        CGFloat glyphWidth = prevGlyph.width;
+        NSLog(@"prev glyp %@", [prevGlyph content]);
+    
+        int i;
+        for (i = 0; i < [lineGlyphs count]; i++) {
+            GGlyph *tmp = [lineGlyphs objectAtIndex:i];
+            if (tmp.indexOfBlock > prevGlyph.indexOfBlock) {
+                NSLog(@"index: %d %@", i, [tmp content]);
+                GGlyph *laterGlyph = [lineGlyphs objectAtIndex:i];
+                
+                // NOTE: We remove indexOfPage in GGlyph
+                // TODO: Maybe we need indexOfPage in GGlyph later.
+                // Find the index of original page glyphs, and update the glyph
+                int indexOfPage = (int)[glyphs indexOfObject:tmp];
+                CGAffineTransform textMatrix = laterGlyph.textMatrix;
+                textMatrix.tx -= glyphWidth;
+                laterGlyph = [glyphs objectAtIndex:indexOfPage];
+                [laterGlyph setTextMatrix:textMatrix];
+            }
+        }
+        // Remove glyph index in front of insertion point this is prevIndex in
+        // this case
+        [glyphs removeObject:prevGlyph];
+        [textBlock removeGlyph:prevGlyph];
+        [self saveEditingGlyphs];
+        insertionPointIndex--;
+    }
 }
 @end

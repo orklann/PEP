@@ -23,6 +23,19 @@
     return lines;
 }
 
+- (void)removeGlyph:(GGlyph*)gl {
+    for (GLine *l in lines) {
+        for (GWord *w in [l words]) {
+            for (GGlyph *g in [w glyphs]) {
+                if ([g isEqualTo:gl]) {
+                    [[w glyphs] removeObject:gl];
+                    return ;
+                }
+            }
+        }
+    }
+}
+
 - (NSMutableArray*)glyphs {
     NSMutableArray *glyphs = [NSMutableArray array];
     int i;

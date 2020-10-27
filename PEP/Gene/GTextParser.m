@@ -106,6 +106,10 @@
     
     words = [NSMutableArray array];
     
+    if ([readOrderGlyphs count] <= 0) {
+        return words;
+    }
+    
     glyphPos = 0;
     
     GGlyph *currentGlyph = [self currentGlyph];
@@ -146,6 +150,10 @@
     
     lines = [NSMutableArray array];
     
+    if ([words count] <= 0) {
+        return lines;
+    }
+    
     wordPos = 0;
     
     GLine *currentLine = [GLine create];
@@ -176,6 +184,10 @@
     [self makeLines];
     textBlocks = [NSMutableArray array];
     
+    if ([lines count] <= 0) {
+        return textBlocks;
+    }
+    
     GTextBlock *textBlock = [GTextBlock create];
     GLine *currentLine = [lines firstObject];
     int i;
@@ -203,6 +215,9 @@
 
 - (GTextBlock *)mergeLinesToTextblock {
     [self makeLines];
+    if ([lines count] <= 0)  {
+        return nil;
+    }
     GTextBlock *textBlock = [GTextBlock create];
     for (GLine *l in lines) {
         [textBlock addLine:l];
