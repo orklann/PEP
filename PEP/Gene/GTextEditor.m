@@ -58,6 +58,15 @@
     [self.editingGlyphs addObject:n];
 }
 
+- (void)removeGlyphIndexInEdittingGlyphs:(int)index {
+    for (NSNumber *n in self.editingGlyphs) {
+        if ([n intValue] == index) {
+            [self.editingGlyphs removeObject:n];
+            return ;
+        }
+    }
+}
+
 - (void)saveEditingGlyphs {
     NSArray *localGlyphs = [textBlock glyphs];
     /* Original glyphs in page */
