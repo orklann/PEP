@@ -564,6 +564,14 @@
 - (void)deleteCharacter {
     if (self.isEditing) return ;
     self.isEditing = YES;
+    // Font size will change between deleteing and adding character
+    // So we also add new font here to workaround it.
+    // Fixme: Orignal subset of Gill Sans in PDF dose not contains some
+    //        glyphs in the editor, becasue we always remove previous upadte
+    //        in [GPage incrementalUpdate], so news glyphs will fallback to
+    //        system fonts, that would cause the font size change.
+    NSFont *font = [NSFont fontWithName:@"Gill Sans" size:1.0];
+    [self.page addFont:font withPDFFontName:@"TT1"];
     [self deleteCharacterInInsertionPoint];
     [self.page buildPageContent];
     [self.page addPageStream];
