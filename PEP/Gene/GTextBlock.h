@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setLineIndexForGlyphs;
 - (int)getLineIndex:(int)index;
 - (int)getGlyphIndexInLine:(int)index;
+- (GLine*)getLineByGlyph:(GGlyph*)g;
 @end
 
 NS_ASSUME_NONNULL_END

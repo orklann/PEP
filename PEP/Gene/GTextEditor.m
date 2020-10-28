@@ -558,12 +558,22 @@
 
 - (GGlyph*)getCurrentGlyph {
     GGlyph *currentGlyph;
-    if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
-        currentGlyph = [[textBlock glyphs] lastObject];
-    } else {
-        currentGlyph = [[textBlock glyphs] objectAtIndex:insertionPointIndex];
+    int index = insertionPointIndex;
+    if (index >= 0 && index <= [[textBlock glyphs] count] - 1) {
+        currentGlyph = [[textBlock glyphs] objectAtIndex:index];
+        return currentGlyph;
     }
-    return currentGlyph;
+    return nil;
+}
+
+- (GGlyph*)getPrevGlyph {
+    GGlyph *prevGlyph;
+    int index = insertionPointIndex - 1;
+    if (index >= 0 && index <= [[textBlock glyphs] count] - 1) {
+        prevGlyph = [[textBlock glyphs] objectAtIndex:index];
+        return prevGlyph;
+    }
+    return nil;
 }
 
 - (void)deleteCharacter {

@@ -150,6 +150,26 @@
     return (int)[lines count] - 1;
 }
 
+- (GLine*)getLineByGlyph:(GGlyph*)g {
+    NSArray *gs = [self glyphs];
+    int index = (int)[gs indexOfObject:g];
+    if (index == -1) {
+        return nil;
+    }
+    
+    int lineIndex = [self getLineIndex:index];
+    NSArray *lines = [self lines];
+    GLine *l = [lines objectAtIndex:lineIndex];
+    int glyphIndexInLine = [self getGlyphIndexInLine:index];
+    if (glyphIndexInLine == [[l glyphs] count] - 1) { // last postion of line
+        if (lineIndex + 1 <= [[self lines] count] - 1){
+            GLine *nextLine = [[self lines] objectAtIndex:lineIndex+1];
+            return nextLine;
+        }
+    }
+    return l;
+}
+
 - (int)getGlyphIndexInLine:(int)index {
     int i;
     int indexFull = 0;
