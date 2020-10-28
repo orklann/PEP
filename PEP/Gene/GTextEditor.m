@@ -532,28 +532,6 @@
     }
 }
 
-//- (void)updateFontNameAndFontSize {
-//    // Don't update, it's at the end of text block
-//    if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
-//        return ;
-//    }
-//    GGlyph *g = [[textBlock glyphs] objectAtIndex:insertionPointIndex];
-//    int lineIndex = [g lineIndex];
-//    GLine *line = [[textBlock lines] objectAtIndex:lineIndex];
-//    NSArray *lineGlyphs = [line glyphs];
-//    int indexOfLine = (int)[lineGlyphs indexOfObject:g];
-//    // Don't update it's at the end of current line
-//    if (indexOfLine >  [lineGlyphs count] - 1) {
-//        return ;
-//    }
-//
-//    // Let's update font name, and font size
-//    self.pdfFontName = [g fontName];
-//    self.fontSize = [g fontSize];
-//
-//    //NSLog(@"Text Editor font name: %@ font size: %f", self.pdfFontName, self.fontSize);
-//}
-
 - (void)updateFontNameAndFontSize {
     int glyphIndexInLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
     GGlyph *prevGlyph = [self getPrevGlyph];
