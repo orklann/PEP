@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSTimer *blinkTimer;
     NSMutableArray *glyphs;
     NSRect firstGlyphFrame;
+    GGlyph *lastDeletedGlyph;
 }
 
 @property (readwrite) NSString *pdfFontName;

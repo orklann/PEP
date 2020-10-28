@@ -163,13 +163,6 @@
     int lineIndex = [self getLineIndex:index];
     NSArray *lines = [self lines];
     GLine *l = [lines objectAtIndex:lineIndex];
-    int glyphIndexInLine = [self getGlyphIndexInLine:index];
-    if (glyphIndexInLine == [[l glyphs] count] - 1) { // last postion of line
-        if (lineIndex + 1 <= [[self lines] count] - 1){
-            GLine *nextLine = [[self lines] objectAtIndex:lineIndex+1];
-            return nextLine;
-        }
-    }
     return l;
 }
 
