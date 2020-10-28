@@ -439,117 +439,12 @@
     self.isEditing = YES;
     // Test insert character into text editor
     // Fixme: use any font here, font is not useful by now
-    GGlyph *g = [self getCurrentGlyph];
-    NSFont *font = [NSFont fontWithName:@"Gill Sans" size:[g fontSize]];
+    NSString *fontName = [self pdfFontName];
+    CGFloat fontSize = [self fontSize];
+    NSFont *font = [NSFont fontWithName:@"Gill Sans" size:fontSize];
     [self insertChar:ch font:font];
     [self.page buildPageContent];
-    [self.page addFont:font withPDFFontName:[g fontName]];
-    [self.page addPageStream];
-    [self.page incrementalUpdate];
-    [self.page setNeedUpdate:YES];
-    self.isEditing = NO;
-}
-
-- (void)insertString:(NSString*)string font:(NSFont*)font {
-    GGlyph *currentGlyph;
-    if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
-        currentGlyph = [[textBlock glyphs] lastObject];
-    } else {
-        currentGlyph = [[textBlock glyphs] objectAtIndex:insertionPointIndex];
-    }
-    
-    int currentIndexInLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
-    int lineIndex = [textBlock getLineIndex:insertionPointIndex];
-    GLine *currentLine = [[textBlock lines] objectAtIndex:lineIndex];
-    NSArray *lineGlyphs = [currentLine glyphs];
-    NSMutableArray *glyphs = [self.page.textParser glyphs];
-    int prevIndex = currentIndexInLine - 1;
-    
-    // Insertion point is at the beginning of line
-    if (prevIndex < 0) {
-        prevIndex = 0;
-    }
-    
-    if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
-        // Advance by 1 glyph, because substract by 1 from currentIndexInLine,
-        // we need to go foward 1 glyph in this case (insertion point is at the end of text block)
-        prevIndex += 1;
-    }
-    
-    NSLog(@"line: %d prev index: %d", lineIndex, prevIndex);
-    
-    if (prevIndex >= 0) {
-        GGlyph *prevGlyph = [[currentLine glyphs] objectAtIndex:prevIndex];
-        CGAffineTransform ctm = prevGlyph.ctm;
-        CGAffineTransform tm = prevGlyph.textMatrix;
-        NSString *fontName = prevGlyph.fontName;
-        CGFloat fontSize = prevGlyph.fontSize;
-        CGFloat glyphWidth = prevGlyph.width;
-        if (currentIndexInLine > 0) {
-            tm.tx += glyphWidth;
-        }
-        
-        int len = (int)[string length];
-        int i;
-        CGAffineTransform incrementalTextMatrix = tm;
-        CGFloat width = 0;
-        
-        for (i = 0; i < len; i++) {
-            GGlyph *g = [GGlyph create];
-            NSString *ch = [string substringWithRange:NSMakeRange(i, 1)];
-            [g setContent:ch];
-            [g setCtm:ctm];
-            [g setTextMatrix:incrementalTextMatrix];
-            [g setFontName:fontName];
-            [g setFontSize:fontSize];
-            [glyphs addObject:g];
-            
-            // Update width for later glyphs
-            CGFloat hAdvance = getGlyphAdvanceForFont(ch, font);
-            NSSize s = NSMakeSize(hAdvance, 0);
-            s = CGSizeApplyAffineTransform(s, incrementalTextMatrix);
-            width += s.width;
-            
-            // Update incremantal text matrix for next glyph by adding current
-            // glyph width
-            incrementalTextMatrix.tx += s.width;
-        }
-        
- 
-        
-        // We don't need to care about later glyphs, since insertion point is
-        // at the end of text block
-        if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
-            insertionPointIndex += len;
-            return ;
-        }
-        
-        for (i = 0; i < [lineGlyphs count]; i++) {
-            GGlyph *tmp = [lineGlyphs objectAtIndex:i];
-            if (tmp.indexOfBlock >= currentGlyph.indexOfBlock) {
-                NSLog(@"index: %d %@", i, [tmp content]);
-                GGlyph *laterGlyph = [lineGlyphs objectAtIndex:i];
-                int indexOfPage = (int)[[[self.page textParser] glyphs] indexOfObject:tmp];
-                CGAffineTransform textMatrix = laterGlyph.textMatrix;
-                textMatrix.tx += width;
-                laterGlyph = [[[self.page textParser] glyphs] objectAtIndex:indexOfPage];
-                [laterGlyph setTextMatrix:textMatrix];
-            }
-        }
-        insertionPointIndex += len;
-    }
-}
-
-- (void)insertString:(NSString*)string {
-    if (self.isEditing) return ;
-    self.isEditing = YES;
-    // Test insert character into text editor
-    // Fixme: use any font here, font is not useful by now
-    GGlyph *g = [self getCurrentGlyph];
-    NSFont *font = [NSFont fontWithName:@"Gill Sans" size:[g fontSize]];
-    [self insertString:string font:font];
-    [self.page buildPageContent];
-    [self.page addFont:font withPDFFontName:[g fontName]];
+    [self.page addFont:font withPDFFontName:fontName];
     [self.page addPageStream];
     [self.page incrementalUpdate];
     [self.page setNeedUpdate:YES];
