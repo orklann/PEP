@@ -199,7 +199,7 @@
         }
         [self updateFontNameAndFontSize];
     } else if (keyCode == kUpArrow) {
-        int currentLineIndex = [textBlock getLineOfGlyphIndex:insertionPointIndex];
+        int currentLineIndex = [textBlock getLineIndex:insertionPointIndex];
         if (currentLineIndex != -1) { // No errors
             if (currentLineIndex - 1 >= 0) {
                 int previousLineIndex = currentLineIndex - 1;
@@ -213,7 +213,7 @@
                 insertionPointIndex = currentGlyph.indexOfBlock;
             }
         } else if (insertionPointIndex == [glyphs count]) { // Edge case: insertion point is at the end of text
-            int currentLineIndex = [textBlock getLineOfGlyphIndex:insertionPointIndex - 1];
+            int currentLineIndex = [textBlock getLineIndex:insertionPointIndex - 1];
             if (currentLineIndex != -1) { // No errors
                 if (currentLineIndex - 1 >= 0) {
                     int previousLineIndex = currentLineIndex - 1;
@@ -230,7 +230,7 @@
         }
         [self updateFontNameAndFontSize];
     } else if (keyCode == kDownArrow) {
-        int currentLineIndex = [textBlock getLineOfGlyphIndex:insertionPointIndex];
+        int currentLineIndex = [textBlock getLineIndex:insertionPointIndex];
         if (currentLineIndex != -1) { // No errors
             if (currentLineIndex + 1 <= [[textBlock lines] count] - 1) {
                 int nextLineIndex = currentLineIndex + 1;
@@ -342,7 +342,7 @@
     }
     
     int currentIndexInLine = [textBlock indexOfLineForGlyphIndex:insertionPointIndex];
-    int lineIndex = [textBlock getLineOfGlyphIndex:insertionPointIndex];
+    int lineIndex = [textBlock getLineIndex:insertionPointIndex];
     GLine *currentLine = [[textBlock lines] objectAtIndex:lineIndex];
     NSArray *lineGlyphs = [currentLine glyphs];
     NSMutableArray *glyphs = [self.page.textParser glyphs];
@@ -459,7 +459,7 @@
     }
     
     int currentIndexInLine = [textBlock indexOfLineForGlyphIndex:insertionPointIndex];
-    int lineIndex = [textBlock getLineOfGlyphIndex:insertionPointIndex];
+    int lineIndex = [textBlock getLineIndex:insertionPointIndex];
     GLine *currentLine = [[textBlock lines] objectAtIndex:lineIndex];
     NSArray *lineGlyphs = [currentLine glyphs];
     NSMutableArray *glyphs = [self.page.textParser glyphs];
@@ -594,7 +594,7 @@
     }
     
     int currentIndexInLine = [textBlock indexOfLineForGlyphIndex:insertionPointIndex];
-    int lineIndex = [textBlock getLineOfGlyphIndex:insertionPointIndex];
+    int lineIndex = [textBlock getLineIndex:insertionPointIndex];
     GLine *currentLine = [[textBlock lines] objectAtIndex:lineIndex];
     NSArray *lineGlyphs = [currentLine glyphs];
     int prevIndex = currentIndexInLine - 1;
