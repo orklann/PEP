@@ -333,6 +333,17 @@
     }
 }
 
+/**
+ * Think through insertion point management carefully, it's just complex to take
+ * edge cases into account.
+ *
+ * For example: "PDF |", We are in | postion, and delete all of that line,
+ * now is "|", and insert 'A' (it use last deleted glyph to create A glyphp),
+ * it become "A|", and insert 'B', in this insert, we need to both think about
+ * insertion point is both in last postion of text block, and last position of
+ * line. Which means curerent glyph is nil, so that current line will return nil.
+ */
+
 - (void)insertChar:(NSString *)ch font:(NSFont*)font {
     NSMutableArray *glyphs = [self.page.textParser glyphs];
     GGlyph *glyphNeeded;
