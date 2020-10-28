@@ -188,6 +188,6 @@
             }
         }
     }
-    return (int)[[[lines lastObject] glyphs] count] - 1;
+    return -1;
 }
 @end

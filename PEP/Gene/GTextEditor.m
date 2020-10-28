@@ -335,21 +335,53 @@
 
 - (void)insertChar:(NSString *)ch font:(NSFont*)font {
     NSMutableArray *glyphs = [self.page.textParser glyphs];
-    GGlyph *currentGlyph = [self getCurrentGlyph];
-    GGlyph *prevGlyph = [self getPrevGlyph];
-
     GGlyph *glyphNeeded;
     
+    //
+    // If no text in text editor, we insert based on the last deleted glyph
+    //
+    if (textBlock == nil) {
+        glyphNeeded = lastDeletedGlyph;
+        
+        CGAffineTransform ctm = glyphNeeded.ctm;
+        CGAffineTransform tm = glyphNeeded.textMatrix;
+        NSString *fontName = glyphNeeded.fontName;
+        CGFloat fontSize = glyphNeeded.fontSize;
+        
+        GGlyph *g = [GGlyph create];
+        [g setContent:ch];
+        [g setCtm:ctm];
+        [g setTextMatrix:tm];
+        [g setFontName:fontName];
+        [g setFontSize:fontSize];
+        [glyphs addObject:g]; // Add this new glyph at the end
+
+        // Add the new glyph index to text editor's editing glyphs
+        [self addGlyphIndexToEditingGlyphs:(int)[glyphs count] - 1];
+        insertionPointIndex++;
+        return ;
+    }
+    
+    GGlyph *currentGlyph = [self getCurrentGlyph];
+    GGlyph *prevGlyph = [self getPrevGlyph];
+    
+    int currentIndexInLine;
     GLine *currentLine;
     NSArray *lineGlyphs;
-
     
-    int currentIndexInLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
-    currentLine = [textBlock getLineByGlyph:currentGlyph];
-    lineGlyphs = [currentLine glyphs];
+    if (currentGlyph == nil) {
+        // It happens that insertion point is at both at the last position line and text block
+        currentIndexInLine = [textBlock getGlyphIndexInLine:insertionPointIndex-1];
+        currentLine = [textBlock getLineByGlyph:prevGlyph];
+        lineGlyphs = [currentLine glyphs];
+    } else {
+        currentIndexInLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
+        currentLine = [textBlock getLineByGlyph:currentGlyph];
+        lineGlyphs = [currentLine glyphs];
+    }
 
-    
-    if (currentIndexInLine == 0) {
+
+    if (currentIndexInLine == 0 && currentGlyph != nil) {
         GGlyph *firstGlyphInLine = [lineGlyphs firstObject];
         glyphNeeded = firstGlyphInLine;
     } else if (prevGlyph != nil) {
@@ -357,14 +389,17 @@
     }
     
     // Debug
-    NSLog(@"line: %@ glyphNeeded %@ current: %@", [currentLine lineString], [glyphNeeded content], [currentGlyph content]);
+    //NSLog(@"line: %@ glyphNeeded %@ current: %@", [currentLine lineString], [glyphNeeded content], [currentGlyph content]);
     
     CGAffineTransform ctm = glyphNeeded.ctm;
     CGAffineTransform tm = glyphNeeded.textMatrix;
     NSString *fontName = glyphNeeded.fontName;
     CGFloat fontSize = glyphNeeded.fontSize;
     CGFloat glyphWidth = glyphNeeded.width;
-    if (currentIndexInLine > 0) {
+    
+    // Current position at line > 0.
+    // At last postion of text block (currentGlyph == nil) also means position > 0
+    if (currentIndexInLine > 0 || currentGlyph == nil) {
         tm.tx += glyphWidth;
     }
     
@@ -378,7 +413,6 @@
 
     // Add the new glyph index to text editor's editing glyphs
     [self addGlyphIndexToEditingGlyphs:(int)[glyphs count] - 1];
-    
     
     // We don't need to care about later glyphs, since insertion point is
     // at the end of text block
@@ -471,21 +505,34 @@
 }
 
 - (void)deleteCharacterInInsertionPoint {
+    // No text in text editor
+    if (textBlock == nil) {
+        return ;
+    }
+    
     NSMutableArray *glyphs = [self.page.textParser glyphs];
     GGlyph *currentGlyph = [self getCurrentGlyph];
     GGlyph *prevGlyph = [self getPrevGlyph];
 
     GGlyph *glyphNeeded;
 
+    int currentIndexInLine;
     GLine *currentLine;
     NSArray *lineGlyphs;
     
     CGFloat glyphWidth;
     
-    int currentIndexInLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
-    currentLine = [textBlock getLineByGlyph:currentGlyph];
-    lineGlyphs = [currentLine glyphs];
-    
+    if (currentGlyph == nil) {
+         // It happens that insertion point is at the last of both line and text block
+         currentIndexInLine = [textBlock getGlyphIndexInLine:insertionPointIndex-1];
+         currentLine = [textBlock getLineByGlyph:prevGlyph];
+         lineGlyphs = [currentLine glyphs];
+     } else {
+         currentIndexInLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
+         currentLine = [textBlock getLineByGlyph:currentGlyph];
+         lineGlyphs = [currentLine glyphs];
+     }
+
 
     // Insertion point is at the end of text blocks
     if (insertionPointIndex == [[textBlock glyphs] count]){
@@ -497,7 +544,7 @@
     }
 
     // Debug
-    NSLog(@"line: %@ glyphNeeded %@ current: %@", [currentLine lineString], [glyphNeeded content], [currentGlyph content]);
+    //NSLog(@"line: %@ glyphNeeded %@ current: %@", [currentLine lineString], [glyphNeeded content], [currentGlyph content]);
 
     glyphWidth = prevGlyph.width;
     
