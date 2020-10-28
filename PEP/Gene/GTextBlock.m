@@ -131,6 +131,9 @@
 }
 
 - (int)getLineIndex:(int)index {
+    //
+    // Get line index by index in text block glyphs
+    //
     int i;
     int indexFull = 0;
     for (i = 0; i < [lines count]; i++) {
@@ -171,6 +174,9 @@
 }
 
 - (int)getGlyphIndexInLine:(int)index {
+    //
+    // Get glyph index in line by index in text block glyphs
+    //
     int i;
     int indexFull = 0;
     for (i = 0; i < [lines count]; i++) {
