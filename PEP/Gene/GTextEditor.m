@@ -656,25 +656,47 @@
     }
 }
 
+//- (void)updateFontNameAndFontSize {
+//    // Don't update, it's at the end of text block
+//    if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
+//        return ;
+//    }
+//    GGlyph *g = [[textBlock glyphs] objectAtIndex:insertionPointIndex];
+//    int lineIndex = [g lineIndex];
+//    GLine *line = [[textBlock lines] objectAtIndex:lineIndex];
+//    NSArray *lineGlyphs = [line glyphs];
+//    int indexOfLine = (int)[lineGlyphs indexOfObject:g];
+//    // Don't update it's at the end of current line
+//    if (indexOfLine >  [lineGlyphs count] - 1) {
+//        return ;
+//    }
+//
+//    // Let's update font name, and font size
+//    self.pdfFontName = [g fontName];
+//    self.fontSize = [g fontSize];
+//
+//    //NSLog(@"Text Editor font name: %@ font size: %f", self.pdfFontName, self.fontSize);
+//}
+
 - (void)updateFontNameAndFontSize {
-    // Don't update, it's at the end of text block
-    if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
-        return ;
-    }
-    GGlyph *g = [[textBlock glyphs] objectAtIndex:insertionPointIndex];
-    int lineIndex = [g lineIndex];
-    GLine *line = [[textBlock lines] objectAtIndex:lineIndex];
-    NSArray *lineGlyphs = [line glyphs];
-    int indexOfLine = (int)[lineGlyphs indexOfObject:g];
-    // Don't update it's at the end of current line
-    if (indexOfLine >  [lineGlyphs count] - 1) {
+    int glyphIndexInLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
+    GGlyph *prevGlyph = [self getPrevGlyph];
+    
+    if (glyphIndexInLine == 0) {
+        GGlyph *currentGlyph = [self getCurrentGlyph];
+        // Let's update font name, and font size based on current glyph
+        // if insertion point is at the beginning of line
+        self.pdfFontName = [currentGlyph fontName];
+        self.fontSize = [currentGlyph fontSize];
+        NSLog(@"Text Editor font name: %@ font size: %f glyph: %@", self.pdfFontName, self.fontSize, [currentGlyph content]);
         return ;
     }
     
-    // Let's update font name, and font size
-    self.pdfFontName = [g fontName];
-    self.fontSize = [g fontSize];
-    
-    //NSLog(@"Text Editor font name: %@ font size: %f", self.pdfFontName, self.fontSize);
+    if (prevGlyph != nil) {
+        // Let's update font name, and font size based on previous glyph
+        self.pdfFontName = [prevGlyph fontName];
+        self.fontSize = [prevGlyph fontSize];
+        NSLog(@"Text Editor font name: %@ font size: %f glyph: %@", self.pdfFontName, self.fontSize, [prevGlyph content]);
+    }
 }
 @end
