@@ -204,7 +204,7 @@
             if (currentLineIndex - 1 >= 0) {
                 int previousLineIndex = currentLineIndex - 1;
                 GLine *prevLine = [[textBlock lines] objectAtIndex:previousLineIndex];
-                int glyphIndexInCurrentLine = [textBlock indexOfLineForGlyphIndex:insertionPointIndex];
+                int glyphIndexInCurrentLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
                 if (glyphIndexInCurrentLine > (int)[[prevLine glyphs] count] - 1) {
                     glyphIndexInCurrentLine = (int)[[prevLine glyphs] count] - 1;
                 }
@@ -218,7 +218,7 @@
                 if (currentLineIndex - 1 >= 0) {
                     int previousLineIndex = currentLineIndex - 1;
                     GLine *prevLine = [[textBlock lines] objectAtIndex:previousLineIndex];
-                    int glyphIndexInCurrentLine = [textBlock indexOfLineForGlyphIndex:insertionPointIndex-1];
+                    int glyphIndexInCurrentLine = [textBlock getGlyphIndexInLine:insertionPointIndex-1];
                     if (glyphIndexInCurrentLine > (int)[[prevLine glyphs] count] - 1) {
                         glyphIndexInCurrentLine = (int)[[prevLine glyphs] count] - 1;
                     }
@@ -235,7 +235,7 @@
             if (currentLineIndex + 1 <= [[textBlock lines] count] - 1) {
                 int nextLineIndex = currentLineIndex + 1;
                 GLine *nextLine = [[textBlock lines] objectAtIndex:nextLineIndex];
-                int glyphIndexInCurrentLine = [textBlock indexOfLineForGlyphIndex:insertionPointIndex];
+                int glyphIndexInCurrentLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
                 
                 
                 if (glyphIndexInCurrentLine >= (int)[[nextLine glyphs] count]) {
@@ -341,7 +341,7 @@
         currentGlyph = [[textBlock glyphs] objectAtIndex:insertionPointIndex];
     }
     
-    int currentIndexInLine = [textBlock indexOfLineForGlyphIndex:insertionPointIndex];
+    int currentIndexInLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
     int lineIndex = [textBlock getLineIndex:insertionPointIndex];
     GLine *currentLine = [[textBlock lines] objectAtIndex:lineIndex];
     NSArray *lineGlyphs = [currentLine glyphs];
@@ -458,7 +458,7 @@
         currentGlyph = [[textBlock glyphs] objectAtIndex:insertionPointIndex];
     }
     
-    int currentIndexInLine = [textBlock indexOfLineForGlyphIndex:insertionPointIndex];
+    int currentIndexInLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
     int lineIndex = [textBlock getLineIndex:insertionPointIndex];
     GLine *currentLine = [[textBlock lines] objectAtIndex:lineIndex];
     NSArray *lineGlyphs = [currentLine glyphs];
@@ -593,7 +593,7 @@
         currentGlyph = [[textBlock glyphs] objectAtIndex:insertionPointIndex];
     }
     
-    int currentIndexInLine = [textBlock indexOfLineForGlyphIndex:insertionPointIndex];
+    int currentIndexInLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
     int lineIndex = [textBlock getLineIndex:insertionPointIndex];
     GLine *currentLine = [[textBlock lines] objectAtIndex:lineIndex];
     NSArray *lineGlyphs = [currentLine glyphs];

@@ -29,7 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)makeIndexInfoForGlyphs;
 - (void)setLineIndexForGlyphs;
 - (int)getLineIndex:(int)index;
-- (int)indexOfLineForGlyphIndex:(int)index;
+- (int)getGlyphIndexInLine:(int)index;
 @end
 
 NS_ASSUME_NONNULL_END

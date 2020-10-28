@@ -150,7 +150,7 @@
     return (int)[lines count] - 1;
 }
 
-- (int)indexOfLineForGlyphIndex:(int)index {
+- (int)getGlyphIndexInLine:(int)index {
     int i;
     int indexFull = 0;
     for (i = 0; i < [lines count]; i++) {
