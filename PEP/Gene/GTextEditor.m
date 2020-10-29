@@ -443,6 +443,13 @@
     // Move glyphs after current glyph afterwards in current line
     [self moveGlyphsIncludeAfter:currentGlyph byDeltaX:deltaX inLine:currentLine];
     
+    // Test
+    if ([ch isEqualToString:@"a"]) {
+        int deltaY = -20;
+        [self moveLine:currentLine by:deltaY];
+        [self moveGlyph:g byDeltaX:0 byDeltaY:deltaY];
+    }
+    
     insertionPointIndex++;
 }
 
@@ -640,6 +647,25 @@
             laterGlyph = [glyphs objectAtIndex:indexOfPage];
             [laterGlyph setTextMatrix:textMatrix];
         }
+    }
+}
+
+- (void)moveGlyph:(GGlyph*)glyph byDeltaX:(CGFloat)deltaX byDeltaY:(CGFloat)deltaY {
+    NSMutableArray *glyphs = [[self.page textParser] glyphs];
+    int indexOfPage = (int)[glyphs indexOfObject:glyph];
+    CGAffineTransform textMatrix = glyph.textMatrix;
+    textMatrix.tx += deltaX;
+    textMatrix.ty += deltaY;
+    GGlyph *g = [glyphs objectAtIndex:indexOfPage];
+    [g setTextMatrix:textMatrix];
+}
+
+- (void)moveLine:(GLine*)line by:(int)deltaY {
+    NSArray *lineGlyphs =  [line glyphs];
+    int i;
+    for (i = 0; i < [lineGlyphs count]; i++) {
+        GGlyph *glyph = [lineGlyphs objectAtIndex:i];
+        [self moveGlyph:glyph byDeltaX:0.0 byDeltaY:deltaY];
     }
 }
 @end
