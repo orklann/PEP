@@ -441,7 +441,7 @@
     s = CGSizeApplyAffineTransform(s, tm);
     int deltaX = s.width;
     // Move glyphs after current glyph afterwards in current line
-    [self moveGlyphsAfter:currentGlyph byDeltaX:deltaX inLine:currentLine];
+    [self moveGlyphsIncludeAfter:currentGlyph byDeltaX:deltaX inLine:currentLine];
     
     insertionPointIndex++;
 }
@@ -558,24 +558,8 @@
 
     glyphWidth = glyphNeeded.width;
    
-    
-    int i;
-    for (i = 0; i < [lineGlyphs count]; i++) {
-        GGlyph *tmp = [lineGlyphs objectAtIndex:i];
-        if (tmp.indexOfBlock > glyphNeeded.indexOfBlock) {
-            NSLog(@"index: %d %@", i, [tmp content]);
-            GGlyph *laterGlyph = [lineGlyphs objectAtIndex:i];
-            
-            // NOTE: We remove indexOfPage in GGlyph
-            // TODO: Maybe we need indexOfPage in GGlyph later.
-            // Find the index of original page glyphs, and update the glyph
-            int indexOfPage = (int)[glyphs indexOfObject:tmp];
-            CGAffineTransform textMatrix = laterGlyph.textMatrix;
-            textMatrix.tx -= glyphWidth;
-            laterGlyph = [glyphs objectAtIndex:indexOfPage];
-            [laterGlyph setTextMatrix:textMatrix];
-        }
-    }
+    int deltaX = glyphWidth * -1;
+    [self moveGlyphsAfter:glyphNeeded byDeltaX:deltaX inLine:currentLine];
     
     if (currentGlyph && needMoveUpward) {
         // Move current glyph upwards and at the end of previous line
@@ -620,13 +604,33 @@
 }
 
 // Move glyphs after startGlyph (including startGlpyh) by delta x in line
-- (void)moveGlyphsAfter:(GGlyph*)startGlyph byDeltaX:(CGFloat)deltaX inLine:(GLine*)line {
+- (void)moveGlyphsIncludeAfter:(GGlyph*)startGlyph byDeltaX:(CGFloat)deltaX inLine:(GLine*)line {
     NSMutableArray *glyphs = [[self.page textParser] glyphs];
     NSArray *lineGlyphs =  [line glyphs];
     int i;
     for (i = 0; i < [lineGlyphs count]; i++) {
         GGlyph *tmp = [lineGlyphs objectAtIndex:i];
         if (tmp.indexOfBlock >= startGlyph.indexOfBlock) {
+            NSLog(@"index: %d %@", i, [tmp content]);
+            GGlyph *laterGlyph = [lineGlyphs objectAtIndex:i];
+            
+            int indexOfPage = (int)[glyphs indexOfObject:tmp];
+            CGAffineTransform textMatrix = laterGlyph.textMatrix;
+            textMatrix.tx += deltaX;
+            laterGlyph = [glyphs objectAtIndex:indexOfPage];
+            [laterGlyph setTextMatrix:textMatrix];
+        }
+    }
+}
+
+// Move glyphs after startGlyph (but not including startGlpyh) by delta x in line
+- (void)moveGlyphsAfter:(GGlyph*)startGlyph byDeltaX:(CGFloat)deltaX inLine:(GLine*)line {
+    NSMutableArray *glyphs = [[self.page textParser] glyphs];
+    NSArray *lineGlyphs =  [line glyphs];
+    int i;
+    for (i = 0; i < [lineGlyphs count]; i++) {
+        GGlyph *tmp = [lineGlyphs objectAtIndex:i];
+        if (tmp.indexOfBlock > startGlyph.indexOfBlock) {
             NSLog(@"index: %d %@", i, [tmp content]);
             GGlyph *laterGlyph = [lineGlyphs objectAtIndex:i];
             
