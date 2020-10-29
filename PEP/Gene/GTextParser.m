@@ -128,6 +128,11 @@
         if (isWhiteSpaceGlyph(nextGlyph) || isWordBreaks(nextGlyph, laterGlyph)) {
             // Current glyph (nextGlyph) can breaks two words, and it's not a
             // white space, so we add it to current word.
+            // Example:
+            //      "Editing"
+            //      "Program"
+            // Here the `g` in `Editing` can breaks two words although it's not
+            // a white space. 
             if (isWordBreaks(nextGlyph, laterGlyph)) {
                 [currentWord addGlyph:nextGlyph];
                 nextGlyph = [self nextGlyph];
