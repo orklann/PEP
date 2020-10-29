@@ -439,24 +439,10 @@
 
     s = NSMakeSize(hAdvance, 0);
     s = CGSizeApplyAffineTransform(s, tm);
+    int deltaX = s.width;
+    // Move glyphs after current glyph afterwards in current line
+    [self moveGlyphsAfter:currentGlyph byDeltaX:deltaX inLine:currentLine];
     
-    int i;
-    for (i = 0; i < [lineGlyphs count]; i++) {
-        GGlyph *tmp = [lineGlyphs objectAtIndex:i];
-        if (tmp.indexOfBlock >= currentGlyph.indexOfBlock) {
-            NSLog(@"index: %d %@", i, [tmp content]);
-            GGlyph *laterGlyph = [lineGlyphs objectAtIndex:i];
-            
-            // NOTE: We remove indexOfPage in GGlyph
-            // TODO: Maybe we need indexOfPage in GGlyph later.
-            // Find the index of original page glyphs, and update the glyph
-            int indexOfPage = (int)[glyphs indexOfObject:tmp];
-            CGAffineTransform textMatrix = laterGlyph.textMatrix;
-            textMatrix.tx += s.width;
-            laterGlyph = [glyphs objectAtIndex:indexOfPage];
-            [laterGlyph setTextMatrix:textMatrix];
-        }
-    }
     insertionPointIndex++;
 }
 
@@ -630,6 +616,26 @@
         self.pdfFontName = [prevGlyph fontName];
         self.fontSize = [prevGlyph fontSize];
         NSLog(@"Text Editor font name: %@ font size: %f glyph: %@", self.pdfFontName, self.fontSize, [prevGlyph content]);
+    }
+}
+
+// Move glyphs after startGlyph (including startGlpyh) by delta x in line
+- (void)moveGlyphsAfter:(GGlyph*)startGlyph byDeltaX:(CGFloat)deltaX inLine:(GLine*)line {
+    NSMutableArray *glyphs = [[self.page textParser] glyphs];
+    NSArray *lineGlyphs =  [line glyphs];
+    int i;
+    for (i = 0; i < [lineGlyphs count]; i++) {
+        GGlyph *tmp = [lineGlyphs objectAtIndex:i];
+        if (tmp.indexOfBlock >= startGlyph.indexOfBlock) {
+            NSLog(@"index: %d %@", i, [tmp content]);
+            GGlyph *laterGlyph = [lineGlyphs objectAtIndex:i];
+            
+            int indexOfPage = (int)[glyphs indexOfObject:tmp];
+            CGAffineTransform textMatrix = laterGlyph.textMatrix;
+            textMatrix.tx += deltaX;
+            laterGlyph = [glyphs objectAtIndex:indexOfPage];
+            [laterGlyph setTextMatrix:textMatrix];
+        }
     }
 }
 @end
