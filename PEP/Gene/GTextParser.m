@@ -42,6 +42,14 @@
     return [self currentGlyph];
 }
 
+- (GGlyph*)peekNextGlyph {
+    int pos = glyphPos + 1;
+    if (pos >= 0 && pos < [readOrderGlyphs count]) {
+        return [readOrderGlyphs objectAtIndex:pos];
+    }
+    return nil;
+}
+
 - (GGlyph*)currentGlyph {
     if (glyphPos < [readOrderGlyphs count]) {
         return [readOrderGlyphs objectAtIndex:glyphPos];
@@ -99,8 +107,6 @@
 }
 
 
-// Note: This method does not tested well
-// Just check back later
 - (NSMutableArray*)makeWords{
     [self makeReadOrderGlyphs];
     
@@ -116,15 +122,23 @@
     GWord *currentWord = [GWord create];
     [currentWord addGlyph:currentGlyph];
     GGlyph *nextGlyph = [self nextGlyph];
+    GGlyph *laterGlyph;
     while(nextGlyph != nil) {
-        if (isWhiteSpaceGlyph(nextGlyph)) {
+        laterGlyph = [self peekNextGlyph];
+        if (isWhiteSpaceGlyph(nextGlyph) || isWordBreaks(nextGlyph, laterGlyph)) {
+            // Current glyph (nextGlyph) can breaks two words, and it's not a
+            // white space, so we add it to current word.
+            if (isWordBreaks(nextGlyph, laterGlyph)) {
+                [currentWord addGlyph:nextGlyph];
+                nextGlyph = [self nextGlyph];
+            }
+            
             // Add previous word
             [words addObject:currentWord];
             
             // Handle edge case: where more than two white spaces stick
             // together. We add each white space as a single word until we
             // reach a none white space
-            //nextGlyph = [self nextGlyph];
             while (isWhiteSpaceGlyph(nextGlyph)) {
                 currentWord = [GWord create];
                 [currentWord addGlyph:nextGlyph];
@@ -141,6 +155,8 @@
     if ([[currentWord glyphs] count] > 0) {
         [words addObject:currentWord];
     }
+    
+    //prettyLogForWords(words);
     
     return words;
 }
