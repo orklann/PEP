@@ -529,8 +529,11 @@
     GGlyph *glyphNeeded;
 
     int currentIndexInLine;
+    GLine *prevLine;
     GLine *currentLine;
     NSArray *lineGlyphs;
+    
+    BOOL needMoveUpward = NO;
     
     CGFloat glyphWidth;
     
@@ -545,20 +548,30 @@
          lineGlyphs = [currentLine glyphs];
      }
 
-
+ 
     // Insertion point is at the end of text blocks
     if (insertionPointIndex == [[textBlock glyphs] count]){
         glyphNeeded = prevGlyph;
     } else if (currentIndexInLine == 0) {
-        return ;
+        prevLine = [textBlock getLineByGlyph:prevGlyph];
+        if (prevLine == nil) {
+            return ;
+        } else {
+            // Previous glyph should be last glyph of previous line
+            prevGlyph = [[prevLine glyphs] lastObject];
+            glyphNeeded = currentGlyph;
+            needMoveUpward = YES;
+        }
     } else if (prevGlyph != nil) {
         glyphNeeded = prevGlyph;
     }
 
     // Debug
     //NSLog(@"line: %@ glyphNeeded %@ current: %@", [currentLine lineString], [glyphNeeded content], [currentGlyph content]);
+    
 
-    glyphWidth = prevGlyph.width;
+    glyphWidth = glyphNeeded.width;
+   
     
     int i;
     for (i = 0; i < [lineGlyphs count]; i++) {
@@ -577,6 +590,15 @@
             [laterGlyph setTextMatrix:textMatrix];
         }
     }
+    
+    if (currentGlyph && needMoveUpward) {
+        // Move current glyph upwards and at the end of previous line
+        int indexOfPage = (int)[glyphs indexOfObject:currentGlyph];
+        GGlyph *upwardGlyph = [glyphs objectAtIndex:indexOfPage];
+        CGAffineTransform textMatrix = prevGlyph.textMatrix;
+        [upwardGlyph setTextMatrix:textMatrix];
+    }
+    
     // Remove glyph index in front of insertion point this is prevIndex in
     // this case
     lastDeletedGlyph = prevGlyph;
