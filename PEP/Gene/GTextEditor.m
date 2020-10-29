@@ -718,7 +718,9 @@
     NSArray *glyphs = [[self.page textParser] glyphs];
     int indexOfPage = (int)[glyphs indexOfObject:destination];
     GGlyph *destGlyph = [glyphs objectAtIndex:indexOfPage];
+    CGAffineTransform ctm = source.ctm;
     CGAffineTransform textMatrix = source.textMatrix;
+    [destGlyph setCtm:ctm];
     [destGlyph setTextMatrix:textMatrix];
 }
 @end
