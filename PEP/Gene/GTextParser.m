@@ -122,18 +122,18 @@
     GWord *currentWord = [GWord create];
     [currentWord addGlyph:currentGlyph];
     GGlyph *nextGlyph = [self nextGlyph];
-    GGlyph *laterGlyph;
+    GGlyph *glyphAfter;
     while(nextGlyph != nil) {
-        laterGlyph = [self peekNextGlyph];
-        if (isWhiteSpaceGlyph(nextGlyph) || isWordBreaks(nextGlyph, laterGlyph)) {
+        glyphAfter = [self peekNextGlyph];
+        if (isWhiteSpaceGlyph(nextGlyph) || isWordBreaks(nextGlyph, glyphAfter)) {
             // Current glyph (nextGlyph) can breaks two words, and it's not a
             // white space, so we add it to current word.
             // Example:
             //      "Editing"
             //      "Program"
             // Here the `g` in `Editing` can breaks two words although it's not
-            // a white space. 
-            if (isWordBreaks(nextGlyph, laterGlyph)) {
+            // a white space.
+            if (isWordBreaks(nextGlyph, glyphAfter)) {
                 [currentWord addGlyph:nextGlyph];
                 nextGlyph = [self nextGlyph];
             }
