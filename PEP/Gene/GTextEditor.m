@@ -443,13 +443,6 @@
     // Move glyphs after current glyph afterwards in current line
     [self moveGlyphsIncludeAfter:currentGlyph byDeltaX:deltaX inLine:currentLine];
     
-    // Test
-    if ([ch isEqualToString:@"a"]) {
-        int deltaY = -20;
-        [self moveLine:currentLine by:deltaY];
-        [self moveGlyph:g byDeltaX:0 byDeltaY:deltaY];
-    }
-    
     insertionPointIndex++;
 }
 
@@ -529,6 +522,7 @@
     BOOL needMoveUpward = NO;
     
     CGFloat glyphWidth;
+    int deltaX;
     
     if (currentGlyph == nil) {
          // It happens that insertion point is at the last of both line and text block
@@ -562,19 +556,54 @@
     // Debug
     //NSLog(@"line: %@ glyphNeeded %@ current: %@", [currentLine lineString], [glyphNeeded content], [currentGlyph content]);
     
-
     glyphWidth = glyphNeeded.width;
    
-    int deltaX = glyphWidth * -1;
-    [self moveGlyphsAfter:glyphNeeded byDeltaX:deltaX inLine:currentLine];
-    
-    if (currentGlyph && needMoveUpward) {
+    deltaX = glyphWidth * -1;
+
+    if (currentGlyph && needMoveUpward &&
+        [[prevLine glyphs] count] > 1 /* We move up the line of this glyph below
+                                       * So don't move twice, where glyphs count of
+                                       * prev line equals to 1:
+                                       * [[prevLine glyphs] count] == 1
+                                       */) {
         // Move current glyph upwards and at the end of previous line
         int indexOfPage = (int)[glyphs indexOfObject:currentGlyph];
         GGlyph *upwardGlyph = [glyphs objectAtIndex:indexOfPage];
         CGAffineTransform textMatrix = prevGlyph.textMatrix;
         [upwardGlyph setTextMatrix:textMatrix];
     }
+    
+    // NOTE: We can not delete a whole line while we are in this line, because we
+    //       can only delete last glyph while we are in the beginning of next line;
+    //       Example:
+    //       "Editing"
+    //       "|Program", like here.
+    // NOTE: If there is only one glyph in prev line, after deleting current glyph
+    //       There is no glyphs in prev line, what we do here is move after lines
+    //       upwards
+    // NOTE: This condiction will only met if we delete from next line. See below.
+    //       Example: "g"
+    //               "|Program"
+    //       After deleting in |, we get.
+    //               "|P"
+    //               "rogram"
+    //       What we do here is let it become below after deleting
+    //               "|Program"
+    //       So we will never delete a whole line which has 0 glyphs
+    if (currentIndexInLine == 0) {
+        if (prevLine){ // we have previous line
+            // Also previous has only one glyph, so let's move up lines after
+            // prev line.
+            if ([[prevLine glyphs] count] == 1) {
+                [self moveLinesUpwardAfter:prevLine];
+                // In this case we should not move glyphs after by deltaX,
+                // So we make deltaX to be 0;
+                deltaX = 0;
+            }
+        }
+    }
+    
+    [self moveGlyphsAfter:glyphNeeded byDeltaX:deltaX inLine:currentLine];
     
     // Remove glyph index in front of insertion point this is prevIndex in
     // this case
@@ -660,12 +689,31 @@
     [g setTextMatrix:textMatrix];
 }
 
-- (void)moveLine:(GLine*)line by:(int)deltaY {
+- (void)moveLine:(GLine*)line byDeltaY:(int)deltaY {
     NSArray *lineGlyphs =  [line glyphs];
     int i;
     for (i = 0; i < [lineGlyphs count]; i++) {
         GGlyph *glyph = [lineGlyphs objectAtIndex:i];
         [self moveGlyph:glyph byDeltaX:0.0 byDeltaY:deltaY];
+    }
+}
+
+- (void)moveLinesUpwardAfter:(GLine*)currentLine {
+    NSRect currentLineFrame = [currentLine frame];
+    CGFloat currentMinY = NSMinY(currentLineFrame);
+    NSArray *lines = [textBlock lines];
+    int currentLineIndex = (int)[lines indexOfObject:currentLine];
+    GLine *nextLine = [lines objectAtIndex:currentLineIndex + 1];
+    if (nextLine) {
+        NSRect nextLineFrame = [nextLine frame];
+        CGFloat nextMinY = NSMinY(nextLineFrame);
+        // NOTE: The sign of this delta should be careful
+        CGFloat deltaY = nextMinY - currentMinY;
+        int i;
+        for (i = currentLineIndex + 1; i < [lines count]; i++) {
+            GLine *line = [lines objectAtIndex:i];
+            [self moveLine:line byDeltaY:deltaY];
+        }
     }
 }
 @end

@@ -479,7 +479,7 @@ void prettyLogForTextBlock(GTextBlock* textBlock) {
     NSMutableArray *lines = [textBlock lines];
     for (i = 0; i < [lines count]; i++) {
         GLine *l = [lines objectAtIndex:i];
-        printf("%s\n", [[l lineString] UTF8String]);
+        printf("[Debug][Line:%d] %s\n", i, [[l lineString] UTF8String]);
     }
     printf("***End Lines***\n");
     printf("====End Text Block====\n");
@@ -487,7 +487,8 @@ void prettyLogForTextBlock(GTextBlock* textBlock) {
 
 
 void prettyLogForWords(NSArray *words) {
-    printf("====Words====\n");
+    printf("====Words====\n[");
+    printf("[Debug][Words]: ");
     int i;
     for (i = 0; i < [words count]; i++) {
         GWord *w = [words objectAtIndex:i];

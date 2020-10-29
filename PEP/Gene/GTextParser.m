@@ -118,10 +118,8 @@
     
     glyphPos = 0;
     
-    GGlyph *currentGlyph = [self currentGlyph];
     GWord *currentWord = [GWord create];
-    [currentWord addGlyph:currentGlyph];
-    GGlyph *nextGlyph = [self nextGlyph];
+    GGlyph *nextGlyph = [self currentGlyph];
     GGlyph *glyphAfter;
     while(nextGlyph != nil) {
         glyphAfter = [self peekNextGlyph];
