@@ -200,7 +200,8 @@
         [self updateFontNameAndFontSize];
     } else if (keyCode == kUpArrow) {
         int currentLineIndex = [textBlock getLineIndex:insertionPointIndex];
-        if (currentLineIndex != -1) { // No errors
+        // Curernt line is valid, and insertion point is not at the end of text block
+        if (currentLineIndex != -1 && insertionPointIndex != [glyphs count]) {
             if (currentLineIndex - 1 >= 0) {
                 int previousLineIndex = currentLineIndex - 1;
                 GLine *prevLine = [[textBlock lines] objectAtIndex:previousLineIndex];
