@@ -565,12 +565,9 @@
                                        * So don't move twice, where glyphs count of
                                        * prev line equals to 1:
                                        * [[prevLine glyphs] count] == 1
-                                       */) {
+                                       */){
         // Move current glyph upwards and at the end of previous line
-        int indexOfPage = (int)[glyphs indexOfObject:currentGlyph];
-        GGlyph *upwardGlyph = [glyphs objectAtIndex:indexOfPage];
-        CGAffineTransform textMatrix = prevGlyph.textMatrix;
-        [upwardGlyph setTextMatrix:textMatrix];
+        [self copyPositionOfGlyph:prevGlyph toGlyph:currentGlyph];
     }
     
     // NOTE: We can not delete a whole line while we are in this line, because we
@@ -715,5 +712,13 @@
             [self moveLine:line byDeltaY:deltaY];
         }
     }
+}
+
+- (void)copyPositionOfGlyph:(GGlyph*)source toGlyph:(GGlyph*)destination {
+    NSArray *glyphs = [[self.page textParser] glyphs];
+    int indexOfPage = (int)[glyphs indexOfObject:destination];
+    GGlyph *destGlyph = [glyphs objectAtIndex:indexOfPage];
+    CGAffineTransform textMatrix = source.textMatrix;
+    [destGlyph setTextMatrix:textMatrix];
 }
 @end
