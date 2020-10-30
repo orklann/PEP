@@ -446,7 +446,7 @@
     CGFloat fontSize = [self fontSize];
     NSFont *font = [NSFont fontWithName:@"Gill Sans" size:fontSize];
     [self insertChar:ch font:font];
-    // Do word wrap here
+    // Do word wrap here, use cached glyphs 
     [self doWordWrap];
     [self.page buildPageContent];
     [self.page addFont:font withPDFFontName:fontName];
