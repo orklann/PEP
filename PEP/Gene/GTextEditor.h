@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSRect firstGlyphFrame;
     GGlyph *lastDeletedGlyph;
     CGFloat editorWidth;
+    CGFloat editorHeight;
     BOOL needWordWrap;
 }
 

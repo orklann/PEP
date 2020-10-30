@@ -41,6 +41,7 @@
     self.firstUsed = YES;
     self.editingGlyphs = [NSMutableArray array];
     editorWidth = [textBlock frame].size.width;
+    editorHeight = [textBlock frame].size.height;
     needWordWrap = NO;
     // First time draw the text, we must ensure to save editing glyphs
     // Other time to save it is after editing text.
@@ -146,8 +147,10 @@
 
 - (NSRect)frame {
     if (textBlock == nil) {
-        firstGlyphFrame.size.width = editorWidth;
-        return firstGlyphFrame;
+        NSRect frame = firstGlyphFrame;
+        frame.size.width = editorWidth;
+        frame.size.height = editorHeight;
+        return frame;
     }
     
     NSArray *glyphs = [textBlock glyphs];
@@ -159,6 +162,7 @@
     }
     NSRect frame =  [textBlock frame];
     frame.size.width = editorWidth;
+    frame.size.height = editorHeight;
     return frame;
 }
 
