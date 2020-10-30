@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (id)create;
 - (void)setFrame:(NSRect)f;
 - (NSRect)frame;
+- (CGFloat)height;
 - (void)setPoint:(NSPoint)p;
 - (NSPoint)point;
 - (void)setContent:(NSString*)s;

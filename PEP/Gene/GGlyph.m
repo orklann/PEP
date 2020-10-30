@@ -30,6 +30,10 @@
     return frame;
 }
 
+- (CGFloat)height {
+    return [self frame].size.height;
+}
+
 - (void)setPoint:(NSPoint)p {
     point = p;
 }
