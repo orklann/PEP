@@ -14,11 +14,11 @@ NS_ASSUME_NONNULL_BEGIN
     NSRect frame;
     NSString *content;
     NSPoint point;
+    CGFloat height;
 }
 
 @property (readwrite) int indexOfBlock;
 @property (readwrite) CGFloat width;
-@property (readwrite) CGFloat height;
 @property (readwrite) NSRect frameInGlyphSpace;
 @property (readwrite) CGAffineTransform ctm;
 @property (readwrite) CGAffineTransform textMatrix;
@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (id)create;
 - (void)setFrame:(NSRect)f;
 - (NSRect)frame;
+- (void)setHeight:(CGFloat)h;
 - (CGFloat)height;
 - (void)setPoint:(NSPoint)p;
 - (NSPoint)point;

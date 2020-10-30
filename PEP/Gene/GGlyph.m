@@ -30,6 +30,10 @@
     return frame;
 }
 
+- (void)setHeight:(CGFloat)h {
+    height = h;
+}
+
 - (CGFloat)height {
     return [self frame].size.height;
 }
