@@ -402,7 +402,7 @@
         // Calculate deltaX
         NSSize s = NSMakeSize(hAdvance, 0);
         s = CGSizeApplyAffineTransform(s, tm);
-        int deltaX = s.width;
+        CGFloat deltaX = s.width;
         
         [self moveGlyphsIncludeAfter:currentGlyph byDeltaX:deltaX];
     } else {
