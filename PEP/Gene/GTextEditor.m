@@ -41,6 +41,7 @@
     self.firstUsed = YES;
     self.editingGlyphs = [NSMutableArray array];
     editorWidth = [textBlock frame].size.width;
+    needWordWrap = NO;
     // First time draw the text, we must ensure to save editing glyphs
     // Other time to save it is after editing text.
     // Call [self insertChar:font:] etc.
@@ -134,6 +135,12 @@
     
     if (self.drawInsertionPoint) {
         [self drawInsertionPoint:context];
+    }
+    
+    if (needWordWrap) {
+        [self doWordWrap];
+        needWordWrap = NO;
+        [self redraw];
     }
 }
 
@@ -502,6 +509,7 @@
     [self.page buildPageContent];
     [self.page addPageStream];
     [self.page incrementalUpdate];
+    needWordWrap = YES;
     [self.page setNeedUpdate:YES];
     self.isEditing = NO;
 }
@@ -726,5 +734,9 @@
     CGAffineTransform textMatrix = source.textMatrix;
     [destGlyph setCtm:ctm];
     [destGlyph setTextMatrix:textMatrix];
+}
+
+- (void)doWordWrap {
+    NSLog(@"Doing word wrap!");
 }
 @end
