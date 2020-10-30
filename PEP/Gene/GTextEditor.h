@@ -23,7 +23,6 @@ NS_ASSUME_NONNULL_BEGIN
     GGlyph *lastDeletedGlyph;
     CGFloat editorWidth;
     CGFloat editorHeight;
-    BOOL needWordWrap;
 }
 
 @property (readwrite) NSString *pdfFontName;

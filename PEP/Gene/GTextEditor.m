@@ -42,7 +42,6 @@
     self.editingGlyphs = [NSMutableArray array];
     editorWidth = [textBlock frame].size.width;
     editorHeight = [textBlock frame].size.height;
-    needWordWrap = NO;
     // First time draw the text, we must ensure to save editing glyphs
     // Other time to save it is after editing text.
     // Call [self insertChar:font:] etc.
@@ -136,12 +135,6 @@
     
     if (self.drawInsertionPoint) {
         [self drawInsertionPoint:context];
-    }
-    
-    if (needWordWrap) {
-        [self doWordWrap];
-        needWordWrap = NO;
-        [self redraw];
     }
 }
 
@@ -281,6 +274,7 @@
                 ch = @" ";  // NOTE: ch is now a Tab character, not a space
             }
             [self insertChar:ch];
+            [self doWordWrap];
         }
     }
     [self redraw];
@@ -484,7 +478,6 @@
     [self.page buildPageContent];
     [self.page addPageStream];
     [self.page incrementalUpdate];
-    needWordWrap = YES;
     [self.page setNeedUpdate:YES];
     self.isEditing = NO;
 }
@@ -632,5 +625,9 @@
 
 - (void)doWordWrap {
     NSLog(@"Doing word wrap!");
+    textBlock = [self getTextBlock];
+    NSArray *words = [textBlock words];
+    prettyLogForWords(words);
+    
 }
 @end
