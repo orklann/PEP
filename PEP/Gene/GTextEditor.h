@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *glyphs;
     NSRect firstGlyphFrame;
     GGlyph *lastDeletedGlyph;
-    CGFloat initialWidth;
+    CGFloat editorWidth;
 }
 
 @property (readwrite) NSString *pdfFontName;
