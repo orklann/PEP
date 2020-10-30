@@ -349,27 +349,22 @@
  * Think through insertion point management carefully, it's just complex to take
  * edge cases into account.
  *
- * For example: "PDF |", We are in | postion, and delete all of that line,
- * now is "|", and insert 'A' (it use last deleted glyph to create A glyphp),
- * it become "A|", and insert 'B', in this insert, we need to both think about
- * insertion point is both in last postion of text block, and last position of
- * line. Which means curerent glyph is nil, so that current line will return nil.
+ *
+ *
+ *
  */
 
 - (void)insertChar:(NSString *)ch font:(NSFont*)font {
     NSMutableArray *glyphs = [self.page.textParser glyphs];
-    GGlyph *glyphNeeded;
     
     //
     // If no text in text editor, we insert based on the last deleted glyph
     //
     if (textBlock == nil) {
-        glyphNeeded = lastDeletedGlyph;
-        
-        CGAffineTransform ctm = glyphNeeded.ctm;
-        CGAffineTransform tm = glyphNeeded.textMatrix;
-        NSString *fontName = glyphNeeded.fontName;
-        CGFloat fontSize = glyphNeeded.fontSize;
+        CGAffineTransform ctm = lastDeletedGlyph.ctm;
+        CGAffineTransform tm = lastDeletedGlyph.textMatrix;
+        NSString *fontName = lastDeletedGlyph.fontName;
+        CGFloat fontSize = lastDeletedGlyph.fontSize;
         
         GGlyph *g = [GGlyph create];
         [g setContent:ch];
@@ -388,71 +383,47 @@
     GGlyph *currentGlyph = [self getCurrentGlyph];
     GGlyph *prevGlyph = [self getPrevGlyph];
     
-    int currentIndexInLine;
-    GLine *currentLine;
-    NSArray *lineGlyphs;
-    
-    if (currentGlyph == nil) {
-        // It happens that insertion point is at both at the last position line and text block
-        currentIndexInLine = [textBlock getGlyphIndexInLine:insertionPointIndex-1];
-        currentLine = [textBlock getLineByGlyph:prevGlyph];
-        lineGlyphs = [currentLine glyphs];
-    } else {
-        currentIndexInLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
-        currentLine = [textBlock getLineByGlyph:currentGlyph];
-        lineGlyphs = [currentLine glyphs];
-    }
-
-
-    if (currentIndexInLine == 0 && currentGlyph != nil) {
-        GGlyph *firstGlyphInLine = [lineGlyphs firstObject];
-        glyphNeeded = firstGlyphInLine;
-    } else if (prevGlyph != nil) {
-        glyphNeeded = prevGlyph;
-    }
-    
-    // Debug
-    //NSLog(@"line: %@ glyphNeeded %@ current: %@", [currentLine lineString], [glyphNeeded content], [currentGlyph content]);
-    
-    CGAffineTransform ctm = glyphNeeded.ctm;
-    CGAffineTransform tm = glyphNeeded.textMatrix;
-    NSString *fontName = glyphNeeded.fontName;
-    CGFloat fontSize = glyphNeeded.fontSize;
-    CGFloat glyphWidth = glyphNeeded.width;
-    
-    // Current position at line > 0.
-    // At last postion of text block (currentGlyph == nil) also means position > 0
-    if (currentIndexInLine > 0 || currentGlyph == nil) {
-        tm.tx += glyphWidth;
-    }
+    CGAffineTransform ctm;
+    CGAffineTransform tm;
+    NSString *fontName;
+    CGFloat fontSize;
     
     GGlyph *g = [GGlyph create];
     [g setContent:ch];
+    CGFloat hAdvance = 0;
+    hAdvance = getGlyphAdvanceForFont(ch, font);
+    
+    if (currentGlyph) {
+        ctm = currentGlyph.ctm;
+        tm = currentGlyph.textMatrix;
+        fontName = currentGlyph.fontName;
+        fontSize = currentGlyph.fontSize;
+        
+        // Calculate deltaX
+        NSSize s = NSMakeSize(hAdvance, 0);
+        s = CGSizeApplyAffineTransform(s, tm);
+        int deltaX = s.width;
+        
+        [self moveGlyphsIncludeAfter:currentGlyph byDeltaX:deltaX];
+    } else {
+        // Current glyph is nil, means we are at the end of text block,
+        // we use previous glyph info
+        ctm = prevGlyph.ctm;
+        tm = prevGlyph.textMatrix;
+        fontName = prevGlyph.fontName;
+        fontSize = prevGlyph.fontSize;
+        // Also new glyph ctm need to add previous glyph width
+        tm.tx += prevGlyph.width;
+    }
+    
     [g setCtm:ctm];
     [g setTextMatrix:tm];
     [g setFontName:fontName];
     [g setFontSize:fontSize];
-    [glyphs addObject:g]; // Add this new glyph at the end
+    [glyphs addObject:g];
 
     // Add the new glyph index to text editor's editing glyphs
     [self addGlyphIndexToEditingGlyphs:(int)[glyphs count] - 1];
-    
-    // We don't need to care about later glyphs, since insertion point is
-    // at the end of text block
-    if (insertionPointIndex > [[textBlock glyphs] count] - 1) {
-        insertionPointIndex++;
-        return ;
-    }
-    
-    CGFloat hAdvance = 0;
-    NSSize s;
-    hAdvance = getGlyphAdvanceForFont(ch, font);
-
-    s = NSMakeSize(hAdvance, 0);
-    s = CGSizeApplyAffineTransform(s, tm);
-    int deltaX = s.width;
-    // Move glyphs after current glyph afterwards in current line
-    [self moveGlyphsIncludeAfter:currentGlyph byDeltaX:deltaX inLine:currentLine];
     
     insertionPointIndex++;
 }
@@ -612,7 +583,7 @@
         }
     }
     
-    [self moveGlyphsAfter:glyphNeeded byDeltaX:deltaX inLine:currentLine];
+    //[self moveGlyphsAfter:glyphNeeded byDeltaX:deltaX inLine:currentLine];
     
     // Remove glyph index in front of insertion point this is prevIndex in
     // this case
@@ -648,42 +619,45 @@
     }
 }
 
-// Move glyphs after startGlyph (including startGlpyh) by delta x in line
-- (void)moveGlyphsIncludeAfter:(GGlyph*)startGlyph byDeltaX:(CGFloat)deltaX inLine:(GLine*)line {
-    NSMutableArray *glyphs = [[self.page textParser] glyphs];
-    NSArray *lineGlyphs =  [line glyphs];
+// Move glyphs after startGlyph (including startGlpyh) by delta x
+- (void)moveGlyphsIncludeAfter:(GGlyph*)startGlyph byDeltaX:(CGFloat)deltaX {
+    NSArray *textBlockGlyphs =  [textBlock glyphs];
+    int startIndex = (int)[textBlockGlyphs indexOfObject:startGlyph];
+    NSPoint startPoint = [startGlyph point];
+    startPoint.x += ([startGlyph width] / 2);
+    
+    NSLog(@"index: (start) %@", [startGlyph content]);
+    [self moveGlyph:startGlyph byDeltaX:deltaX byDeltaY:0];
+    
     int i;
-    for (i = 0; i < [lineGlyphs count]; i++) {
-        GGlyph *tmp = [lineGlyphs objectAtIndex:i];
-        if (tmp.indexOfBlock >= startGlyph.indexOfBlock) {
-            NSLog(@"index: %d %@", i, [tmp content]);
-            GGlyph *laterGlyph = [lineGlyphs objectAtIndex:i];
-            
-            int indexOfPage = (int)[glyphs indexOfObject:tmp];
-            CGAffineTransform textMatrix = laterGlyph.textMatrix;
-            textMatrix.tx += deltaX;
-            laterGlyph = [glyphs objectAtIndex:indexOfPage];
-            [laterGlyph setTextMatrix:textMatrix];
+    for (i = startIndex + 1; i < [textBlockGlyphs count]; i++) {
+        GGlyph *g = [textBlockGlyphs objectAtIndex:i];
+        NSPoint p = [g point];
+        if (p.x >= startPoint.x) {
+            NSLog(@"index: %d %@", i, [g content]);
+            [self moveGlyph:g byDeltaX:deltaX byDeltaY:0];
+        } else if (p.x < startPoint.x) {
+            break;
         }
     }
 }
 
-// Move glyphs after startGlyph (but not including startGlpyh) by delta x in line
-- (void)moveGlyphsAfter:(GGlyph*)startGlyph byDeltaX:(CGFloat)deltaX inLine:(GLine*)line {
-    NSMutableArray *glyphs = [[self.page textParser] glyphs];
-    NSArray *lineGlyphs =  [line glyphs];
+// Move glyphs after startGlyph (but not including startGlpyh) by delta x
+- (void)moveGlyphsAfter:(GGlyph*)startGlyph byDeltaX:(CGFloat)deltaX {
+    NSArray *textBlockGlyphs =  [textBlock glyphs];
+    int startIndex = (int)[textBlockGlyphs indexOfObject:startGlyph];
+    NSPoint startPoint = [startGlyph point];
+    startPoint.x += ([startGlyph width] / 2);
+    
     int i;
-    for (i = 0; i < [lineGlyphs count]; i++) {
-        GGlyph *tmp = [lineGlyphs objectAtIndex:i];
-        if (tmp.indexOfBlock > startGlyph.indexOfBlock) {
-            NSLog(@"index: %d %@", i, [tmp content]);
-            GGlyph *laterGlyph = [lineGlyphs objectAtIndex:i];
-            
-            int indexOfPage = (int)[glyphs indexOfObject:tmp];
-            CGAffineTransform textMatrix = laterGlyph.textMatrix;
-            textMatrix.tx += deltaX;
-            laterGlyph = [glyphs objectAtIndex:indexOfPage];
-            [laterGlyph setTextMatrix:textMatrix];
+    for (i = startIndex + 1; i < [textBlockGlyphs count]; i++) {
+        GGlyph *g = [textBlockGlyphs objectAtIndex:i];
+        NSPoint p = [g point];
+        if (p.x >= startPoint.x) {
+            NSLog(@"index: %d %@", i, [g content]);
+            [self moveGlyph:g byDeltaX:deltaX byDeltaY:0];
+        } else if (p.x < startPoint.x) {
+            break;
         }
     }
 }
