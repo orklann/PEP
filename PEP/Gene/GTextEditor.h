@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
     GTextBlock *textBlock;
     NSTimer *blinkTimer;
     NSMutableArray *glyphs;
+    NSMutableArray *cachedGlyphs;
     NSRect firstGlyphFrame;
     GGlyph *lastDeletedGlyph;
     CGFloat editorWidth;

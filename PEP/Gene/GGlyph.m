@@ -7,6 +7,7 @@
 //
 
 #import "GGlyph.h"
+#import "GMisc.h"
 
 @implementation GGlyph
 + (id)create {
@@ -22,6 +23,10 @@
 // In some case, we need view coordinate, just call [GPage rectFromPageToView:]
 // to convert to view coordinate
 - (NSRect)frame {
+    NSRect r = CGRectApplyAffineTransform(self.frameInGlyphSpace, self.textMatrix);
+    // Apply current context matrix to get the right frame of glyph
+    r = CGRectApplyAffineTransform(r, self.ctm);
+    frame = r;
     return frame;
 }
 

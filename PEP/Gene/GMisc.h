@@ -23,6 +23,10 @@ CGFloat getGlyphAdvanceForFont(NSString *ch, NSFont *font);
 // Get glyph bounding box, in user space.
 NSRect getGlyphBoundingBox(NSString *ch, NSFont *font, CGAffineTransform tm);
 
+// Get glyph bounding box, in glyph space
+// Without apply any matrix.
+NSRect getGlyphBoundingBoxGlyphSpace(NSString *ch, NSFont *font);
+
 // Compare method for sorting glyphs in read order
 int compareGlyphs(GGlyph *a, GGlyph *b);
 
@@ -86,3 +90,5 @@ BOOL isWhiteSpaceGlyph(GGlyph * _Nullable glyph);
 void logGlyphsIndex(NSArray * _Nullable glyphs);
 // Log glyphs content in GTextEditor's glyphs
 void logGlyphsContent(NSArray * _Nullable glyphs);
+
+void printCGAffineTransform(CGAffineTransform mt);

@@ -150,7 +150,7 @@
         [words addObject:currentWord];
     }
     
-    prettyLogForWords(words);
+    //prettyLogForWords(words);
     
     return words;
 }

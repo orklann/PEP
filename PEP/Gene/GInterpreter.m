@@ -87,6 +87,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         // Apply current context matrix to get the right frame of glyph
         r = CGRectApplyAffineTransform(r, [[page graphicsState] ctm]);
         
+        
         NSPoint p = CGContextGetTextPosition(context);
         // Apply current context matrix to get the right point for glyph
         p = CGPointApplyAffineTransform(p, [[page graphicsState] ctm]);
@@ -98,10 +99,18 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         s = CGSizeApplyAffineTransform(s, [[page textState] textMatrix]);
         
         GGlyph *glyph = [GGlyph create];
+        
+        // We set frame here, but we also recalculate frame in [GGlyph frame]
+        // So we need frame in glyph space, and convert it to text space later
         [glyph setFrame:r];
+        
+        CGRect rectGlyphSpace = getGlyphBoundingBoxGlyphSpace(ch, font);
+        [glyph setFrameInGlyphSpace:rectGlyphSpace];
+        
         [glyph setPoint:p];
         [glyph setContent:ch];
         [glyph setWidth:s.width];
+        [glyph setHeight:r.size.height];
         [glyph setCtm:[[page graphicsState] ctm]];
         [glyph setTextMatrix:[[page textState] textMatrix]];
         NSString *fontName = [[page textState] fontName];

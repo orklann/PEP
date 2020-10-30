@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readwrite) int indexOfBlock;
 @property (readwrite) CGFloat width;
+@property (readwrite) CGFloat height;
+@property (readwrite) NSRect frameInGlyphSpace;
 @property (readwrite) CGAffineTransform ctm;
 @property (readwrite) CGAffineTransform textMatrix;
 @property (readwrite) NSString *fontName;

@@ -73,6 +73,22 @@ NSRect getGlyphBoundingBox(NSString *ch, NSFont *font, CGAffineTransform tm) {
     return r;
 }
 
+NSRect getGlyphBoundingBoxGlyphSpace(NSString *ch, NSFont *font) {
+    CGFloat glyphWidth = getGlyphAdvanceForFont(ch, font);
+    NSMutableAttributedString *s = [[NSMutableAttributedString alloc]
+                                    initWithString:ch];
+    [s addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, [ch length])];
+    [s addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor]
+              range:NSMakeRange(0, [ch length])];
+    CFAttributedStringRef attrStr = (__bridge CFAttributedStringRef)(s);
+    CTLineRef line = CTLineCreateWithAttributedString(attrStr);
+    CGFloat ascent, descent, leading;
+    CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
+    CGRect textRect = NSMakeRect(0, 0 - descent, glyphWidth, descent + ascent);
+    CFRelease(line);
+    return textRect;
+}
+
 // return -1 if glyph a is before b, return 1 if glyph b is before glyph a
 int compareGlyphs(GGlyph *a, GGlyph *b) {
     NSPoint pa = [a frame].origin;
@@ -517,4 +533,9 @@ void logGlyphsContent(NSArray * _Nullable glyphs) {
     }
     printf("]");
     printf("\n");
+}
+
+void printCGAffineTransform(CGAffineTransform mt) {
+    printf("\n[Debug] a:%f b:%f c:%f d:%f tx:%f, ty:%f\n",
+          mt.a, mt.b, mt.c, mt.d, mt.tx, mt.ty);
 }

@@ -107,6 +107,13 @@
     }
 }
 
+- (GTextBlock*)getTextBlockByCachedGlyphs {
+    GTextParser *textParser = [GTextParser create];
+    [textParser setGlyphs:cachedGlyphs];
+    GTextBlock *tb = [textParser mergeLinesToTextblock];
+    return tb;
+}
+
 - (void)redraw {
     GDocument *doc = (GDocument*)[(GPage*)self.page doc];
     [doc setNeedsDisplay:YES];
@@ -274,7 +281,6 @@
                 ch = @" ";  // NOTE: ch is now a Tab character, not a space
             }
             [self insertChar:ch];
-            [self doWordWrap];
         }
     }
     [self redraw];
@@ -375,6 +381,9 @@
         // Add the new glyph index to text editor's editing glyphs
         [self addGlyphIndexToEditingGlyphs:(int)[glyphs count] - 1];
         insertionPointIndex++;
+        
+        // Update cached glyphs for word wrap use
+        [self updateCachedGlyphs:[textBlock glyphs] newGlyph:g];
         return ;
     }
     
@@ -422,8 +431,10 @@
 
     // Add the new glyph index to text editor's editing glyphs
     [self addGlyphIndexToEditingGlyphs:(int)[glyphs count] - 1];
-    
     insertionPointIndex++;
+    
+    // Update cached glyphs for word wrap use
+    [self updateCachedGlyphs:[textBlock glyphs] newGlyph:g];
 }
 
 - (void)insertChar:(NSString *)ch {
@@ -435,6 +446,8 @@
     CGFloat fontSize = [self fontSize];
     NSFont *font = [NSFont fontWithName:@"Gill Sans" size:fontSize];
     [self insertChar:ch font:font];
+    // Do word wrap here
+    [self doWordWrap];
     [self.page buildPageContent];
     [self.page addFont:font withPDFFontName:fontName];
     [self.page addPageStream];
@@ -624,10 +637,14 @@
 }
 
 - (void)doWordWrap {
-    NSLog(@"Doing word wrap!");
-    textBlock = [self getTextBlock];
-    NSArray *words = [textBlock words];
+    NSLog(@"[Debug] Doing word wrap!");
+    GTextBlock *tb = [self getTextBlockByCachedGlyphs];
+    NSArray *words = [tb words];
     prettyLogForWords(words);
-    
+}
+
+- (void)updateCachedGlyphs:(NSArray*)glyphs newGlyph:(GGlyph*)newGlyph {
+    cachedGlyphs = [NSMutableArray arrayWithArray:glyphs];
+    [cachedGlyphs addObject:newGlyph];
 }
 @end
