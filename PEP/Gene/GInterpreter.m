@@ -102,7 +102,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         
         // We set frame here, but we also recalculate frame in [GGlyph frame]
         // So we need frame in glyph space, and convert it to text space and
-        // user space later.
+        // user space in [GGlyph frame]
         [glyph setFrame:r];
         CGRect rectGlyphSpace = getGlyphBoundingBoxGlyphSpace(ch, font);
         [glyph setFrameInGlyphSpace:rectGlyphSpace];
