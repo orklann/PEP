@@ -457,6 +457,7 @@ void prettyLogForWords(NSArray *words) {
         for (index = 0; index < [s length]; ++index) {
             char ch = [s characterAtIndex:index];
             if (isWhiteSpaceChar(ch)) {
+                // We use ☀️ to represent white spaces
                 printf("%s", [@"☀️" UTF8String]);
             } else {
                 printf("%c", ch);
