@@ -464,7 +464,7 @@ void prettyLogForTextBlock(GTextBlock* textBlock) {
 
 void prettyLogForWords(NSArray *words) {
     printf("====Words====\n[");
-    printf("[Debug][Words]: ");
+    printf("[Debug][%d Words]: ", (int)[words count]);
     int i;
     for (i = 0; i < [words count]; i++) {
         GWord *w = [words objectAtIndex:i];

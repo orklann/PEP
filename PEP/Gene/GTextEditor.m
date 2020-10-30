@@ -370,8 +370,11 @@
         CGAffineTransform tm = lastDeletedGlyph.textMatrix;
         NSString *fontName = lastDeletedGlyph.fontName;
         CGFloat fontSize = lastDeletedGlyph.fontSize;
+        NSRect rectGlyphSpace;
         
         GGlyph *g = [GGlyph create];
+        rectGlyphSpace = getGlyphBoundingBoxGlyphSpace(ch, font);
+        [g setFrameInGlyphSpace:rectGlyphSpace];
         [g setContent:ch];
         [g setCtm:ctm];
         [g setTextMatrix:tm];
@@ -395,6 +398,7 @@
     CGAffineTransform tm;
     NSString *fontName;
     CGFloat fontSize;
+    CGRect rectGlyphSpace;
     
     GGlyph *g = [GGlyph create];
     [g setContent:ch];
@@ -424,6 +428,8 @@
         tm.tx += prevGlyph.width;
     }
     
+    rectGlyphSpace = getGlyphBoundingBoxGlyphSpace(ch, font);
+    [g setFrameInGlyphSpace:rectGlyphSpace];
     [g setCtm:ctm];
     [g setTextMatrix:tm];
     [g setFontName:fontName];

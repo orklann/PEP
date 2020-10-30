@@ -128,7 +128,9 @@
     while(nextGlyph != nil) {
         if (isWhiteSpaceGlyph(nextGlyph)) {
             // Add previous word
-            [words addObject:currentWord];
+            if ([[currentWord glyphs] count] > 0)  {
+                [words addObject:currentWord];
+            }
             
             // Handle edge case: where more than two white spaces stick
             // together. We add each white space as a single word until we
