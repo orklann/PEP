@@ -115,6 +115,7 @@
 }
 
 - (void)redraw {
+    if (self.isEditing) return ;
     GDocument *doc = (GDocument*)[(GPage*)self.page doc];
     [doc setNeedsDisplay:YES];
 }
