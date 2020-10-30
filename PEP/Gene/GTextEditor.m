@@ -519,7 +519,7 @@
     GLine *currentLine;
     NSArray *lineGlyphs;
     
-    BOOL needMoveUpward = NO;
+    BOOL needMoveForward = YES;
     
     CGFloat glyphWidth;
     int deltaX;
@@ -547,9 +547,9 @@
             // Previous glyph should be last glyph of previous line
             prevGlyph = [[prevLine glyphs] lastObject];
             glyphNeeded = currentGlyph;
-            needMoveUpward = YES;
+            needMoveForward = NO;
         }
-    } else if (prevGlyph != nil) {
+    }else if (prevGlyph != nil) {
         glyphNeeded = prevGlyph;
     }
 
@@ -560,14 +560,14 @@
    
     deltaX = glyphWidth * -1;
 
-    if (currentGlyph && needMoveUpward &&
-        [[prevLine glyphs] count] > 1 /* We move up the line of this glyph below
-                                       * So don't move twice, where glyphs count of
-                                       * prev line equals to 1:
+    if (currentGlyph && !needMoveForward &&
+        [[prevLine glyphs] count] > 1 /* We don't move glyphs after forwards, while
+                                       * we are at the begining of line, and previous line
+                                       * has more than 1 glyphs. We move later lines upward while
+                                       * previous glyphs equals to 1 later (empty line after deleting).
                                        * [[prevLine glyphs] count] == 1
                                        */){
-        // Move current glyph upwards and at the end of previous line
-        [self copyPositionOfGlyph:prevGlyph toGlyph:currentGlyph];
+        deltaX = 0;
     }
     
     // NOTE: We can not delete a whole line while we are in this line, because we
