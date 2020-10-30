@@ -107,6 +107,11 @@
 }
 
 
+/*
+ * Only white space breaks words.
+ * Old code which check if two character break words in geometry info.
+ * See: https://gist.github.com/orklann/5a7a4ae666368bd23406801e8951c6ad
+ */
 - (NSMutableArray*)makeWords{
     [self makeReadOrderGlyphs];
     
@@ -120,22 +125,8 @@
     
     GWord *currentWord = [GWord create];
     GGlyph *nextGlyph = [self currentGlyph];
-    GGlyph *glyphAfter;
     while(nextGlyph != nil) {
-        glyphAfter = [self peekNextGlyph];
-        if (isWhiteSpaceGlyph(nextGlyph) || isWordBreaks(nextGlyph, glyphAfter)) {
-            // Current glyph (nextGlyph) can breaks two words, and it's not a
-            // white space, so we add it to current word.
-            // Example:
-            //      "Editing"
-            //      "Program"
-            // Here the `g` in `Editing` can breaks two words although it's not
-            // a white space.
-            if (isWordBreaks(nextGlyph, glyphAfter)) {
-                [currentWord addGlyph:nextGlyph];
-                nextGlyph = [self nextGlyph];
-            }
-            
+        if (isWhiteSpaceGlyph(nextGlyph)) {
             // Add previous word
             [words addObject:currentWord];
             
@@ -159,7 +150,7 @@
         [words addObject:currentWord];
     }
     
-    //prettyLogForWords(words);
+    prettyLogForWords(words);
     
     return words;
 }

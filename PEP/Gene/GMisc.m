@@ -176,46 +176,6 @@ NSMutableArray *sortGlyphsInReadOrder(NSMutableArray *glyphs) {
     return sorted;
 }
 
-BOOL isWordBreaks(GGlyph *a, GGlyph *b) {
-    if (a == nil || b == nil) {
-        BOOL result = NO;
-        //NSLog(@"Nil case cur: %@ next: %@ result: %d",  [a content], [b content], result);
-        return result;
-    }
-
-    NSRect f1 = [a frame];
-    NSRect f2 = [b frame];
-    CGFloat yMinA = NSMinY(f1);
-    CGFloat yMinB = NSMinY(f2);
-    CGFloat xA = NSMaxX(f1);
-    CGFloat xB = NSMinX(f2);
-    CGFloat widthA = NSWidth(f1);
-    CGFloat widthB = NSWidth(f2);
-    CGFloat heightA = NSHeight(f1);
-    CGFloat heightB = NSHeight(f1);
-    
-    BOOL result = NO;
-    
-    CGFloat dy = fabs(yMinA - yMinB);
-    CGFloat heightDelta = MAX(heightA, heightB);
-    CGFloat percent = (dy / heightDelta);
-    CGFloat heightTolerance = 0.05;
-    if (percent <= heightTolerance) {
-        CGFloat dx = fabs(xA - xB);
-        CGFloat widthTolerance = (widthA + widthB) / 2.0;
-        if (dx <= widthTolerance) {
-            result = NO;
-        } else {
-            result = YES;
-        }
-    } else {
-        result = YES;
-    }
-    
-    //NSLog(@"dy: %f cur: %@ next: %@ result: %d", dy, [a content], [b content], result);
-    return result;
-}
-
 BOOL separateWords(GWord* a, GWord*b) {
     NSRect f1 = [a frame];
     NSRect f2 = [b frame];

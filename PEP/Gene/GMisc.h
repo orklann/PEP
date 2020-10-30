@@ -32,9 +32,6 @@ NSMutableArray *sortGlyphsInReadOrder(NSMutableArray *glyphs);
 // TODO: Use quick sort to improve performance
 void quicksortGlyphs(NSMutableArray *array, int l, int r);
 
-// Check if two glyphs mark a word break, function like a white space
-BOOL isWordBreaks(GGlyph *a, GGlyph*b);
-
 // Check if two words form a line
 BOOL separateWords(GWord* a, GWord*b);
 
