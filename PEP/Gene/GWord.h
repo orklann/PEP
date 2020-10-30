@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSMutableArray*)glyphs;
 - (void)addGlyph:(GGlyph*)g;
 - (NSString*)wordString;
+- (CGFloat)getWordWidth;
 @end
 
 NS_ASSUME_NONNULL_END

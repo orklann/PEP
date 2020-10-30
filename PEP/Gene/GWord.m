@@ -60,4 +60,15 @@
     }
     return s;
 }
+
+/* Return width of a word, this is different from the width of the frame of a
+ * word, we calculate this width by adding all width of glyphs in it.
+ */
+- (CGFloat)getWordWidth {
+    CGFloat result = 0;
+    for (GGlyph *g in [self glyphs]) {
+        result += g.width;
+    }
+    return result;
+}
 @end
