@@ -492,98 +492,14 @@
     }
     
     NSMutableArray *glyphs = [self.page.textParser glyphs];
-    GGlyph *currentGlyph = [self getCurrentGlyph];
     GGlyph *prevGlyph = [self getPrevGlyph];
 
-    GGlyph *glyphNeeded;
-
-    int currentIndexInLine;
-    GLine *prevLine;
-    GLine *currentLine;
-    NSArray *lineGlyphs;
-    
-    BOOL needMoveForward = YES;
-    
-    CGFloat glyphWidth;
-    int deltaX;
-    
-    if (currentGlyph == nil) {
-         // It happens that insertion point is at the last of both line and text block
-         currentIndexInLine = [textBlock getGlyphIndexInLine:insertionPointIndex-1];
-         currentLine = [textBlock getLineByGlyph:prevGlyph];
-         lineGlyphs = [currentLine glyphs];
-     } else {
-         currentIndexInLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
-         currentLine = [textBlock getLineByGlyph:currentGlyph];
-         lineGlyphs = [currentLine glyphs];
-     }
-
- 
-    // Insertion point is at the end of text blocks
-    if (insertionPointIndex == [[textBlock glyphs] count]){
-        glyphNeeded = prevGlyph;
-    } else if (currentIndexInLine == 0) {
-        prevLine = [textBlock getLineByGlyph:prevGlyph];
-        if (prevLine == nil) {
-            return ;
-        } else {
-            // Previous glyph should be last glyph of previous line
-            prevGlyph = [[prevLine glyphs] lastObject];
-            glyphNeeded = currentGlyph;
-            needMoveForward = NO;
-        }
-    }else if (prevGlyph != nil) {
-        glyphNeeded = prevGlyph;
+    if (prevGlyph) {
+        CGFloat deltaX = prevGlyph.width * -1;
+        [self moveGlyphsAfter:prevGlyph byDeltaX:deltaX];
+    } else {
+        return ;
     }
-
-    // Debug
-    //NSLog(@"line: %@ glyphNeeded %@ current: %@", [currentLine lineString], [glyphNeeded content], [currentGlyph content]);
-    
-    glyphWidth = glyphNeeded.width;
-   
-    deltaX = glyphWidth * -1;
-
-    if (currentGlyph && !needMoveForward &&
-        [[prevLine glyphs] count] > 1 /* We don't move glyphs after forwards, while
-                                       * we are at the begining of line, and previous line
-                                       * has more than 1 glyphs. We move later lines upward while
-                                       * previous glyphs equals to 1 later (empty line after deleting).
-                                       * [[prevLine glyphs] count] == 1
-                                       */){
-        deltaX = 0;
-    }
-    
-    // NOTE: We can not delete a whole line while we are in this line, because we
-    //       can only delete last glyph while we are in the beginning of next line;
-    //       Example:
-    //       "Editing"
-    //       "|Program", like here.
-    // NOTE: If there is only one glyph in prev line, after deleting current glyph
-    //       There is no glyphs in prev line, what we do here is move after lines
-    //       upwards
-    // NOTE: This condiction will only met if we delete from next line. See below.
-    //       Example: "g"
-    //               "|Program"
-    //       After deleting in |, we get.
-    //               "|P"
-    //               "rogram"
-    //       What we do here is let it become below after deleting
-    //               "|Program"
-    //       So we will never delete a whole line which has 0 glyphs
-    if (currentIndexInLine == 0) {
-        if (prevLine){ // we have previous line
-            // Also previous has only one glyph, so let's move up lines after
-            // prev line.
-            if ([[prevLine glyphs] count] == 1) {
-                [self moveLinesUpwardAfter:prevLine];
-                // In this case we should not move glyphs after by deltaX,
-                // So we make deltaX to be 0;
-                deltaX = 0;
-            }
-        }
-    }
-    
-    //[self moveGlyphsAfter:glyphNeeded byDeltaX:deltaX inLine:currentLine];
     
     // Remove glyph index in front of insertion point this is prevIndex in
     // this case
