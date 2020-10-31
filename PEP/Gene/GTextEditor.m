@@ -702,7 +702,10 @@
             wordWidth = [self wrapWord:word];
             widthLeft -= wordWidth;
         } else {
-            [self lineBreak];
+            GGlyph *whiteSpaceGlyph = [[word glyphs] firstObject];
+            if (!isWhiteSpaceGlyph(whiteSpaceGlyph)) {
+                [self lineBreak];
+            }
             wordWidth = [self wrapWord:word];
             widthLeft -= wordWidth;
         }
@@ -724,7 +727,9 @@
             width = [self wrapGlyph:g];
             totalWidth += width;
         } else {
-            [self lineBreak];
+            if (!isWhiteSpaceGlyph(g)) {
+                [self lineBreak];
+            }
             totalWidth = 0.0;
             localWidthLeft = [self getEditorWidth];
             width = [self wrapGlyph:g];
