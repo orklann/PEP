@@ -150,13 +150,6 @@
     if (self.drawInsertionPoint) {
         [self drawInsertionPoint:context];
     }
-    
-    NSArray *glyphs = [textBlock glyphs];
-    for (GGlyph *g in glyphs) {
-        NSRect frame = [g frame];
-        CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
-        CGContextFillRect(context, frame);
-    }
 }
 
 - (NSRect)frame {
@@ -178,6 +171,11 @@
     frame.size.width = editorWidth;
     frame.size.height = editorHeight;
     return frame;
+}
+
+- (CGFloat)getEditorWidth {
+    // 5 points margin on both sides
+    return editorWidth + (5 * 2);
 }
 
 - (NSRect)enlargedFrame {
@@ -687,13 +685,20 @@
     
     wordWrapCTM = ctm;
     wordWrapTextMatrix = textMatrix;
-    widthLeft = editorWidth;
+    widthLeft = [self getEditorWidth];
     GGlyph *firstGlyph = [[tb glyphs] firstObject];
     editorHeight = [firstGlyph height];
     lastWrapGlyph = nil;
     for (GWord *word in words) {
         CGFloat wordWidth = [word getWordWidth];
-        if (widthLeft - wordWidth >= 0) {
+        // In case next word width is bigger than editor width and there is room
+        // in current line (that is widthLeft > 0)
+        // Need line break in [self wrapWord:]
+        if (wordWidth >= [self getEditorWidth] && widthLeft > 0) {
+            // line break happens in - [self wrapWord:]
+            wordWidth = [self wrapWord:word];
+            widthLeft -= wordWidth;
+        } else if (widthLeft - wordWidth >= 0) {
             wordWidth = [self wrapWord:word];
             widthLeft -= wordWidth;
         } else {
@@ -711,9 +716,21 @@
 
 - (CGFloat)wrapWord:(GWord*)w {
     CGFloat totalWidth = 0.0;
+    CGFloat localWidthLeft = widthLeft;
     for (GGlyph *g in [w glyphs]) {
-        CGFloat width = [self wrapGlyph:g];
-        totalWidth += width;
+        CGFloat glyphWidth = [g width];
+        CGFloat width;
+        if (localWidthLeft - glyphWidth >= 0) {
+            width = [self wrapGlyph:g];
+            totalWidth += width;
+        } else {
+            [self lineBreak];
+            totalWidth = 0.0;
+            localWidthLeft = [self getEditorWidth];
+            width = [self wrapGlyph:g];
+            totalWidth += width;
+        }
+        localWidthLeft -= width;
     }
     return totalWidth;
 }
@@ -744,7 +761,7 @@
         //       after line break
         CGFloat deltaY = [lastWrapGlyph height] + 2;
         wordWrapTextMatrix.ty = lastTextMatrix.ty + deltaY;
-        widthLeft = editorWidth;
+        widthLeft = [self getEditorWidth];
         editorHeight += deltaY;
     }
 }
