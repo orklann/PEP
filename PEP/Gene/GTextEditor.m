@@ -478,6 +478,7 @@
 - (void)deleteCharacterInInsertionPoint {
     // No text in text editor
     if (textBlock == nil) {
+        // Update cached glyphs for word wrap use
         cachedGlyphs = [NSMutableArray arrayWithArray:[textBlock glyphs]];
         return ;
     }
@@ -489,6 +490,7 @@
         CGFloat deltaX = prevGlyph.width * -1;
         [self moveGlyphsAfter:prevGlyph byDeltaX:deltaX];
     } else {
+        // Update cached glyphs for word wrap use
         cachedGlyphs = [NSMutableArray arrayWithArray:[textBlock glyphs]];
         return ;
     }
