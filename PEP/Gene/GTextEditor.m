@@ -737,6 +737,8 @@
         CGAffineTransform lastTextMatrix = [lastWrapGlyph textMatrix];
         wordWrapTextMatrix = textMatrix;
         // Plus 2 to make correct read order glyphs
+        // TODO: Maybe modify makeReadOrderGlyphs to make it more robust for
+        //       uneven heights of glyphs
         // TODO: Better calculatation for delta y by the height of next glyph
         //       after line break
         CGFloat deltaY = [lastWrapGlyph height] + 2;
