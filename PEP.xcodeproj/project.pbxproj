@@ -20,6 +20,7 @@
 		9320C01A2519C7F8008F20B0 /* GInterpreterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9320C0192519C7F8008F20B0 /* GInterpreterTests.m */; };
 		9320C01C251A1552008F20B0 /* irig_keys_25.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9320C01B251A1552008F20B0 /* irig_keys_25.pdf */; };
 		9320C01E251A1569008F20B0 /* irig_keys_25.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9320C01D251A1568008F20B0 /* irig_keys_25.pdf */; };
+		93311A0E254D456000D58E06 /* GWrappedLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 93311A0D254D456000D58E06 /* GWrappedLine.m */; };
 		93427469252082CA00CA3DBE /* GGraphicsState.m in Sources */ = {isa = PBXBuildFile; fileRef = 93427468252082CA00CA3DBE /* GGraphicsState.m */; };
 		9346A86125305B2800804506 /* GTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346A86025305B2800804506 /* GTextBlock.m */; };
 		9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9355AEB824F12DCC00764E36 /* GLexerTests.m */; };
@@ -84,6 +85,8 @@
 		9320C0192519C7F8008F20B0 /* GInterpreterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GInterpreterTests.m; sourceTree = "<group>"; };
 		9320C01B251A1552008F20B0 /* irig_keys_25.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = irig_keys_25.pdf; sourceTree = "<group>"; };
 		9320C01D251A1568008F20B0 /* irig_keys_25.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = irig_keys_25.pdf; path = PEPTests/pdf/irig_keys_25.pdf; sourceTree = SOURCE_ROOT; };
+		93311A0C254D456000D58E06 /* GWrappedLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWrappedLine.h; sourceTree = "<group>"; };
+		93311A0D254D456000D58E06 /* GWrappedLine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWrappedLine.m; sourceTree = "<group>"; };
 		93427467252082CA00CA3DBE /* GGraphicsState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GGraphicsState.h; sourceTree = "<group>"; };
 		93427468252082CA00CA3DBE /* GGraphicsState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GGraphicsState.m; sourceTree = "<group>"; };
 		9346A85F25305B2800804506 /* GTextBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTextBlock.h; sourceTree = "<group>"; };
@@ -252,6 +255,8 @@
 				935BCC39252C61B900868C01 /* GWord.m */,
 				938A4E6D252EEFDF00504235 /* GLine.h */,
 				938A4E6E252EEFDF00504235 /* GLine.m */,
+				93311A0C254D456000D58E06 /* GWrappedLine.h */,
+				93311A0D254D456000D58E06 /* GWrappedLine.m */,
 				9346A85F25305B2800804506 /* GTextBlock.h */,
 				9346A86025305B2800804506 /* GTextBlock.m */,
 				93159E60252B09F400F87451 /* GTextParser.h */,
@@ -381,6 +386,7 @@
 				9373EEF6251C84A80066AD2A /* GFont.m in Sources */,
 				93427469252082CA00CA3DBE /* GGraphicsState.m in Sources */,
 				93159E62252B09F400F87451 /* GTextParser.m in Sources */,
+				93311A0E254D456000D58E06 /* GWrappedLine.m in Sources */,
 				93D48C1E2536CAAA002DD41B /* GTextEditor.m in Sources */,
 				93159E5F252AEB5E00F87451 /* GGlyph.m in Sources */,
 				9363D94A250895610075FEF0 /* GDocument.m in Sources */,

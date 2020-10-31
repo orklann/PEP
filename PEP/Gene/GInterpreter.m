@@ -81,8 +81,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         CGRect r = getGlyphBoundingBox(ch, font, [[page textState] textMatrix]);
         
         // Test: draw bounding box for glyph
-        CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
-        CGContextFillRect(context, r);
+        //CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
+        //CGContextFillRect(context, r);
         
         // Apply current context matrix to get the right frame of glyph
         r = CGRectApplyAffineTransform(r, [[page graphicsState] ctm]);

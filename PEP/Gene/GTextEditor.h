@@ -12,6 +12,8 @@
 @class GGlyph;
 @class GTextBlock;
 @class GPage;
+@class GLine;
+@class GWrappedLine;
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GTextEditor : NSObject {
@@ -30,6 +32,9 @@ NS_ASSUME_NONNULL_BEGIN
     CGAffineTransform textMatrix;
     CGFloat widthLeft;
     GGlyph *lastWrapGlyph;
+    BOOL everWrapWord;
+    NSMutableArray *wordWrappedLines;
+    GWrappedLine *currentWordWrapLine;
 }
 
 @property (readwrite) NSString *pdfFontName;
