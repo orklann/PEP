@@ -690,6 +690,7 @@
     widthLeft = editorWidth;
     GGlyph *firstGlyph = [[tb glyphs] firstObject];
     editorHeight = [firstGlyph height];
+    lastWrapGlyph = nil;
     for (GWord *word in words) {
         CGFloat wordWidth = [word getWordWidth];
         if (widthLeft - wordWidth >= 0) {
