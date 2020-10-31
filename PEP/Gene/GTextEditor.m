@@ -515,6 +515,8 @@
     NSFont *font = [NSFont fontWithName:@"Gill Sans" size:1.0];
     [self.page addFont:font withPDFFontName:@"TT1"];
     [self deleteCharacterInInsertionPoint];
+    // Do word wrap
+    [self doWordWrap];
     [self.page buildPageContent];
     [self.page addPageStream];
     [self.page incrementalUpdate];
@@ -525,6 +527,7 @@
 - (void)deleteCharacterInInsertionPoint {
     // No text in text editor
     if (textBlock == nil) {
+        cachedGlyphs = [NSMutableArray arrayWithArray:[textBlock glyphs]];
         return ;
     }
     
@@ -535,6 +538,7 @@
         CGFloat deltaX = prevGlyph.width * -1;
         [self moveGlyphsAfter:prevGlyph byDeltaX:deltaX];
     } else {
+        cachedGlyphs = [NSMutableArray arrayWithArray:[textBlock glyphs]];
         return ;
     }
     
@@ -548,6 +552,9 @@
     if (insertionPointIndex < 0) {
         insertionPointIndex = 0;
     }
+    
+    // Update cached glyphs for word wrap use
+    [self updateCachedGlyphs:[textBlock glyphs] removeGlyph:prevGlyph];
 }
 
 - (void)updateFontNameAndFontSize {
@@ -711,6 +718,11 @@
 }
 
 - (CGFloat)wrapGlyph:(GGlyph*)g {
+    NSMutableArray *glyphs = [[self.page textParser] glyphs];
+    if (![glyphs containsObject:g]) {
+        // urh, this should never happens
+        return 0.0;
+    }
     [self setCTM:wordWrapCTM textMatrix:wordWrapTextMatrix forGlyph:g];
     wordWrapCTM = [g ctm];
     wordWrapTextMatrix.tx += [g width];
@@ -736,5 +748,10 @@
 - (void)updateCachedGlyphs:(NSArray*)glyphs newGlyph:(GGlyph*)newGlyph {
     cachedGlyphs = [NSMutableArray arrayWithArray:glyphs];
     [cachedGlyphs addObject:newGlyph];
+}
+
+- (void)updateCachedGlyphs:(NSArray*)glyphs removeGlyph:(GGlyph*)glyphToRemove {
+    cachedGlyphs = [NSMutableArray arrayWithArray:glyphs];
+    [cachedGlyphs removeObject:glyphToRemove];
 }
 @end
