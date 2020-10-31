@@ -24,6 +24,12 @@ NS_ASSUME_NONNULL_BEGIN
     GGlyph *lastDeletedGlyph;
     CGFloat editorWidth;
     CGFloat editorHeight;
+    CGAffineTransform wordWrapCTM;
+    CGAffineTransform wordWrapTextMatrix;
+    CGAffineTransform ctm;
+    CGAffineTransform textMatrix;
+    CGFloat widthLeft;
+    GGlyph *lastWrapGlyph;
 }
 
 @property (readwrite) NSString *pdfFontName;

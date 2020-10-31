@@ -42,6 +42,12 @@
     self.editingGlyphs = [NSMutableArray array];
     editorWidth = [textBlock frame].size.width;
     editorHeight = [textBlock frame].size.height;
+    
+    // Initialize ctm, textMatrix (First glyph)
+    GGlyph *firstGlyph = [[textBlock glyphs] firstObject];
+    ctm = [firstGlyph ctm];
+    textMatrix = [firstGlyph textMatrix];
+    
     // First time draw the text, we must ensure to save editing glyphs
     // Other time to save it is after editing text.
     // Call [self insertChar:font:] etc.
@@ -143,6 +149,13 @@
     
     if (self.drawInsertionPoint) {
         [self drawInsertionPoint:context];
+    }
+    
+    NSArray *glyphs = [textBlock glyphs];
+    for (GGlyph *g in glyphs) {
+        NSRect frame = [g frame];
+        CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
+        CGContextFillRect(context, frame);
     }
 }
 
@@ -394,6 +407,7 @@
     GGlyph *currentGlyph = [self getCurrentGlyph];
     GGlyph *prevGlyph = [self getPrevGlyph];
     
+    CGFloat width;
     CGAffineTransform ctm;
     CGAffineTransform tm;
     NSString *fontName;
@@ -434,6 +448,12 @@
     [g setTextMatrix:tm];
     [g setFontName:fontName];
     [g setFontSize:fontSize];
+    
+    // Set width for new glyph
+    NSSize s = NSMakeSize(hAdvance, 0);
+    s = CGSizeApplyAffineTransform(s, tm);
+    width = s.width;
+    [g setWidth:width];
     [glyphs addObject:g];
 
     // Add the new glyph index to text editor's editing glyphs
@@ -654,10 +674,63 @@
 }
 
 - (void)doWordWrap {
-    NSLog(@"[Debug] Doing word wrap!");
     GTextBlock *tb = [self getTextBlockByCachedGlyphs];
     NSArray *words = [tb words];
-    prettyLogForWords(words);
+    //prettyLogForWords(words);
+    
+    wordWrapCTM = ctm;
+    wordWrapTextMatrix = textMatrix;
+    widthLeft = editorWidth;
+    GGlyph *firstGlyph = [[tb glyphs] firstObject];
+    editorHeight = [firstGlyph height];
+    for (GWord *word in words) {
+        CGFloat wordWidth = [word getWordWidth];
+        if (widthLeft - wordWidth >= 0) {
+            wordWidth = [self wrapWord:word];
+            widthLeft -= wordWidth;
+        } else {
+            [self lineBreak];
+            wordWidth = [self wrapWord:word];
+            widthLeft -= wordWidth;
+        }
+    }
+    
+    // Test wrapping result
+    //tb = [self getTextBlockByCachedGlyphs];
+    //words = [tb words];
+    //prettyLogForWords(words);
+}
+
+- (CGFloat)wrapWord:(GWord*)w {
+    CGFloat totalWidth = 0.0;
+    for (GGlyph *g in [w glyphs]) {
+        CGFloat width = [self wrapGlyph:g];
+        totalWidth += width;
+    }
+    return totalWidth;
+}
+
+- (CGFloat)wrapGlyph:(GGlyph*)g {
+    [self setCTM:wordWrapCTM textMatrix:wordWrapTextMatrix forGlyph:g];
+    wordWrapCTM = [g ctm];
+    wordWrapTextMatrix.tx += [g width];
+    lastWrapGlyph = g;
+    return [g width];
+}
+
+- (void)lineBreak {
+    if (lastWrapGlyph) {
+        wordWrapCTM = ctm;
+        CGAffineTransform lastTextMatrix = [lastWrapGlyph textMatrix];
+        wordWrapTextMatrix = textMatrix;
+        // Plus 2 to make correct read order glyphs
+        // TODO: Better calculatation for delta y by the height of next glyph
+        //       after line break
+        CGFloat deltaY = [lastWrapGlyph height] + 2;
+        wordWrapTextMatrix.ty = lastTextMatrix.ty + deltaY;
+        widthLeft = editorWidth;
+        editorHeight += deltaY;
+    }
 }
 
 - (void)updateCachedGlyphs:(NSArray*)glyphs newGlyph:(GGlyph*)newGlyph {
