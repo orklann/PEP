@@ -726,6 +726,7 @@
     }
     [self setCTM:wordWrapCTM textMatrix:wordWrapTextMatrix forGlyph:g];
     wordWrapCTM = [g ctm];
+    // Take account for glyph delta in operator in "TJ"
     wordWrapTextMatrix.tx += [g width];
     lastWrapGlyph = g;
     return [g width];
