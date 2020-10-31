@@ -727,6 +727,9 @@
             width = [self wrapGlyph:g];
             totalWidth += width;
         } else {
+            // NOTE: We can only do word wrapping in this?
+            //       Means it's start word wrapping in glyph wide.
+            //       TODO: Consider as an option later
             if (!isWhiteSpaceGlyph(g)) {
                 [self lineBreak];
             }
