@@ -180,7 +180,7 @@
 }
 
 - (NSRect)enlargedFrame {
-    return NSInsetRect([self frame], -3, -3);
+    return NSInsetRect([textBlock frame], -3, -3);
 }
 
 - (NSRect)getInsertionPoint {
