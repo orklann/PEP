@@ -172,6 +172,15 @@ void quicksortGlyphs(NSMutableArray *array, int l, int r) {
     quicksortGlyphs(array, cnt, r);   // Recursively sort the right side of pivot
 }
 
+/*
+ * Note: I am ok with this implementation, but I also notice that we might
+ * change it - the compareGlyphs() function.
+ * Because in text editor, line breaks can bring some glyphs frame in next line
+ * which break the read order glyphs, that is glyphs in next line exceed upwards
+ * to previous line. (mainly due to not even glyphs height, some high enough to
+ * exceed the bottom line of previous line.
+ * TODO: So shall we handle this later?
+ */
 NSMutableArray *sortGlyphsInReadOrder(NSMutableArray *glyphs) {
     NSMutableArray *workingGlyphs = [NSMutableArray arrayWithArray:glyphs];
     NSMutableArray *sorted = [NSMutableArray array];
