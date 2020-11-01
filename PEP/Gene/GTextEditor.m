@@ -759,7 +759,11 @@
         widthLeft = [self getEditorWidth];
         editorHeight += deltaY;
     } else {
-        return ;
+        //
+        // We currently don't handle if last wrapped glyph is nil
+        // Consider handle it later?
+        //
+        /*
         wordWrapCTM = ctm;
         wordWrapTextMatrix = textMatrix;
         //
@@ -770,6 +774,7 @@
         wordWrapTextMatrix.ty += deltaY;
         widthLeft = [self getEditorWidth];
         editorHeight += deltaY;
+         */
     }
 }
 
