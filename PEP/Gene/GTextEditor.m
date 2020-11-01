@@ -693,6 +693,15 @@
         CGFloat glyphWidth = [g width];
         CGFloat width;
         if (isReturnGlyph(g)) { // Manual line break
+            /*
+             * If '\n' is at the end of text, we do line break before
+             * wrap glyph, to make sure we have a new line to enter text
+             */
+            GTextBlock *tb = [self getTextBlockByCachedGlyphs];
+            NSArray *glyphs = [tb glyphs];
+            if ([[glyphs lastObject] isEqualTo:g]) {
+                [self lineBreak];
+            }
             // Add new line to word wrapped lines array, and create a new line
             [currentWordWrapLine addGlyph:g];
             [wordWrappedLines addObject:currentWordWrapLine];
