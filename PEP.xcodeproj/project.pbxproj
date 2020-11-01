@@ -21,6 +21,8 @@
 		9320C01C251A1552008F20B0 /* irig_keys_25.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9320C01B251A1552008F20B0 /* irig_keys_25.pdf */; };
 		9320C01E251A1569008F20B0 /* irig_keys_25.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9320C01D251A1568008F20B0 /* irig_keys_25.pdf */; };
 		93311A0E254D456000D58E06 /* GWrappedLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 93311A0D254D456000D58E06 /* GWrappedLine.m */; };
+		93311A10254EA5EF00D58E06 /* PEP_Incremental.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93311A0F254EA5EF00D58E06 /* PEP_Incremental.pdf */; };
+		93311A12254EA60500D58E06 /* PEP_Incremental.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93311A11254EA60500D58E06 /* PEP_Incremental.pdf */; };
 		93427469252082CA00CA3DBE /* GGraphicsState.m in Sources */ = {isa = PBXBuildFile; fileRef = 93427468252082CA00CA3DBE /* GGraphicsState.m */; };
 		9346A86125305B2800804506 /* GTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346A86025305B2800804506 /* GTextBlock.m */; };
 		9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9355AEB824F12DCC00764E36 /* GLexerTests.m */; };
@@ -85,6 +87,8 @@
 		9320C01D251A1568008F20B0 /* irig_keys_25.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = irig_keys_25.pdf; path = PEPTests/pdf/irig_keys_25.pdf; sourceTree = SOURCE_ROOT; };
 		93311A0C254D456000D58E06 /* GWrappedLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWrappedLine.h; sourceTree = "<group>"; };
 		93311A0D254D456000D58E06 /* GWrappedLine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWrappedLine.m; sourceTree = "<group>"; };
+		93311A0F254EA5EF00D58E06 /* PEP_Incremental.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PEP_Incremental.pdf; sourceTree = "<group>"; };
+		93311A11254EA60500D58E06 /* PEP_Incremental.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = PEP_Incremental.pdf; path = PEPTests/pdf/PEP_Incremental.pdf; sourceTree = SOURCE_ROOT; };
 		93427467252082CA00CA3DBE /* GGraphicsState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GGraphicsState.h; sourceTree = "<group>"; };
 		93427468252082CA00CA3DBE /* GGraphicsState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GGraphicsState.m; sourceTree = "<group>"; };
 		9346A85F25305B2800804506 /* GTextBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTextBlock.h; sourceTree = "<group>"; };
@@ -201,6 +205,7 @@
 		9363D94B250898D60075FEF0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				93311A11254EA60500D58E06 /* PEP_Incremental.pdf */,
 				938EB9762545A0F50045F463 /* tab.pdf */,
 				9359739F2543B37500BB217D /* PEP_GillSans.pdf */,
 				9320C01D251A1568008F20B0 /* irig_keys_25.pdf */,
@@ -212,6 +217,7 @@
 		936C4303250363AD00FFE547 /* pdf */ = {
 			isa = PBXGroup;
 			children = (
+				93311A0F254EA5EF00D58E06 /* PEP_Incremental.pdf */,
 				938EB9742545A0D80045F463 /* tab.pdf */,
 				9359739D2543B36800BB217D /* PEP_GillSans.pdf */,
 				9320C01B251A1552008F20B0 /* irig_keys_25.pdf */,
@@ -349,6 +355,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9320C01E251A1569008F20B0 /* irig_keys_25.pdf in Resources */,
+				93311A12254EA60500D58E06 /* PEP_Incremental.pdf in Resources */,
 				935973A02543B37500BB217D /* PEP_GillSans.pdf in Resources */,
 				931221C924F0139300929C01 /* Assets.xcassets in Resources */,
 				931221CC24F0139300929C01 /* MainMenu.xib in Resources */,
@@ -362,6 +369,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9320C01C251A1552008F20B0 /* irig_keys_25.pdf in Resources */,
+				93311A10254EA5EF00D58E06 /* PEP_Incremental.pdf in Resources */,
 				938EB9752545A0D80045F463 /* tab.pdf in Resources */,
 				9359739E2543B36800BB217D /* PEP_GillSans.pdf in Resources */,
 				936C4305250363E800FFE547 /* test_xref.pdf in Resources */,

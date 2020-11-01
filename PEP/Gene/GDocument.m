@@ -57,11 +57,11 @@
     
     GParser *p = [GParser parser];
     NSBundle *mainBundle = [NSBundle mainBundle];
-    NSString *path = [mainBundle pathForResource:@"PEP_incremental" ofType:@"pdf"];
+    NSString *path = [mainBundle pathForResource:@"PEP_Incremental" ofType:@"pdf"];
     NSMutableData *d = [NSMutableData dataWithContentsOfFile:path];
     [p setStream:d];
        
-    GStreamObject *stream = [p getObjectByRef:@"19-0"];
+    GStreamObject *stream = [p getObjectByRef:@"29-0"];
     NSData *decodedFontData = [stream getDecodedStreamContent];
     
     CGDataProviderRef cgdata = CGDataProviderCreateWithCFData((CFDataRef)decodedFontData);
