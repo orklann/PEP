@@ -86,6 +86,10 @@ BOOL isWhiteSpaceChar(char c);
 // Check for white space glyph
 BOOL isWhiteSpaceGlyph(GGlyph * _Nullable glyph);
 
+// Check for Enter/Return glpyh
+BOOL isReturnChar(char c);
+BOOL isReturnGlyph(GGlyph * _Nullable glyph);
+
 // Log glyphs index in GTextEditor's editingGlyphs array
 void logGlyphsIndex(NSArray * _Nullable glyphs);
 // Log glyphs content in GTextEditor's glyphs

@@ -180,7 +180,9 @@
 }
 
 - (NSRect)enlargedFrame {
-    return NSInsetRect([textBlock frame], -3, -3);
+    NSRect rect = [textBlock frame];
+    rect.size.width = editorWidth;
+    return NSInsetRect(rect, -3, -3);
 }
 
 - (NSRect)getInsertionPoint {
@@ -235,7 +237,9 @@
     } else {
         NSString *ch =[event characters];
         unichar key = [ch characterAtIndex:0];
-        if(key == NSDeleteCharacter) {
+        if (event.keyCode == 36) { // Enter key
+            [self insertChar:@"\n"];
+        } else if(key == NSDeleteCharacter) {
             [self deleteCharacter];
         } else {
             /*
@@ -648,19 +652,18 @@
     currentWordWrapLine = [GWrappedLine create];
     for (GWord *word in words) {
         CGFloat wordWidth = [word getWordWidth];
-        // In case next word width is bigger than editor width and there is room
-        // in current line (that is widthLeft > 0)
-        // Need line break in [self wrapWord:]
         if (wordWidth >= [self getEditorWidth] && widthLeft > 0) {
-            // line break happens in - [self wrapWord:]
+            // In case next word width is bigger than editor width and there is room
+            // in current line (that is widthLeft > 0)
+            // Need line break in [self wrapWord:]
             wordWidth = [self wrapWord:word];
             widthLeft -= wordWidth;
         } else if (widthLeft - wordWidth >= 0) {
             wordWidth = [self wrapWord:word];
             widthLeft -= wordWidth;
         } else {
-            GGlyph *whiteSpaceGlyph = [[word glyphs] firstObject];
-            if (!isWhiteSpaceGlyph(whiteSpaceGlyph)) {
+            GGlyph *glyph = [[word glyphs] firstObject];
+            if (!isWhiteSpaceGlyph(glyph)) {
                 [self lineBreak];
                 // Add new line to word wrapped lines array, and create a new line
                 [wordWrappedLines addObject:currentWordWrapLine];
@@ -689,7 +692,20 @@
     for (GGlyph *g in [w glyphs]) {
         CGFloat glyphWidth = [g width];
         CGFloat width;
-        if (localWidthLeft - glyphWidth >= 0) {
+        if (isReturnGlyph(g)) { // Manual line break
+            // Add new line to word wrapped lines array, and create a new line
+            [currentWordWrapLine addGlyph:g];
+            [wordWrappedLines addObject:currentWordWrapLine];
+            currentWordWrapLine = [GWrappedLine create];
+            totalWidth = 0.0;
+            localWidthLeft = [self getEditorWidth];
+            width = [self wrapGlyph:g];
+            totalWidth += width;
+            
+            // Line break delay to here, to make sure \n is at the end of
+            // line before line breaks
+            [self lineBreak];
+        } else if (localWidthLeft - glyphWidth >= 0) {
             width = [self wrapGlyph:g];
             totalWidth += width;
             [currentWordWrapLine addGlyph:g];
@@ -740,6 +756,18 @@
         //       after line break
         CGFloat deltaY = [lastWrapGlyph height] + 2;
         wordWrapTextMatrix.ty = lastTextMatrix.ty + deltaY;
+        widthLeft = [self getEditorWidth];
+        editorHeight += deltaY;
+    } else {
+        return ;
+        wordWrapCTM = ctm;
+        wordWrapTextMatrix = textMatrix;
+        //
+        // Use eidtor height as deltaY, which happens to be first glyph height
+        // at the moment
+        //
+        CGFloat deltaY = editorHeight;
+        wordWrapTextMatrix.ty += deltaY;
         widthLeft = [self getEditorWidth];
         editorHeight += deltaY;
     }
@@ -836,7 +864,6 @@
         if (prevLine) {
             GGlyph *currentGlyph = [self getCurrentWrappedGlyph];
             int indexOfLine = [currentLine indexforGlyph:currentGlyph];
-            
             // We are at the end of text to get -1 returned. Just put index of
             // line to last index.
             if (indexOfLine == -1) {
@@ -870,7 +897,7 @@
         }
     }
     
-    // No current glyph found, uh, this should should happen at the top, we have
+    // No current glyph found, uh, this should happen at the top, we have
     // return nil already.
     return nil;
 }

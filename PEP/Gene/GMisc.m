@@ -94,6 +94,16 @@ int compareGlyphs(GGlyph *a, GGlyph *b) {
     NSPoint pa = [a frame].origin;
     NSPoint pb = [b frame].origin;
     
+    if (NSEqualPoints(pa, pb)) {
+        // Two glyphs has the same origin, we return the one which is a return
+        // glyph
+        if (isReturnGlyph(a)) {
+            return -1;
+        } else if (isReturnGlyph(b)) {
+            return 1;
+        }
+    }
+    
     CGFloat aMaxY = NSMaxY([a frame]);
     CGFloat bMaxY = NSMaxY([b frame]);
     CGFloat aMaxX = NSMaxX([a frame]);
@@ -519,9 +529,21 @@ BOOL isWhiteSpaceChar(char c) {
     return NO;
 }
 
+
+
 BOOL isWhiteSpaceGlyph(GGlyph *glyph) {
     char ch = [[glyph content] characterAtIndex:0];
     return isWhiteSpaceChar(ch);
+}
+
+BOOL isReturnChar(char c) {
+    if (c == '\n') return YES;
+    return NO;
+}
+
+BOOL isReturnGlyph(GGlyph * _Nullable glyph) {
+    char ch = [[glyph content] characterAtIndex:0];
+    return isReturnChar(ch);
 }
 
 void logGlyphsIndex(NSArray * _Nullable glyphs) {
