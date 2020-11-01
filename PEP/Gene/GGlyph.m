@@ -64,6 +64,8 @@
         ret = @"\\t";
     } else if ([content isEqualToString:@"\n"]) {
         ret = @"\\n";
+    } else if ([content isEqualToString:@"\\"]) {
+        ret = @"\\\\";
     } else {
         ret = content;
     }

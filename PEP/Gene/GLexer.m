@@ -131,20 +131,27 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     [d appendBytes:(unsigned char*)&next length:1];
     unsigned char prev = next;
     next = [self nextChar];
+    BOOL escapped = YES;
     if (next == '(' && prev != '\\') { // Handle (\()
         unbalanced += 1;
-    } else if (next == ')' && prev != '\\') { // Handle (\))
+    } else if (next == ')' && (prev != '\\' || escapped) ) { // Handle (\))
+        // Paired, if prev character is not a '\'  - This case: (\))
+        // Paired, if prev character is escaped, even it's a '\', - this case: (\\)
         unbalanced -= 1;
     }
     while(unbalanced != 0) {
+        if (next == '\\') escapped = NO;
         if (next == '(' && prev != '\\') {
             unbalanced += 1;
-        } else if (next == ')' && prev != '\\') {
+        } else if (next == ')' && (prev != '\\' || escapped)) {
+            // Paired, if prev character is not a '\' this case: (\))
+            // Paired, if prev character is escaped, even it's a '\', - this case: (\\)
             unbalanced -= 1;
         }
         [d appendBytes:(unsigned char*)&next length:1];
         prev = next;
         next = [self nextChar];
+        escapped = YES;
     }
     d = [NSMutableData dataWithBytes:([d bytes]+1) length:[d length] - 2];
     [d appendBytes:"\0" length:1];

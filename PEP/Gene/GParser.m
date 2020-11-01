@@ -8,6 +8,7 @@
 
 #import "GParser.h"
 #import "GObjects.h"
+#import "GMisc.h"
 
 XRefType xrefType(NSString *line) {
     if ([line containsString:@"f"] || [line containsString:@"n"]) {
