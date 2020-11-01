@@ -761,20 +761,9 @@
     } else {
         //
         // We currently don't handle if last wrapped glyph is nil
-        // Consider handle it later?
+        // NOTE: We always get last wrap glyph even we do line break at the
+        // start of text, in this case, the last wrapped glyph in a '\n' glyph
         //
-        /*
-        wordWrapCTM = ctm;
-        wordWrapTextMatrix = textMatrix;
-        //
-        // Use eidtor height as deltaY, which happens to be first glyph height
-        // at the moment
-        //
-        CGFloat deltaY = editorHeight;
-        wordWrapTextMatrix.ty += deltaY;
-        widthLeft = [self getEditorWidth];
-        editorHeight += deltaY;
-         */
     }
 }
 
