@@ -759,11 +759,14 @@
         CGAffineTransform lastTextMatrix = [lastWrapGlyph textMatrix];
         wordWrapTextMatrix = textMatrix;
         // Plus 2 to make correct read order glyphs
-        // Note: We have updated makeReadOrderGlyphs to make it more robust for
-        //       uneven heights of glyphs
+        // Now, even we don't add 2 points to the deltaY, it will also work,
+        // since we have updated compareGlyphs().
+        //
+        // Note: We have updated makeReadOrderGlyphs (actually it's compareGlyphs())
+        //       to make it more robust for uneven heights of glyphs.
         // TODO: Better calculatation for delta y by the height
         //       (height = descent of lastWrapGlyp + ascent of next glyph) of
-        //       next glyph after line break
+        //       next glyph after line break.
         CGFloat deltaY = [lastWrapGlyph height] + 2;
         wordWrapTextMatrix.ty = lastTextMatrix.ty + deltaY;
         widthLeft = [self getEditorWidth];
