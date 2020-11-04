@@ -59,7 +59,7 @@
 }
 
 - (GGlyph*)currentGlyph {
-    if (glyphPos < [readOrderGlyphs count]) {
+    if (glyphPos >= 0 && glyphPos < [readOrderGlyphs count]) {
         return [readOrderGlyphs objectAtIndex:glyphPos];
     }
     return nil;
@@ -95,23 +95,23 @@
 
 - (void)makeReadOrderGlyphs {
     readOrderGlyphs = sortGlyphsInReadOrder(glyphs);
-    NSMutableString *s = [NSMutableString string];
-    int i;
-    for (i = 0; i < [readOrderGlyphs count]; i++) {
-        GGlyph *g = [readOrderGlyphs objectAtIndex:i];
-        [s appendString:[g content]];
-    }
-    printf("====Read Order Glyphs====\n");
-    printf("%s\n", [s UTF8String]);
-    
-    s = [NSMutableString string];
-    for (i = 0; i < [glyphs count]; i++) {
-        GGlyph *g = [glyphs objectAtIndex:i];
-        [s appendString:[g content]];
-    }
-    printf("====Original Glyphs======\n");
-    printf("%s\n", [s UTF8String]);
-    printf("====@@@@@@@@@@@@@@@@=====\n");
+//    NSMutableString *s = [NSMutableString string];
+//    int i;
+//    for (i = 0; i < [readOrderGlyphs count]; i++) {
+//        GGlyph *g = [readOrderGlyphs objectAtIndex:i];
+//        [s appendString:[g content]];
+//    }
+//    printf("====Read Order Glyphs====\n");
+//    printf("%s\n", [s UTF8String]);
+//
+//    s = [NSMutableString string];
+//    for (i = 0; i < [glyphs count]; i++) {
+//        GGlyph *g = [glyphs objectAtIndex:i];
+//        [s appendString:[g content]];
+//    }
+//    printf("====Original Glyphs======\n");
+//    printf("%s\n", [s UTF8String]);
+//    printf("====@@@@@@@@@@@@@@@@=====\n");
 }
 
 
@@ -134,7 +134,7 @@
     GWord *currentWord = [GWord create];
     GGlyph *nextGlyph = [self currentGlyph];
     while(nextGlyph != nil) {
-        if ([self isGlyphBreakWord:nextGlyph]) {
+        if (isWhiteSpaceGlyph(nextGlyph)) {
             // Add previous word
             if ([[currentWord glyphs] count] > 0)  {
                 [words addObject:currentWord];
@@ -143,13 +143,22 @@
             // Handle edge case: where more than two white spaces stick
             // together. We add each white space as a single word until we
             // reach a none white space
-            while ([self isGlyphBreakWord:nextGlyph]) {
+            while (isWhiteSpaceGlyph(nextGlyph)) {
                 currentWord = [GWord create];
                 [currentWord addGlyph:nextGlyph];
                 [words addObject:currentWord];
                 nextGlyph = [self nextGlyph];
             }
+            
             currentWord = [GWord create];
+        } else if ([self isGlyphBreakWord:nextGlyph]) { // Geometry word break
+            // Add previous word
+            if ([[currentWord glyphs] count] > 0)  {
+                [words addObject:currentWord];
+            }
+            currentWord = [GWord create];
+            [currentWord addGlyph:nextGlyph];
+            nextGlyph = [self nextGlyph];
         } else {
             [currentWord addGlyph:nextGlyph];
             nextGlyph = [self nextGlyph];
@@ -160,7 +169,7 @@
         [words addObject:currentWord];
     }
     
-    //prettyLogForWords(words);
+    prettyLogForWords(words);
     
     return words;
 }
@@ -248,9 +257,6 @@
 - (BOOL)isGlyphBreakWord:(GGlyph*)a{
     // a is current glyph, we also need previous glyph
     GGlyph *prevGlyph = [self peekPrevGlyph];
-    if (isWhiteSpaceGlyph(a)) {
-        return YES;
-    }
     
     // TODO: Add a [GTextParser onlyWhiteSpaceCanBreakWord] as an option to skip this check
     if (prevGlyph != nil && a != nil && !glyphsInTheSameLine(prevGlyph, a)) {
@@ -258,5 +264,25 @@
     }
     
     return NO;
+}
+
+- (void)logGlyphs {
+    NSMutableString *s = [NSMutableString string];
+    int i;
+    for (i = 0; i < [readOrderGlyphs count]; i++) {
+        GGlyph *g = [readOrderGlyphs objectAtIndex:i];
+        [s appendString:[g content]];
+    }
+    printf("Debug:====Read Order Glyphs====\n");
+    printf("Debug:%s\n", [s UTF8String]);
+    
+    s = [NSMutableString string];
+    for (i = 0; i < [glyphs count]; i++) {
+        GGlyph *g = [glyphs objectAtIndex:i];
+        [s appendString:[g content]];
+    }
+    printf("Debug:====Original Glyphs======\n");
+    printf("Debug:%s\n", [s UTF8String]);
+    printf("Debug:====@@@@@@@@@@@@@@@@=====\n");
 }
 @end

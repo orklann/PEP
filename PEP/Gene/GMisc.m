@@ -108,8 +108,9 @@ int compareGlyphs(GGlyph *a, GGlyph *b) {
     CGFloat bMaxY = NSMaxY([b frame]);
     CGFloat aMaxX = NSMaxX([a frame]);
     CGFloat bMaxX = NSMaxX([b frame]);
-    CGFloat aMinY = NSMidY([a frame]);
-    CGFloat bMinY = NSMidY([b frame]);
+    CGFloat aMidY = NSMidY([a frame]);
+    CGFloat bMidY = NSMidY([b frame]);
+
     
     // if two glyphs are located at more or less the same y coordinate,
     // the one to the left goes before, if not, else the one which start
@@ -127,16 +128,16 @@ int compareGlyphs(GGlyph *a, GGlyph *b) {
        }
     }
     
+    if (aMidY <= bMidY) return 1;
+    
+    if (bMidY <= aMidY) return -1;
+    
     // if one glyph is located above another, it goese before
     if (aMaxY > pb.y) {
-        // If a's max y above b's y, but a's mid y still below b's y, return b
-        if (aMinY < pb.y) return 1;
         return -1;
     }
     
     if (pa.y < bMaxY) {
-        // If b's max y above a's y, but b's mid y still below a's y, return a;
-        if (bMinY < pa.y) return -1;
         return 1;
     }
     
@@ -156,8 +157,8 @@ int compareGlyphs(GGlyph *a, GGlyph *b) {
 BOOL glyphsInTheSameLine(GGlyph *a, GGlyph *b) {
     NSPoint originA = [a frame].origin;
     NSPoint originB = [b frame].origin;
-    CGFloat delta = 3; // Need refine?
-    if (fabs(originA.x - originB.x) <= delta) {
+    CGFloat delta = 3.0; // TODO: Need refine?
+    if (fabs(originA.y - originB.y) <= delta) {
         return YES;
     }
     return NO;

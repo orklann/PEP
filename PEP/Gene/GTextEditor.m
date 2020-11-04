@@ -756,6 +756,8 @@
 - (void)lineBreak {
     if (lastWrapGlyph) {
         wordWrapCTM = ctm;
+        //GWrappedLine *currentLine = [self getCurrentWrappedLine];
+        //GGlyph *firstGlyph = [[currentLine glyphs] firstObject];
         CGAffineTransform lastTextMatrix = [lastWrapGlyph textMatrix];
         wordWrapTextMatrix = textMatrix;
         // Plus 2 to make correct read order glyphs
