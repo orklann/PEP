@@ -107,7 +107,9 @@ int compareGlyphs(GGlyph *a, GGlyph *b) {
     CGFloat aMaxY = NSMaxY([a frame]);
     CGFloat bMaxY = NSMaxY([b frame]);
     CGFloat aMaxX = NSMaxX([a frame]);
-    CGFloat bMaxX = NSMaxX([a frame]);
+    CGFloat bMaxX = NSMaxX([b frame]);
+    CGFloat aMinY = NSMidY([a frame]);
+    CGFloat bMinY = NSMidY([b frame]);
     
     // if two glyphs are located at more or less the same y coordinate,
     // the one to the left goes before, if not, else the one which start
@@ -127,10 +129,14 @@ int compareGlyphs(GGlyph *a, GGlyph *b) {
     
     // if one glyph is located above another, it goese before
     if (aMaxY > pb.y) {
+        // If a's max y above b's y, but a's mid y still below b's y, return b
+        if (aMinY < pb.y) return 1;
         return -1;
     }
     
     if (pa.y < bMaxY) {
+        // If b's max y above a's y, but b's mid y still below a's y, return a;
+        if (bMinY < pa.y) return -1;
         return 1;
     }
     

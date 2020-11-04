@@ -136,11 +136,12 @@
     [self setNeedUpdate:NO];
     self.isRendering = NO;
 
-    for (GGlyph * g in [textParser glyphs]) {
+    /* Test: draw glyph bounding box */
+    /*for (GGlyph * g in [textParser glyphs]) {
         NSRect r = [g frame];
         CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
         CGContextFillRect(context, r);
-    }
+    }*/
 }
 
 // Calculate media box for PDF page in user space coordinate
