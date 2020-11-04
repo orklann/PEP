@@ -116,9 +116,8 @@
 
 
 /*
- * Only white space breaks words.
- * Old code which check if two character break words in geometry info.
- * See: https://gist.github.com/orklann/5a7a4ae666368bd23406801e8951c6ad
+ * White spaces break words, and words break by geomety too
+ * See isGlyphBreakWord:
  */
 - (NSMutableArray*)makeWords{
     [self makeReadOrderGlyphs];
