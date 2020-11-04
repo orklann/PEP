@@ -153,6 +153,16 @@ int compareGlyphs(GGlyph *a, GGlyph *b) {
     return ret;
 }
 
+BOOL glyphsInTheSameLine(GGlyph *a, GGlyph *b) {
+    NSPoint originA = [a frame].origin;
+    NSPoint originB = [b frame].origin;
+    CGFloat delta = 3; // Need refine?
+    if (fabs(originA.x - originB.x) <= delta) {
+        return YES;
+    }
+    return NO;
+}
+
 void quicksortGlyphs(NSMutableArray *array, int l, int r) {
     if (l >= r) {
         return ;

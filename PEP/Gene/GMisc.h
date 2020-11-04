@@ -30,6 +30,9 @@ NSRect getGlyphBoundingBoxGlyphSpace(NSString *ch, NSFont *font);
 // Compare method for sorting glyphs in read order
 int compareGlyphs(GGlyph *a, GGlyph *b);
 
+// Check if two glyphs are almost at the same x-coordinate, that's in the same line
+BOOL glyphsInTheSameLine(GGlyph *a, GGlyph *b);
+
 NSMutableArray *sortGlyphsInReadOrder(NSMutableArray *glyphs);
 
 // quick sort not used yet

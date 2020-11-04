@@ -28,6 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSMutableArray*)glyphs;
 - (void)setGlyphs:(NSMutableArray*)gs;
 - (NSMutableArray*)readOrderGlyphs;
+- (GGlyph*)peekPrevGlyph;
 - (GGlyph*)nextGlyph;
 - (GGlyph*)peekNextGlyph;
 - (GGlyph*)currentGlyph;

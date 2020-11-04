@@ -37,6 +37,14 @@
     return readOrderGlyphs;
 }
 
+- (GGlyph*)peekPrevGlyph {
+    int pos = glyphPos - 1;
+    if (pos >= 0 && pos < [readOrderGlyphs count]) {
+        return [readOrderGlyphs objectAtIndex:pos];
+    }
+    return nil;
+}
+
 - (GGlyph*)nextGlyph {
     glyphPos += 1;
     return [self currentGlyph];
@@ -126,7 +134,7 @@
     GWord *currentWord = [GWord create];
     GGlyph *nextGlyph = [self currentGlyph];
     while(nextGlyph != nil) {
-        if (isWhiteSpaceGlyph(nextGlyph)) {
+        if ([self isGlyphBreakWord:nextGlyph]) {
             // Add previous word
             if ([[currentWord glyphs] count] > 0)  {
                 [words addObject:currentWord];
@@ -135,7 +143,7 @@
             // Handle edge case: where more than two white spaces stick
             // together. We add each white space as a single word until we
             // reach a none white space
-            while (isWhiteSpaceGlyph(nextGlyph)) {
+            while ([self isGlyphBreakWord:nextGlyph]) {
                 currentWord = [GWord create];
                 [currentWord addGlyph:nextGlyph];
                 [words addObject:currentWord];
@@ -235,5 +243,20 @@
         [textBlock addLine:l];
     }
     return textBlock;
+}
+
+- (BOOL)isGlyphBreakWord:(GGlyph*)a{
+    // a is current glyph, we also need previous glyph
+    GGlyph *prevGlyph = [self peekPrevGlyph];
+    if (isWhiteSpaceGlyph(a)) {
+        return YES;
+    }
+    
+    // TODO: Add a [GTextParser onlyWhiteSpaceCanBreakWord] as an option to skip this check
+    if (prevGlyph != nil && a != nil && !glyphsInTheSameLine(prevGlyph, a)) {
+        return YES;
+    }
+    
+    return NO;
 }
 @end
