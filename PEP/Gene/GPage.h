@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
     GDictionaryObject *resources;
     GTextState *textState;
     GGraphicsState *graphicsState;
+    NSMutableArray *graphicsStateStack;
     NSMutableArray *glyphs;
     GTextParser *textParser;
     NSPoint origin;
@@ -94,6 +95,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Build cached fonts for this page
 - (void)buildCachedFonts;
+
+// Graphics state stacks operation
+- (void)saveGraphicsState;
+- (void)restoreGraphicsState;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -11,6 +11,7 @@
 @implementation GGraphicsState
 + (id)create {
     GGraphicsState *gs = [[GGraphicsState alloc] init];
+    [gs setCTM:CGAffineTransformIdentity];
     return gs;
 }
 
@@ -20,5 +21,11 @@
 
 - (CGAffineTransform)ctm {
     return ctm;
+}
+
+- (GGraphicsState*)clone {
+    GGraphicsState *newGraphicsState = [GGraphicsState create];
+    [newGraphicsState setCTM:ctm];
+    return newGraphicsState;
 }
 @end

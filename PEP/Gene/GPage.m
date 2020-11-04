@@ -108,6 +108,7 @@
     
     textState = [GTextState create];
     graphicsState = [GGraphicsState create];
+    graphicsStateStack = [NSMutableArray array];
     textParser = [GTextParser create];
     
     GInterpreter *interpreter = [GInterpreter create];
@@ -135,6 +136,11 @@
     [self setNeedUpdate:NO];
     self.isRendering = NO;
 
+    for (GGlyph * g in [textParser glyphs]) {
+        NSRect r = [g frame];
+        CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
+        CGContextFillRect(context, r);
+    }
 }
 
 // Calculate media box for PDF page in user space coordinate
@@ -519,5 +525,15 @@
             }
         }
     }
+}
+
+- (void)saveGraphicsState {
+    [graphicsStateStack addObject:[graphicsState clone]];
+}
+
+- (void)restoreGraphicsState {
+    GGraphicsState *lastObject = [graphicsStateStack lastObject];
+    graphicsState = lastObject;
+    [graphicsStateStack removeObject:lastObject];
 }
 @end

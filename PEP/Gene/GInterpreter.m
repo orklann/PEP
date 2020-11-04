@@ -208,10 +208,12 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 
 - (void)eval_q_Command:(CGContextRef)context {
     CGContextSaveGState(context);
+    [page saveGraphicsState];
 }
 
 - (void)eval_Q_Command:(CGContextRef)context {
     CGContextRestoreGState(context);
+    [page restoreGraphicsState];
 }
 
 - (void)eval_cm_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -223,7 +225,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGFloat e = [[args objectAtIndex:4] getRealValue];
     CGFloat f = [[args objectAtIndex:5] getRealValue];
     CGAffineTransform ctm = CGAffineTransformMake(a, b, c, d, e, f);
-    [[page graphicsState] setCTM:ctm];
+    CGAffineTransform currentCTM = [[page graphicsState] ctm];
+    CGAffineTransform newCTM = CGAffineTransformConcat(currentCTM, ctm);
+    [[page graphicsState] setCTM:newCTM];
     CGContextConcatCTM(context, ctm);
 }
 

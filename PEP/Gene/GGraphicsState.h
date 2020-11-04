@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (id)create;
 - (void)setCTM:(CGAffineTransform)tf;
 - (CGAffineTransform)ctm;
+- (GGraphicsState*)clone;
 @end
 
 NS_ASSUME_NONNULL_END
