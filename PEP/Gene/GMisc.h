@@ -99,3 +99,6 @@ void logGlyphsIndex(NSArray * _Nullable glyphs);
 void logGlyphsContent(NSArray * _Nullable glyphs);
 
 void printCGAffineTransform(CGAffineTransform mt);
+
+// Get sign of a CGFloat
+int signOfCGFloat(CGFloat v);

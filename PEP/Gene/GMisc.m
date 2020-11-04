@@ -587,3 +587,9 @@ void printCGAffineTransform(CGAffineTransform mt) {
     printf("\n[Debug] a:%f b:%f c:%f d:%f tx:%f, ty:%f\n",
           mt.a, mt.b, mt.c, mt.d, mt.tx, mt.ty);
 }
+
+int signOfCGFloat(CGFloat v) {
+    if (v <= 0.0) return -1;
+    if (v > 0.0) return 1;
+    return 0;
+}

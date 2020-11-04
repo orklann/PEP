@@ -745,6 +745,7 @@
         // urh, this should never happens
         return 0.0;
     }
+    
     [self setCTM:wordWrapCTM textMatrix:wordWrapTextMatrix forGlyph:g];
     wordWrapCTM = [g ctm];
     // Take account for glyph delta in operator in "TJ"
@@ -770,6 +771,10 @@
         //       (height = descent of lastWrapGlyp + ascent of next glyph) of
         //       next glyph after line break.
         CGFloat deltaY = [lastWrapGlyph height] + 2;
+        
+        // Check the sign of d component of ctm, and decide the sing of deltaY
+        int sign = signOfCGFloat(wordWrapCTM.d);
+        deltaY = -1 * sign * deltaY;
         wordWrapTextMatrix.ty = lastTextMatrix.ty + deltaY;
         widthLeft = [self getEditorWidth];
         editorHeight += deltaY;
