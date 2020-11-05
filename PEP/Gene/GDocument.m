@@ -111,6 +111,7 @@
     NSBundle *mainBundle = [NSBundle mainBundle];
     // TODO: Use test_xref.pdf by default without ability to custom file, will
     // do it later
+    //file = [mainBundle pathForResource:@"irig_keys_25" ofType:@"pdf"];
     file = [mainBundle pathForResource:@"PEP_Incremental" ofType:@"pdf"];
     NSMutableData *d = [NSMutableData dataWithContentsOfFile:file];
     [parser setStream:d];

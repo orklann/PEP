@@ -104,7 +104,7 @@
 
 - (void)testGParserParseLiteralStringsObject {
     GParser *p = [GParser parser];
-    char *b = "(I am a literal string)";
+    char *b = "(I am a literal string)Tj";
     NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
     [p setStream:d];
     [p parse];
@@ -590,7 +590,7 @@
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
     // Even test_xref.pdf is in the `pdf` folder, we still only need to provide
     // file name in the path, no need to provide folder name
-    NSString *path = [bundle pathForResource:@"PEP_incremental" ofType:@"pdf"];
+    NSString *path = [bundle pathForResource:@"PEP_Incremental" ofType:@"pdf"];
     NSData *d = [NSData dataWithContentsOfFile:path];
     [p setStream:d];
     
@@ -601,13 +601,13 @@
         if ([key isEqualTo:@"1-0"]) {     // Test first xref entry (object number is 1)
             GXRefEntry *x = [dict objectForKey:key];
             XCTAssertEqual([x objectNumber], 1);
-            XCTAssertEqual([x offset], 44968);
+            XCTAssertEqual([x offset], 25384);
             XCTAssertEqual([x generationNumber], 0);
             XCTAssertEqual([x inUse], 'n');
-        } else if ([key isEqualTo:@"38-0"]) { // Test 24 xref entry (object number is 24)
+        } else if ([key isEqualTo:@"24-0"]) { // Test 24 xref entry (object number is 24)
             GXRefEntry *x = [dict objectForKey:key];
-            XCTAssertEqual([x objectNumber], 38);
-            XCTAssertEqual([x offset], 34371);
+            XCTAssertEqual([x objectNumber], 24);
+            XCTAssertEqual([x offset], 21406);
             XCTAssertEqual([x generationNumber], 0);
             XCTAssertEqual([x inUse], 'n');
         }
@@ -620,13 +620,13 @@
         if ([key isEqualTo:@"1-0"]) {
             GXRefEntry *x = [prev objectForKey:key];
             XCTAssertEqual([x objectNumber], 1);
-            XCTAssertEqual([x offset], 33784);
+            XCTAssertEqual([x offset], 12247);
             XCTAssertEqual([x generationNumber], 0);
             XCTAssertEqual([x inUse], 'n');
-        } else if ([key isEqualTo:@"31-0"]) {
+        } else if ([key isEqualTo:@"5-0"]) {
             GXRefEntry *x = [prev objectForKey:key];
-            XCTAssertEqual([x objectNumber], 31);
-            XCTAssertEqual([x offset], 25638);
+            XCTAssertEqual([x objectNumber], 5);
+            XCTAssertEqual([x offset], 355);
             XCTAssertEqual([x generationNumber], 0);
             XCTAssertEqual([x inUse], 'n');
         }
@@ -750,5 +750,56 @@
     GNumberObject *lastArg = [args lastObject];
     XCTAssertEqual([lastArg type], kNumberObject);
     XCTAssertEqual([lastArg intValue], 720);
+}
+
+- (void)testExamplePageContent {
+    // Content from 1st page of irig_keys_25.pdf
+    
+    char *content = "q\n"
+            "q 1 0 0 1 0 0 cm /Xi0 Do Q\n"
+            "Q\n"
+            "\\340q\n"
+            "0 0 612 792 re\n"
+            "W* n\n"
+            "BT\n"
+            "0.412 0.412 0.412 rg\n"
+            "0 i\n"
+            "/RelativeColorimetric ri\n"
+            "/TT0 1 Tf\n"
+            "8 0 0 8 3 5.6691 Tm\n"
+            "(Downloaded from )Tj\n"
+            "ET\n"
+            "0 0 1 RG\n"
+            "0.384 w\n"
+            "q 1 0 0 1 63.432 4.5171 cm\n"
+            "0 0 m\n"
+            "71.104 0 l\n"
+            "S\n"
+            "Q\n"
+            "BT\n"
+            "0 0 1 rg\n"
+            "/TT0 1 Tf\n"
+            "8 0 0 8 63.432 5.6691 Tm\n"
+            "(www.Manualslib.com)Tj\n"
+            "0 0 0 rg\n"
+            "14 0 0 14 134.536 5.6691 Tm\n"
+            "( )Tj\n"
+            "0.412 0.412 0.412 rg\n"
+            "8 0 0 8 138.036 5.6691 Tm\n"
+            "(manuals search engine)Tj\n"
+            "0 0 0 rg\n"
+            "14 0 0 14 210.46 5.6691 Tm\n"
+            "( )Tj\n"
+            "ET\n"
+            "Q\n"
+            "\\340";
+
+    GParser *p = [GParser parser];
+    NSData *d = [NSData dataWithBytes:content length:strlen(content) + 1];
+    [p setStream:d];
+    
+    [p parse];
+    NSArray *objects = [p objects];
+    NSLog(@"objects count: %d", [objects count]);
 }
 @end

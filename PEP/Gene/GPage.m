@@ -65,9 +65,21 @@
 - (void)parsePageContent {
     // Contents can be a GArrayObject instead of GRefObject,
     // TODO: Handle this case later.
-    GRefObject *ref = [[pageDictionary value] objectForKey:@"Contents"];
-    GStreamObject *contentStream = [parser getObjectByRef:[ref getRefString]];
-    pageContent = (NSMutableData*)[contentStream getDecodedStreamContent];
+    id content = [[pageDictionary value] objectForKey:@"Contents"];
+    if ([(GObject*)content type] == kArrayObject) {
+        GArrayObject *contentArray = (GArrayObject*)content;
+        pageContent = [NSMutableData data];
+        for (GRefObject *ref in [contentArray value]) {
+            GStreamObject *contentStream = [parser getObjectByRef:[ref getRefString]];
+            NSMutableData* data = (NSMutableData*)[contentStream getDecodedStreamContent];
+            [pageContent appendData:data];
+            [pageContent appendBytes:@"\n" length:1];
+        }
+    } else if ([(GObject*)content type] == kRefObject) {
+        GRefObject *ref = (GRefObject*)content;
+        GStreamObject *contentStream = [parser getObjectByRef:[ref getRefString]];
+        pageContent = (NSMutableData*)[contentStream getDecodedStreamContent];
+    }
     
     printData(pageContent);
     
@@ -76,8 +88,14 @@
 }
 
 - (void)parseResources {
-    GRefObject *ref = [[pageDictionary value] objectForKey:@"Resources"];
-    resources = [parser getObjectByRef:[ref getRefString]];
+    id res = [[pageDictionary value] objectForKey:@"Resources"];
+    if ([(GObject*)res type] == kRefObject) {
+        GRefObject *ref = (GRefObject*)res;
+        resources = [parser getObjectByRef:[ref getRefString]];
+    } else if ([(GObject*)res type] == kDictionaryObject)  {
+        resources = (GDictionaryObject*)res;
+    }
+    
 }
 
 - (GDictionaryObject*)resources {
