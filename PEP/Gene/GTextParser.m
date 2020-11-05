@@ -95,23 +95,6 @@
 
 - (void)makeReadOrderGlyphs {
     readOrderGlyphs = sortGlyphsInReadOrder(glyphs);
-//    NSMutableString *s = [NSMutableString string];
-//    int i;
-//    for (i = 0; i < [readOrderGlyphs count]; i++) {
-//        GGlyph *g = [readOrderGlyphs objectAtIndex:i];
-//        [s appendString:[g content]];
-//    }
-//    printf("====Read Order Glyphs====\n");
-//    printf("%s\n", [s UTF8String]);
-//
-//    s = [NSMutableString string];
-//    for (i = 0; i < [glyphs count]; i++) {
-//        GGlyph *g = [glyphs objectAtIndex:i];
-//        [s appendString:[g content]];
-//    }
-//    printf("====Original Glyphs======\n");
-//    printf("%s\n", [s UTF8String]);
-//    printf("====@@@@@@@@@@@@@@@@=====\n");
 }
 
 
