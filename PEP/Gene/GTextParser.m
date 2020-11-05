@@ -99,7 +99,7 @@
 
 
 /*
- * White spaces break words, and words break by geomety too
+ * White spaces break words, and words break by geometry too
  * See isGlyphBreakWord:
  */
 - (NSMutableArray*)makeWords{
