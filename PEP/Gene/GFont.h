@@ -15,8 +15,11 @@ NS_ASSUME_NONNULL_BEGIN
     GPage *page;
     NSData *fontData;
     NSString *fontName;
+    BOOL embededFont;
+    NSString *noneEmbededFontName;
 }
 + (id)fontWithName:(NSString*)name page:(GPage*)p;
+- (void)setEmbededFont:(BOOL)v;
 - (void)setFontName:(NSString*)name;
 - (void)setPage:(GPage*)p;
 - (NSFont*)getNSFontBySize:(CGFloat)fontSize;
