@@ -137,7 +137,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     if (![page needUpdate]) {
         return ;
     }
-
     [page initCommands];
     NSMutableArray* commands = [self commands];
     GParser *cmdParser = [GParser parser];

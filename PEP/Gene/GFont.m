@@ -52,14 +52,24 @@
         [[descriptor value] objectForKey:@"FontFile2"] == nil &&
         [[descriptor value] objectForKey:@"FontFile3"] == nil) {
         embededFont = NO;
-        GLiteralStringsObject *fontFamily = [[descriptor value] objectForKey:@"FontFamily"];
-        noneEmbededFontName = [fontFamily value];
+        GLiteralStringsObject *fontName = [[descriptor value] objectForKey:@"FontName"];
+        noneEmbededFontName = [fontName value];
         return ;
     }
     
     // Only get font program for `/FontFile2` for truetype font
     // Other fonts will be in `/FontFile`, `/FontFile3`, we will handle it later
-    ref = [[descriptor value] objectForKey:@"FontFile2"];
+    id fontFile = [[descriptor value] objectForKey:@"FontFile"];
+    id fontFile2 = [[descriptor value] objectForKey:@"FontFile2"];
+    id fontFile3 = [[descriptor value] objectForKey:@"FontFile3"];
+    if (fontFile != nil) {
+        ref = (GRefObject*)fontFile;
+    } else if (fontFile2 != nil) {
+        ref = (GRefObject*)fontFile2;
+    } else if (fontFile3 != nil) {
+        ref = (GRefObject*)fontFile3;
+    }
+    
     GStreamObject *fontProgram = [parser getObjectByRef:[ref getRefString]];
     fontData = [fontProgram getDecodedStreamContent];
 }

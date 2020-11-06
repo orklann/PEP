@@ -535,7 +535,6 @@
     if (existFont) return ;
     GFont *font = [GFont fontWithName:fontName page:self];
     NSFont *f = [font getNSFontBySize:fontSize];
-    
     [self.cachedFonts setObject:f forKey:fontKey];
 }
 
