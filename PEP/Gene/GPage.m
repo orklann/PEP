@@ -201,7 +201,9 @@
 - (NSFont*)getCurrentFont:(NSString*)s {
     NSFont *f;
     NSString *fontName = [[self textState] fontName];
-    CGFloat fontSize = [[self textState] fontSize];
+    // [[self textState] fontSize] used in text matrix,
+    // So we only need font size to be 1.0 for actuall NSFont;
+    CGFloat fontSize = 1.0f; //[[self textState] fontSize];
     NSString *fontKey = [NSString stringWithFormat:@"%@-%f", fontName, fontSize];
     f = [self.cachedFonts objectForKey:fontKey];
     return f;
@@ -549,7 +551,9 @@
             NSString *cmd = [cmdObj cmd];
             if (isCommand(cmd, @"Tf")) { // eval Tf
                 NSString *fontName = [(GNameObject*)[[cmdObj args] objectAtIndex:0] value];
-                CGFloat fontSize = [[[cmdObj args] objectAtIndex:1] getRealValue];
+                // [[self textState] fontSize] (set by Tj operator) used in text matrix,
+                // So we only need font size to be 1.0 for actuall NSFont;
+                CGFloat fontSize = 1.0f; //[[[cmdObj args] objectAtIndex:1] getRealValue];
                 [self setCachedFont:fontName fontSize:fontSize];
             }
         }

@@ -22,6 +22,8 @@
     leading = 0;
     render = 0;
     rise = 0;
+    fontSize = 1.0;
+    textMatrix = CGAffineTransformIdentity;
 }
 
 - (void)setFontName:(NSString*)name {
