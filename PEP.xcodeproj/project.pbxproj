@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9301BEFB25554A05000C6F4E /* A Sample PDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9301BEFA25554A05000C6F4E /* A Sample PDF.pdf */; };
+		9301BEFD25554A11000C6F4E /* A Sample PDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9301BEFC25554A10000C6F4E /* A Sample PDF.pdf */; };
 		930ACC9B250759780092206C /* GDecoders.m in Sources */ = {isa = PBXBuildFile; fileRef = 930ACC9A250759780092206C /* GDecoders.m */; };
 		930ACC9D250763C30092206C /* GDecodersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 930ACC9C250763C30092206C /* GDecodersTests.m */; };
 		930B09BB25412AEE00ED00BD /* GMiscTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 930B09BA25412AEE00ED00BD /* GMiscTests.m */; };
@@ -62,6 +64,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9301BEFA25554A05000C6F4E /* A Sample PDF.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "A Sample PDF.pdf"; sourceTree = "<group>"; };
+		9301BEFC25554A10000C6F4E /* A Sample PDF.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "A Sample PDF.pdf"; path = "PEPTests/pdf/A Sample PDF.pdf"; sourceTree = SOURCE_ROOT; };
 		930ACC99250759780092206C /* GDecoders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDecoders.h; sourceTree = "<group>"; };
 		930ACC9A250759780092206C /* GDecoders.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDecoders.m; sourceTree = "<group>"; };
 		930ACC9C250763C30092206C /* GDecodersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDecodersTests.m; sourceTree = "<group>"; };
@@ -205,6 +209,7 @@
 		9363D94B250898D60075FEF0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9301BEFC25554A10000C6F4E /* A Sample PDF.pdf */,
 				93311A11254EA60500D58E06 /* PEP_Incremental.pdf */,
 				938EB9762545A0F50045F463 /* tab.pdf */,
 				9359739F2543B37500BB217D /* PEP_GillSans.pdf */,
@@ -217,6 +222,7 @@
 		936C4303250363AD00FFE547 /* pdf */ = {
 			isa = PBXGroup;
 			children = (
+				9301BEFA25554A05000C6F4E /* A Sample PDF.pdf */,
 				93311A0F254EA5EF00D58E06 /* PEP_Incremental.pdf */,
 				938EB9742545A0D80045F463 /* tab.pdf */,
 				9359739D2543B36800BB217D /* PEP_GillSans.pdf */,
@@ -359,6 +365,7 @@
 				935973A02543B37500BB217D /* PEP_GillSans.pdf in Resources */,
 				931221C924F0139300929C01 /* Assets.xcassets in Resources */,
 				931221CC24F0139300929C01 /* MainMenu.xib in Resources */,
+				9301BEFD25554A11000C6F4E /* A Sample PDF.pdf in Resources */,
 				938EB9772545A0F50045F463 /* tab.pdf in Resources */,
 				9363D9512508994E0075FEF0 /* test_xref.pdf in Resources */,
 			);
@@ -373,6 +380,7 @@
 				938EB9752545A0D80045F463 /* tab.pdf in Resources */,
 				9359739E2543B36800BB217D /* PEP_GillSans.pdf in Resources */,
 				936C4305250363E800FFE547 /* test_xref.pdf in Resources */,
+				9301BEFB25554A05000C6F4E /* A Sample PDF.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
