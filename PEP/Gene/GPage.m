@@ -146,6 +146,12 @@
         [textEditor draw:context];
     }
     
+    // If context's origin is (0, 0), we need to add translate to page's origin
+    // which is not (x, y), because highlightBlockFrame is in page coordinate
+    CGAffineTransform ctm = CGContextGetCTM(context);
+    if (ctm.tx == 0.0 && ctm.ty == 0.0) {
+        highlightBlockFrame = [self rectFromPageToView:highlightBlockFrame];
+    }
     // Draw highlith text block border
     CGContextSetLineWidth(context, 1.0 / (kScaleFactor));
     CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
@@ -284,6 +290,11 @@
     NSPoint o = [self origin];
     return NSMakeRect(rect.origin.x + o.x, rect.origin.y + o.y,
                       rect.size.width, rect.size.height);
+}
+
+- (NSPoint)pointFromPageToView:(NSPoint)p {
+    NSPoint o = [self origin];
+    return NSMakePoint(p.x + o.x, p.y + o.y);
 }
 
 - (void)buildPageContent {

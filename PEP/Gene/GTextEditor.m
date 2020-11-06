@@ -129,6 +129,14 @@
 
 - (void)drawInsertionPoint:(CGContextRef)context {
     NSRect rect = [self getInsertionPoint];
+    
+    // Check if context's origin is in (0, 0), need to
+    // add page's origin (x, y) to get in view coordinage
+    CGAffineTransform ctm = CGContextGetCTM(context);
+    if (ctm.tx == 0.0 && ctm.ty == 0.0) {
+        rect = [self.page rectFromPageToView:rect];
+    }
+    
     NSPoint start = NSMakePoint(NSMinX(rect), NSMinY(rect));
     NSPoint end = NSMakePoint(NSMinX(rect), NSMaxY(rect));
     CGContextSetRGBFillColor(context, 0.0, 0.0, 0.0, 1.0);
@@ -143,6 +151,14 @@
     
     // Draw text editor border with 1 pixel width;
     NSRect frame = [self enlargedFrame];
+    
+    // Check if context's origin is in (0, 0), need to
+    // add page's origin (x, y) to get in view coordinage
+    CGAffineTransform ctm = CGContextGetCTM(context);
+    if (ctm.tx == 0.0 && ctm.ty == 0.0) {
+        frame = [self.page rectFromPageToView:frame];
+    }
+    
     frame = NSInsetRect(frame, 0.5, 0.5);
     CGContextSetLineWidth(context, 1.0 / (kScaleFactor));
     CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);

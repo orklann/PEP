@@ -70,6 +70,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)mouseMoved:(NSEvent*)event;
 - (void)mouseDown:(NSEvent*)event;
 - (NSRect)rectFromPageToView:(NSRect)rect;
+- (NSPoint)pointFromPageToView:(NSPoint)p;
 - (void)buildPageContent;
 - (void)translateToPageOrigin:(CGContextRef)context;
 - (void)redraw;
