@@ -301,6 +301,35 @@
 
         }
     }
+    
+    // New test case, taken from "A Sample PDF.pdf"
+    p = [GParser parser];
+    b = "[(Lorem)4( Ips)-2(um)]";
+    d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    
+    objs = [p objects];
+    GArrayObject *array = [objs firstObject];
+    XCTAssertEqual([[array value] count], 5);
+    for (i = 0; i < [[array value] count]; ++i) {
+        if (i == 0) {
+            GLiteralStringsObject *str1 = [[array value] objectAtIndex:i];
+            XCTAssertEqualObjects([str1 value], @"Lorem");
+        } else if (i == 1) {
+            GNumberObject *num1 = [[array value] objectAtIndex:i];
+            XCTAssertEqual([num1 intValue], 4);
+        } else if (i == 2) {
+            GLiteralStringsObject *str2 = [[array value] objectAtIndex:i];
+            XCTAssertEqualObjects([str2 value], @" Ips");
+        } else if (i == 3) {
+            GNumberObject *num2 = [[array value] objectAtIndex:i];
+            XCTAssertEqual([num2 intValue], -2);
+        } else if (i == 4) {
+            GLiteralStringsObject *str3 = [[array value] objectAtIndex:i];
+            XCTAssertEqualObjects([str3 value], @"um");
+        }
+    }
 }
 
 - (void)testGParserParseDictionaryObject {
@@ -750,56 +779,5 @@
     GNumberObject *lastArg = [args lastObject];
     XCTAssertEqual([lastArg type], kNumberObject);
     XCTAssertEqual([lastArg intValue], 720);
-}
-
-- (void)testExamplePageContent {
-    // Content from 1st page of irig_keys_25.pdf
-    
-    char *content = "q\n"
-            "q 1 0 0 1 0 0 cm /Xi0 Do Q\n"
-            "Q\n"
-            "\\340q\n"
-            "0 0 612 792 re\n"
-            "W* n\n"
-            "BT\n"
-            "0.412 0.412 0.412 rg\n"
-            "0 i\n"
-            "/RelativeColorimetric ri\n"
-            "/TT0 1 Tf\n"
-            "8 0 0 8 3 5.6691 Tm\n"
-            "(Downloaded from )Tj\n"
-            "ET\n"
-            "0 0 1 RG\n"
-            "0.384 w\n"
-            "q 1 0 0 1 63.432 4.5171 cm\n"
-            "0 0 m\n"
-            "71.104 0 l\n"
-            "S\n"
-            "Q\n"
-            "BT\n"
-            "0 0 1 rg\n"
-            "/TT0 1 Tf\n"
-            "8 0 0 8 63.432 5.6691 Tm\n"
-            "(www.Manualslib.com)Tj\n"
-            "0 0 0 rg\n"
-            "14 0 0 14 134.536 5.6691 Tm\n"
-            "( )Tj\n"
-            "0.412 0.412 0.412 rg\n"
-            "8 0 0 8 138.036 5.6691 Tm\n"
-            "(manuals search engine)Tj\n"
-            "0 0 0 rg\n"
-            "14 0 0 14 210.46 5.6691 Tm\n"
-            "( )Tj\n"
-            "ET\n"
-            "Q\n"
-            "\\340";
-
-    GParser *p = [GParser parser];
-    NSData *d = [NSData dataWithBytes:content length:strlen(content) + 1];
-    [p setStream:d];
-    
-    [p parse];
-    NSArray *objects = [p objects];
-    NSLog(@"objects count: %d", [objects count]);
 }
 @end

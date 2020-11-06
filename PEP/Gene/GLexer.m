@@ -23,6 +23,47 @@ BOOL isWhiteSpace(unsigned char ch) {
     return NO;
 }
 
+BOOL isNumberChar(unsigned char ch) {
+    switch (ch) {
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+        case '+':
+        case '-':
+        case '.':
+            return YES;
+        default:
+            break;
+    }
+    return NO;
+}
+
+BOOL isDelimiter(unsigned char ch) {
+    switch(ch) {
+        case '<':
+        case '>':
+        case '[':
+        case ']':
+        case '(':
+        case ')':
+        case '{':
+        case '}':
+        case '%':
+        case '/':
+            return YES;
+        default:
+            break;
+    }
+    return NO;
+}
+
 int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     if (ch1 == kCARRIAGE_RETURN && ch2 == kLINE_FEED) {
         return kTWO_END_LINE_MARKERS ;
@@ -118,6 +159,7 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     
     unsigned char next = [self nextChar];
     while(!isWhiteSpace(next)) {
+        if (isDelimiter(next)) break;
         [d appendBytes:(unsigned char*)&next length:1];
         next = [self nextChar];
     }
