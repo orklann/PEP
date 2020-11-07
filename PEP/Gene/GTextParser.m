@@ -22,11 +22,16 @@
     [tp setGlyphs:gs];
     [tp setWords:ws];
     [tp setLines:ls];
+    [tp setCached:NO];
     return tp;
 }
 
 - (void)setGlyphs:(NSMutableArray*)gs {
     glyphs = gs;
+}
+
+- (void)setCached:(BOOL)c {
+    cached = c;
 }
 
 - (NSMutableArray*)glyphs {
@@ -94,6 +99,8 @@
 }
 
 - (void)makeReadOrderGlyphs {
+    if (cached) return;
+    cached = YES;
     readOrderGlyphs = sortGlyphsInReadOrder(glyphs);
 }
 
@@ -103,6 +110,9 @@
  * See isGlyphBreakWord:
  */
 - (NSMutableArray*)makeWords{
+    if (cached) return words;
+    
+    cached = YES;
     [self makeReadOrderGlyphs];
     
     words = [NSMutableArray array];
@@ -152,11 +162,14 @@
     }
     
     //prettyLogForWords(words);
-    
     return words;
 }
 
 - (NSMutableArray*)makeLines {
+    if (cached) return lines;
+    
+    cached = YES;
+    
     [self makeWords];
     
     lines = [NSMutableArray array];
@@ -187,11 +200,12 @@
     if ([[currentLine words] count] > 0) {
         [lines addObject:currentLine];
     }
-    
     return lines;
 }
 
 - (NSMutableArray*)makeTextBlocks {
+    if (cached) return textBlocks;
+    cached = YES;
     [self makeLines];
     textBlocks = [NSMutableArray array];
     
@@ -220,7 +234,6 @@
     if ([[textBlock lines] count] > 0) {
         [textBlocks addObject:textBlock];
     }
-    
     return textBlocks;
 }
 

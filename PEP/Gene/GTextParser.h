@@ -22,9 +22,11 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *textBlocks;
     unsigned int glyphPos;
     unsigned int wordPos;
+    BOOL cached;
 }
 
 + (id)create;
+- (void)setCached:(BOOL)c;
 - (NSMutableArray*)glyphs;
 - (void)setGlyphs:(NSMutableArray*)gs;
 - (NSMutableArray*)readOrderGlyphs;

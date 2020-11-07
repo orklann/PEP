@@ -15,8 +15,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GTextBlock : NSObject {
     NSMutableArray *lines;
     NSRect frame;
+    BOOL cached;
 }
 + (id)create;
+- (void)setCached:(BOOL)c;
 - (void)setLines:(NSMutableArray*)ls;
 - (void)addLine:(GLine*)l;
 - (NSMutableArray*)lines;

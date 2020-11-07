@@ -16,6 +16,7 @@
     GTextBlock *tb = [[GTextBlock alloc] init];
     NSMutableArray *ls = [NSMutableArray array];
     [tb setLines:ls];
+    [tb setCached:NO];
     return tb;
 }
 
@@ -57,6 +58,10 @@
     return words;
 }
 
+- (void)setCached:(BOOL)c {
+    cached = c;
+}
+
 - (void)setLines:(NSMutableArray*)ls {
     lines = ls;
 }
@@ -68,6 +73,8 @@
 }
 
 - (NSRect)frame {
+    if (cached) return frame;
+    cached = YES;
     CGFloat startX = INFINITY, startY = INFINITY, endX = -INFINITY, endY = -INFINITY;
     int i;
     for (i = 0; i < [lines count]; i++) {

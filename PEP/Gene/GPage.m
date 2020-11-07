@@ -127,8 +127,11 @@
     textState = [GTextState create];
     graphicsState = [GGraphicsState create];
     graphicsStateStack = [NSMutableArray array];
-    textParser = [GTextParser create];
     
+    if (self.needUpdate) {
+        textParser = [GTextParser create];
+    }
+        
     GInterpreter *interpreter = [GInterpreter create];
     [interpreter setPage:self];
     [interpreter setParser:parser];
