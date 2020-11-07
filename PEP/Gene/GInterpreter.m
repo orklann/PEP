@@ -74,48 +74,51 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         [self drawString:ch font:font context:context];
         
         CGFloat hAdvance = getGlyphAdvanceForFont(ch, font);
-        //
-        // Make glyphs for GTextParser
-        //
-        CGRect r = getGlyphBoundingBox(ch, font, [[page textState] textMatrix]);
         
-        // Test: draw bounding box for glyph
-        //CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
-        //CGContextFillRect(context, r);
-        
-        // Apply current context matrix to get the right frame of glyph
-        r = CGRectApplyAffineTransform(r, [[page graphicsState] ctm]);
-        
-        
-        NSPoint p = CGContextGetTextPosition(context);
-        // Apply current context matrix to get the right point for glyph
-        p = CGPointApplyAffineTransform(p, [[page graphicsState] ctm]);
-        
-        // Convert glyph width from glyph space to text space
-        // Glyph space are defined by EM square and glyph origin
-        // hAdvance is a floating point here = width / unitsPerEM
-        NSSize s = NSMakeSize(hAdvance, 0);
-        s = CGSizeApplyAffineTransform(s, [[page textState] textMatrix]);
-        
-        GGlyph *glyph = [GGlyph create];
-        
-        // We set frame here, but we also recalculate frame in [GGlyph frame]
-        // So we need frame in glyph space, and convert it to text space and
-        // user space in [GGlyph frame]
-        [glyph setFrame:r];
-        CGRect rectGlyphSpace = getGlyphBoundingBoxGlyphSpace(ch, font);
-        [glyph setFrameInGlyphSpace:rectGlyphSpace];
-        
-        [glyph setPoint:p];
-        [glyph setContent:ch];
-        [glyph setWidth:s.width];
-        [glyph setHeight:r.size.height];
-        [glyph setCtm:[[page graphicsState] ctm]];
-        [glyph setTextMatrix:[[page textState] textMatrix]];
-        NSString *fontName = [[page textState] fontName];
-        [glyph setFontName:fontName];
-        [glyph setFontSize:[[page textState] fontSize]];
-        [glyphs addObject:glyph];
+        if ([page needUpdate]) {
+            //
+            // Make glyphs for GTextParser
+            //
+            CGRect r = getGlyphBoundingBox(ch, font, [[page textState] textMatrix]);
+            
+            // Test: draw bounding box for glyph
+            //CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
+            //CGContextFillRect(context, r);
+            
+            // Apply current context matrix to get the right frame of glyph
+            r = CGRectApplyAffineTransform(r, [[page graphicsState] ctm]);
+            
+            
+            NSPoint p = CGContextGetTextPosition(context);
+            // Apply current context matrix to get the right point for glyph
+            p = CGPointApplyAffineTransform(p, [[page graphicsState] ctm]);
+            
+            // Convert glyph width from glyph space to text space
+            // Glyph space are defined by EM square and glyph origin
+            // hAdvance is a floating point here = width / unitsPerEM
+            NSSize s = NSMakeSize(hAdvance, 0);
+            s = CGSizeApplyAffineTransform(s, [[page textState] textMatrix]);
+            
+            GGlyph *glyph = [GGlyph create];
+            
+            // We set frame here, but we also recalculate frame in [GGlyph frame]
+            // So we need frame in glyph space, and convert it to text space and
+            // user space in [GGlyph frame]
+            [glyph setFrame:r];
+            CGRect rectGlyphSpace = getGlyphBoundingBoxGlyphSpace(ch, font);
+            [glyph setFrameInGlyphSpace:rectGlyphSpace];
+            
+            [glyph setPoint:p];
+            [glyph setContent:ch];
+            [glyph setWidth:s.width];
+            [glyph setHeight:r.size.height];
+            [glyph setCtm:[[page graphicsState] ctm]];
+            [glyph setTextMatrix:[[page textState] textMatrix]];
+            NSString *fontName = [[page textState] fontName];
+            [glyph setFontName:fontName];
+            [glyph setFontSize:[[page textState] fontSize]];
+            [glyphs addObject:glyph];
+        }
         
         // See "9.4.4 Text space details"
         CGFloat tx = ((hAdvance - (tj/1000.0)) * fs + cs + wc) * h;

@@ -100,8 +100,8 @@
 
 - (void)makeReadOrderGlyphs {
     if (cached) return;
-    cached = YES;
     readOrderGlyphs = sortGlyphsInReadOrder(glyphs);
+    cached = YES;
 }
 
 
@@ -112,8 +112,9 @@
 - (NSMutableArray*)makeWords{
     if (cached) return words;
     
-    cached = YES;
     [self makeReadOrderGlyphs];
+    
+    cached = YES;
     
     words = [NSMutableArray array];
     
@@ -167,11 +168,8 @@
 
 - (NSMutableArray*)makeLines {
     if (cached) return lines;
-    
-    cached = YES;
-    
     [self makeWords];
-    
+    cached = YES;
     lines = [NSMutableArray array];
     
     if ([words count] <= 0) {
@@ -205,8 +203,8 @@
 
 - (NSMutableArray*)makeTextBlocks {
     if (cached) return textBlocks;
-    cached = YES;
     [self makeLines];
+    cached = YES;
     textBlocks = [NSMutableArray array];
     
     if ([lines count] <= 0) {

@@ -111,8 +111,8 @@
     NSBundle *mainBundle = [NSBundle mainBundle];
     // TODO: Use test_xref.pdf by default without ability to custom file, will
     // do it later
-    //file = [mainBundle pathForResource:@"PEP_Incremental" ofType:@"pdf"];
-    file = [mainBundle pathForResource:@"A Sample PDF" ofType:@"pdf"];
+    file = [mainBundle pathForResource:@"PEP_Incremental" ofType:@"pdf"];
+    //file = [mainBundle pathForResource:@"A Sample PDF" ofType:@"pdf"];
     NSMutableData *d = [NSMutableData dataWithContentsOfFile:file];
     [parser setStream:d];
     
@@ -185,6 +185,7 @@
     
     NSUInteger i;
     NSMutableArray *glyphs = [[p textParser] glyphs];
+    printf("%d glyphs in text parser", (int)[glyphs count]);
     for (i = 0; i < [glyphs count]; i++) {
         GGlyph *g = [glyphs objectAtIndex:i];
         printf("%s", [[g content] UTF8String]);
