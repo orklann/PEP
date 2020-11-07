@@ -195,8 +195,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             } else if (isCommand(cmd, @"Tc")) { // Tc
                 NSArray *args = getCommandArgs(commands, 1);
                 [(GCommandObject*)obj setArgs:args];
-            }
-            else {
+            } else if (isCommand(cmd, @"Td")) { // Td
+                NSArray *args = getCommandArgs(commands, 2);
+                [(GCommandObject*)obj setArgs:args];
+            } else {
                 //NSLog(@"GInterpreter:parseCommands not handle %@ operator", cmd);
             }
         }
@@ -263,6 +265,16 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [self layoutStrings:string context:context tj:0];
 }
 
+- (void)eval_Td_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    CGFloat tx = [[[cmdObj args] objectAtIndex:0] getRealValue];
+    CGFloat ty = [[[cmdObj args] objectAtIndex:1] getRealValue];
+    CGAffineTransform tm = CGAffineTransformIdentity;
+    tm.tx = tx;
+    tm.ty = ty;
+    [[page textState] setTextMatrix:tm];
+    CGContextSetTextMatrix(context, tm);
+}
+
 - (void)eval_TJ_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     GArrayObject *array = [[cmdObj args] objectAtIndex:0];
     NSUInteger i;
@@ -301,6 +313,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                 [self eval_TJ_Command:context command:cmdObj];
             } else if (isCommand(cmd, @"Tj")) { // eval Tj
                 [self eval_Tj_Command:context command:cmdObj];
+            } else if (isCommand(cmd, @"Td")) { // eval Td
+                [self eval_Td_Command:context command:cmdObj];
             } else {
                 //NSLog(@"Operator %@ not eval.", cmd);
             }
