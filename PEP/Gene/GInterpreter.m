@@ -281,14 +281,18 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 - (void)eval_TJ_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     GArrayObject *array = [[cmdObj args] objectAtIndex:0];
     NSUInteger i;
-    CGFloat tjDelta = 0;
+    CGFloat tjDelta = 0.0;
     for (i = 0; i < [[array value] count]; i++) {
         id a = [[array value] objectAtIndex:i];
         if ([(GObject*)a type] == kLiteralStringsObject) { // Literal strings
+            if (i + 1 <= [[array value] count] -1) {
+                id nextObject = [[array value] objectAtIndex:i + 1];
+                if ([(GObject*)nextObject type] == kNumberObject) { // Next object is offset
+                    tjDelta = [(GNumberObject*)nextObject getRealValue];
+                }
+            }
             [self layoutStrings:[(GLiteralStringsObject*)a value] context:context tj:tjDelta];
-            tjDelta = 0;
-        } else if ([(GObject*)a type] == kNumberObject) { // Number object for offset
-            tjDelta = [(GNumberObject*)a getRealValue];
+            tjDelta = 0.0;
         }
     }
 }
