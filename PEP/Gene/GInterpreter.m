@@ -64,7 +64,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGAffineTransform trm = CGAffineTransformMake(fs*h, 0, 0, fs, 0, rise);
     CGAffineTransform rm = CGAffineTransformConcat(trm, tm);
     NSInteger i;
-    CGFloat tj = tjDelta;
+    CGFloat tj = 0.0;
     for (i = 0; i < [s length]; i++) {
         NSString *ch = [s substringWithRange:NSMakeRange(i, 1)];
         // Add glyph chars for font in GPage
@@ -120,6 +120,11 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             [glyphs addObject:glyph];
         }
         
+        // Fixed: Right side of text not align
+        // Only apply next offset after drawing last glyph
+        if (i == [s length] - 1) {
+            tj = tjDelta;
+        }
         // See "9.4.4 Text space details"
         CGFloat tx = ((hAdvance - (tj/1000.0)) * fs + cs + wc) * h;
         CGFloat ty = 0; // TODO: Handle vertical advance for vertical text layout
