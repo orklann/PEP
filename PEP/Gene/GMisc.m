@@ -167,8 +167,10 @@ void quicksortGlyphs(NSMutableArray *array, int l, int r) {
     if (l >= r) {
         return ;
     }
-     
-    GGlyph *pivot = [array objectAtIndex:(int)r];
+    
+    // We choose the middle glyph in this range of sorting to be pivot.
+    // We had pivot to be (r) before, but it's slow
+    GGlyph *pivot = [array objectAtIndex:(int)(r/2)];
     int cnt = l;
      
     for (int i = l; i <= r; i++)
@@ -208,6 +210,9 @@ void quicksortGlyphs(NSMutableArray *array, int l, int r) {
  * TODO: So shall we handle this later?
  */
 NSMutableArray *sortGlyphsInReadOrder(NSMutableArray *glyphs) {
+    quicksortGlyphs(glyphs, 0, (int)[glyphs count] - 1);
+    /* ** Slow code for sorting, we use quick sort to have better performance */
+    /*
     NSMutableArray *workingGlyphs = [NSMutableArray arrayWithArray:glyphs];
     NSMutableArray *sorted = [NSMutableArray array];
     while([workingGlyphs count] > 0) {
@@ -223,8 +228,8 @@ NSMutableArray *sortGlyphsInReadOrder(NSMutableArray *glyphs) {
         }
         [sorted addObject:smallest];
         [workingGlyphs removeObject:smallest];
-    }
-    return sorted;
+    }*/
+    return glyphs;
 }
 
 BOOL separateWords(GWord* a, GWord*b) {
