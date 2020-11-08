@@ -186,7 +186,7 @@
    
     [p mouseDown:event];
     return ;
-    NSUInteger i;
+    /*NSUInteger i;
     NSMutableArray *glyphs = [[p textParser] glyphs];
     printf("%d glyphs in text parser", (int)[glyphs count]);
     for (i = 0; i < [glyphs count]; i++) {
@@ -215,7 +215,7 @@
     NSPoint origin = f.origin;
     origin = translatePoint(origin, [p origin]);
     f.origin = origin;
-    
+    */
     //[p buildPageContent];
     //[self setNeedsDisplay:YES];
 }
