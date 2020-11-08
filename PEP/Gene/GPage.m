@@ -236,7 +236,6 @@
 }
 
 - (void)mouseDown:(NSEvent*)event {
-    return ;
     NSPoint location = [event locationInWindow];
     NSPoint point = [self.doc convertPoint:location fromView:nil];
     
@@ -257,7 +256,6 @@
     
     NSArray *blocks = [[self textParser] makeTextBlocks];
     highlightBlockFrame = NSZeroRect;
-    return ;
     for (GTextBlock *tb in blocks) {
         NSRect frame = [tb frame];
         NSRect viewFrame = [self rectFromPageToView:frame];
