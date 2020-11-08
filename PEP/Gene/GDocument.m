@@ -116,6 +116,9 @@
     NSMutableData *d = [NSMutableData dataWithContentsOfFile:file];
     [parser setStream:d];
     
+    // Dummy code, automatically set window titile based on the file path
+    [self.window setTitle:file];
+    
     // Get trailer
     GDictionaryObject *trailer = [parser getTrailer];
     
