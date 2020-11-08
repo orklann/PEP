@@ -238,10 +238,10 @@ BOOL separateWords(GWord* a, GWord*b) {
     CGFloat heightB = NSHeight(f1);
     
     CGFloat dy = fabs(yMinA - yMinB);
-    CGFloat heightTolerance = fabs(heightA - heightB);
+    CGFloat heightTolerance = (heightA + heightB) * 0.05;
     if (dy <= heightTolerance) {
         CGFloat dx = fabs(xA - xB);
-        CGFloat widthTolerance = (widthA + widthB) / 2.0;
+        CGFloat widthTolerance = (widthA + widthB);
         if (dx <= widthTolerance) {
             return YES;
         }
@@ -262,8 +262,8 @@ BOOL separateLines(GLine *a, GLine *b) {
     CGFloat xA = NSMinX(f1);
     CGFloat xB = NSMinX(f2);
     
-    NSPoint pa = NSMakePoint(xA, NSMinY(f1));
-    NSPoint pb = NSMakePoint(xB, NSMaxY(f2));
+    NSPoint pa = f1.origin;
+    NSPoint pb = f2.origin;
     
     CGFloat heightA = NSHeight([a frame]);
     CGFloat heightB = NSHeight([b frame]);
@@ -271,7 +271,7 @@ BOOL separateLines(GLine *a, GLine *b) {
     
     CGFloat xTolerance = 5; // Fix value: 5 points
     CGFloat heightTolerance = 0.05; // Percentage
-    CGFloat yTolerance = (heightA + heightB) / 2;
+    CGFloat yTolerance = (heightA + heightB) / 2 + ((heightA + heightB) * 0.3);
     
     if (fabs(xA - xB) <= xTolerance && distance(pa, pb) <= yTolerance
         && fabs(heightA - heightB) / ((heightA + heightB) / 2) <= heightTolerance) {
