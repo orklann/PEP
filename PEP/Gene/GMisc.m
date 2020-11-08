@@ -115,17 +115,16 @@ int compareGlyphs(GGlyph *a, GGlyph *b) {
     // if two glyphs are located at more or less the same y coordinate,
     // the one to the left goes before, if not, else the one which start
     // higher up is sorted first.
-    CGFloat tolerance = 0.04f;
-    CGFloat percent = fabs(pa.y - pb.y) / (pa.y + pb.y);
+    CGFloat tolerance = 3;
     int ret = -1;
-    if (percent <= tolerance) {
-       if (pa.x < pb.x) {
-           ret = -1;
-           return ret;
-       } else {
-           ret = 1;
-           return ret;
-       }
+    if (fabs(pa.y - pb.y) <= tolerance) {
+        if (pa.x < pb.x) {
+            ret = -1;
+            return ret;
+        } else {
+            ret = 1;
+            return ret;
+        }
     }
     
     if (aMidY <= bMidY) return 1;
