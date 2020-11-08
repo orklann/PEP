@@ -75,15 +75,18 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         
         CGFloat hAdvance = getGlyphAdvanceForFont(ch, font);
         
+        // Test: draw bounding box for glyph
+        //CGRect r = getGlyphBoundingBox(ch, font, rm);
+        //CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
+        //CGContextFillRect(context, r);
+        
+        
         if ([page needUpdate]) {
             //
             // Make glyphs for GTextParser
             //
-            CGRect r = getGlyphBoundingBox(ch, font, [[page textState] textMatrix]);
             
-            // Test: draw bounding box for glyph
-            //CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
-            //CGContextFillRect(context, r);
+            CGRect r = getGlyphBoundingBox(ch, font, rm);
             
             // Apply current context matrix to get the right frame of glyph
             r = CGRectApplyAffineTransform(r, [[page graphicsState] ctm]);
@@ -97,7 +100,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             // Glyph space are defined by EM square and glyph origin
             // hAdvance is a floating point here = width / unitsPerEM
             NSSize s = NSMakeSize(hAdvance, 0);
-            s = CGSizeApplyAffineTransform(s, [[page textState] textMatrix]);
+            s = CGSizeApplyAffineTransform(s, rm);
             
             GGlyph *glyph = [GGlyph create];
             
@@ -113,7 +116,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             [glyph setWidth:s.width];
             [glyph setHeight:r.size.height];
             [glyph setCtm:[[page graphicsState] ctm]];
-            [glyph setTextMatrix:[[page textState] textMatrix]];
+            [glyph setTextMatrix:rm];
             NSString *fontName = [[page textState] fontName];
             [glyph setFontName:fontName];
             [glyph setFontSize:[[page textState] fontSize]];

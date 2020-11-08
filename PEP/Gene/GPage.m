@@ -164,11 +164,11 @@
     self.isRendering = NO;
 
     /* Test: draw glyph bounding box */
-    /*for (GGlyph * g in [textParser glyphs]) {
+    for (GGlyph * g in [textParser glyphs]) {
         NSRect r = [g frame];
         CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
         CGContextFillRect(context, r);
-    }*/
+    }
 }
 
 // Calculate media box for PDF page in user space coordinate
@@ -236,6 +236,7 @@
 }
 
 - (void)mouseDown:(NSEvent*)event {
+    return ;
     NSPoint location = [event locationInWindow];
     NSPoint point = [self.doc convertPoint:location fromView:nil];
     
@@ -256,6 +257,7 @@
     
     NSArray *blocks = [[self textParser] makeTextBlocks];
     highlightBlockFrame = NSZeroRect;
+    return ;
     for (GTextBlock *tb in blocks) {
         NSRect frame = [tb frame];
         NSRect viewFrame = [self rectFromPageToView:frame];
@@ -272,6 +274,7 @@
 }
 
 - (void)mouseMoved:(NSEvent*)event {
+    return ;
     if (self.isEditingMode) {
         [self redraw];
         return ;

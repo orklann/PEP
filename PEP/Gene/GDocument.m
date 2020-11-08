@@ -182,7 +182,7 @@
     GPage *p = [pages firstObject];
    
     [p mouseDown:event];
-    
+    return ;
     NSUInteger i;
     NSMutableArray *glyphs = [[p textParser] glyphs];
     printf("%d glyphs in text parser", (int)[glyphs count]);
