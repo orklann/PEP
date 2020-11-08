@@ -115,7 +115,7 @@
     file = [mainBundle pathForResource:@"A Sample PDF" ofType:@"pdf"];
     NSMutableData *d = [NSMutableData dataWithContentsOfFile:file];
     [parser setStream:d];
-    
+
     // Dummy code, automatically set window titile based on the file path
     [self.window setTitle:file];
     

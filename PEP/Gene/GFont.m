@@ -52,8 +52,13 @@
         [[descriptor value] objectForKey:@"FontFile2"] == nil &&
         [[descriptor value] objectForKey:@"FontFile3"] == nil) {
         embededFont = NO;
-        GLiteralStringsObject *fontName = [[descriptor value] objectForKey:@"FontName"];
-        noneEmbededFontName = [fontName value];
+        GLiteralStringsObject *fontFamily = [[descriptor value] objectForKey:@"FontFamily"];
+        if (fontFamily != nil) {
+            noneEmbededFontName = [fontFamily value];
+        } else {
+            GLiteralStringsObject *fontName = [[descriptor value] objectForKey:@"FontName"];
+            noneEmbededFontName = [fontName value];
+        }
         return ;
     }
     
