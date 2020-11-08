@@ -168,6 +168,8 @@ NSMutableArray* quicksortGlyphs(NSMutableArray *array) {
     NSMutableArray *greater = [NSMutableArray array];
     NSMutableArray *result = [NSMutableArray array];
     if ([array count] > 1) {
+        // Choose pivot to the middle can improve the performance
+        // If all glyphs in array is sorted already
         int pivotIndex = (int)([array count] / 2);
         GGlyph *pivot = [array objectAtIndex:pivotIndex];
         for (GGlyph *g in array) {
