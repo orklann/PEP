@@ -163,41 +163,32 @@ BOOL glyphsInTheSameLine(GGlyph *a, GGlyph *b) {
     return NO;
 }
 
-void quicksortGlyphs(NSMutableArray *array, int l, int r) {
-    if (l >= r) {
-        return ;
-    }
-    
-    // We choose the middle glyph in this range of sorting to be pivot.
-    // We had pivot to be (r) before, but it's slow
-    GGlyph *pivot = [array objectAtIndex:(int)(r/2)];
-    int cnt = l;
-     
-    for (int i = l; i <= r; i++)
-    {
-        GGlyph *a = [array objectAtIndex:i];
-        // If an element less than or equal to the pivot is found...
-        if (compareGlyphs(pivot, a) == 1) {
-         // Then swap arr[cnt] and arr[i] so that the smaller element arr[i]
-         // is to the left of all elements greater than pivot
-         [array exchangeObjectAtIndex:i withObjectAtIndex:cnt];
-
-         // Make sure to increment cnt so we can keep track of what to swap
-         // arr[i] with
-         cnt++;
+NSMutableArray* quicksortGlyphs(NSMutableArray *array) {
+    NSMutableArray *less = [NSMutableArray array];
+    NSMutableArray *greater = [NSMutableArray array];
+    NSMutableArray *result = [NSMutableArray array];
+    if ([array count] > 1) {
+        int pivotIndex = (int)([array count] / 2);
+        GGlyph *pivot = [array objectAtIndex:pivotIndex];
+        for (GGlyph *g in array) {
+            if ([g isEqualTo:pivot]) {
+                continue;
+            }
+            if (compareGlyphs(pivot, g) == 1) { // less, g is before pivot
+                [less addObject:g];
+            } else if (compareGlyphs(pivot, g) == -1) { // greater, g is after pivot
+                [greater addObject:g];
+            }
         }
+        [result addObjectsFromArray:quicksortGlyphs(less)];
+        [result addObject:pivot];
+        [result addObjectsFromArray:quicksortGlyphs(greater)];
+        return result;
+    } else {
+        return array;
     }
     
-    // TODO: Buggy? Let's check later
-    // Means all elements are sorted correctly, stop sorting.
-    if (cnt == l) {
-        return ;
-    }
-    
-    // NOTE: cnt is currently at one plus the pivot's index
-    // (Hence, the cnt-2 when recursively sorting the left side of pivot)
-    quicksortGlyphs(array, l, cnt-2); // Recursively sort the left side of pivot
-    quicksortGlyphs(array, cnt, r);   // Recursively sort the right side of pivot
+    return array;
 }
 
 /*
@@ -210,7 +201,7 @@ void quicksortGlyphs(NSMutableArray *array, int l, int r) {
  * TODO: So shall we handle this later?
  */
 NSMutableArray *sortGlyphsInReadOrder(NSMutableArray *glyphs) {
-    quicksortGlyphs(glyphs, 0, (int)[glyphs count] - 1);
+    NSMutableArray *sorted = quicksortGlyphs(glyphs);
     /* ** Slow code for sorting, we use quick sort to have better performance */
     /*
     NSMutableArray *workingGlyphs = [NSMutableArray arrayWithArray:glyphs];
@@ -229,7 +220,7 @@ NSMutableArray *sortGlyphsInReadOrder(NSMutableArray *glyphs) {
         [sorted addObject:smallest];
         [workingGlyphs removeObject:smallest];
     }*/
-    return glyphs;
+    return sorted;
 }
 
 BOOL separateWords(GWord* a, GWord*b) {
