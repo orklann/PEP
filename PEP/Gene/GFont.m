@@ -54,10 +54,10 @@
         embededFont = NO;
         GLiteralStringsObject *fontFamily = [[descriptor value] objectForKey:@"FontFamily"];
         if (fontFamily != nil) {
-            noneEmbededFontName = [fontFamily value];
+            noneEmbeddedFontName = [fontFamily value];
         } else {
             GLiteralStringsObject *fontName = [[descriptor value] objectForKey:@"FontName"];
-            noneEmbededFontName = [fontName value];
+            noneEmbeddedFontName = [fontName value];
         }
         return ;
     }
@@ -81,7 +81,7 @@
 
 - (NSFont*)getNSFontBySize:(CGFloat)fontSize {
     if (!embededFont) {
-        NSFont *f = [NSFont fontWithName:noneEmbededFontName size:fontSize];
+        NSFont *f = [NSFont fontWithName:noneEmbeddedFontName size:fontSize];
         return f;
     }
     CGDataProviderRef cgData = CGDataProviderCreateWithCFData((CFDataRef)fontData);
