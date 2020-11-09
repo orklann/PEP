@@ -37,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
     GWrappedLine *currentWordWrapLine;
 }
 
-@property (readwrite) commandsUpdated;
+@property (readwrite) BOOL commandsUpdated;
 @property (readwrite) NSString *pdfFontName;
 @property (readwrite) CGFloat fontSize;
 @property (readwrite) BOOL firstUsed;

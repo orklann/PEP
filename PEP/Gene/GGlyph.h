@@ -37,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString*)content;
 - (NSString*)literalString;
 - (NSString*)complieToOperators;
+- (NSArray*)compileToCommands;
 @end
 
 NS_ASSUME_NONNULL_END

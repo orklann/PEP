@@ -453,11 +453,11 @@
     }
     [self insertChar:ch font:font];
     // Do word wrap here, use cached glyphs 
-    [self doWordWrap];
+    //[self doWordWrap];
     [self.page buildPageContent];
-    [self.page addFont:font withPDFFontName:fontName];
-    [self.page addPageStream];
-    [self.page incrementalUpdate];
+    //[self.page addFont:font withPDFFontName:fontName];
+    //[self.page addPageStream];
+    //[self.page incrementalUpdate];
     [self.page setNeedUpdate:YES];
     self.isEditing = NO;
 }

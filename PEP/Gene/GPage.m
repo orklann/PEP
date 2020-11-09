@@ -320,7 +320,7 @@
     //       two Q (Q Q)
     [ret appendString:@"Q\n"];
     pageContent = (NSMutableData*)[ret dataUsingEncoding:NSASCIIStringEncoding];
-    printData(pageContent);
+    //printData(pageContent);
 }
 
 - (void)redraw {

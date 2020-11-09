@@ -735,6 +735,7 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
 @implementation GCommandObject
 + (id)create {
     id o = [[GCommandObject alloc] init];
+    [o setType:kCommandObject];
     return o;
 }
 
