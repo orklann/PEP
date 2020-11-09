@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setFontName:(NSString*)name;
 - (void)setPage:(GPage*)p;
 - (NSFont*)getNSFontBySize:(CGFloat)fontSize;
+- (BOOL)embeddedFont;
 @end
 
 NS_ASSUME_NONNULL_END

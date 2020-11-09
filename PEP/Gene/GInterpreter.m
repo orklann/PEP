@@ -119,7 +119,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             [glyph setTextMatrix:rm];
             NSString *fontName = [[page textState] fontName];
             [glyph setFontName:fontName];
-            [glyph setFontSize:[[page textState] fontSize]];
+            // Use font size 1.0, we set font size in text matrix already
+            //[glyph setFontSize:[[page textState] fontSize]];
+            [glyph setFontSize:1.0];
             [glyphs addObject:glyph];
         }
         

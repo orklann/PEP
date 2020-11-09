@@ -320,6 +320,7 @@
     //       two Q (Q Q)
     [ret appendString:@"Q\n"];
     pageContent = (NSMutableData*)[ret dataUsingEncoding:NSASCIIStringEncoding];
+    printData(pageContent);
 }
 
 - (void)redraw {
@@ -351,6 +352,10 @@
 
 #pragma mark Adding stuff as GBinaryData to page
 - (void)addFont:(NSFont*)font withPDFFontName:(NSString*)fontKey {
+    GFont *gFont = [GFont fontWithName:fontKey page:self];
+    if (![gFont embeddedFont]) {
+        return ;
+    }
     GDictionaryObject *fontDict = [[resources value] objectForKey:@"Font"];
     GRefObject *fontRef = [[fontDict value] objectForKey:fontKey];
     GDictionaryObject *fontObject = [self.parser getObjectByRef:[fontRef getRefString]];

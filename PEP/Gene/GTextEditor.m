@@ -12,6 +12,7 @@
 #import "GGlyph.h"
 #import "GWord.h"
 #import "GLine.h"
+#import "GFont.h"
 #import "GDocument.h"
 #import "GMisc.h"
 #import "GConstants.h"
@@ -442,7 +443,13 @@
     // Fixme: use any font here, font is not useful by now
     NSString *fontName = [self pdfFontName];
     CGFloat fontSize = [self fontSize];
-    NSFont *font = [NSFont fontWithName:@"Gill Sans" size:fontSize];
+    NSFont *font;
+    GFont *gFont = [GFont fontWithName:fontName page:self.page];
+    if (![gFont embeddedFont]) {
+        font = [gFont getNSFontBySize:fontSize];
+    } else {
+        font = [NSFont fontWithName:@"Gill Sans" size:fontSize];
+    }
     [self insertChar:ch font:font];
     // Do word wrap here, use cached glyphs 
     [self doWordWrap];
@@ -777,7 +784,6 @@
         //GGlyph *firstGlyph = [[currentLine glyphs] firstObject];
         CGAffineTransform lastTextMatrix = [lastWrapGlyph textMatrix];
         wordWrapTextMatrix = textMatrix;
-        // Plus 2 to make correct read order glyphs
         // Now, even we don't add 2 points to the deltaY, it will also work,
         // since we have updated compareGlyphs().
         //
@@ -786,7 +792,7 @@
         // TODO: Better calculatation for delta y by the height
         //       (height = descent of lastWrapGlyp + ascent of next glyph) of
         //       next glyph after line break.
-        CGFloat deltaY = [lastWrapGlyph height] + 2;
+        CGFloat deltaY = [lastWrapGlyph height];
         
         // Check the sign of d component of ctm, and decide the sing of deltaY
         int sign = signOfCGFloat(wordWrapCTM.d);

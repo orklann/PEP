@@ -101,7 +101,6 @@
 - (void)makeReadOrderGlyphs {
     if (cached) return;
     readOrderGlyphs = sortGlyphsInReadOrder(glyphs);
-    [self logGlyphs];
     cached = YES;
 }
 

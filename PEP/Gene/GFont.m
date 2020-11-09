@@ -91,4 +91,8 @@
     CFRelease(font);
     return f;
 }
+
+- (BOOL)embeddedFont {
+    return embededFont;
+}
 @end

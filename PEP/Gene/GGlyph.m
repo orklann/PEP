@@ -93,6 +93,7 @@
     [ret appendString:tm];
     
     // Font
+    // Use 1.0 font size, fontSize is always 1.0, we set it in GInterpreter
     [ret appendFormat:@"/%@ %f Tf ", [self fontName], [self fontSize]];
     
     // Tj
