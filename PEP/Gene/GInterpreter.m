@@ -309,6 +309,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 
 - (void)eval:(CGContextRef)context {
     [self parseCommands];
+    if ([page needUpdate]) {
+        [page buildCachedFonts];
+    }
     NSMutableArray *commands = [self commands];
     NSUInteger i;
     for (i = 0; i < [commands count]; i++) {
