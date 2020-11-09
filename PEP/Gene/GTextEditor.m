@@ -41,6 +41,7 @@
     self.drawInsertionPoint = YES;
     self.isEditing = NO;
     self.firstUsed = YES;
+    self.commandsUpdated = NO;
     self.editingGlyphs = [NSMutableArray array];
     editorWidth = [textBlock frame].size.width;
     editorHeight = [textBlock frame].size.height;
