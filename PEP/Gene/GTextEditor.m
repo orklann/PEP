@@ -453,11 +453,11 @@
     }
     [self insertChar:ch font:font];
     // Do word wrap here, use cached glyphs 
-    //[self doWordWrap];
+    [self doWordWrap];
     [self.page buildPageContent];
-    //[self.page addFont:font withPDFFontName:fontName];
-    //[self.page addPageStream];
-    //[self.page incrementalUpdate];
+    [self.page addFont:font withPDFFontName:fontName];
+    [self.page addPageStream];
+    [self.page incrementalUpdate];
     [self.page setNeedUpdate:YES];
     self.isEditing = NO;
 }
@@ -491,8 +491,16 @@
     //        glyphs in the editor, becasue we always remove previous upadte
     //        in [GPage incrementalUpdate], so news glyphs will fallback to
     //        system fonts, that would cause the font size change.
-    NSFont *font = [NSFont fontWithName:@"Gill Sans" size:1.0];
-    [self.page addFont:font withPDFFontName:@"TT1"];
+    NSString *fontName = [self pdfFontName];
+    CGFloat fontSize = [self fontSize];
+    NSFont *font;
+    GFont *gFont = [GFont fontWithName:fontName page:self.page];
+    if (![gFont embeddedFont]) {
+        font = [gFont getNSFontBySize:fontSize];
+    } else {
+        font = [NSFont fontWithName:@"Gill Sans" size:fontSize];
+    }
+    [self.page addFont:font withPDFFontName:fontName];
     [self deleteCharacterInInsertionPoint];
     // Do word wrap
     [self doWordWrap];

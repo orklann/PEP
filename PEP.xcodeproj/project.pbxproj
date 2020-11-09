@@ -38,6 +38,8 @@
 		936C4305250363E800FFE547 /* test_xref.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 936C4304250363E700FFE547 /* test_xref.pdf */; };
 		9373EEF3251C7E840066AD2A /* GTextState.m in Sources */ = {isa = PBXBuildFile; fileRef = 9373EEF2251C7E840066AD2A /* GTextState.m */; };
 		9373EEF6251C84A80066AD2A /* GFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 9373EEF5251C84A80066AD2A /* GFont.m */; };
+		93899B0225594EF2001D79A8 /* A Sample PDF(Updated).pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93899B0125594EF2001D79A8 /* A Sample PDF(Updated).pdf */; };
+		93899B0425594F04001D79A8 /* A Sample PDF(Updated).pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93899B0325594F04001D79A8 /* A Sample PDF(Updated).pdf */; };
 		938A4E6F252EEFDF00504235 /* GLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 938A4E6E252EEFDF00504235 /* GLine.m */; };
 		938EB9752545A0D80045F463 /* tab.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 938EB9742545A0D80045F463 /* tab.pdf */; };
 		938EB9772545A0F50045F463 /* tab.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 938EB9762545A0F50045F463 /* tab.pdf */; };
@@ -113,6 +115,8 @@
 		9373EEF2251C7E840066AD2A /* GTextState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTextState.m; sourceTree = "<group>"; };
 		9373EEF4251C84A80066AD2A /* GFont.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GFont.h; sourceTree = "<group>"; };
 		9373EEF5251C84A80066AD2A /* GFont.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GFont.m; sourceTree = "<group>"; };
+		93899B0125594EF2001D79A8 /* A Sample PDF(Updated).pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "A Sample PDF(Updated).pdf"; sourceTree = "<group>"; };
+		93899B0325594F04001D79A8 /* A Sample PDF(Updated).pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "A Sample PDF(Updated).pdf"; path = "PEPTests/pdf/A Sample PDF(Updated).pdf"; sourceTree = SOURCE_ROOT; };
 		938A4E6D252EEFDF00504235 /* GLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GLine.h; sourceTree = "<group>"; };
 		938A4E6E252EEFDF00504235 /* GLine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GLine.m; sourceTree = "<group>"; };
 		938EB9742545A0D80045F463 /* tab.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = tab.pdf; sourceTree = "<group>"; };
@@ -209,6 +213,7 @@
 		9363D94B250898D60075FEF0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				93899B0325594F04001D79A8 /* A Sample PDF(Updated).pdf */,
 				9301BEFC25554A10000C6F4E /* A Sample PDF.pdf */,
 				93311A11254EA60500D58E06 /* PEP_Incremental.pdf */,
 				938EB9762545A0F50045F463 /* tab.pdf */,
@@ -222,6 +227,7 @@
 		936C4303250363AD00FFE547 /* pdf */ = {
 			isa = PBXGroup;
 			children = (
+				93899B0125594EF2001D79A8 /* A Sample PDF(Updated).pdf */,
 				9301BEFA25554A05000C6F4E /* A Sample PDF.pdf */,
 				93311A0F254EA5EF00D58E06 /* PEP_Incremental.pdf */,
 				938EB9742545A0D80045F463 /* tab.pdf */,
@@ -366,6 +372,7 @@
 				931221C924F0139300929C01 /* Assets.xcassets in Resources */,
 				931221CC24F0139300929C01 /* MainMenu.xib in Resources */,
 				9301BEFD25554A11000C6F4E /* A Sample PDF.pdf in Resources */,
+				93899B0425594F04001D79A8 /* A Sample PDF(Updated).pdf in Resources */,
 				938EB9772545A0F50045F463 /* tab.pdf in Resources */,
 				9363D9512508994E0075FEF0 /* test_xref.pdf in Resources */,
 			);
@@ -379,6 +386,7 @@
 				93311A10254EA5EF00D58E06 /* PEP_Incremental.pdf in Resources */,
 				938EB9752545A0D80045F463 /* tab.pdf in Resources */,
 				9359739E2543B36800BB217D /* PEP_GillSans.pdf in Resources */,
+				93899B0225594EF2001D79A8 /* A Sample PDF(Updated).pdf in Resources */,
 				936C4305250363E800FFE547 /* test_xref.pdf in Resources */,
 				9301BEFB25554A05000C6F4E /* A Sample PDF.pdf in Resources */,
 			);
@@ -575,7 +583,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = "0.12 alpha";
+				MARKETING_VERSION = "0.13 alpha";
 				PRODUCT_BUNDLE_IDENTIFIER = org.macpep.pep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -594,7 +602,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = "0.12 alpha";
+				MARKETING_VERSION = "0.13 alpha";
 				PRODUCT_BUNDLE_IDENTIFIER = org.macpep.pep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

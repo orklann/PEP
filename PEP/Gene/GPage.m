@@ -137,13 +137,15 @@
     [interpreter setParser:parser];
     [interpreter setInput:pageContent];
     
-    NSDate *methodStart = [NSDate date];
+    //NSDate *methodStart = [NSDate date];
     [interpreter eval:context];
     
+    /* Measrure time */
+    /*
     NSDate *methodFinish = [NSDate date];
     NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
     NSLog(@"Debug: render() executionTime = %f", executionTime);
-    
+    */
     if (textEditor != nil) {
         [textEditor draw:context];
     }
@@ -302,7 +304,7 @@
 }
 
 - (void)buildPageContent {
-    NSDate *methodStart = [NSDate date];
+    //NSDate *methodStart = [NSDate date];
     NSMutableString *ret = [NSMutableString string];
     
     // q Q q
@@ -320,9 +322,11 @@
     //       two Q (Q Q)
     [ret appendString:@"Q\n"];
     pageContent = (NSMutableData*)[ret dataUsingEncoding:NSASCIIStringEncoding];
-    NSDate *methodFinish = [NSDate date];
+    /*
+     NSDate *methodFinish = [NSDate date];
     NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
     NSLog(@"Debug: buildPageContent() executionTime = %f", executionTime);
+     */
     //printData(pageContent);
 }
 
