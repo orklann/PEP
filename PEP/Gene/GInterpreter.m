@@ -52,7 +52,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     return size.width;
 }
 
-- (void)layoutStrings:(NSString*)s context:(CGContextRef)context  tj:(CGFloat)tjDelta{
+- (void)layoutStrings:(NSString*)s context:(CGContextRef)context  tj:(CGFloat)tjDelta prevTj:(int)prevTj{
     NSMutableArray *glyphs = [[page textParser] glyphs];
     NSFont *font = [page getCurrentFont:s];
     CGAffineTransform tm = [[page textState] textMatrix];
@@ -122,6 +122,11 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             // Use font size 1.0, we set font size in text matrix already
             //[glyph setFontSize:[[page textState] fontSize]];
             [glyph setFontSize:1.0];
+            
+            // Only set delta to first glyph of a string
+            if (i == 0) {
+                [glyph setDelta:prevTj];
+            }
             [glyphs addObject:glyph];
         }
         
@@ -275,7 +280,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 - (void)eval_Tj_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     NSString *string = [(GLiteralStringsObject*)[[cmdObj args] objectAtIndex:0]
                         value];
-    [self layoutStrings:string context:context tj:0];
+    [self layoutStrings:string context:context tj:0 prevTj:0];
 }
 
 - (void)eval_Td_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -290,18 +295,28 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 
 - (void)eval_TJ_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     GArrayObject *array = [[cmdObj args] objectAtIndex:0];
-    NSUInteger i;
+    int i;
     CGFloat tjDelta = 0.0;
+    int prevTj = 0;
     for (i = 0; i < [[array value] count]; i++) {
         id a = [[array value] objectAtIndex:i];
         if ([(GObject*)a type] == kLiteralStringsObject) { // Literal strings
-            if (i + 1 <= [[array value] count] -1) {
+            if (i + 1 <= [[array value] count] - 1) {
                 id nextObject = [[array value] objectAtIndex:i + 1];
                 if ([(GObject*)nextObject type] == kNumberObject) { // Next object is offset
                     tjDelta = [(GNumberObject*)nextObject getRealValue];
                 }
             }
-            [self layoutStrings:[(GLiteralStringsObject*)a value] context:context tj:tjDelta];
+            
+            if (i - 1 >= 0) {
+                id prevObject = [[array value] objectAtIndex:i - 1];
+                if ([(GObject*)prevObject type] == kNumberObject) { // Prev object is offset
+                    prevTj = (int)[(GNumberObject*)prevObject getRealValue];
+                } else {
+                    prevTj = 0;
+                }
+            }
+            [self layoutStrings:[(GLiteralStringsObject*)a value] context:context tj:tjDelta prevTj:prevTj];
             tjDelta = 0.0;
         }
     }
