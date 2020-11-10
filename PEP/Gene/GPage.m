@@ -18,6 +18,7 @@
 #import "GLine.h"
 #import "GTextBlock.h"
 #import "GGlyph.h"
+#import "GCompiler.h"
 #import "GBinaryData.h"
 
 @implementation GPage
@@ -163,7 +164,7 @@
     
     [self setNeedUpdate:NO];
     self.isRendering = NO;
-    NSLog(@"Debug: render done");
+    
     /* Test: draw glyph bounding box */
     /*for (GGlyph * g in [textParser glyphs]) {
         NSRect r = [g frame];
@@ -304,31 +305,38 @@
 }
 
 - (void)buildPageContent {
-    //NSDate *methodStart = [NSDate date];
-    NSMutableString *ret = [NSMutableString string];
-    
-    // q Q q
-    [ret appendString:@" q Q q "];
-
-    int i;
-    for (i = 0; i < [[textParser glyphs] count]; i++) {
-        GGlyph *g = [[textParser glyphs] objectAtIndex:i];
-        [ret appendString:[g complieToOperators]];
-    }
-    
-    // Q
-    // TODO: Fix context origin restore to (bottom, left) that causes
-    //       text block frame not drawn at the right position, due to
-    //       two Q (Q Q)
-    [ret appendString:@"Q\n"];
-    pageContent = (NSMutableData*)[ret dataUsingEncoding:NSASCIIStringEncoding];
-    /*
-     NSDate *methodFinish = [NSDate date];
-    NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
-    NSLog(@"Debug: buildPageContent() executionTime = %f", executionTime);
-     */
-    //printData(pageContent);
+    GCompiler *comp = [GCompiler compilerWithPage:self];
+    NSString *result = [comp compile];
+    pageContent = (NSMutableData*)[result dataUsingEncoding:NSASCIIStringEncoding];
+    printData(pageContent);
 }
+
+//- (void)buildPageContent {
+//    //NSDate *methodStart = [NSDate date];
+//    NSMutableString *ret = [NSMutableString string];
+//
+//    // q Q q
+//    [ret appendString:@" q Q q "];
+//
+//    int i;
+//    for (i = 0; i < [[textParser glyphs] count]; i++) {
+//        GGlyph *g = [[textParser glyphs] objectAtIndex:i];
+//        [ret appendString:[g complieToOperators]];
+//    }
+//
+//    // Q
+//    // TODO: Fix context origin restore to (bottom, left) that causes
+//    //       text block frame not drawn at the right position, due to
+//    //       two Q (Q Q)
+//    [ret appendString:@"Q\n"];
+//    pageContent = (NSMutableData*)[ret dataUsingEncoding:NSASCIIStringEncoding];
+//    /*
+//     NSDate *methodFinish = [NSDate date];
+//    NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
+//    NSLog(@"Debug: buildPageContent() executionTime = %f", executionTime);
+//     */
+//    //printData(pageContent);
+//}
 
 - (void)redraw {
     [[self doc] setNeedsDisplay:YES];

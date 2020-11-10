@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9301BEFB25554A05000C6F4E /* A Sample PDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9301BEFA25554A05000C6F4E /* A Sample PDF.pdf */; };
 		9301BEFD25554A11000C6F4E /* A Sample PDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9301BEFC25554A10000C6F4E /* A Sample PDF.pdf */; };
+		9307B2AA255A6996000468A9 /* GCompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9307B2A9255A6996000468A9 /* GCompiler.m */; };
 		930ACC9B250759780092206C /* GDecoders.m in Sources */ = {isa = PBXBuildFile; fileRef = 930ACC9A250759780092206C /* GDecoders.m */; };
 		930ACC9D250763C30092206C /* GDecodersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 930ACC9C250763C30092206C /* GDecodersTests.m */; };
 		930B09BB25412AEE00ED00BD /* GMiscTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 930B09BA25412AEE00ED00BD /* GMiscTests.m */; };
@@ -68,6 +69,8 @@
 /* Begin PBXFileReference section */
 		9301BEFA25554A05000C6F4E /* A Sample PDF.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "A Sample PDF.pdf"; sourceTree = "<group>"; };
 		9301BEFC25554A10000C6F4E /* A Sample PDF.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "A Sample PDF.pdf"; path = "PEPTests/pdf/A Sample PDF.pdf"; sourceTree = SOURCE_ROOT; };
+		9307B2A8255A6996000468A9 /* GCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCompiler.h; sourceTree = "<group>"; };
+		9307B2A9255A6996000468A9 /* GCompiler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCompiler.m; sourceTree = "<group>"; };
 		930ACC99250759780092206C /* GDecoders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDecoders.h; sourceTree = "<group>"; };
 		930ACC9A250759780092206C /* GDecoders.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDecoders.m; sourceTree = "<group>"; };
 		930ACC9C250763C30092206C /* GDecodersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDecodersTests.m; sourceTree = "<group>"; };
@@ -275,6 +278,8 @@
 				93159E61252B09F400F87451 /* GTextParser.m */,
 				93D48C1C2536CAAA002DD41B /* GTextEditor.h */,
 				93D48C1D2536CAAA002DD41B /* GTextEditor.m */,
+				9307B2A8255A6996000468A9 /* GCompiler.h */,
+				9307B2A9255A6996000468A9 /* GCompiler.m */,
 				93A86928251399760033DC22 /* GPage.h */,
 				93A86929251399760033DC22 /* GPage.m */,
 				9363D948250895610075FEF0 /* GDocument.h */,
@@ -405,6 +410,7 @@
 				93311A0E254D456000D58E06 /* GWrappedLine.m in Sources */,
 				93D48C1E2536CAAA002DD41B /* GTextEditor.m in Sources */,
 				93159E5F252AEB5E00F87451 /* GGlyph.m in Sources */,
+				9307B2AA255A6996000468A9 /* GCompiler.m in Sources */,
 				9363D94A250895610075FEF0 /* GDocument.m in Sources */,
 				935BCC3A252C61B900868C01 /* GWord.m in Sources */,
 				93DC04C424F7B335003AC9B0 /* GParser.m in Sources */,
