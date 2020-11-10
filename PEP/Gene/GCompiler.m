@@ -56,8 +56,21 @@
 - (BOOL)glyph:(GGlyph*)g1 inSameLineWithGlyph:(GGlyph*)g2 {
     NSPoint p1 = [g1 frame].origin;
     NSPoint p2 = [g2 frame].origin;
+    
     if (p1.y == p2.y && // 1: The same y
         [[g1 fontName] isEqualToString:[g2 fontName]]) { // 2: Same font name
+        
+        NSRect f1 = [g1 frame];
+        NSRect f2 = [g2 frame];
+        CGFloat maxX = NSMaxX(f1);
+        CGFloat minX = NSMinX(f2);
+        // If next glyph (g2) delta is 0, but maxX != minX, means g1 and g2
+        // should not in the same TJ (same line), because g2's text matrix was
+        // setting by separately with other operators, like (Td, Tm, etc)
+        // To make glyphs position exactly as its before compilation
+        if ([g2 delta] == 0 && maxX != minX) {
+            return NO;
+        }
         return YES;
     }
     return NO;
