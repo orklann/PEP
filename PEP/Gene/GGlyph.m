@@ -13,6 +13,7 @@
 @implementation GGlyph
 + (id)create {
     GGlyph *g = [[GGlyph alloc] init];
+    [g setDelta:0];
     return g;
 }
 
