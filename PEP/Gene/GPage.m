@@ -235,6 +235,12 @@
     if (textEditor) {
         [textEditor keyDown:event];
     }
+    
+    /*
+    [self buildPageContent];
+    [self setNeedUpdate:YES];
+    [self redraw];
+    */
 }
 
 - (void)mouseDown:(NSEvent*)event {

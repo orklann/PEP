@@ -10,6 +10,9 @@
 #import "GGlyph.h"
 #import "GPage.h"
 
+#define kEndString @")"
+#define kEndTJ @") ] TJ\nET\n"
+
 @implementation GCompiler
 + (id)compilerWithPage:(GPage*)page {
     GCompiler *comp = [[GCompiler alloc] init];
@@ -34,11 +37,11 @@
             if ([nextGlyph delta] == 0) {
                 [currentTJ appendString:[nextGlyph literalString]];
             } else {
-                [currentTJ appendString:[self endString]];
+                [currentTJ appendString:kEndString];
                 [currentTJ appendString:[self startStringWithGlyph:nextGlyph]];
             }
         } else {
-            [currentTJ appendString:[self endTJ]];
+            [currentTJ appendString:kEndTJ];
             [result appendString:currentTJ];
             currentTJ = [NSMutableString string];
             [currentTJ appendString:[self startTJWithGlyph:nextGlyph]];
@@ -116,9 +119,5 @@
         return [NSString stringWithFormat:@" %d (%@", [g delta], [g literalString]];
     }
     return [NSString stringWithFormat:@"(%@", [g literalString]];
-}
-
-- (NSString*)endString {
-    return @")";
 }
 @end
