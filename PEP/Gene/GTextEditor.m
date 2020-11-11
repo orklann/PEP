@@ -575,7 +575,7 @@
     NSPoint startPoint = [startGlyph point];
     startPoint.x += ([startGlyph width] / 2);
     
-    NSLog(@"index: (start) %@", [startGlyph content]);
+    //NSLog(@"index: (start) %@", [startGlyph content]);
     [self moveGlyph:startGlyph byDeltaX:deltaX byDeltaY:0];
     
     int i;
@@ -583,7 +583,7 @@
         GGlyph *g = [textBlockGlyphs objectAtIndex:i];
         NSPoint p = [g point];
         if (p.x >= startPoint.x) {
-            NSLog(@"index: %d %@", i, [g content]);
+            //NSLog(@"index: %d %@", i, [g content]);
             [self moveGlyph:g byDeltaX:deltaX byDeltaY:0];
         } else if (p.x < startPoint.x) {
             break;

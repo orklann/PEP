@@ -314,7 +314,7 @@
     GCompiler *comp = [GCompiler compilerWithPage:self];
     NSString *result = [comp compile];
     pageContent = (NSMutableData*)[result dataUsingEncoding:NSASCIIStringEncoding];
-    printData(pageContent);
+    //printData(pageContent);
 }
 
 //- (void)buildPageContent {

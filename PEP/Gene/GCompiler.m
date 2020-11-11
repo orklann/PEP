@@ -26,7 +26,7 @@
 
 - (NSString*)compile {
     NSMutableString *result = [NSMutableString string];
-    NSArray *glyphs = [[page textParser] readOrderGlyphs];
+    NSArray *glyphs = [[page textParser] glyphs];
     GGlyph *prevGlyph = [glyphs firstObject];
     NSMutableString *currentTJ = [NSMutableString string];
     [currentTJ appendString:[self startTJWithGlyph:prevGlyph]];
