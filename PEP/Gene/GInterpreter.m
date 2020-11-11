@@ -323,7 +323,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }
 
 - (void)eval:(CGContextRef)context {
-    NSDate *methodStart = [NSDate date];
+    //NSDate *methodStart = [NSDate date];
     if ([page needUpdate]) {
         [self parseCommands];
         [page buildCachedFonts];
@@ -356,13 +356,15 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             }
         }
     } else {
-        NSLog(@"Debug:No Need Update");
         [self drawAllGlyphs:context];
     }
     
+    /* Measure time */
+/*
     NSDate *methodFinish = [NSDate date];
     NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
     NSLog(@"Debug: eval() executionTime = %f", executionTime);
+*/
 }
 
 - (void)drawAllGlyphs:(CGContextRef)context {

@@ -454,11 +454,14 @@
     [self insertChar:ch font:font];
     // Do word wrap here, use cached glyphs 
     [self doWordWrap];
-    [self.page buildPageContent];
+    // We don't update page content, just update [GTextParser glyphs]
+    // And udpate its readOrderGlyphs by setting no cached below
+    //[self.page buildPageContent];
     [self.page addFont:font withPDFFontName:fontName];
-    [self.page addPageStream];
-    [self.page incrementalUpdate];
-    [self.page setNeedUpdate:YES];
+    //[self.page addPageStream];
+    //[self.page incrementalUpdate];
+    [[self.page textParser] setCached:NO];
+    //[self.page setNeedUpdate:YES];
     self.isEditing = NO;
 }
 
@@ -504,10 +507,11 @@
     [self deleteCharacterInInsertionPoint];
     // Do word wrap
     [self doWordWrap];
-    [self.page buildPageContent];
-    [self.page addPageStream];
-    [self.page incrementalUpdate];
-    [self.page setNeedUpdate:YES];
+    [[self.page textParser] setCached:NO];
+    //[self.page buildPageContent];
+    //[self.page addPageStream];
+    //[self.page incrementalUpdate];
+    //[self.page setNeedUpdate:YES];
     self.isEditing = NO;
 }
 
@@ -603,7 +607,7 @@
         GGlyph *g = [textBlockGlyphs objectAtIndex:i];
         NSPoint p = [g point];
         if (p.x >= startPoint.x) {
-            NSLog(@"index: %d %@", i, [g content]);
+            //NSLog(@"index: %d %@", i, [g content]);
             [self moveGlyph:g byDeltaX:deltaX byDeltaY:0];
         } else if (p.x < startPoint.x) {
             break;
