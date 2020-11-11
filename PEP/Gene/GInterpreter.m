@@ -323,37 +323,69 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }
 
 - (void)eval:(CGContextRef)context {
-    [self parseCommands];
+    NSDate *methodStart = [NSDate date];
     if ([page needUpdate]) {
+        [self parseCommands];
         [page buildCachedFonts];
-    }
-    NSMutableArray *commands = [self commands];
-    NSUInteger i;
-    for (i = 0; i < [commands count]; i++) {
-        id obj = [commands objectAtIndex:i];
-        if ([(GObject*)obj type] == kCommandObject) {
-            GCommandObject *cmdObj = (GCommandObject*)obj;
-            NSString *cmd = [cmdObj cmd];
-            if (isCommand(cmd, @"Q")) { // eval Q
-                [self eval_Q_Command:context];
-            } else if (isCommand(cmd, @"q")) { // eval q
-                [self eval_q_Command:context];
-            } else if (isCommand(cmd, @"cm")) { // eval cm
-                [self eval_cm_Command:context command:cmdObj];
-            } else if (isCommand(cmd, @"Tm")) { // eval Tm
-                [self eval_Tm_Command:context command:cmdObj];
-            } else if (isCommand(cmd, @"Tf")) { // eval Tf
-                [self eval_Tf_Command:context command:cmdObj];
-            } else if (isCommand(cmd, @"TJ")) { // eval TJ
-                [self eval_TJ_Command:context command:cmdObj];
-            } else if (isCommand(cmd, @"Tj")) { // eval Tj
-                [self eval_Tj_Command:context command:cmdObj];
-            } else if (isCommand(cmd, @"Td")) { // eval Td
-                [self eval_Td_Command:context command:cmdObj];
-            } else {
-                //NSLog(@"Operator %@ not eval.", cmd);
+        NSMutableArray *commands = [self commands];
+        NSUInteger i;
+        for (i = 0; i < [commands count]; i++) {
+            id obj = [commands objectAtIndex:i];
+            if ([(GObject*)obj type] == kCommandObject) {
+                GCommandObject *cmdObj = (GCommandObject*)obj;
+                NSString *cmd = [cmdObj cmd];
+                if (isCommand(cmd, @"Q")) { // eval Q
+                    [self eval_Q_Command:context];
+                } else if (isCommand(cmd, @"q")) { // eval q
+                    [self eval_q_Command:context];
+                } else if (isCommand(cmd, @"cm")) { // eval cm
+                    [self eval_cm_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"Tm")) { // eval Tm
+                    [self eval_Tm_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"Tf")) { // eval Tf
+                    [self eval_Tf_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"TJ")) { // eval TJ
+                    [self eval_TJ_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"Tj")) { // eval Tj
+                    [self eval_Tj_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"Td")) { // eval Td
+                    [self eval_Td_Command:context command:cmdObj];
+                } else {
+                    //NSLog(@"Operator %@ not eval.", cmd);
+                }
             }
         }
+    } else {
+        NSLog(@"Debug:No Need Update");
+        [self drawAllGlyphs:context];
     }
+    
+    NSDate *methodFinish = [NSDate date];
+    NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
+    NSLog(@"Debug: eval() executionTime = %f", executionTime);
+}
+
+- (void)drawAllGlyphs:(CGContextRef)context {
+    for (GGlyph * glyph in [[page textParser] glyphs]) {
+        [self drawGlyph:glyph inContext:context];
+    }
+    CGContextRestoreGState(context); // Q
+}
+
+- (void)drawGlyph:(GGlyph*)glyph inContext:(CGContextRef)context {
+    
+    if (!CGAffineTransformEqualToTransform(CGContextGetCTM(context), [glyph ctm])) {
+        CGContextSaveGState(context); // q
+        CGContextRestoreGState(context); // Q
+        CGContextSaveGState(context); // q
+        CGContextConcatCTM(context, [glyph ctm]);
+    }
+    
+    CGContextSetTextMatrix(context, [glyph textMatrix]);
+    NSString *fontKey = [NSString stringWithFormat:@"%@-%f", [glyph fontName],
+                         [glyph fontSize]];
+    NSFont *font = [page getCachedFontForKey:fontKey];
+    NSString *ch = [glyph content];
+    [self drawString:ch font:font context:context];
 }
 @end

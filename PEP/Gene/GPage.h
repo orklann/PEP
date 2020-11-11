@@ -63,6 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (GFont*)getFontByName:(NSString*)name;
 - (NSFont*)getFontByName:(NSString*)name size:(CGFloat)size;
 - (NSFont*)getCurrentFont:(NSString*)s;
+- (NSFont*)getCachedFontForKey:(NSString*)key;
 - (GGraphicsState*)graphicsState;
 - (GTextState*)textState;
 - (GTextParser*)textParser;

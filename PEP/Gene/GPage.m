@@ -214,6 +214,10 @@
     return f;
 }
 
+- (NSFont*)getCachedFontForKey:(NSString*)key {
+    return [self.cachedFonts objectForKey:key];
+}
+
 - (NSFont*)getFontByName:(NSString*)name size:(CGFloat)size {
     GFont *font = [self getFontByName:name];
     return [font getNSFontBySize:size];
