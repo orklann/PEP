@@ -346,7 +346,6 @@
     NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
     [p setStream:d];
     [p parse];
-    NSMutableArray *objs = [p objects];
 }
 
 - (void)testGParserParseDictionaryObject {
