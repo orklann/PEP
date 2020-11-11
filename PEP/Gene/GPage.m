@@ -318,7 +318,7 @@
     GCompiler *comp = [GCompiler compilerWithPage:self];
     NSString *result = [comp compile];
     pageContent = (NSMutableData*)[result dataUsingEncoding:NSASCIIStringEncoding];
-    //printData(pageContent);
+    printData(pageContent);
 }
 
 //- (void)buildPageContent {
@@ -534,6 +534,10 @@
 }
 
 - (void)incrementalUpdate {
+    // Build page content, and add it to "dataToUpdate" array
+    [self buildPageContent];
+    [self addPageStream];
+    
     NSMutableData *stream = [self.parser stream];
     // remove last added content from stream
     [stream setLength:self.lastStreamOffset];

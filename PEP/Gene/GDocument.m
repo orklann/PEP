@@ -32,6 +32,8 @@
 }
 
 - (void)saveAs:(NSString*)path {
+    GPage *firstPage = [pages firstObject];
+    [firstPage incrementalUpdate];
     [[parser stream] writeToFile:path atomically:YES];
 }
 
