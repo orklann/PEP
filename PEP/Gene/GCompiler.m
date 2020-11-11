@@ -28,6 +28,9 @@
     NSMutableString *result = [NSMutableString string];
     NSArray *glyphs = [[page textParser] readOrderGlyphs];
     GGlyph *prevGlyph = [glyphs firstObject];
+    
+    [result appendString:@"q\n"];
+    
     NSMutableString *currentTJ = [NSMutableString string];
     [currentTJ appendString:[self startTJWithGlyph:prevGlyph]];
     int i = 1;
@@ -83,7 +86,7 @@
     CGAffineTransform ctm = [g ctm];
     CGAffineTransform textMatrix = [g textMatrix];
     NSMutableString *result = [NSMutableString string];
-    [result appendString:@"\nq\nQ\nq\n"];
+    [result appendString:@"\nQ\nq\n"];
     
     // cm operator
     NSString *cm = [NSString stringWithFormat:@"%f %f %f %f %f %f cm\n",

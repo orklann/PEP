@@ -315,6 +315,8 @@
 }
 
 - (void)buildPageContent {
+    [[self textParser] setCached:NO];
+    [[self textParser] makeReadOrderGlyphs];
     GCompiler *comp = [GCompiler compilerWithPage:self];
     NSString *result = [comp compile];
     pageContent = (NSMutableData*)[result dataUsingEncoding:NSASCIIStringEncoding];
@@ -504,6 +506,13 @@
                 [xrefTable appendString:subTable];
             }
         }
+    }
+    
+    if ([subTable length] > 0) {
+        NSString *subTableHeader = [NSString stringWithFormat:@"%d %d\r\n",
+                                    startIndex, count];
+        [xrefTable appendString:subTableHeader];
+        [xrefTable appendString:subTable];
     }
     return [xrefTable dataUsingEncoding:NSASCIIStringEncoding];
 }

@@ -457,7 +457,7 @@
     // We don't update page content, just update [GTextParser glyphs]
     // And udpate its readOrderGlyphs by setting no cached below
     //[self.page buildPageContent];
-    [self.page addFont:font withPDFFontName:fontName];
+    //[self.page addFont:font withPDFFontName:fontName];
     //[self.page addPageStream];
     //[self.page incrementalUpdate];
     [[self.page textParser] setCached:NO];
@@ -503,7 +503,7 @@
     } else {
         font = [NSFont fontWithName:@"Gill Sans" size:fontSize];
     }
-    [self.page addFont:font withPDFFontName:fontName];
+    //[self.page addFont:font withPDFFontName:fontName];
     [self deleteCharacterInInsertionPoint];
     // Do word wrap
     [self doWordWrap];

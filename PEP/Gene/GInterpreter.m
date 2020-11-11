@@ -368,6 +368,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }
 
 - (void)drawAllGlyphs:(CGContextRef)context {
+    CGContextSaveGState(context); // q
     for (GGlyph * glyph in [[page textParser] glyphs]) {
         [self drawGlyph:glyph inContext:context];
     }
@@ -377,7 +378,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 - (void)drawGlyph:(GGlyph*)glyph inContext:(CGContextRef)context {
     
     if (!CGAffineTransformEqualToTransform(CGContextGetCTM(context), [glyph ctm])) {
-        CGContextSaveGState(context); // q
         CGContextRestoreGState(context); // Q
         CGContextSaveGState(context); // q
         CGContextConcatCTM(context, [glyph ctm]);
