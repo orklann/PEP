@@ -477,12 +477,14 @@
                                             startIndex, count];
                 [xrefTable appendString:subTableHeader];
                 [xrefTable appendString:subTable];
+                subTable = [NSMutableString string];
             }
         } else { // Add sub table
             NSString *subTableHeader = [NSString stringWithFormat:@"%d %d\r\n",
                                         startIndex, count];
             [xrefTable appendString:subTableHeader];
             [xrefTable appendString:subTable];
+            subTable = [NSMutableString string];
             
             // We have other sub tables, start new sub table
             if (i + 1 < len && i != len - 1) {
@@ -504,6 +506,7 @@
                                             startIndex, count];
                 [xrefTable appendString:subTableHeader];
                 [xrefTable appendString:subTable];
+                subTable = [NSMutableString string];
             }
         }
     }

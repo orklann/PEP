@@ -221,6 +221,8 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     NSMutableData *d = [NSMutableData dataWithCapacity:100];
     unsigned char next = [self nextChar];
     while(!isWhiteSpace(next)) {
+        if (next == '[' || next == '('
+            || next == '<' ||next == '/') break;
         if (next == '#') {
             unsigned char ch1 = [self nextChar];
             unsigned char ch2 = [self nextChar];
@@ -393,7 +395,8 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     switch (current) {
         case 'R': // Indirect object reference
         {
-            if (isWhiteSpace([self nextChar])) {
+            char next = [self nextChar];
+            if (isWhiteSpace(next) || isDelimiter(next)) {
                 [token setType:kRefToken];
                 [token setContent:[NSData dataWithBytes:"R" length:1]];
             }

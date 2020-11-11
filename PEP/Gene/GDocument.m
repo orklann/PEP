@@ -113,8 +113,8 @@
     NSBundle *mainBundle = [NSBundle mainBundle];
     // TODO: Use test_xref.pdf by default without ability to custom file, will
     // do it later
-    file = [mainBundle pathForResource:@"PEP_Incremental" ofType:@"pdf"];
-    //file = [mainBundle pathForResource:@"A Sample PDF" ofType:@"pdf"];
+    //file = [mainBundle pathForResource:@"PEP_Incremental" ofType:@"pdf"];
+    file = [mainBundle pathForResource:@"Sample_001" ofType:@"pdf"];
     NSMutableData *d = [NSMutableData dataWithContentsOfFile:file];
     [parser setStream:d];
 
@@ -127,6 +127,7 @@
     // Get Root ref
     GRefObject *root = [[trailer value] objectForKey:@"Root"];
     // Get catalog dictionary object
+    NSLog(@"Root ref: %@", [root getRefString]);
     GDictionaryObject *catalogObject = [parser getObjectByRef:[root getRefString]];
     GRefObject *pagesRef = [[catalogObject value] objectForKey:@"Pages"];
     // Get pages dictionary object
@@ -139,6 +140,7 @@
     NSUInteger i;
     for (i = 0; i < [array count]; i++) {
         GRefObject *ref = (GRefObject*)[array objectAtIndex:i];
+        NSLog(@"Debug: kid ref: %@", [ref getRefString]);
         GDictionaryObject *pageDict = [parser getObjectByRef:[ref getRefString]];
         GPage *page = [GPage create];
         [page setPageDictionary:pageDict];

@@ -332,6 +332,23 @@
     }
 }
 
+- (void)testParserDictionaryObject2 {
+    GParser *p = [GParser parser];
+    /*char *b = "<</Type/Catalog/Pages 7 0 R "
+        "/OpenAction[1 0 R /XYZ null null 0]"
+        "/Lang(en-US)"
+        ">>";*/
+    char *b = "<</Type/Pages\n"
+        "/Resources 10 0 R\n"
+        "/MediaBox[ 0 0 612 792 ]\n"
+        "/Kids[ 1 0 R 4 0 R ]\n"
+        "/Count 2>>";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+}
+
 - (void)testGParserParseDictionaryObject {
     GParser *p = [GParser parser];
     char *b = "<</Name (PEP) /Subtype /DictionaryExample /Length 128 "
