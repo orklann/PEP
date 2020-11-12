@@ -140,7 +140,6 @@
     NSUInteger i;
     for (i = 0; i < [array count]; i++) {
         GRefObject *ref = (GRefObject*)[array objectAtIndex:i];
-        NSLog(@"Debug: kid ref: %@", [ref getRefString]);
         GDictionaryObject *pageDict = [parser getObjectByRef:[ref getRefString]];
         GPage *page = [GPage create];
         [page setPageDictionary:pageDict];

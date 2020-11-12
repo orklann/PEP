@@ -300,7 +300,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     int prevTj = 0;
     for (i = 0; i < [[array value] count]; i++) {
         id a = [[array value] objectAtIndex:i];
-        if ([(GObject*)a type] == kLiteralStringsObject) { // Literal strings
+        if ([(GObject*)a type] == kLiteralStringsObject ||
+            [(GObject*)a type] == kHexStringsObject) { // Literal strings
             if (i + 1 <= [[array value] count] - 1) {
                 id nextObject = [[array value] objectAtIndex:i + 1];
                 if ([(GObject*)nextObject type] == kNumberObject) { // Next object is offset
@@ -316,7 +317,14 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     prevTj = 0;
                 }
             }
-            [self layoutStrings:[(GLiteralStringsObject*)a value] context:context tj:tjDelta prevTj:prevTj];
+            
+            NSString *string;
+            if ([(GObject*)a type] == kLiteralStringsObject) {
+                string = [(GLiteralStringsObject*)a value];
+            } else if ([(GObject*)a type] == kHexStringsObject) {
+                string = [(GHexStringsObject*)a stringValue];
+            }
+            [self layoutStrings:string context:context tj:tjDelta prevTj:prevTj];
             tjDelta = 0.0;
         }
     }

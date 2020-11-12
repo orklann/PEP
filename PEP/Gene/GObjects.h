@@ -110,6 +110,7 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
 - (void)setValue:(NSData*)v;
 - (NSData *)value;
 - (void)parse;
+- (NSString*)stringValue;
 - (NSString*)toString;
 @end
 

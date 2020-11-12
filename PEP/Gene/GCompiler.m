@@ -28,7 +28,6 @@
     NSMutableString *result = [NSMutableString string];
     NSArray *glyphs = [[page textParser] readOrderGlyphs];
     GGlyph *prevGlyph = [glyphs firstObject];
-    
     [result appendString:@"q\n"];
     
     NSMutableString *currentTJ = [NSMutableString string];

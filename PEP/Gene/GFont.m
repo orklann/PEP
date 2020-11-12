@@ -45,6 +45,12 @@
     GRefObject *ref = [[fonts value] objectForKey:fontName];
     GDictionaryObject *font = [parser getObjectByRef:[ref getRefString]];
     ref = [[font value] objectForKey:@"FontDescriptor"];
+    if (ref == nil) {
+        embededFont = NO;
+        GNameObject *baseFont = [[font value] objectForKey:@"BaseFont"];
+        noneEmbeddedFontName = [baseFont value];
+        return ;
+    }
     GDictionaryObject *descriptor = [parser getObjectByRef:[ref getRefString]];
     
     // Check if font is embedded font, if not embeded, just return and set embededFont to NO

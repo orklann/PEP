@@ -344,6 +344,10 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
     value = (NSData*)d;
 }
 
+- (NSString*)stringValue {
+    return [[NSString alloc] initWithData:value encoding:NSASCIIStringEncoding];
+}
+
 - (NSString*)toString {
     NSMutableString *ret = [NSMutableString string];
     [ret appendString:@"<"];
