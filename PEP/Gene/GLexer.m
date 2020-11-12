@@ -221,8 +221,7 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     NSMutableData *d = [NSMutableData dataWithCapacity:100];
     unsigned char next = [self nextChar];
     while(!isWhiteSpace(next)) {
-        if (next == '[' || next == '('
-            || next == '<' ||next == '/') break;
+        if (isDelimiter(next)) break;
         if (next == '#') {
             unsigned char ch1 = [self nextChar];
             unsigned char ch2 = [self nextChar];
