@@ -606,7 +606,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MARKETING_VERSION = "0.14 alpha";
 				PRODUCT_BUNDLE_IDENTIFIER = org.macpep.pep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -627,7 +627,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				MARKETING_VERSION = "0.14 alpha";
 				PRODUCT_BUNDLE_IDENTIFIER = org.macpep.pep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
