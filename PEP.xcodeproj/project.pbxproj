@@ -10,8 +10,6 @@
 		9301BEFB25554A05000C6F4E /* A Sample PDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9301BEFA25554A05000C6F4E /* A Sample PDF.pdf */; };
 		9301BEFD25554A11000C6F4E /* A Sample PDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9301BEFC25554A10000C6F4E /* A Sample PDF.pdf */; };
 		9307B2AA255A6996000468A9 /* GCompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9307B2A9255A6996000468A9 /* GCompiler.m */; };
-		9307B2B4255C2A50000468A9 /* Sample_001.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9307B2B3255C2A50000468A9 /* Sample_001.pdf */; };
-		9307B2B6255C2A5F000468A9 /* Sample_001.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9307B2B5255C2A5F000468A9 /* Sample_001.pdf */; };
 		930ACC9B250759780092206C /* GDecoders.m in Sources */ = {isa = PBXBuildFile; fileRef = 930ACC9A250759780092206C /* GDecoders.m */; };
 		930ACC9D250763C30092206C /* GDecodersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 930ACC9C250763C30092206C /* GDecodersTests.m */; };
 		930B09BB25412AEE00ED00BD /* GMiscTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 930B09BA25412AEE00ED00BD /* GMiscTests.m */; };
@@ -49,6 +47,8 @@
 		93A8692A251399760033DC22 /* GPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A86929251399760033DC22 /* GPage.m */; };
 		93A8692D25147ECA0033DC22 /* GMisc.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A8692C25147ECA0033DC22 /* GMisc.m */; };
 		93D48C1E2536CAAA002DD41B /* GTextEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D48C1D2536CAAA002DD41B /* GTextEditor.m */; };
+		93DB0FC0255CCD350030F33A /* Sample_001.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93DB0FBF255CCD350030F33A /* Sample_001.pdf */; };
+		93DB0FC2255CCD410030F33A /* Sample_001.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93DB0FC1255CCD410030F33A /* Sample_001.pdf */; };
 		93DC04C424F7B335003AC9B0 /* GParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C324F7B335003AC9B0 /* GParser.m */; };
 		93DC04C624F7B474003AC9B0 /* GParserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C524F7B474003AC9B0 /* GParserTests.m */; };
 		93DC04C924F7B6EB003AC9B0 /* GObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DC04C824F7B6EB003AC9B0 /* GObjects.m */; };
@@ -73,8 +73,6 @@
 		9301BEFC25554A10000C6F4E /* A Sample PDF.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "A Sample PDF.pdf"; path = "PEPTests/pdf/A Sample PDF.pdf"; sourceTree = SOURCE_ROOT; };
 		9307B2A8255A6996000468A9 /* GCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCompiler.h; sourceTree = "<group>"; };
 		9307B2A9255A6996000468A9 /* GCompiler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCompiler.m; sourceTree = "<group>"; };
-		9307B2B3255C2A50000468A9 /* Sample_001.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Sample_001.pdf; sourceTree = "<group>"; };
-		9307B2B5255C2A5F000468A9 /* Sample_001.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Sample_001.pdf; path = PEPTests/pdf/Sample_001.pdf; sourceTree = SOURCE_ROOT; };
 		930ACC99250759780092206C /* GDecoders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDecoders.h; sourceTree = "<group>"; };
 		930ACC9A250759780092206C /* GDecoders.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDecoders.m; sourceTree = "<group>"; };
 		930ACC9C250763C30092206C /* GDecodersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDecodersTests.m; sourceTree = "<group>"; };
@@ -134,6 +132,8 @@
 		93A8692C25147ECA0033DC22 /* GMisc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GMisc.m; sourceTree = "<group>"; };
 		93D48C1C2536CAAA002DD41B /* GTextEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTextEditor.h; sourceTree = "<group>"; };
 		93D48C1D2536CAAA002DD41B /* GTextEditor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTextEditor.m; sourceTree = "<group>"; };
+		93DB0FBF255CCD350030F33A /* Sample_001.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Sample_001.pdf; sourceTree = "<group>"; };
+		93DB0FC1255CCD410030F33A /* Sample_001.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = Sample_001.pdf; path = PEPTests/pdf/Sample_001.pdf; sourceTree = SOURCE_ROOT; };
 		93DC04C224F7B335003AC9B0 /* GParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GParser.h; sourceTree = "<group>"; };
 		93DC04C324F7B335003AC9B0 /* GParser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GParser.m; sourceTree = "<group>"; };
 		93DC04C524F7B474003AC9B0 /* GParserTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GParserTests.m; sourceTree = "<group>"; };
@@ -220,7 +220,7 @@
 		9363D94B250898D60075FEF0 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				9307B2B5255C2A5F000468A9 /* Sample_001.pdf */,
+				93DB0FC1255CCD410030F33A /* Sample_001.pdf */,
 				93899B0325594F04001D79A8 /* A Sample PDF(Updated).pdf */,
 				9301BEFC25554A10000C6F4E /* A Sample PDF.pdf */,
 				93311A11254EA60500D58E06 /* PEP_Incremental.pdf */,
@@ -235,7 +235,7 @@
 		936C4303250363AD00FFE547 /* pdf */ = {
 			isa = PBXGroup;
 			children = (
-				9307B2B3255C2A50000468A9 /* Sample_001.pdf */,
+				93DB0FBF255CCD350030F33A /* Sample_001.pdf */,
 				93899B0125594EF2001D79A8 /* A Sample PDF(Updated).pdf */,
 				9301BEFA25554A05000C6F4E /* A Sample PDF.pdf */,
 				93311A0F254EA5EF00D58E06 /* PEP_Incremental.pdf */,
@@ -379,7 +379,7 @@
 			files = (
 				9320C01E251A1569008F20B0 /* irig_keys_25.pdf in Resources */,
 				93311A12254EA60500D58E06 /* PEP_Incremental.pdf in Resources */,
-				9307B2B6255C2A5F000468A9 /* Sample_001.pdf in Resources */,
+				93DB0FC2255CCD410030F33A /* Sample_001.pdf in Resources */,
 				935973A02543B37500BB217D /* PEP_GillSans.pdf in Resources */,
 				931221C924F0139300929C01 /* Assets.xcassets in Resources */,
 				931221CC24F0139300929C01 /* MainMenu.xib in Resources */,
@@ -394,7 +394,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9307B2B4255C2A50000468A9 /* Sample_001.pdf in Resources */,
+				93DB0FC0255CCD350030F33A /* Sample_001.pdf in Resources */,
 				9320C01C251A1552008F20B0 /* irig_keys_25.pdf in Resources */,
 				93311A10254EA5EF00D58E06 /* PEP_Incremental.pdf in Resources */,
 				938EB9752545A0D80045F463 /* tab.pdf in Resources */,
