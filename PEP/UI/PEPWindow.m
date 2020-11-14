@@ -11,5 +11,7 @@
 @implementation PEPWindow
 - (void)awakeFromNib {
     NSLog(@"Debug: PEPWindow awakeFromNib");
+    [self setTitle:@""];
+    [self setTitlebarAppearsTransparent:YES];
 }
 @end

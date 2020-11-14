@@ -38,9 +38,6 @@
 }
 
 - (void)awakeFromNib {
-    // Set window title:
-    [[self window] setTitle:@"PEP_GillSans.pdf"];
-    
     // Resize window
     NSLog(@"View: %@", NSStringFromRect(self.bounds));
     NSRect rect = [[self window] frame];
@@ -117,9 +114,6 @@
     file = [mainBundle pathForResource:@"Sample_001" ofType:@"pdf"];
     NSMutableData *d = [NSMutableData dataWithContentsOfFile:file];
     [parser setStream:d];
-
-    // Dummy code, automatically set window titile based on the file path
-    [self.window setTitle:file];
     
     // Get trailer
     GDictionaryObject *trailer = [parser getTrailer];
