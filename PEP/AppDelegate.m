@@ -8,9 +8,10 @@
 
 #import "AppDelegate.h"
 #import "GDocument.h"
+#import "PEPWindow.h"
 @interface AppDelegate ()
 
-@property (weak) IBOutlet NSWindow *window;
+@property (weak) IBOutlet PEPWindow *window;
 @end
 
 @implementation AppDelegate
