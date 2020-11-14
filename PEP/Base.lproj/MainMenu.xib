@@ -686,19 +686,19 @@
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="360"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
-            <view key="contentView" appearanceType="aqua" id="EiT-Mj-1SZ">
+            <view key="contentView" appearanceType="aqua" id="EiT-Mj-1SZ" customClass="PEPView">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="llR-pq-gxd">
-                        <rect key="frame" x="-1" y="-1" width="482" height="362"/>
+                        <rect key="frame" x="-1" y="-1" width="482" height="335"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="5mw-Qj-UQq">
-                            <rect key="frame" x="1" y="1" width="480" height="360"/>
+                            <rect key="frame" x="1" y="1" width="480" height="333"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <view id="Bho-M0-3ar" customClass="GDocument">
-                                    <rect key="frame" x="0.0" y="0.0" width="465" height="345"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="465" height="318"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </subviews>
