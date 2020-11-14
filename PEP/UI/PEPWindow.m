@@ -10,8 +10,48 @@
 
 @implementation PEPWindow
 - (void)awakeFromNib {
-    NSLog(@"Debug: PEPWindow awakeFromNib");
     [self setTitle:@""];
     [self setTitlebarAppearsTransparent:YES];
+    needToMoveCloseButton = YES;
+    needToMoveMiniaturizeButton = YES;
+    needToMoveZoomButton = YES;
+}
+
+- (void)layoutIfNeeded {
+    [super layoutIfNeeded];
+    [self moveButtonOfType:NSWindowCloseButton];
+    [self moveButtonOfType:NSWindowMiniaturizeButton];
+    [self moveButtonOfType:NSWindowZoomButton];
+}
+
+- (void)moveButtonOfType:(NSWindowButton) b {
+    NSButton *button = [self standardWindowButton:b];
+    if (b == NSWindowCloseButton) {
+        if (needToMoveCloseButton) {
+            needToMoveCloseButton = NO;
+            [self moveButtonDown:button];
+        }
+    } else if (b == NSWindowMiniaturizeButton) {
+        if (needToMoveMiniaturizeButton) {
+            needToMoveMiniaturizeButton = NO;
+            [self moveButtonDown:button];
+        }
+    } else if (b == NSWindowZoomButton) {
+        if (needToMoveZoomButton) {
+            needToMoveZoomButton = NO;
+            [self moveButtonDown:button];
+        }
+    }
+    
+}
+
+- (void)moveButtonDown:(NSView*)button {
+    [button setFrameOrigin:(NSMakePoint(button.frame.origin.x, button.frame.origin.y - kMoveButtonDelta))];
+}
+
+- (void)needToMoveButtons {
+    needToMoveCloseButton = YES;
+    needToMoveMiniaturizeButton = YES;
+    needToMoveZoomButton = YES;
 }
 @end

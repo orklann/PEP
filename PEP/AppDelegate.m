@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "GDocument.h"
 #import "PEPWindow.h"
+
 @interface AppDelegate ()
 
 @property (weak) IBOutlet PEPWindow *window;
@@ -22,6 +23,7 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
+    [self.window setDelegate:self];
 }
 
 
@@ -29,5 +31,7 @@
     // Insert code here to tear down your application
 }
 
-
+- (void)windowWillExitFullScreen:(NSNotification *)notification {
+    [self.window needToMoveButtons];
+}
 @end

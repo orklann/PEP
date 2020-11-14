@@ -10,8 +10,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PEPWindow : NSWindow
+#define kMoveButtonDelta 8.0
 
+@interface PEPWindow : NSWindow {
+    BOOL needToMoveCloseButton;
+    BOOL needToMoveMiniaturizeButton;
+    BOOL needToMoveZoomButton;
+}
+
+- (void)needToMoveButtons;
 @end
 
 NS_ASSUME_NONNULL_END
