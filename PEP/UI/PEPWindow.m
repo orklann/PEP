@@ -30,16 +30,19 @@
         if (needToMoveCloseButton) {
             needToMoveCloseButton = NO;
             [self moveButtonDown:button];
+            [self moveButtonRight:button];
         }
     } else if (b == NSWindowMiniaturizeButton) {
         if (needToMoveMiniaturizeButton) {
             needToMoveMiniaturizeButton = NO;
             [self moveButtonDown:button];
+            [self moveButtonRight:button];
         }
     } else if (b == NSWindowZoomButton) {
         if (needToMoveZoomButton) {
             needToMoveZoomButton = NO;
             [self moveButtonDown:button];
+            [self moveButtonRight:button];
         }
     }
     
@@ -47,6 +50,10 @@
 
 - (void)moveButtonDown:(NSView*)button {
     [button setFrameOrigin:(NSMakePoint(button.frame.origin.x, button.frame.origin.y - kMoveButtonDelta))];
+}
+
+- (void)moveButtonRight:(NSView*)button {
+    [button setFrameOrigin:(NSMakePoint(button.frame.origin.x + kMoveButtonDelta, button.frame.origin.y))];
 }
 
 - (void)needToMoveButtons {
