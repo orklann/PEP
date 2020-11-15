@@ -686,7 +686,7 @@
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="360"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
-            <view key="contentView" appearanceType="aqua" id="EiT-Mj-1SZ" customClass="PEPView">
+            <view key="contentView" appearanceType="aqua" id="EiT-Mj-1SZ" customClass="PEPContentView">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>

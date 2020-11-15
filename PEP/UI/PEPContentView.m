@@ -6,9 +6,9 @@
 //  Copyright © 2020 Aaron Elkins. All rights reserved.
 //
 
-#import "PEPView.h"
+#import "PEPContentView.h"
 
-@implementation PEPView
+@implementation PEPContentView
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];

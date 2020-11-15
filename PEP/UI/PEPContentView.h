@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PEPView : NSView
+@interface PEPContentView : NSView
 
 @end
 
