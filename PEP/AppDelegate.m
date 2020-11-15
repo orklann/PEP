@@ -34,4 +34,8 @@
 - (void)windowDidResize:(NSNotification *)notification {
     [self.window needToMoveButtons];
 }
+
+- (void)tabDidActive:(PEPTab *)tab {
+    NSLog(@"Tab actived: %@", [tab title]);
+}
 @end

@@ -18,6 +18,7 @@
     [tab1 setTabView:self];
     [tab1 setTitle:@"Annotate"];
     [tab1 setActive:YES];
+    [tab1 setDelegate:NSApp.delegate];
     [tabs addObject:tab1];
     
     // Edit PDF tab
@@ -25,6 +26,7 @@
     [tab2 setTabView:self];
     [tab2 setTitle:@"Edit PDF"];
     [tab2 setActive:NO];
+    [tab2 setDelegate:NSApp.delegate];
     [tabs addObject:tab2];
     
     // Draw tab
@@ -32,6 +34,7 @@
     [tab3 setTabView:self];
     [tab3 setTitle:@"Draw"];
     [tab3 setActive:NO];
+    [tab3 setDelegate:NSApp.delegate];
     [tabs addObject:tab3];
     
     // Favorites tab
@@ -39,6 +42,7 @@
     [tab4 setTabView:self];
     [tab4 setTitle:@"Favorites"];
     [tab4 setActive:NO];
+    [tab4 setDelegate:NSApp.delegate];
     [tabs addObject:tab4];
     
     [self setNeedsDisplay:YES];

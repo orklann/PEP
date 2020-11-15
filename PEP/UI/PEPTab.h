@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
 @class PEPTabView;
 
 NS_ASSUME_NONNULL_BEGIN
@@ -19,11 +18,12 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 @property (readwrite) PEPTabView *tabView;
+@property (readwrite) id delegate;
 
 + (id)create;
 - (void)setTitle:(NSString*)t;
+- (NSString*)title;
 - (void)setActive:(BOOL)a;
 - (void)draw:(CGContextRef)context;
 @end
-
 NS_ASSUME_NONNULL_END

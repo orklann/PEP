@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "PEPTab.h"
 #import "PEPTabView.h"
+#import "PEPTabDelegate.h"
 
 @implementation PEPTab
 
@@ -21,8 +22,17 @@
     title = t;
 }
 
+- (NSString*)title {
+    return title;
+}
+
 - (void)setActive:(BOOL)a {
     active = a;
+    if (a) {
+        if ([_delegate respondsToSelector:@selector(tabDidActive:)]) {
+            [_delegate tabDidActive:self];
+        }
+    }
 }
 
 - (void)drawTitle:(CGContextRef)context {
