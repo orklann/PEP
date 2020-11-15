@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
     PEPTopView *topView;
 }
 
+@property (weak) IBOutlet NSScrollView *scrollView;
+
 - (void)needToMoveButtons;
 - (void)layoutViews;
 @end

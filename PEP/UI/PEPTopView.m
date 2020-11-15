@@ -16,6 +16,12 @@
     NSColor *bgColor = [NSColor yellowColor];
     [bgColor set];
     NSRectFill(self.bounds);
+    
+    // Test if views layout is right
+    CGContextRef context = [[NSGraphicsContext currentContext] CGContext];
+    CGContextSetLineWidth(context, 6.0);
+    CGContextSetStrokeColorWithColor(context, [[NSColor blueColor] CGColor]);
+    CGContextStrokeRect(context, self.bounds);
 }
 
 @end

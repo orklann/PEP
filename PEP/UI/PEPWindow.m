@@ -21,12 +21,19 @@
     [self layoutViews];
 }
 
+/*
+ * Layout all views
+ */
 - (void)layoutViews {
     NSRect contentViewFrame = [self.contentView frame];
     NSRect topViewFrame = contentViewFrame;
     topViewFrame.size.height = kTopViewHeight;
     topViewFrame.origin.y = contentViewFrame.size.height - kTopViewHeight;
     [topView setFrame:topViewFrame];
+    
+    NSRect scrollViewFrame = contentViewFrame;
+    scrollViewFrame.size.height = contentViewFrame.size.height - kTopViewHeight;
+    [self.scrollView setFrame:scrollViewFrame];
 }
 
 - (void)layoutIfNeeded {
