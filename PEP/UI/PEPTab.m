@@ -21,6 +21,29 @@
     title = t;
 }
 
+- (void)drawTitle:(CGContextRef)context {
+    NSRect rect = [self.tabView getRectForTab:self];
+    
+    // Paragraph Style
+    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setAlignment:NSTextAlignmentCenter];
+    
+    // Label font and color
+    NSFont *labelFont = [NSFont systemFontOfSize:13];
+    NSColor *labelColor = [NSColor blackColor];
+
+    // Put all in attributes dictionary
+    NSMutableDictionary *attributesDictionary = [NSMutableDictionary dictionary];
+    [attributesDictionary setObject:paragraphStyle forKey:NSParagraphStyleAttributeName];
+    [attributesDictionary setObject:labelFont forKey:NSFontAttributeName];
+    [attributesDictionary setObject:labelColor forKey:NSForegroundColorAttributeName];
+
+    // Title text
+    NSAttributedString *titleText = [[NSAttributedString alloc] initWithString:title attributes:attributesDictionary];
+    NSRect titleRect = NSInsetRect(rect, 8, 6);
+    [titleText drawInRect:titleRect];
+}
+
 - (void)drawActive:(CGContextRef)context {
     NSRect rect = [self.tabView getRectForTab:self];
     CGFloat midX = NSMidX(rect);
@@ -53,5 +76,6 @@
 
 - (void)draw:(CGContextRef)context {
     [self drawActive:context];
+    [self drawTitle:context];
 }
 @end

@@ -15,6 +15,7 @@
     tabs = [NSMutableArray array];
     PEPTab *tab1 = [PEPTab create];
     [tab1 setTabView:self];
+    [tab1 setTitle:@"Annotate"];
     [tabs addObject:tab1];
     [self setNeedsDisplay:YES];
 }
