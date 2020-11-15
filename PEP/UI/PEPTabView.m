@@ -87,4 +87,13 @@
     }
     [self setNeedsDisplay:YES];
 }
+
+// Empty implementations to prevent mouse event pass to super view,
+// So that dragging Tab View will not drag the window.
+- (void) mouseDragged:(NSEvent*)event {}
+- (void) mouseUp:(NSEvent*)event {}
+
+- (BOOL)mouseDownCanMoveWindow {
+    return NO;
+}
 @end
