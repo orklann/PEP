@@ -32,7 +32,6 @@
 }
 
 - (void)windowDidResize:(NSNotification *)notification {
-    [self.window layoutViews];
     [self.window needToMoveButtons];
 }
 @end
