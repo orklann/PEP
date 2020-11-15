@@ -16,7 +16,7 @@
     // Annotate tab
     PEPTab *tab1 = [PEPTab create];
     [tab1 setTabView:self];
-    [tab1 setTitle:@"Annotate"];
+    [tab1 setTitle:kAnnotateTabTitle];
     [tab1 setActive:YES];
     [tab1 setDelegate:NSApp.delegate];
     [tabs addObject:tab1];
@@ -24,7 +24,7 @@
     // Edit PDF tab
     PEPTab *tab2 = [PEPTab create];
     [tab2 setTabView:self];
-    [tab2 setTitle:@"Edit PDF"];
+    [tab2 setTitle:kEditPDFTabTitle];
     [tab2 setActive:NO];
     [tab2 setDelegate:NSApp.delegate];
     [tabs addObject:tab2];
@@ -32,7 +32,7 @@
     // Draw tab
     PEPTab *tab3 = [PEPTab create];
     [tab3 setTabView:self];
-    [tab3 setTitle:@"Draw"];
+    [tab3 setTitle:kDrawTabTitle];
     [tab3 setActive:NO];
     [tab3 setDelegate:NSApp.delegate];
     [tabs addObject:tab3];
@@ -40,7 +40,7 @@
     // Favorites tab
     PEPTab *tab4 = [PEPTab create];
     [tab4 setTabView:self];
-    [tab4 setTitle:@"Favorites"];
+    [tab4 setTitle:kFavoritesTabTitle];
     [tab4 setActive:NO];
     [tab4 setDelegate:NSApp.delegate];
     [tabs addObject:tab4];
