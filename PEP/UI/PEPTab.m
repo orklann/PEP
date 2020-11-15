@@ -27,12 +27,12 @@
 }
 
 - (void)setActive:(BOOL)a {
-    active = a;
-    if (a) {
+    if (a && !active) {
         if ([_delegate respondsToSelector:@selector(tabDidActive:)]) {
             [_delegate tabDidActive:self];
         }
     }
+    active = a;
 }
 
 - (void)drawTitle:(CGContextRef)context {
