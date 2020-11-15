@@ -34,4 +34,9 @@
 - (void)windowWillExitFullScreen:(NSNotification *)notification {
     [self.window needToMoveButtons];
 }
+
+- (void)windowDidResize:(NSNotification *)notification {
+    [self.window layoutViews];
+    [self.window needToMoveButtons];
+}
 @end

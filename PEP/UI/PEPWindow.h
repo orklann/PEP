@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import "PEPTopView.h"
 NS_ASSUME_NONNULL_BEGIN
 
 #define kMoveButtonDelta 8.0
@@ -16,9 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
     BOOL needToMoveCloseButton;
     BOOL needToMoveMiniaturizeButton;
     BOOL needToMoveZoomButton;
+    PEPTopView *topView;
 }
 
 - (void)needToMoveButtons;
+- (void)layoutViews;
 @end
 
 NS_ASSUME_NONNULL_END

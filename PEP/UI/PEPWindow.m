@@ -15,6 +15,21 @@
     needToMoveCloseButton = YES;
     needToMoveMiniaturizeButton = YES;
     needToMoveZoomButton = YES;
+    
+    NSRect contentViewFrame = [self.contentView frame];
+    NSRect topViewFrame = contentViewFrame;
+    topViewFrame.size.height = kTopViewHeight;
+    topViewFrame.origin.y = contentViewFrame.size.height - kTopViewHeight;
+    topView = [[PEPTopView alloc] initWithFrame:topViewFrame];
+    [self.contentView addSubview:topView];
+}
+
+- (void)layoutViews {
+    NSRect contentViewFrame = [self.contentView frame];
+    NSRect topViewFrame = contentViewFrame;
+    topViewFrame.size.height = kTopViewHeight;
+    topViewFrame.origin.y = contentViewFrame.size.height - kTopViewHeight;
+    [topView setFrame:topViewFrame];
 }
 
 - (void)layoutIfNeeded {
@@ -22,6 +37,7 @@
     [self moveButtonOfType:NSWindowCloseButton];
     [self moveButtonOfType:NSWindowMiniaturizeButton];
     [self moveButtonOfType:NSWindowZoomButton];
+    [self layoutViews];
 }
 
 - (void)moveButtonOfType:(NSWindowButton) b {
