@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (id)create;
 - (void)setTitle:(NSString*)t;
 - (NSString*)title;
-- (void)setActive:(BOOL)a;
+- (void)setActive:(BOOL)flag;
 - (void)draw:(CGContextRef)context;
 @end
 NS_ASSUME_NONNULL_END

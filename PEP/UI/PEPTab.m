@@ -26,13 +26,13 @@
     return title;
 }
 
-- (void)setActive:(BOOL)a {
-    if (a && !active) {
+- (void)setActive:(BOOL)flag {
+    if (flag && !active) {
         if ([_delegate respondsToSelector:@selector(tabDidActive:)]) {
             [_delegate tabDidActive:self];
         }
     }
-    active = a;
+    active = flag;
 }
 
 - (void)drawTitle:(CGContextRef)context {
