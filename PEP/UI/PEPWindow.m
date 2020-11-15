@@ -16,12 +16,9 @@
     needToMoveMiniaturizeButton = YES;
     needToMoveZoomButton = YES;
     
-    NSRect contentViewFrame = [self.contentView frame];
-    NSRect topViewFrame = contentViewFrame;
-    topViewFrame.size.height = kTopViewHeight;
-    topViewFrame.origin.y = contentViewFrame.size.height - kTopViewHeight;
-    topView = [[PEPTopView alloc] initWithFrame:topViewFrame];
+    topView = [[PEPTopView alloc] initWithFrame:NSZeroRect];
     [self.contentView addSubview:topView];
+    [self layoutViews];
 }
 
 - (void)layoutViews {
