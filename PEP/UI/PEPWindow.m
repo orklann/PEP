@@ -21,6 +21,8 @@
 - (void)awakeFromNib {
     [self setTitle:@""];
     [self setTitlebarAppearsTransparent:YES];
+    self.movableByWindowBackground = YES;
+    
     needToMoveCloseButton = YES;
     needToMoveMiniaturizeButton = YES;
     needToMoveZoomButton = YES;
