@@ -149,6 +149,7 @@
 		93C0E61C256119F700D4E508 /* PEPTabView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEPTabView.m; sourceTree = "<group>"; };
 		93C0E62225611E9100D4E508 /* PEPTab.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEPTab.h; sourceTree = "<group>"; };
 		93C0E62325611E9100D4E508 /* PEPTab.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEPTab.m; sourceTree = "<group>"; };
+		93C0E62725613E0400D4E508 /* PEPConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEPConstants.h; sourceTree = "<group>"; };
 		93D48C1C2536CAAA002DD41B /* GTextEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTextEditor.h; sourceTree = "<group>"; };
 		93D48C1D2536CAAA002DD41B /* GTextEditor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTextEditor.m; sourceTree = "<group>"; };
 		93DB0FBF255CCD350030F33A /* Sample_001.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Sample_001.pdf; sourceTree = "<group>"; };
@@ -250,6 +251,7 @@
 				93C0E61C256119F700D4E508 /* PEPTabView.m */,
 				93C0E62225611E9100D4E508 /* PEPTab.h */,
 				93C0E62325611E9100D4E508 /* PEPTab.m */,
+				93C0E62725613E0400D4E508 /* PEPConstants.h */,
 			);
 			path = UI;
 			sourceTree = "<group>";
