@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define kTopViewHeight 85
+#define kTopViewHeight 80
 
 @interface PEPTopView : NSView
 
