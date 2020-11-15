@@ -9,6 +9,11 @@
 #import "PEPWindow.h"
 
 @implementation PEPWindow
+
+- (PEPTabview*)tabView {
+    return tabView;
+}
+
 - (void)awakeFromNib {
     [self setTitle:@""];
     [self setTitlebarAppearsTransparent:YES];
@@ -18,6 +23,10 @@
     
     topView = [[PEPTopView alloc] initWithFrame:NSZeroRect];
     [self.contentView addSubview:topView];
+    
+    tabView = [[PEPTabview alloc] initWithFrame:NSZeroRect];
+    [topView addSubview:tabView];
+    
     [self layoutViews];
 }
 
@@ -25,12 +34,17 @@
  * Layout all views
  */
 - (void)layoutViews {
+    // Top View
     NSRect contentViewFrame = [self.contentView frame];
     NSRect topViewFrame = contentViewFrame;
     topViewFrame.size.height = kTopViewHeight;
     topViewFrame.origin.y = contentViewFrame.size.height - kTopViewHeight;
     [topView setFrame:topViewFrame];
+
+    // Tab View
+    [topView layoutViews];
     
+    // Scroll View
     NSRect scrollViewFrame = contentViewFrame;
     scrollViewFrame.size.height = contentViewFrame.size.height - kTopViewHeight;
     [self.scrollView setFrame:scrollViewFrame];

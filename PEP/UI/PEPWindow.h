@@ -17,10 +17,12 @@ NS_ASSUME_NONNULL_BEGIN
     BOOL needToMoveMiniaturizeButton;
     BOOL needToMoveZoomButton;
     PEPTopView *topView;
+    PEPTabview *tabView;
 }
 
 @property (weak) IBOutlet NSScrollView *scrollView;
 
+- (PEPTabview*)tabView;
 - (void)needToMoveButtons;
 - (void)layoutViews;
 @end

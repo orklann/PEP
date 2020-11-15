@@ -7,21 +7,33 @@
 //
 
 #import "PEPTopView.h"
+#import "PEPWindow.h"
 
 @implementation PEPTopView
+
+- (void)layoutViews {
+    PEPTabview *tabView = [(PEPWindow*)self.window tabView];
+    NSSize tabSize = NSMakeSize(kTabWidth * 4, kTabHeight);
+    NSRect topViewBounds = [self bounds];
+    CGFloat midX = NSMidX(topViewBounds);
+    CGFloat x = midX - (tabSize.width / 2);
+    NSRect tabRect = NSMakeRect(x, 0, tabSize.width, tabSize.height);
+    [tabView setFrame:tabRect];
+}
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
     
-    NSColor *bgColor = [NSColor yellowColor];
+    NSColor *bgColor = [NSColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:1.0];
     [bgColor set];
     NSRectFill(self.bounds);
     
     // Test if views layout is right
-    CGContextRef context = [[NSGraphicsContext currentContext] CGContext];
+    /*CGContextRef context = [[NSGraphicsContext currentContext] CGContext];
     CGContextSetLineWidth(context, 6.0);
     CGContextSetStrokeColorWithColor(context, [[NSColor blueColor] CGColor]);
     CGContextStrokeRect(context, self.bounds);
+     */
 }
 
 @end

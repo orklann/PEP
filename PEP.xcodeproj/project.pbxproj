@@ -51,6 +51,7 @@
 		93B707AC255D129200F326EB /* bug_hex_string.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93B707AB255D129200F326EB /* bug_hex_string.pdf */; };
 		93B707AE255D129E00F326EB /* bug_hex_string.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93B707AD255D129E00F326EB /* bug_hex_string.pdf */; };
 		93C0E6162560F5A200D4E508 /* PEPTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C0E6152560F5A200D4E508 /* PEPTopView.m */; };
+		93C0E61D256119F700D4E508 /* PEPTabview.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C0E61C256119F700D4E508 /* PEPTabview.m */; };
 		93D48C1E2536CAAA002DD41B /* GTextEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D48C1D2536CAAA002DD41B /* GTextEditor.m */; };
 		93DB0FC0255CCD350030F33A /* Sample_001.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93DB0FBF255CCD350030F33A /* Sample_001.pdf */; };
 		93DB0FC2255CCD410030F33A /* Sample_001.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93DB0FC1255CCD410030F33A /* Sample_001.pdf */; };
@@ -143,6 +144,8 @@
 		93B707AD255D129E00F326EB /* bug_hex_string.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = bug_hex_string.pdf; path = PEPTests/pdf/bug_hex_string.pdf; sourceTree = SOURCE_ROOT; };
 		93C0E6142560F5A200D4E508 /* PEPTopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEPTopView.h; sourceTree = "<group>"; };
 		93C0E6152560F5A200D4E508 /* PEPTopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEPTopView.m; sourceTree = "<group>"; };
+		93C0E61B256119F700D4E508 /* PEPTabview.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEPTabview.h; sourceTree = "<group>"; };
+		93C0E61C256119F700D4E508 /* PEPTabview.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEPTabview.m; sourceTree = "<group>"; };
 		93D48C1C2536CAAA002DD41B /* GTextEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTextEditor.h; sourceTree = "<group>"; };
 		93D48C1D2536CAAA002DD41B /* GTextEditor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTextEditor.m; sourceTree = "<group>"; };
 		93DB0FBF255CCD350030F33A /* Sample_001.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Sample_001.pdf; sourceTree = "<group>"; };
@@ -240,6 +243,8 @@
 				93576007255FC83900102C92 /* PEPContentView.m */,
 				93C0E6142560F5A200D4E508 /* PEPTopView.h */,
 				93C0E6152560F5A200D4E508 /* PEPTopView.m */,
+				93C0E61B256119F700D4E508 /* PEPTabview.h */,
+				93C0E61C256119F700D4E508 /* PEPTabview.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -464,6 +469,7 @@
 				93DEC3422540238C00E280B0 /* GBinaryData.m in Sources */,
 				9346A86125305B2800804506 /* GTextBlock.m in Sources */,
 				930ACC9B250759780092206C /* GDecoders.m in Sources */,
+				93C0E61D256119F700D4E508 /* PEPTabview.m in Sources */,
 				93576003255FC6F600102C92 /* PEPWindow.m in Sources */,
 				9373EEF3251C7E840066AD2A /* GTextState.m in Sources */,
 				93A8692D25147ECA0033DC22 /* GMisc.m in Sources */,

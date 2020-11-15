@@ -1,5 +1,5 @@
 //
-//  PEPTopView.h
+//  PEPTabview.h
 //  PEP
 //
 //  Created by Aaron Elkins on 11/15/20.
@@ -7,15 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "PEPTabview.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-#define kTopViewHeight 48
+#define kTabWidth 90
+#define kTabHeight 34
 
-@interface PEPTopView : NSView
+@interface PEPTabview : NSView
 
-- (void)layoutViews;
 @end
 
 NS_ASSUME_NONNULL_END
