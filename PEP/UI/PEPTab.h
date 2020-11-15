@@ -8,15 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+@class PEPTabView;
+
 NS_ASSUME_NONNULL_BEGIN
+#define kTabRadius 5
 
 @interface PEPTab : NSObject {
     NSString *title;
-    NSRect rect;
 }
 
+@property (readwrite) PEPTabView *tabView;
+
++ (id)create;
 - (void)setTitle:(NSString*)t;
-- (void)setRect:(NSRect)r;
+- (void)draw:(CGContextRef)context;
 @end
 
 NS_ASSUME_NONNULL_END

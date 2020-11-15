@@ -26,6 +26,7 @@
     
     tabView = [[PEPTabView alloc] initWithFrame:NSZeroRect];
     [topView addSubview:tabView];
+    [tabView initTabs];
     
     [self layoutViews];
 }
