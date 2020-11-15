@@ -13,13 +13,22 @@
 @implementation PEPTopView
 
 - (void)layoutViews {
+    // Tab view
     PEPTabView *tabView = [(PEPWindow*)self.window tabView];
     NSSize tabSize = NSMakeSize(kTabWidth * 4, kTabHeight);
     NSRect topViewBounds = [self bounds];
     CGFloat midX = NSMidX(topViewBounds);
     CGFloat x = midX - (tabSize.width / 2);
-    NSRect tabRect = NSMakeRect(x, 0, tabSize.width, tabSize.height);
+    CGFloat y = kToolbarHeight; // toolbar height offset
+    NSRect tabRect = NSMakeRect(x, y, tabSize.width, tabSize.height);
     [tabView setFrame:tabRect];
+    
+    // Toolbar view
+    PEPToolbarView *toolbarView = [(PEPWindow*)self.window toolbarView];
+    NSRect toolbarRect = topViewBounds;
+    toolbarRect.size.height = kToolbarHeight;
+    toolbarRect.origin = NSMakePoint(0, 0);
+    [toolbarView setFrame:toolbarRect];
 }
 
 - (void)drawRect:(NSRect)dirtyRect {

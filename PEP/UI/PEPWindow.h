@@ -18,11 +18,13 @@ NS_ASSUME_NONNULL_BEGIN
     BOOL needToMoveZoomButton;
     PEPTopView *topView;
     PEPTabView *tabView;
+    PEPToolbarView *toolbarView;
 }
 
 @property (weak) IBOutlet NSScrollView *scrollView;
 
 - (PEPTabView*)tabView;
+- (PEPToolbarView*)toolbarView;
 - (void)needToMoveButtons;
 - (void)layoutViews;
 @end

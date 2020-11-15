@@ -14,6 +14,10 @@
     return tabView;
 }
 
+- (PEPToolbarView*)toolbarView {
+    return toolbarView;
+}
+
 - (void)awakeFromNib {
     [self setTitle:@""];
     [self setTitlebarAppearsTransparent:YES];
@@ -27,6 +31,9 @@
     tabView = [[PEPTabView alloc] initWithFrame:NSZeroRect];
     [topView addSubview:tabView];
     [tabView initTabs];
+    
+    toolbarView = [[PEPToolbarView alloc] initWithFrame:NSZeroRect];
+    [topView addSubview:toolbarView];
     
     [self layoutViews];
 }
@@ -42,7 +49,7 @@
     topViewFrame.origin.y = contentViewFrame.size.height - kTopViewHeight;
     [topView setFrame:topViewFrame];
 
-    // Tab View
+    // Layout tab view, toolbar view
     [topView layoutViews];
     
     // Scroll View

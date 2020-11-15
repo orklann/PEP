@@ -52,8 +52,6 @@
 }
 
 - (void)draw:(CGContextRef)context {
-    NSRect rect = [self.tabView getRectForTab:self];
-    NSLog(@"PEPTab draw, rect: %@", NSStringFromRect(rect));
     [self drawActive:context];
 }
 @end
