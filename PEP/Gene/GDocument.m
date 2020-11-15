@@ -44,6 +44,7 @@
     rect.size = NSMakeSize(1200, 1024);
     [[self window] setFrame: rect display: YES];
     
+    rect = [self frame]; // keep view width
     rect.size.height += 150;
     [self setFrameSize:rect.size];
     
