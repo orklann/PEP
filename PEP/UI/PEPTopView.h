@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "PEPTabview.h"
+#import "PEPTabView.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

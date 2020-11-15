@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 #define kTabWidth 90
 #define kTabHeight 34
 
-@interface PEPTabview : NSView
+@interface PEPTabView : NSView
 
 @end
 

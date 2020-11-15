@@ -6,9 +6,9 @@
 //  Copyright © 2020 Aaron Elkins. All rights reserved.
 //
 
-#import "PEPTabview.h"
+#import "PEPTabView.h"
 
-@implementation PEPTabview
+@implementation PEPTabView
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];

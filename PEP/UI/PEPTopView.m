@@ -12,7 +12,7 @@
 @implementation PEPTopView
 
 - (void)layoutViews {
-    PEPTabview *tabView = [(PEPWindow*)self.window tabView];
+    PEPTabView *tabView = [(PEPWindow*)self.window tabView];
     NSSize tabSize = NSMakeSize(kTabWidth * 4, kTabHeight);
     NSRect topViewBounds = [self bounds];
     CGFloat midX = NSMidX(topViewBounds);

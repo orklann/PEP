@@ -10,7 +10,7 @@
 
 @implementation PEPWindow
 
-- (PEPTabview*)tabView {
+- (PEPTabView*)tabView {
     return tabView;
 }
 
@@ -24,7 +24,7 @@
     topView = [[PEPTopView alloc] initWithFrame:NSZeroRect];
     [self.contentView addSubview:topView];
     
-    tabView = [[PEPTabview alloc] initWithFrame:NSZeroRect];
+    tabView = [[PEPTabView alloc] initWithFrame:NSZeroRect];
     [topView addSubview:tabView];
     
     [self layoutViews];
