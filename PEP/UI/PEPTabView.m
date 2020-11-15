@@ -13,10 +13,34 @@
 
 - (void)initTabs {
     tabs = [NSMutableArray array];
+    // Annotate tab
     PEPTab *tab1 = [PEPTab create];
     [tab1 setTabView:self];
     [tab1 setTitle:@"Annotate"];
+    [tab1 setActive:YES];
     [tabs addObject:tab1];
+    
+    // Edit PDF tab
+    PEPTab *tab2 = [PEPTab create];
+    [tab2 setTabView:self];
+    [tab2 setTitle:@"Edit PDF"];
+    [tab2 setActive:NO];
+    [tabs addObject:tab2];
+    
+    // Draw tab
+    PEPTab *tab3 = [PEPTab create];
+    [tab3 setTabView:self];
+    [tab3 setTitle:@"Draw"];
+    [tab3 setActive:NO];
+    [tabs addObject:tab3];
+    
+    // Favorites tab
+    PEPTab *tab4 = [PEPTab create];
+    [tab4 setTabView:self];
+    [tab4 setTitle:@"Favorites"];
+    [tab4 setActive:NO];
+    [tabs addObject:tab4];
+    
     [self setNeedsDisplay:YES];
 }
 
@@ -45,4 +69,18 @@
     }
 }
 
+- (void)mouseDown:(NSEvent *)event {
+    NSPoint location = [event locationInWindow];
+    NSPoint point = [self convertPoint:location fromView:nil];
+    
+    for (PEPTab *tab in tabs) {
+        NSRect tabRect = [self getRectForTab:tab];
+        if (NSPointInRect(point, tabRect)) {
+            [tab setActive:YES];
+        } else {
+            [tab setActive:NO];
+        }
+    }
+    [self setNeedsDisplay:YES];
+}
 @end

@@ -15,12 +15,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PEPTab : NSObject {
     NSString *title;
+    BOOL active;
 }
 
 @property (readwrite) PEPTabView *tabView;
 
 + (id)create;
 - (void)setTitle:(NSString*)t;
+- (void)setActive:(BOOL)a;
 - (void)draw:(CGContextRef)context;
 @end
 

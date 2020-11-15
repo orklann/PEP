@@ -21,6 +21,10 @@
     title = t;
 }
 
+- (void)setActive:(BOOL)a {
+    active = a;
+}
+
 - (void)drawTitle:(CGContextRef)context {
     NSRect rect = [self.tabView getRectForTab:self];
     
@@ -30,7 +34,13 @@
     
     // Label font and color
     NSFont *labelFont = [NSFont systemFontOfSize:13];
-    NSColor *labelColor = [NSColor blackColor];
+    
+    NSColor *labelColor;
+    if (active) {
+        labelColor = [NSColor blackColor];
+    } else {
+        labelColor = [NSColor whiteColor];
+    }
 
     // Put all in attributes dictionary
     NSMutableDictionary *attributesDictionary = [NSMutableDictionary dictionary];
@@ -75,7 +85,9 @@
 }
 
 - (void)draw:(CGContextRef)context {
-    [self drawActive:context];
+    if (active) {
+        [self drawActive:context];
+    }
     [self drawTitle:context];
 }
 @end
