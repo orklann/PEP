@@ -16,4 +16,5 @@
 
 #define kDarkColor [NSColor colorWithRed:0.26 green:0.28 blue:0.31 alpha:1.0]
 
+#define kTextEditToolText @"Text"
 #endif /* PEPConstants_h */

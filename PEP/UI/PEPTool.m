@@ -8,6 +8,7 @@
 
 #import "PEPTool.h"
 #import "PEPToolbarView.h"
+#import "PEPToolDelegate.h"
 
 @implementation PEPTool
 + (id)create {
@@ -15,8 +16,13 @@
     return tool;
 }
 
-- (void)setSelected:(BOOL)s {
-    selected = s;
+- (void)setSelected:(BOOL)flag {
+    if (flag && !selected) {
+        if ([_delegate respondsToSelector:@selector(toolDidActive:)]) {
+            [_delegate toolDidActive:self];
+        }
+    }
+    selected = flag;
 }
 
 - (void)setToolbarView:(PEPToolbarView*)tb {
@@ -33,6 +39,10 @@
 
 - (void)setText:(NSString*)s {
     text = s;
+}
+
+- (NSString*)text {
+    return text;
 }
 
 - (void)draw:(CGContextRef)context {

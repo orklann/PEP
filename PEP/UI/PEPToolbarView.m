@@ -7,6 +7,7 @@
 //
 
 #import "PEPToolbarView.h"
+#import "PEPConstants.h"
 
 @implementation PEPToolbarView
 
@@ -16,8 +17,9 @@
     PEPTool *textEditTool = [PEPTool create];
     NSImage *textEditImage = [NSImage imageNamed:@"cursor-text"];
     [textEditTool setImage:textEditImage];
-    [textEditTool setText:@"Text"];
+    [textEditTool setText:kTextEditToolText];
     [textEditTool setToolbarView:self];
+    [textEditTool setDelegate:[NSApp delegate]];
     [textEditTool setSelected:YES];
     [_tools addObject:textEditTool];
     [self setNeedsDisplay:YES];

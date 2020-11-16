@@ -145,6 +145,7 @@
 		9392912E25624202003F062A /* PEPTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEPTool.m; sourceTree = "<group>"; };
 		9392914325624C52003F062A /* cursor-text.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cursor-text.png"; sourceTree = "<group>"; };
 		9392914425624C52003F062A /* cursor-text@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cursor-text@2x.png"; sourceTree = "<group>"; };
+		939291512562531B003F062A /* PEPToolDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEPToolDelegate.h; sourceTree = "<group>"; };
 		93A86928251399760033DC22 /* GPage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GPage.h; sourceTree = "<group>"; };
 		93A86929251399760033DC22 /* GPage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GPage.m; sourceTree = "<group>"; };
 		93A8692B25147ECA0033DC22 /* GMisc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMisc.h; sourceTree = "<group>"; };
@@ -268,6 +269,7 @@
 				93C0E62B2561412F00D4E508 /* PEPToolbarView.m */,
 				9392912D25624202003F062A /* PEPTool.h */,
 				9392912E25624202003F062A /* PEPTool.m */,
+				939291512562531B003F062A /* PEPToolDelegate.h */,
 			);
 			path = UI;
 			sourceTree = "<group>";

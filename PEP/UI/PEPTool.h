@@ -23,12 +23,15 @@ NS_ASSUME_NONNULL_BEGIN
     BOOL selected;
 }
 
+@property (readwrite) id delegate;
+
 + (id)create;
-- (void)setSelected:(BOOL)s;
+- (void)setSelected:(BOOL)flag;
 - (void)setToolbarView:(PEPToolbarView*)tb;
 - (void)setImage:(NSImage*)img;
 - (void)setSelectedImage:(NSImage*)img;
 - (void)setText:(NSString*)s;
+- (NSString*)text;
 - (CGFloat)width;
 - (void)draw:(CGContextRef)context;
 @end

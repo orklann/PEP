@@ -8,8 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 #import "PEPTabDelegate.h"
+#import "PEPToolDelegate.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, PEPTabDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate,
+                                    PEPTabDelegate, PEPToolDelegate>
 
 @end
 

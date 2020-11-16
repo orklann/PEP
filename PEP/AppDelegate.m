@@ -43,4 +43,8 @@
         [[(PEPWindow*)self.window toolbarView] initToolsForEditPDF];
     }
 }
+
+- (void)toolDidActive:(PEPTool *)tool {
+    NSLog(@"Tool selected: %@", [tool text]);
+}
 @end
