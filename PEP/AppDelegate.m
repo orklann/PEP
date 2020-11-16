@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "GDocument.h"
 #import "PEPWindow.h"
+#import "PEPConstants.h"
 
 @interface AppDelegate ()
 
@@ -37,5 +38,9 @@
 
 - (void)tabDidActive:(PEPTab *)tab {
     NSLog(@"Tab actived: %@", [tab title]);
+    if ([[tab title] isEqualToString:kEditPDFTabTitle]) {
+        [[(PEPWindow*)self.window toolbarView] removeAllTools];
+        [[(PEPWindow*)self.window toolbarView] initToolsForEditPDF];
+    }
 }
 @end

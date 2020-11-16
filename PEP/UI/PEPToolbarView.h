@@ -7,13 +7,17 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import "PEPTool.h"
 NS_ASSUME_NONNULL_BEGIN
 
-#define kToolbarHeight 34
+#define kToolbarHeight 36
 
 @interface PEPToolbarView : NSView
 
+@property (readwrite) NSMutableArray *tools;
+- (void)initToolsForEditPDF;
+- (void)removeAllTools;
+- (NSRect)getRectForTool:(PEPTool*)tool;
 @end
 
 NS_ASSUME_NONNULL_END
