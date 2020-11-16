@@ -58,9 +58,24 @@
     return NO;
 }
 
+- (void)mouseDown:(NSEvent *)event {
+    NSPoint location = [event locationInWindow];
+    NSPoint point = [self convertPoint:location fromView:nil];
+    
+    for (PEPTool *tool in _tools) {
+        NSRect toolRect = [self getRectForTool:tool];
+        if (NSPointInRect(point, toolRect)) {
+            [tool setSelected:YES];
+        } else {
+            [tool setSelected:NO];
+        }
+    }
+    [self setNeedsDisplay:YES];
+}
+
 - (NSRect)getRectForTool:(PEPTool*)tool {
     NSRect frame = [self bounds];
-    CGFloat totalWidth = 0.0;
+    CGFloat totalWidth = kToolMargin;
     for (PEPTool *t in _tools) {
         CGFloat width = [t width];
         totalWidth += width;
