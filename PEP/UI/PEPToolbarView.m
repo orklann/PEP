@@ -18,6 +18,7 @@
     [textEditTool setImage:textEditImage];
     [textEditTool setText:@"Text"];
     [textEditTool setToolbarView:self];
+    [textEditTool setSelected:YES];
     [_tools addObject:textEditTool];
     [self setNeedsDisplay:YES];
 }
