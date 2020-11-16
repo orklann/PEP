@@ -141,7 +141,7 @@
     
     NSPoint start = NSMakePoint(NSMinX(rect), NSMinY(rect));
     NSPoint end = NSMakePoint(NSMinX(rect), NSMaxY(rect));
-    CGContextSetRGBFillColor(context, 0.0, 0.0, 0.0, 1.0);
+    CGContextSetRGBStrokeColor(context, 0.22, 0.66, 0.99, 1.0);
     CGContextSetLineWidth(context, 1.0 / (kScaleFactor));
     CGContextMoveToPoint(context, (int)(start.x) + 0.5, (int)(start.y) - 0.5);
     CGContextAddLineToPoint(context, (int)(end.x) + 0.5, (int)(end.y) - 0.5);
@@ -162,9 +162,15 @@
     }
     
     frame = NSInsetRect(frame, 0.5, 0.5);
-    CGContextSetLineWidth(context, 1.0 / (kScaleFactor));
-    CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
+    CGFloat dash[2] = {6, 5}; // pattern 6 times “solid”, 5 times “empty”
+    CGContextSetLineDash(context, 0, dash, 2);
+    CGContextSetLineWidth(context, 1.5 / (kScaleFactor));
+    CGContextSetRGBStrokeColor(context, 0.22, 0.66, 0.99, 1.0);
     CGContextStrokeRect(context, frame);
+    
+    // Back to normal dash
+    CGFloat normal[1] = {1};
+    CGContextSetLineDash(context, 0, normal, 0);
     
     if (self.drawInsertionPoint) {
         [self drawInsertionPoint:context];
