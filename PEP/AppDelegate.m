@@ -41,6 +41,8 @@
     if ([[tab title] isEqualToString:kEditPDFTabTitle]) {
         [[(PEPWindow*)self.window toolbarView] removeAllTools];
         [[(PEPWindow*)self.window toolbarView] initToolsForEditPDF];
+    } else {
+        [[(PEPWindow*)self.window toolbarView] removeAllTools];
     }
 }
 
