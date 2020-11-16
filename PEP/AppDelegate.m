@@ -43,10 +43,22 @@
         [[(PEPWindow*)self.window toolbarView] initToolsForEditPDF];
     } else {
         [[(PEPWindow*)self.window toolbarView] removeAllTools];
+        PEPWindow* window = (PEPWindow*)self.window;
+        GDocument *doc = (GDocument*)[window doc];
+        [doc setMode:kNoneMode];
     }
 }
 
 - (void)toolDidActive:(PEPTool *)tool {
     NSLog(@"Tool selected: %@", [tool text]);
+    if ([[tool text] isEqualToString:kTextEditToolText]) {
+        PEPWindow* window = (PEPWindow*)self.window;
+        GDocument *doc = (GDocument*)[window doc];
+        [doc setMode:kTextEditMode];
+    } else if ([[tool text] isEqualToString:kImageToolText]) {
+        PEPWindow* window = (PEPWindow*)self.window;
+        GDocument *doc = (GDocument*)[window doc];
+        [doc setMode:kImageMode];
+    }
 }
 @end

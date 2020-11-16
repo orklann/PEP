@@ -34,12 +34,10 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *glyphs;
     GTextParser *textParser;
     NSPoint origin;
-    GTextEditor *textEditor;
     NSMutableArray *commands;
     NSRect highlightBlockFrame;
 }
 
-@property (readwrite) BOOL isEditingMode;
 @property (readwrite) BOOL isRendering;
 @property (readwrite) unsigned int lastStreamOffset;
 @property (readwrite) NSMutableDictionary *cachedFonts;

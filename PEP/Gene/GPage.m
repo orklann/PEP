@@ -28,7 +28,6 @@
     [p setNeedUpdate:YES];
     p.dataToUpdate = [NSMutableArray array];
     p.cachedFonts = [NSMutableDictionary dictionary];
-    p.isEditingMode = NO;
     p.isRendering = NO;
     return p;
 }
@@ -147,6 +146,7 @@
     NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
     NSLog(@"Debug: render() executionTime = %f", executionTime);
     */
+    GTextEditor *textEditor = [doc textEditor];
     if (textEditor != nil) {
         [textEditor draw:context];
     }
@@ -236,8 +236,8 @@
 }
 
 - (void)keyDown:(NSEvent*)event {
-    if (textEditor) {
-        [textEditor keyDown:event];
+    if ([doc textEditor]) {
+        [[doc textEditor] keyDown:event];
     }
     
     /*
@@ -248,21 +248,25 @@
 }
 
 - (void)mouseDown:(NSEvent*)event {
+    if ([doc mode] != kTextEditMode) {
+        return ;
+    }
     NSPoint location = [event locationInWindow];
     NSPoint point = [self.doc convertPoint:location fromView:nil];
     
-    if (textEditor && self.isEditingMode) {
+    GTextEditor *textEditor = [doc textEditor];
+    
+    if (textEditor) {
         [textEditor mouseDown:event];
         NSRect frame = [textEditor frame];
         NSRect viewFrame = [self rectFromPageToView:frame];
         if (!NSPointInRect(point, viewFrame)) {
-            textEditor = nil;
-            self.isEditingMode = NO;
+            [doc setTextEditor:nil];
         }
         [self redraw];
     }
     
-    if (self.isEditingMode) {
+    if ([doc textEditor]) {
         return ;
     }
     
@@ -272,10 +276,10 @@
         NSRect frame = [tb frame];
         NSRect viewFrame = [self rectFromPageToView:frame];
         if (NSPointInRect(point, viewFrame)) {
-            textEditor = [GTextEditor textEditorWithPage:self textBlock:tb];
+            GTextEditor *textEditor = [GTextEditor textEditorWithPage:self textBlock:tb];
             unsigned int index = (unsigned int)[blocks indexOfObject:tb];
             [textEditor setTextBlockIndex:index];
-            self.isEditingMode = YES;
+            [doc setTextEditor:textEditor];
             [self redraw];
             return ;
         }
@@ -284,7 +288,12 @@
 }
 
 - (void)mouseMoved:(NSEvent*)event {
-    if (self.isEditingMode) {
+    if ([doc mode] != kTextEditMode) {
+        return ;
+    }
+    
+    
+    if ([doc textEditor]) {
         [self redraw];
         return ;
     }

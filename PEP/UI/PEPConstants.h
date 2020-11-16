@@ -18,4 +18,11 @@
 
 #define kTextEditToolText @"Text"
 #define kImageToolText @"Image"
+
+// Modes for GDocument
+typedef enum {
+    kNoneMode,
+    kTextEditMode,
+    kImageMode
+} GMode;
 #endif /* PEPConstants_h */

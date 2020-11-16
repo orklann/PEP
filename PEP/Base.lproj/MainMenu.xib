@@ -715,6 +715,7 @@
                 </subviews>
             </view>
             <connections>
+                <outlet property="doc" destination="Bho-M0-3ar" id="zCE-Nq-LZw"/>
                 <outlet property="scrollView" destination="llR-pq-gxd" id="y8e-TE-cbU"/>
             </connections>
             <point key="canvasLocation" x="141" y="-120"/>

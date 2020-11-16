@@ -10,6 +10,8 @@
 #import "GPage.h"
 #import "GParser.h"
 #import "GConstants.h"
+#import "PEPConstants.h"
+#import "GTextEditor.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,7 +21,10 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *pages;
     GParser *parser;
     NSTrackingArea *trackingArea;
+    GMode mode;
 }
+
+@property (readwrite) GTextEditor * _Nullable textEditor;
 
 - (IBAction)saveDocumentAs:(id)sender;
 
@@ -27,6 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)parsePages;
 - (NSRect)rectFromFlipped:(NSRect)r;
 - (void)scrollToTop;
+- (void)setMode:(GMode)m;
+- (GMode)mode;
 @end
 
 NS_ASSUME_NONNULL_END

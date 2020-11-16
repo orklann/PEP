@@ -81,6 +81,9 @@
     CFRelease(font);
     CFRelease(cgdata);
     
+    // Inits
+    mode = kNoneMode;
+    
     // Test parsePages
     [self parsePages];
     
@@ -89,7 +92,6 @@
     
     // Make all mouse events work
     [self updateTrackingAreas];
-    
 }
 
 - (void)updateTrackingAreas {
@@ -224,5 +226,17 @@
 
 - (BOOL)acceptsFirstResponder {
     return YES;
+}
+
+- (void)setMode:(GMode)m {
+    if (m != kTextEditMode) {
+        _textEditor = nil;
+    }
+    mode = m;
+    [self setNeedsDisplay:YES];
+}
+
+- (GMode)mode {
+    return mode;
 }
 @end
