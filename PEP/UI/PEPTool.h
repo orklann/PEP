@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define kToolHeight 24
 #define kToolWidthMargin 8
+#define kToolMargin 8
 
 @interface PEPTool : NSObject {
     NSImage *image;

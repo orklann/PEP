@@ -22,6 +22,17 @@
     [textEditTool setDelegate:[NSApp delegate]];
     [textEditTool setSelected:YES];
     [_tools addObject:textEditTool];
+    
+    // Add Image tool
+    PEPTool *imageTool = [PEPTool create];
+    NSImage *imageToolImage = [NSImage imageNamed:@"image"];
+    [imageTool setImage:imageToolImage];
+    [imageTool setText:kImageToolText];
+    [imageTool setToolbarView:self];
+    [imageTool setDelegate:[NSApp delegate]];
+    [imageTool setSelected:NO];
+    [_tools addObject:imageTool];
+    
     [self setNeedsDisplay:YES];
 }
 
@@ -53,9 +64,19 @@
     for (PEPTool *t in _tools) {
         CGFloat width = [t width];
         totalWidth += width;
+        totalWidth += kToolMargin;
     }
     CGFloat midX = NSMidX(frame);
     CGFloat x = midX - (totalWidth / 2);
+    
+    int index = (int)[_tools indexOfObject:tool];
+    int i;
+    for (i = 0; i < index; i++)  {
+        PEPTool *tool = [_tools objectAtIndex:i];
+        x += [tool width];
+        x += kToolMargin;
+    }
+    
     CGFloat y = (kToolbarHeight - kToolHeight) / 2;
     return NSMakeRect(x, y, [tool width], kToolHeight);
 }
