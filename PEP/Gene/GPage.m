@@ -159,7 +159,7 @@
     }
     // Draw highlith text block border
     CGContextSetLineWidth(context, 1.0 / (kScaleFactor));
-    CGContextSetRGBStrokeColor(context, 0.0, 0.0, 0.0, 1.0);
+    CGContextSetRGBStrokeColor(context, 0.22, 0.66, 0.99, 1.0);
     CGContextStrokeRect(context, highlightBlockFrame);
     
     [self setNeedUpdate:NO];
