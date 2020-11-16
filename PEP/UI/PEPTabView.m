@@ -17,7 +17,7 @@
     PEPTab *tab1 = [PEPTab create];
     [tab1 setTabView:self];
     [tab1 setTitle:kAnnotateTabTitle];
-    [tab1 setActive:YES];
+    [tab1 setActive:NO];
     [tab1 setDelegate:NSApp.delegate];
     [tabs addObject:tab1];
     
@@ -37,11 +37,11 @@
     [tab3 setDelegate:NSApp.delegate];
     [tabs addObject:tab3];
     
-    // Favorites tab
+    // Recent tab
     PEPTab *tab4 = [PEPTab create];
     [tab4 setTabView:self];
-    [tab4 setTitle:kFavoritesTabTitle];
-    [tab4 setActive:NO];
+    [tab4 setTitle:kRecentTabTitle];
+    [tab4 setActive:YES];
     [tab4 setDelegate:NSApp.delegate];
     [tabs addObject:tab4];
     
