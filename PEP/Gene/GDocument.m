@@ -228,7 +228,7 @@
     return YES;
 }
 
-- (void)setMode:(GMode)m {
+- (void)setMode:(GDocumentMode)m {
     if (m != kTextEditMode) {
         _textEditor = nil;
     }
@@ -236,7 +236,7 @@
     [self setNeedsDisplay:YES];
 }
 
-- (GMode)mode {
+- (GDocumentMode)mode {
     return mode;
 }
 @end

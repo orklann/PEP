@@ -24,5 +24,5 @@ typedef enum {
     kNoneMode,
     kTextEditMode,
     kImageMode
-} GMode;
+} GDocumentMode;
 #endif /* PEPConstants_h */

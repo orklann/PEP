@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *pages;
     GParser *parser;
     NSTrackingArea *trackingArea;
-    GMode mode;
+    GDocumentMode mode;
 }
 
 @property (readwrite) GTextEditor * _Nullable textEditor;
@@ -32,8 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)parsePages;
 - (NSRect)rectFromFlipped:(NSRect)r;
 - (void)scrollToTop;
-- (void)setMode:(GMode)m;
-- (GMode)mode;
+- (void)setMode:(GDocumentMode)m;
+- (GDocumentMode)mode;
 @end
 
 NS_ASSUME_NONNULL_END
