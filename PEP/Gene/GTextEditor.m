@@ -162,13 +162,14 @@
     }
     
     frame = NSInsetRect(frame, 0.5, 0.5);
-    CGFloat dash[2] = {6, 3}; // pattern 6 times “solid”, 5 times “empty”
+    // Dash pattern: pattern 6 times “solid”, 3 times “empty”
+    CGFloat dash[2] = {6, 3};
     CGContextSetLineDash(context, 0, dash, 2);
     CGContextSetLineWidth(context, 1.5 / (kScaleFactor));
     CGContextSetRGBStrokeColor(context, 0.22, 0.66, 0.99, 1.0);
     CGContextStrokeRect(context, frame);
     
-    // Back to normal dash
+    // Back to normal dash pattern
     CGFloat normal[1] = {1};
     CGContextSetLineDash(context, 0, normal, 0);
     
