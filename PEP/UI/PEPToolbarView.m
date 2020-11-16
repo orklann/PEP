@@ -74,6 +74,8 @@
 }
 
 - (NSRect)getRectForTool:(PEPTool*)tool {
+    // It's all about calculate x, y
+    // width and height are fix
     NSRect frame = [self bounds];
     CGFloat totalWidth = kToolMargin;
     for (PEPTool *t in _tools) {
