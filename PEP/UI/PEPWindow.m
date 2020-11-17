@@ -37,6 +37,9 @@
     toolbarView = [[PEPToolbarView alloc] initWithFrame:NSZeroRect];
     [topView addSubview:toolbarView];
     
+    sideView = [[PEPSideView alloc] initWithFrame:NSZeroRect];
+    [self.contentView addSubview:sideView];
+    
     [self layoutViews];
 }
 
@@ -54,10 +57,28 @@
     // Layout tab view, toolbar view
     [topView layoutViews];
     
-    // Scroll View
-    NSRect scrollViewFrame = contentViewFrame;
-    scrollViewFrame.size.height = contentViewFrame.size.height - kTopViewHeight;
-    [self.scrollView setFrame:scrollViewFrame];
+    if ([self.doc textEditor]) {
+        // Scroll View, but make space for right side view
+        NSRect scrollViewFrame = contentViewFrame;
+        scrollViewFrame.size.height = contentViewFrame.size.height - kTopViewHeight;
+        scrollViewFrame.size.width -= kSideViewWidth;
+        [self.scrollView setFrame:scrollViewFrame];
+        
+        // Side View
+        NSRect sideViewFrame = contentViewFrame;
+        sideViewFrame.size.height = contentViewFrame.size.height - kTopViewHeight;
+        sideViewFrame.size.width = kSideViewWidth;
+        sideViewFrame.origin.x = NSMaxX(scrollViewFrame);
+        [sideView setFrame:sideViewFrame];
+    } else {
+        // Only scroll View
+        NSRect scrollViewFrame = contentViewFrame;
+        scrollViewFrame.size.height = contentViewFrame.size.height - kTopViewHeight;
+        [self.scrollView setFrame:scrollViewFrame];
+        
+        // Hide side view
+        [sideView setFrame:NSZeroRect];
+    }
 }
 
 - (void)layoutIfNeeded {

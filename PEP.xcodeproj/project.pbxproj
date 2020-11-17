@@ -23,6 +23,7 @@
 		9320C01A2519C7F8008F20B0 /* GInterpreterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9320C0192519C7F8008F20B0 /* GInterpreterTests.m */; };
 		9320C01C251A1552008F20B0 /* irig_keys_25.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9320C01B251A1552008F20B0 /* irig_keys_25.pdf */; };
 		9320C01E251A1569008F20B0 /* irig_keys_25.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9320C01D251A1568008F20B0 /* irig_keys_25.pdf */; };
+		932FF6EC2563D79800808652 /* PEPSideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 932FF6EB2563D79800808652 /* PEPSideView.m */; };
 		93311A0E254D456000D58E06 /* GWrappedLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 93311A0D254D456000D58E06 /* GWrappedLine.m */; };
 		93311A10254EA5EF00D58E06 /* PEP_Incremental.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93311A0F254EA5EF00D58E06 /* PEP_Incremental.pdf */; };
 		93311A12254EA60500D58E06 /* PEP_Incremental.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93311A11254EA60500D58E06 /* PEP_Incremental.pdf */; };
@@ -109,6 +110,8 @@
 		9320C0192519C7F8008F20B0 /* GInterpreterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GInterpreterTests.m; sourceTree = "<group>"; };
 		9320C01B251A1552008F20B0 /* irig_keys_25.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = irig_keys_25.pdf; sourceTree = "<group>"; };
 		9320C01D251A1568008F20B0 /* irig_keys_25.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = irig_keys_25.pdf; path = PEPTests/pdf/irig_keys_25.pdf; sourceTree = SOURCE_ROOT; };
+		932FF6EA2563D79800808652 /* PEPSideView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEPSideView.h; sourceTree = "<group>"; };
+		932FF6EB2563D79800808652 /* PEPSideView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEPSideView.m; sourceTree = "<group>"; };
 		93311A0C254D456000D58E06 /* GWrappedLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWrappedLine.h; sourceTree = "<group>"; };
 		93311A0D254D456000D58E06 /* GWrappedLine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWrappedLine.m; sourceTree = "<group>"; };
 		93311A0F254EA5EF00D58E06 /* PEP_Incremental.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PEP_Incremental.pdf; sourceTree = "<group>"; };
@@ -274,6 +277,8 @@
 				9392912D25624202003F062A /* PEPTool.h */,
 				9392912E25624202003F062A /* PEPTool.m */,
 				939291512562531B003F062A /* PEPToolDelegate.h */,
+				932FF6EA2563D79800808652 /* PEPSideView.h */,
+				932FF6EB2563D79800808652 /* PEPSideView.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -512,6 +517,7 @@
 				931221CF24F0139300929C01 /* main.m in Sources */,
 				931ECFB12518911A00E26EFA /* GInterpreter.m in Sources */,
 				93DEC33D25401C3D00E280B0 /* GEncoders.m in Sources */,
+				932FF6EC2563D79800808652 /* PEPSideView.m in Sources */,
 				93576008255FC83900102C92 /* PEPContentView.m in Sources */,
 				93E336FD24F1265300F91F74 /* GLexer.m in Sources */,
 				93DEC3422540238C00E280B0 /* GBinaryData.m in Sources */,

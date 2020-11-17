@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "PEPTopView.h"
 #import "GDocument.h"
+#import "PEPSideView.h"
 NS_ASSUME_NONNULL_BEGIN
 
 #define kMoveButtonDelta 8.0
@@ -20,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
     PEPTopView *topView;
     PEPTabView *tabView;
     PEPToolbarView *toolbarView;
+    PEPSideView *sideView;
 }
 
 @property (weak) IBOutlet GDocument *doc;
