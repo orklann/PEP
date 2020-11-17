@@ -18,4 +18,4 @@ I update PEP almost everyday. Please check out the official website ([PEP](https
 I don't have any roadmap yet, but i will publish one later at the right moment. I hope someone will see the potential of PEP, and donate towards it to speed up the development process.
 
 ## Screenshots
-![](https://raw.githubusercontent.com/orklann/PEP/master/Screenshots/render_sample_pdf.png)
+![](https://raw.githubusercontent.com/orklann/PEP/master/Screenshots/pep_alpha_focus_ui.png)
