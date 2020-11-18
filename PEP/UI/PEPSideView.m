@@ -34,13 +34,7 @@
     [self setAlphaValue:1.0];
     
     // Font label
-    fontLabel = [[NSTextField alloc] initWithFrame:NSZeroRect];
-    [fontLabel setEditable:NO];
-    [fontLabel setSelectable:NO];
-    [fontLabel setStringValue:@"Font"];
-    [fontLabel setDrawsBackground:NO];
-    [fontLabel setBezeled:NO];
-    [fontLabel setFont:[NSFont labelFontOfSize:15]];
+    fontLabel = [self makeTitleLableWithText:@"Font"];
     [self addSubview:fontLabel];
     
     // Font list
@@ -81,5 +75,16 @@
 
 - (NSRect)marginBounds {
     return NSInsetRect(self.bounds, 12, 0);
+}
+
+- (NSTextField*)makeTitleLableWithText:(NSString*)text {
+    NSTextField *label = [[NSTextField alloc] initWithFrame:NSZeroRect];
+    [label setEditable:NO];
+    [label setSelectable:NO];
+    [label setStringValue:text];
+    [label setDrawsBackground:NO];
+    [label setBezeled:NO];
+    [label setFont:[NSFont labelFontOfSize:15]];
+    return label;
 }
 @end
