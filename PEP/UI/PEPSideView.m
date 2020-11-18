@@ -61,6 +61,11 @@
     fontListFrame.size.height = 32;
     fontListFrame.origin.y = 38;
     [fontsList setFrame:fontListFrame];
+    
+    // TODO: List all font styles for each font
+    // Need another NSPopupButton here
+    
+    
 }
 
 - (void)setFontListItems {
