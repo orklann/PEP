@@ -64,7 +64,8 @@
     
     // TODO: List all font styles for each font
     // Need another NSPopupButton here
-    
+    // USE: use font name and comparing to fonts list to get all styles for a font name
+    // NSArray *fonts = [[NSFontManager sharedFontManager] availableFonts];
     
 }
 
