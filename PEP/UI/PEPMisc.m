@@ -8,7 +8,7 @@
 
 #import "PEPMisc.h"
 
-NSArray *allFontsInSystem(void) {
+NSArray *allFontFamiliesInSystem(void) {
     /*
      // This returns an array of NSStrings that gives you each font installed on the system
      NSArray *fonts = [[NSFontManager sharedFontManager] availableFontFamilies];

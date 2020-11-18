@@ -70,7 +70,7 @@
 }
 
 - (void)setFontListItems {
-    NSArray *fonts = allFontsInSystem();
+    NSArray *fonts = allFontFamiliesInSystem();
     [fontsList removeAllItems];
     [fontsList addItemsWithTitles:fonts];
 }
