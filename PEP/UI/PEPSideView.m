@@ -12,7 +12,9 @@
 @implementation PEPSideView
 
 - (void)drawRect:(NSRect)dirtyRect {
-    // The same color with NSScrollView's border color
+    // The same color with NSScrollView's border color,
+    // But we hard code the side view top border color here
+    // TODO: A smarter way to get the system default border color
     [[NSColor colorWithRed:0.90 green:0.90 blue:0.90 alpha:1] set];
     NSRectFill([self bounds]);
 
