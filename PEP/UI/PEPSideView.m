@@ -59,13 +59,13 @@
     // Font label
     NSRect fontLabelFrame = sideViewFrame;
     fontLabelFrame.size.height = 24;
-    fontLabelFrame.origin.y = 6;
+    fontLabelFrame.origin.y = 12;
     [fontLabel setFrame:fontLabelFrame];
     
     // Font list
     NSRect fontListFrame = sideViewFrame;
     fontListFrame.size.height = 32;
-    fontListFrame.origin.y = 48;
+    fontListFrame.origin.y = 38;
     [fontsList setFrame:fontListFrame];
 }
 
