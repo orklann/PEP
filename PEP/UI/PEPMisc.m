@@ -10,15 +10,20 @@
 
 NSArray *allFontFamiliesInSystem(void) {
     /*
-     // This returns an array of NSStrings that gives you each font installed on the system
-     NSArray *fonts = [[NSFontManager sharedFontManager] availableFontFamilies];
-
-     // Does the same as the above, but includes each available font style (e.g. you get
-     // Verdana, "Verdana-Bold", "Verdana-BoldItalic", and "Verdana-Italic" for Verdana).
-     NSArray *fonts = [[NSFontManager sharedFontManager] availableFonts];
+     This returns an array of NSStrings that gives you each font installed on the system
     */
     NSFontManager *fmg = [NSFontManager sharedFontManager];
     NSArray *families = [fmg availableFontFamilies];
+    return families;
+}
+
+NSArray *allFontsInSystem(void) {
+    /*
+     Does the same to allFontFamiliesInSystem(), but includes each available font style (e.g. you get
+     Verdana, "Verdana-Bold", "Verdana-BoldItalic", and "Verdana-Italic" for Verdana).
+    */
+    NSFontManager *fmg = [NSFontManager sharedFontManager];
+    NSArray *families = [fmg availableFonts];
     return families;
 }
 
