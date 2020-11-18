@@ -12,11 +12,6 @@
 
 - (void)drawRect:(NSRect)dirtyRect {
     [super drawRect:dirtyRect];
-    
-    // Drawing code here.
-    NSColor *bgColor = [NSColor colorWithRed:0.15 green:0.15 blue:0.15 alpha:1.0];
-    [bgColor set];
-    NSRectFill([self bounds]);
 }
 
 @end

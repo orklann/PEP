@@ -22,6 +22,7 @@
     [self setTitle:@""];
     [self setTitlebarAppearsTransparent:YES];
     self.movableByWindowBackground = YES;
+    [self setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
     
     needToMoveCloseButton = YES;
     needToMoveMiniaturizeButton = YES;
@@ -39,6 +40,7 @@
     
     sideView = [[PEPSideView alloc] initWithFrame:NSZeroRect];
     [self.contentView addSubview:sideView];
+    [sideView initAllViews];
     
     [self layoutViews];
 }
@@ -70,6 +72,7 @@
         sideViewFrame.size.width = kSideViewWidth;
         sideViewFrame.origin.x = NSMaxX(scrollViewFrame);
         [sideView setFrame:sideViewFrame];
+        [sideView layoutViews];
     } else {
         // Only scroll View
         NSRect scrollViewFrame = contentViewFrame;
