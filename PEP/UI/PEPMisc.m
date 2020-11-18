@@ -21,3 +21,12 @@ NSArray *allFontsInSystem(void) {
     NSArray *families = [fmg availableFontFamilies];
     return families;
 }
+
+NSString *getFontPath(NSFont* font) {
+    CTFontDescriptorRef ctFontRef = CTFontDescriptorCreateWithNameAndSize ((CFStringRef)[font fontName], [font pointSize]);
+    NSFontDescriptor* fontRef = (__bridge NSFontDescriptor*)ctFontRef;
+    CFURLRef url = (CFURLRef)CTFontDescriptorCopyAttribute((CTFontDescriptorRef)fontRef, kCTFontURLAttribute);
+    NSString *fontPath = [NSString stringWithString:[(NSURL *)CFBridgingRelease(url) path]];
+    CFRelease(ctFontRef);
+    return fontPath;
+}

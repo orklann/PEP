@@ -14,4 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 // Return a array of font names
 NSArray *allFontsInSystem(void);
 
+// Get font path for a NSFont, use to get font styles by comparing the font name
+// return by this method to all fonts.
+NSString *getFontPath(NSFont* font);
 NS_ASSUME_NONNULL_END
