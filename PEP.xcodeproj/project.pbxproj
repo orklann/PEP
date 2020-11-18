@@ -52,6 +52,7 @@
 		9392914625624C52003F062A /* cursor-text@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9392914425624C52003F062A /* cursor-text@2x.png */; };
 		9392915825625AF0003F062A /* image@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9392915625625AF0003F062A /* image@2x.png */; };
 		9392915925625AF0003F062A /* image.png in Resources */ = {isa = PBXBuildFile; fileRef = 9392915725625AF0003F062A /* image.png */; };
+		9397A56A25652DB5003969B8 /* PEPMisc.m in Sources */ = {isa = PBXBuildFile; fileRef = 9397A56925652DB5003969B8 /* PEPMisc.m */; };
 		93A8692A251399760033DC22 /* GPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A86929251399760033DC22 /* GPage.m */; };
 		93A8692D25147ECA0033DC22 /* GMisc.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A8692C25147ECA0033DC22 /* GMisc.m */; };
 		93B707AC255D129200F326EB /* bug_hex_string.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93B707AB255D129200F326EB /* bug_hex_string.pdf */; };
@@ -153,6 +154,8 @@
 		939291512562531B003F062A /* PEPToolDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEPToolDelegate.h; sourceTree = "<group>"; };
 		9392915625625AF0003F062A /* image@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "image@2x.png"; sourceTree = "<group>"; };
 		9392915725625AF0003F062A /* image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image.png; sourceTree = "<group>"; };
+		9397A56825652DB5003969B8 /* PEPMisc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEPMisc.h; sourceTree = "<group>"; };
+		9397A56925652DB5003969B8 /* PEPMisc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEPMisc.m; sourceTree = "<group>"; };
 		93A86928251399760033DC22 /* GPage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GPage.h; sourceTree = "<group>"; };
 		93A86929251399760033DC22 /* GPage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GPage.m; sourceTree = "<group>"; };
 		93A8692B25147ECA0033DC22 /* GMisc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMisc.h; sourceTree = "<group>"; };
@@ -279,6 +282,8 @@
 				939291512562531B003F062A /* PEPToolDelegate.h */,
 				932FF6EA2563D79800808652 /* PEPSideView.h */,
 				932FF6EB2563D79800808652 /* PEPSideView.m */,
+				9397A56825652DB5003969B8 /* PEPMisc.h */,
+				9397A56925652DB5003969B8 /* PEPMisc.m */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -519,6 +524,7 @@
 				93DEC33D25401C3D00E280B0 /* GEncoders.m in Sources */,
 				932FF6EC2563D79800808652 /* PEPSideView.m in Sources */,
 				93576008255FC83900102C92 /* PEPContentView.m in Sources */,
+				9397A56A25652DB5003969B8 /* PEPMisc.m in Sources */,
 				93E336FD24F1265300F91F74 /* GLexer.m in Sources */,
 				93DEC3422540238C00E280B0 /* GBinaryData.m in Sources */,
 				9346A86125305B2800804506 /* GTextBlock.m in Sources */,

@@ -8,6 +8,7 @@
 
 #import "PEPSideView.h"
 #import "PEPConstants.h"
+#import "PEPMisc.h"
 
 @implementation PEPSideView
 
@@ -32,6 +33,7 @@
     // View settings
     [self setAlphaValue:1.0];
     
+    // Font label
     fontLabel = [[NSTextField alloc] initWithFrame:NSZeroRect];
     [fontLabel setEditable:NO];
     [fontLabel setSelectable:NO];
@@ -40,6 +42,11 @@
     [fontLabel setBezeled:NO];
     [fontLabel setFont:[NSFont labelFontOfSize:15]];
     [self addSubview:fontLabel];
+    
+    // Font list
+    fontsList = [[NSPopUpButton alloc] initWithFrame:NSZeroRect];
+    [self addSubview:fontsList];
+    [self setFontListItems];
 }
 
 - (void)layoutViews {
@@ -48,10 +55,24 @@
 
 - (void)layoutFontView {
     NSRect sideViewFrame = [self marginBounds];
+    
+    // Font label
     NSRect fontLabelFrame = sideViewFrame;
     fontLabelFrame.size.height = 24;
     fontLabelFrame.origin.y = 6;
     [fontLabel setFrame:fontLabelFrame];
+    
+    // Font list
+    NSRect fontListFrame = sideViewFrame;
+    fontListFrame.size.height = 32;
+    fontListFrame.origin.y = 48;
+    [fontsList setFrame:fontListFrame];
+}
+
+- (void)setFontListItems {
+    NSArray *fonts = allFontsInSystem();
+    [fontsList removeAllItems];
+    [fontsList addItemsWithTitles:fonts];
 }
 
 - (BOOL)isFlipped {
