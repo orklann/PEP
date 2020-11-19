@@ -94,7 +94,8 @@
     NSRect fontSizeListFrame = styleListFrame;
     fontSizeListFrame.size.width = 100;
     fontSizeListFrame.size.height = 24;
-    fontSizeListFrame.origin.y += 32;
+    fontSizeListFrame.origin.y += 34;
+    fontSizeListFrame.origin.x += 2;
     [fontSizeList setFrame:fontSizeListFrame];
 }
 
