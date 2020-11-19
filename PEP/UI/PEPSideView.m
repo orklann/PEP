@@ -52,6 +52,11 @@
     styleList = [[NSPopUpButton alloc] initWithFrame:NSZeroRect];
     [self addSubview:styleList];
     [self reloadStyleList];
+    
+    // Font size list
+    fontSizeList = [[NSComboBox alloc] initWithFrame:NSZeroRect];
+    [self addSubview:fontSizeList];
+    [self reloadFontSizeList];
 }
 
 - (void)layoutViews {
@@ -84,6 +89,14 @@
     styleListFrame.size.height = 32;
     styleListFrame.origin.y += 24;
     [styleList setFrame:styleListFrame];
+    
+    // Font size list
+    NSRect fontSizeListFrame = styleListFrame;
+    fontSizeListFrame.size.width = 100;
+    fontSizeListFrame.size.height = 24;
+    fontSizeListFrame.origin.y += 32;
+    fontSizeListFrame.origin.x += 5;
+    [fontSizeList setFrame:fontSizeListFrame];
 }
 
 - (void)reloadDefaultFontFamilies {
@@ -134,5 +147,17 @@
     NSArray *styles = [selectedFamilyDictionary allKeys];
     [styleList removeAllItems];
     [styleList addItemsWithTitles:styles];
+}
+
+- (void)reloadFontSizeList {
+    NSArray *sizeList = @[@"6 pt", @"8 pt", @"9 pt", @"10 pt",
+                           @"11 pt", @"12 pt", @"13 pt", @"14 pt",
+                           @"15pt", @"16 pt", @"17 pt", @"18 pt",
+                           @"24 pt", @"36 pt", @"48 pt", @"64 pt",
+                           @"72 pt", @"96 pt", @"144 pt", @"288 pt"];
+    
+    [fontSizeList removeAllItems];
+    [fontSizeList addItemsWithObjectValues:sizeList];
+    [fontSizeList setNumberOfVisibleItems:[sizeList count]];
 }
 @end

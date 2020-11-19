@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PEPSideView : NSView <NSMenuDelegate> {
     NSPopUpButton *familyList;
     NSPopUpButton *styleList;
+    NSComboBox *fontSizeList;
     NSTextField *fontLabel;
     NSTextField *styleLabel;
     NSMutableDictionary *familyDictionary;
