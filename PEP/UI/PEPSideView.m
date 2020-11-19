@@ -95,7 +95,6 @@
     fontSizeListFrame.size.width = 100;
     fontSizeListFrame.size.height = 24;
     fontSizeListFrame.origin.y += 32;
-    fontSizeListFrame.origin.x += 5;
     [fontSizeList setFrame:fontSizeListFrame];
 }
 
@@ -159,5 +158,6 @@
     [fontSizeList removeAllItems];
     [fontSizeList addItemsWithObjectValues:sizeList];
     [fontSizeList setNumberOfVisibleItems:[sizeList count]];
+    [fontSizeList setStringValue:@"12 pt"];
 }
 @end
