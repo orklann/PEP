@@ -43,6 +43,15 @@
     [familyList setTarget:self];
     [familyList setAction:@selector(fontFamiliesSelectionDidChange:)];
     [self reloadDefaultFontFamilies];
+    
+    // Style label
+    styleLabel = [self makeTitleLableWithText:@"Style"];
+    [self addSubview:styleLabel];
+    
+    // Style list
+    styleList = [[NSPopUpButton alloc] initWithFrame:NSZeroRect];
+    [self addSubview:styleList];
+    [self reloadStyleList];
 }
 
 - (void)layoutViews {
@@ -59,16 +68,22 @@
     [fontLabel setFrame:fontLabelFrame];
     
     // Font list
-    NSRect fontListFrame = sideViewFrame;
+    NSRect fontListFrame = fontLabelFrame;
     fontListFrame.size.height = 32;
-    fontListFrame.origin.y = 38;
+    fontListFrame.origin.y += 24;
     [familyList setFrame:fontListFrame];
     
-    // TODO: List all font styles for each font
-    // Need another NSPopupButton here
-    // USE: use font name and comparing to fonts list to get all styles for a font name
-    // NSArray *fonts = [[NSFontManager sharedFontManager] availableFonts];
+    // Style label
+    NSRect styleLabelFrame = fontListFrame;
+    styleLabelFrame.size.height = 24;
+    styleLabelFrame.origin.y += 32;
+    [styleLabel setFrame:styleLabelFrame];
     
+    // Style list
+    NSRect styleListFrame = styleLabelFrame;
+    styleListFrame.size.height = 32;
+    styleListFrame.origin.y += 24;
+    [styleList setFrame:styleListFrame];
 }
 
 - (void)reloadDefaultFontFamilies {
@@ -110,6 +125,14 @@
 }
 
 - (IBAction)fontFamiliesSelectionDidChange:(id)sender {
-    NSLog(@"%@", [familyList titleOfSelectedItem]);
+    [self reloadStyleList];
+}
+
+- (void)reloadStyleList {
+    NSString *selectedFamily = [familyList titleOfSelectedItem];
+    NSDictionary *selectedFamilyDictionary = [familyDictionary objectForKey:selectedFamily];
+    NSArray *styles = [selectedFamilyDictionary allKeys];
+    [styleList removeAllItems];
+    [styleList addItemsWithTitles:styles];
 }
 @end
