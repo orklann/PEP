@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define kSideViewWidth 280
 
-@interface PEPSideView : NSView {
+@interface PEPSideView : NSView <NSMenuDelegate> {
     NSPopUpButton *familyList;
     NSTextField *fontLabel;
     NSMutableDictionary *familyDictionary;

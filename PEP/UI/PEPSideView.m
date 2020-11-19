@@ -40,6 +40,8 @@
     // Font list
     familyList = [[NSPopUpButton alloc] initWithFrame:NSZeroRect];
     [self addSubview:familyList];
+    [familyList setTarget:self];
+    [familyList setAction:@selector(fontFamiliesSelectionDidChange:)];
     [self reloadDefaultFontFamilies];
 }
 
@@ -105,5 +107,9 @@
     [label setBezeled:NO];
     [label setFont:[NSFont labelFontOfSize:15]];
     return label;
+}
+
+- (IBAction)fontFamiliesSelectionDidChange:(id)sender {
+    NSLog(@"%@", [familyList titleOfSelectedItem]);
 }
 @end
