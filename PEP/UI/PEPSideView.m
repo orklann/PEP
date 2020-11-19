@@ -38,8 +38,8 @@
     [self addSubview:fontLabel];
     
     // Font list
-    fontsList = [[NSPopUpButton alloc] initWithFrame:NSZeroRect];
-    [self addSubview:fontsList];
+    familyList = [[NSPopUpButton alloc] initWithFrame:NSZeroRect];
+    [self addSubview:familyList];
     [self setFontListItems];
 }
 
@@ -60,7 +60,7 @@
     NSRect fontListFrame = sideViewFrame;
     fontListFrame.size.height = 32;
     fontListFrame.origin.y = 38;
-    [fontsList setFrame:fontListFrame];
+    [familyList setFrame:fontListFrame];
     
     // TODO: List all font styles for each font
     // Need another NSPopupButton here
@@ -71,8 +71,8 @@
 
 - (void)setFontListItems {
     NSArray *fonts = allFontFamiliesInSystem();
-    [fontsList removeAllItems];
-    [fontsList addItemsWithTitles:fonts];
+    [familyList removeAllItems];
+    [familyList addItemsWithTitles:fonts];
 }
 
 - (BOOL)isFlipped {
