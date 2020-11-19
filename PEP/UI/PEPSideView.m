@@ -40,7 +40,7 @@
     // Font list
     familyList = [[NSPopUpButton alloc] initWithFrame:NSZeroRect];
     [self addSubview:familyList];
-    [self setFontListItems];
+    [self reloadDefaultFontFamilies];
 }
 
 - (void)layoutViews {
@@ -69,10 +69,23 @@
     
 }
 
-- (void)setFontListItems {
-    NSArray *fonts = allFontFamiliesInSystem();
+- (void)reloadDefaultFontFamilies {
+    NSArray *fontfamilies = allFontFamiliesInSystem();
     [familyList removeAllItems];
-    [familyList addItemsWithTitles:fonts];
+    [familyList addItemsWithTitles:fontfamilies];
+    
+    // Construct fontFamilyDictionary
+    NSFontManager *fm = [NSFontManager sharedFontManager];
+    familyDictionary = [NSMutableDictionary dictionary];
+    for (NSString *family in fontfamilies) {
+        NSArray *familyMembers;
+        familyMembers = [fm availableMembersOfFontFamily:family];
+        NSMutableDictionary *memberDictionary = [NSMutableDictionary dictionary];
+        for (NSArray *member in familyMembers) {
+            [memberDictionary setObject:[member objectAtIndex:0] forKey:[member objectAtIndex:1]];
+        }
+        [familyDictionary setObject:memberDictionary forKey:family];
+    }
 }
 
 - (BOOL)isFlipped {
