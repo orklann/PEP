@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
     NSTextField *fontLabel;
     NSTextField *styleLabel;
     NSMutableDictionary *familyDictionary;
+    NSArray *fontList;
+    NSArray *fontfamilies;
 }
 
 - (void)initAllViews;

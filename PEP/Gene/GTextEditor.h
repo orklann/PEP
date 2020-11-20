@@ -69,6 +69,10 @@ NS_ASSUME_NONNULL_BEGIN
 // Delete current character in insertion point
 - (void)deleteCharacter;
 - (void)deleteCharacterInInsertionPoint;
+
+// Get text font family
+- (NSString*)getFontFamilyForCurrentGlyph;
+- (NSString*)getFontNameForCurrentGlyph;
 @end
 
 NS_ASSUME_NONNULL_END

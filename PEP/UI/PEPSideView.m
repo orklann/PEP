@@ -101,7 +101,10 @@
 }
 
 - (void)reloadDefaultFontFamilies {
-    NSArray *fontfamilies = allFontFamiliesInSystem();
+    // Save a copy of all fonts
+    fontList = allFontsInSystem();
+    
+    fontfamilies = allFontFamiliesInSystem();
     [familyList removeAllItems];
     [familyList addItemsWithTitles:fontfamilies];
     
@@ -164,6 +167,27 @@
 }
 
 - (void)textStateDidChange:(GTextEditor *)editor {
+    NSString *familyName = [editor getFontFamilyForCurrentGlyph];
+    if ([fontfamilies containsObject:familyName]) {
+        [familyList selectItemWithTitle:familyName];
+    }
     
+    NSString *fontName = [editor getFontNameForCurrentGlyph];
+    NSString *style = [self getStyleByFontName:fontName andFamily:familyName];
+    if (style != nil) {
+        [self reloadStyleList];
+        [styleList selectItemWithTitle:style];
+    }
+}
+
+- (NSString*)getStyleByFontName:(NSString*)fontName andFamily:(NSString*)family {
+    NSDictionary *styleDictionary = [familyDictionary objectForKey:family];
+    for (NSString *style in styleDictionary) {
+        NSString *fontNameForStyle = [styleDictionary objectForKey:style];
+        if ([fontName isEqualToString:fontNameForStyle]) {
+            return style;
+        }
+    }
+    return nil;
 }
 @end

@@ -1021,4 +1021,23 @@
     // No glyph found, return -1
     return -1;
 }
+
+- (NSString*)getFontFamilyForCurrentGlyph {
+    return [self getFontFamilyByPDFFontTage:[self pdfFontName]];
+}
+
+- (NSString*)getFontFamilyByPDFFontTage:(NSString*)pdfFontTag {
+    NSFont *font = [self.page getCachedFontByFontTag:pdfFontTag];
+    return [font familyName];
+}
+
+- (NSString*)getFontNameForCurrentGlyph {
+    return [self getFontNameByPDFFontTag:[self pdfFontName]];
+}
+
+- (NSString*)getFontNameByPDFFontTag:(NSString*)pdfFontTag {
+    NSFont *font = [self.page getCachedFontByFontTag:pdfFontTag];
+    return [font fontName];
+}
 @end
+
