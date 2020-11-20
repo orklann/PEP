@@ -471,7 +471,7 @@
         font = [gFont getNSFontBySize:fontSize];
     } else {
         // This cause "test_xref.pdf" inserting character position not correct
-        // TODO: Fix it later
+        // TODO: Fix it later, maybe we need to take a look at makeReadOrderGlyph() again
         font = [NSFont fontWithName:@"Gill Sans" size:fontSize];
     }
     [self insertChar:ch font:font];
