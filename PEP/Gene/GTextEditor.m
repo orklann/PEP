@@ -66,6 +66,11 @@
         }
         [self redraw];
     }];
+    
+    // Notify delegate to udpate text state
+    if ([_delegate respondsToSelector:@selector(textStateDidChange:)]) {
+        [_delegate textStateDidChange:self];
+    }
     return self;
 }
 
@@ -346,6 +351,9 @@
         }
         self.drawInsertionPoint = YES;
         [self redraw];
+    }
+    if ([_delegate respondsToSelector:@selector(textStateDidChange:)]) {
+        [_delegate textStateDidChange:self];
     }
 }
 
@@ -1023,7 +1031,8 @@
 }
 
 - (NSString*)getFontFamilyForCurrentGlyph {
-    return [self getFontFamilyByPDFFontTage:[self pdfFontName]];
+    GGlyph *currentGlyph = [self getCurrentGlyph];
+    return [self getFontFamilyByPDFFontTage:[currentGlyph fontName]];
 }
 
 - (NSString*)getFontFamilyByPDFFontTage:(NSString*)pdfFontTag {
@@ -1032,7 +1041,8 @@
 }
 
 - (NSString*)getFontNameForCurrentGlyph {
-    return [self getFontNameByPDFFontTag:[self pdfFontName]];
+    GGlyph *currentGlyph = [self getCurrentGlyph];
+    return [self getFontNameByPDFFontTag:[currentGlyph fontName]];
 }
 
 - (NSString*)getFontNameByPDFFontTag:(NSString*)pdfFontTag {
