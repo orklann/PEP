@@ -470,6 +470,8 @@
     if (![gFont embeddedFont]) {
         font = [gFont getNSFontBySize:fontSize];
     } else {
+        // This cause "test_xref.pdf" inserting character position not correct
+        // TODO: Fix it later
         font = [NSFont fontWithName:@"Gill Sans" size:fontSize];
     }
     [self insertChar:ch font:font];
