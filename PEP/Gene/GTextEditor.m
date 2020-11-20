@@ -1039,5 +1039,15 @@
     NSFont *font = [self.page getCachedFontByFontTag:pdfFontTag];
     return [font fontName];
 }
+
+- (CGFloat)getFontSizeForCurrentGlyph {
+    GGlyph *currentGlyph = [self getCurrentGlyph];
+    if (currentGlyph){
+        NSSize size = NSMakeSize([currentGlyph fontSize], 0);
+        size = CGSizeApplyAffineTransform(size, [currentGlyph textMatrix]);
+        return size.width;
+    }
+    return -1;
+}
 @end
 

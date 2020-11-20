@@ -178,6 +178,11 @@
         [self reloadStyleList];
         [styleList selectItemWithTitle:style];
     }
+    
+    CGFloat fontSize = [editor getFontSizeForCurrentGlyph];
+    if (fontSize != -1) {
+        [fontSizeList setStringValue:[NSString stringWithFormat:@"%d pt", (int)fontSize]];
+    }
 }
 
 - (NSString*)getStyleByFontName:(NSString*)fontName andFamily:(NSString*)family {

@@ -73,6 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
 // Get text font family
 - (NSString*)getFontFamilyForCurrentGlyph;
 - (NSString*)getFontNameForCurrentGlyph;
+- (CGFloat)getFontSizeForCurrentGlyph;
 @end
 
 NS_ASSUME_NONNULL_END
