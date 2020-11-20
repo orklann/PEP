@@ -231,6 +231,9 @@
 
 - (NSString*)getFontNameByFontTag:(NSString*)fontTag {
     GDictionaryObject *fontDict = [[resources value] objectForKey:@"Font"];
+    if ([(GObject*)fontDict type] == kRefObject) {
+        fontDict = [self.parser getObjectByRef:[(GRefObject*)fontDict getRefString]];
+    } 
     GRefObject *fontRef = [[fontDict value] objectForKey:fontTag];
     GDictionaryObject *fontObject = [self.parser getObjectByRef:[fontRef getRefString]];
     GLiteralStringsObject *fontName = [[fontObject value] objectForKey:@"BaseFont"];

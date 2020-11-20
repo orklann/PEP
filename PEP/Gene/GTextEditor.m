@@ -1032,21 +1032,13 @@
 
 - (NSString*)getFontFamilyForCurrentGlyph {
     GGlyph *currentGlyph = [self getCurrentGlyph];
-    return [self getFontFamilyByPDFFontTage:[currentGlyph fontName]];
-}
-
-- (NSString*)getFontFamilyByPDFFontTage:(NSString*)pdfFontTag {
-    NSFont *font = [self.page getCachedFontByFontTag:pdfFontTag];
+    NSFont *font = [self.page getCachedFontByFontTag:[currentGlyph fontName]];
     return [font familyName];
 }
 
 - (NSString*)getFontNameForCurrentGlyph {
     GGlyph *currentGlyph = [self getCurrentGlyph];
-    return [self getFontNameByPDFFontTag:[currentGlyph fontName]];
-}
-
-- (NSString*)getFontNameByPDFFontTag:(NSString*)pdfFontTag {
-    NSFont *font = [self.page getCachedFontByFontTag:pdfFontTag];
+    NSFont *font = [self.page getCachedFontByFontTag:[currentGlyph fontName]];
     return [font fontName];
 }
 

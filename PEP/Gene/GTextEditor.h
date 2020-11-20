@@ -71,8 +71,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)deleteCharacterInInsertionPoint;
 
 // Get text font family
-- (NSString*)getFontFamilyForCurrentGlyph;
+/*- (NSString*)getFontFamilyForCurrentGlyph;
 - (NSString*)getFontNameForCurrentGlyph;
+ */
 - (CGFloat)getFontSizeForCurrentGlyph;
 - (NSString*)getPDFFontNameForCurrentGlyph;
 @end

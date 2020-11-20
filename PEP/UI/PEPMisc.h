@@ -20,5 +20,7 @@ NSArray *allFontsInSystem(void);
 NSString *getFontPath(NSFont* font);
 
 // Get font style based on font name
-NSString *getFontStyle(NSString* fontName);
+NSString *getFontStyleFromSubset(NSString* subsetName);
+NSString *getFontNameFromSubset(NSString* subsetName);
+NSString *getSubsetFontNameFromSubset(NSString* subsetName);
 NS_ASSUME_NONNULL_END

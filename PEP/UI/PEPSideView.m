@@ -167,27 +167,32 @@
 }
 
 - (void)textStateDidChange:(GTextEditor *)editor {
-    NSString *familyName = [editor getFontFamilyForCurrentGlyph];
-    if ([fontfamilies containsObject:familyName]) {
-        [familyList selectItemWithTitle:familyName];
-        
-        // Style
-        NSString *fontName = [editor getFontNameForCurrentGlyph];
-        NSString *style = [self getStyleByFontName:fontName andFamily:familyName];
-        if (style != nil) {
-            [self reloadStyleList];
-            [styleList selectItemWithTitle:style];
+    NSString *subsetName = [editor getPDFFontNameForCurrentGlyph];
+    NSString *familyName = getFontNameFromSubset(subsetName);
+    
+    if (familyName) {
+        if ([fontfamilies containsObject:familyName]) {
+            [familyList selectItemWithTitle:familyName];
+            
+            // Style
+            NSString *style = getFontStyleFromSubset(subsetName);
+            if (style != nil) {
+                [self reloadStyleList];
+                [styleList selectItemWithTitle:style];
+            }
+        } else {
+            familyName = getSubsetFontNameFromSubset(subsetName);
+            [familyList addItemWithTitle:familyName];
+            [familyList selectItemWithTitle:familyName];
+            
+            // Style
+            NSString *style = getFontStyleFromSubset(subsetName);
+            if (style != nil) {
+                [styleList removeAllItems];
+                [styleList addItemWithTitle:style];
+                [styleList selectItemWithTitle:style];
+            }
         }
-    } else {
-        familyName = [editor getPDFFontNameForCurrentGlyph];
-        [familyList addItemWithTitle:familyName];
-        [familyList selectItemWithTitle:familyName];
-        
-        // Style based on the family name (It's actually a font name)
-        NSString *style = getFontStyle(familyName);
-        [styleList removeAllItems];
-        [styleList addItemWithTitle:style];
-        [styleList selectItemWithTitle:style];
     }
     
     CGFloat fontSize = [editor getFontSizeForCurrentGlyph];

@@ -36,21 +36,50 @@ NSString *getFontPath(NSFont* font) {
     return fontPath;
 }
 
-NSString *getFontStyle(NSString* fontName) {
-    NSMutableString *result = [NSMutableString string];
-    int i;
-    for (i = (int)[fontName length] - 1; i >= 0; i--) {
-        if ([fontName characterAtIndex:i] != '-') {
-            [result appendString:[fontName substringWithRange:NSMakeRange(i, 1)]];
-        } else {
-            break;
-        }
+NSString *getFontStyleFromSubset(NSString* subsetName) {
+    NSArray *list = [subsetName componentsSeparatedByString:@"+"];
+    NSString *fontName = [list lastObject];
+    list = [fontName componentsSeparatedByString:@"-"];
+    if ([list count] == 1) {
+        return @"Regular";
     }
+    NSString *style = [list lastObject];
+    return style;
+}
+
+NSString *getFontNameFromSubset(NSString* subsetName) {
+    NSArray *list = [subsetName componentsSeparatedByString:@"+"];
+    NSString *fontName = [list lastObject];
+    list = [fontName componentsSeparatedByString:@"-"];
+    fontName = [list firstObject];
     
-    NSMutableString *reversed = [NSMutableString string];
-    for (i = (int)[result length] - 1;  i >= 0; i--) {
-        [reversed appendString:[result substringWithRange:NSMakeRange(i, 1)]];
-    }
+    NSRegularExpression *regexp = [NSRegularExpression
+        regularExpressionWithPattern:@"([a-z])([A-Z])"
+        options:0
+        error:NULL];
     
-    return reversed;
+    NSString *result = [regexp
+        stringByReplacingMatchesInString:fontName
+        options:0
+        range:NSMakeRange(0, fontName.length)
+        withTemplate:@"$1 $2"];
+    return result;
+}
+
+NSString *getSubsetFontNameFromSubset(NSString* subsetName) {
+    NSArray *list;
+    list = [subsetName componentsSeparatedByString:@"-"];
+    NSString *fontName = [list firstObject];
+    
+    NSRegularExpression *regexp = [NSRegularExpression
+        regularExpressionWithPattern:@"([a-z])([A-Z])"
+        options:0
+        error:NULL];
+    
+    NSString *result = [regexp
+        stringByReplacingMatchesInString:fontName
+        options:0
+        range:NSMakeRange(0, fontName.length)
+        withTemplate:@"$1 $2"];
+    return result;
 }
