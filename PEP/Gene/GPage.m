@@ -229,6 +229,14 @@
     return [font getNSFontBySize:size];
 }
 
+- (NSString*)getFontNameByFontTag:(NSString*)fontTag {
+    GDictionaryObject *fontDict = [[resources value] objectForKey:@"Font"];
+    GRefObject *fontRef = [[fontDict value] objectForKey:fontTag];
+    GDictionaryObject *fontObject = [self.parser getObjectByRef:[fontRef getRefString]];
+    GLiteralStringsObject *fontName = [[fontObject value] objectForKey:@"BaseFont"];
+    return [fontName value];
+}
+
 - (GGraphicsState*)graphicsState {
     return graphicsState;
 }

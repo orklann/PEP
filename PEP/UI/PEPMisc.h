@@ -18,4 +18,7 @@ NSArray *allFontsInSystem(void);
 // Get font path for a NSFont, use to get font styles by comparing the font name
 // return by this method to fonts return by allFontsInSystem().
 NSString *getFontPath(NSFont* font);
+
+// Get font style based on font name
+NSString *getFontStyle(NSString* fontName);
 NS_ASSUME_NONNULL_END

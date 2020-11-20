@@ -1059,5 +1059,13 @@
     }
     return -1;
 }
+
+- (NSString*)getPDFFontNameForCurrentGlyph {
+    GGlyph *currentGlyph = [self getCurrentGlyph];
+    if (currentGlyph){
+        return [self.page getFontNameByFontTag:[currentGlyph fontName]];
+    }
+    return nil;
+}
 @end
 

@@ -74,6 +74,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString*)getFontFamilyForCurrentGlyph;
 - (NSString*)getFontNameForCurrentGlyph;
 - (CGFloat)getFontSizeForCurrentGlyph;
+- (NSString*)getPDFFontNameForCurrentGlyph;
 @end
 
 NS_ASSUME_NONNULL_END

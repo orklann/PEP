@@ -35,3 +35,22 @@ NSString *getFontPath(NSFont* font) {
     CFRelease(ctFontRef);
     return fontPath;
 }
+
+NSString *getFontStyle(NSString* fontName) {
+    NSMutableString *result = [NSMutableString string];
+    int i;
+    for (i = (int)[fontName length] - 1; i >= 0; i--) {
+        if ([fontName characterAtIndex:i] != '-') {
+            [result appendString:[fontName substringWithRange:NSMakeRange(i, 1)]];
+        } else {
+            break;
+        }
+    }
+    
+    NSMutableString *reversed = [NSMutableString string];
+    for (i = (int)[result length] - 1;  i >= 0; i--) {
+        [reversed appendString:[result substringWithRange:NSMakeRange(i, 1)]];
+    }
+    
+    return reversed;
+}
