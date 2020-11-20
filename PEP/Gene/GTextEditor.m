@@ -19,6 +19,7 @@
 #import "GBinaryData.h"
 #import "GTextParser.h"
 #import "GWrappedLine.h"
+#import "PEPWindow.h"
 
 #define kLeftArrow 123
 #define kRightArrow 124
@@ -34,6 +35,8 @@
 - (GTextEditor*)initWithPage:(GPage *)p textBlock:(GTextBlock*)tb {
     self = [super init];
     self.page = p;
+    PEPWindow *window = (PEPWindow*)self.page.doc.window;
+    [self setDelegate:[window sideView]];
     textBlock = tb;
     insertionPointIndex = 0;
     // Update font name, font size
@@ -276,6 +279,9 @@
             }
             [self insertChar:ch];
         }
+    }
+    if ([_delegate respondsToSelector:@selector(textStateDidChange:)]) {
+        [_delegate textStateDidChange:self];
     }
     [self redraw];
 }

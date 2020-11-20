@@ -10,6 +10,10 @@
 
 @implementation PEPWindow
 
+- (PEPSideView*)sideView {
+    return sideView;
+}
+
 - (PEPTabView*)tabView {
     return tabView;
 }

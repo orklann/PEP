@@ -9,6 +9,7 @@
 #import "PEPSideView.h"
 #import "PEPConstants.h"
 #import "PEPMisc.h"
+#import "GTextEditor.h"
 
 @implementation PEPSideView
 
@@ -160,5 +161,9 @@
     [fontSizeList addItemsWithObjectValues:sizeList];
     [fontSizeList setNumberOfVisibleItems:[sizeList count]];
     [fontSizeList setStringValue:@"12 pt"];
+}
+
+- (void)textStateDidChange:(GTextEditor *)editor {
+    
 }
 @end

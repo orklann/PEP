@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak) IBOutlet GDocument *doc;
 @property (weak) IBOutlet NSScrollView *scrollView;
 
+- (PEPSideView*)sideView;
 - (PEPTabView*)tabView;
 - (PEPToolbarView*)toolbarView;
 - (void)needToMoveButtons;

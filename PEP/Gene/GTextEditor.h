@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
+#import "GTextEditorDelegate.h"
 
 @class GGlyph;
 @class GTextBlock;
@@ -37,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
     GWrappedLine *currentWordWrapLine;
 }
 
+@property (readwrite) id delegate;
 @property (readwrite) BOOL commandsUpdated;
 @property (readwrite) NSString *pdfFontName;
 @property (readwrite) CGFloat fontSize;

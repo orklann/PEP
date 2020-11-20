@@ -190,6 +190,7 @@
 		93DEC3412540238C00E280B0 /* GBinaryData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GBinaryData.m; sourceTree = "<group>"; };
 		93E336F824F1254300F91F74 /* GLexer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GLexer.m; sourceTree = "<group>"; };
 		93E336FC24F1256000F91F74 /* GLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLexer.h; sourceTree = "<group>"; };
+		93E73A75256794430060EEBC /* GTextEditorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTextEditorDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -381,6 +382,7 @@
 				93A8692B25147ECA0033DC22 /* GMisc.h */,
 				93A8692C25147ECA0033DC22 /* GMisc.m */,
 				935CC18025374A23005758B5 /* GConstants.h */,
+				93E73A75256794430060EEBC /* GTextEditorDelegate.h */,
 			);
 			path = Gene;
 			sourceTree = "<group>";

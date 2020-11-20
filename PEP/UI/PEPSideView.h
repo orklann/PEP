@@ -8,11 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "GTextEditorDelegate.h"
 NS_ASSUME_NONNULL_BEGIN
 
 #define kSideViewWidth 280
 
-@interface PEPSideView : NSView <NSMenuDelegate> {
+@interface PEPSideView : NSView <NSMenuDelegate, GTextEditorDelegate> {
     NSPopUpButton *familyList;
     NSPopUpButton *styleList;
     NSComboBox *fontSizeList;
