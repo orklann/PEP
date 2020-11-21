@@ -60,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSRect)enlargedFrame;
 
 // Insert character in insertion point
-- (void)insertChar:(NSString *)ch font:(NSFont*)font;
+- (void)insertChar:(NSString *)ch font:(NSFont*)font fontTag:(NSString*)fontName;
 - (void)insertChar:(NSString *)ch;
 
 - (GGlyph*)getCurrentGlyph;
