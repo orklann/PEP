@@ -27,6 +27,8 @@
 		93311A0E254D456000D58E06 /* GWrappedLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 93311A0D254D456000D58E06 /* GWrappedLine.m */; };
 		93311A10254EA5EF00D58E06 /* PEP_Incremental.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93311A0F254EA5EF00D58E06 /* PEP_Incremental.pdf */; };
 		93311A12254EA60500D58E06 /* PEP_Incremental.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93311A11254EA60500D58E06 /* PEP_Incremental.pdf */; };
+		93386D382568E6D400B63E8E /* Super Mario World.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93386D372568E6D400B63E8E /* Super Mario World.pdf */; };
+		93386D3E2568E6E300B63E8E /* Super Mario World.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93386D3D2568E6E300B63E8E /* Super Mario World.pdf */; };
 		93427469252082CA00CA3DBE /* GGraphicsState.m in Sources */ = {isa = PBXBuildFile; fileRef = 93427468252082CA00CA3DBE /* GGraphicsState.m */; };
 		9346A86125305B2800804506 /* GTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346A86025305B2800804506 /* GTextBlock.m */; };
 		9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9355AEB824F12DCC00764E36 /* GLexerTests.m */; };
@@ -118,6 +120,8 @@
 		93311A0D254D456000D58E06 /* GWrappedLine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWrappedLine.m; sourceTree = "<group>"; };
 		93311A0F254EA5EF00D58E06 /* PEP_Incremental.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PEP_Incremental.pdf; sourceTree = "<group>"; };
 		93311A11254EA60500D58E06 /* PEP_Incremental.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = PEP_Incremental.pdf; path = PEPTests/pdf/PEP_Incremental.pdf; sourceTree = SOURCE_ROOT; };
+		93386D372568E6D400B63E8E /* Super Mario World.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Super Mario World.pdf"; sourceTree = "<group>"; };
+		93386D3D2568E6E300B63E8E /* Super Mario World.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "Super Mario World.pdf"; path = "PEP/Resources/Super Mario World.pdf"; sourceTree = SOURCE_ROOT; };
 		93427467252082CA00CA3DBE /* GGraphicsState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GGraphicsState.h; sourceTree = "<group>"; };
 		93427468252082CA00CA3DBE /* GGraphicsState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GGraphicsState.m; sourceTree = "<group>"; };
 		9346A85F25305B2800804506 /* GTextBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTextBlock.h; sourceTree = "<group>"; };
@@ -296,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				939291322562474B003F062A /* Images */,
+				93386D3D2568E6E300B63E8E /* Super Mario World.pdf */,
 				93B707AD255D129E00F326EB /* bug_hex_string.pdf */,
 				93DB0FC1255CCD410030F33A /* Sample_001.pdf */,
 				93899B0325594F04001D79A8 /* A Sample PDF(Updated).pdf */,
@@ -312,6 +317,7 @@
 		936C4303250363AD00FFE547 /* pdf */ = {
 			isa = PBXGroup;
 			children = (
+				93386D372568E6D400B63E8E /* Super Mario World.pdf */,
 				93DB0FBF255CCD350030F33A /* Sample_001.pdf */,
 				93B707AB255D129200F326EB /* bug_hex_string.pdf */,
 				93899B0125594EF2001D79A8 /* A Sample PDF(Updated).pdf */,
@@ -479,6 +485,7 @@
 				931221CC24F0139300929C01 /* MainMenu.xib in Resources */,
 				9301BEFD25554A11000C6F4E /* A Sample PDF.pdf in Resources */,
 				93899B0425594F04001D79A8 /* A Sample PDF(Updated).pdf in Resources */,
+				93386D3E2568E6E300B63E8E /* Super Mario World.pdf in Resources */,
 				938EB9772545A0F50045F463 /* tab.pdf in Resources */,
 				9363D9512508994E0075FEF0 /* test_xref.pdf in Resources */,
 				9392915925625AF0003F062A /* image.png in Resources */,
@@ -491,6 +498,7 @@
 			files = (
 				93DB0FC0255CCD350030F33A /* Sample_001.pdf in Resources */,
 				9320C01C251A1552008F20B0 /* irig_keys_25.pdf in Resources */,
+				93386D382568E6D400B63E8E /* Super Mario World.pdf in Resources */,
 				93311A10254EA5EF00D58E06 /* PEP_Incremental.pdf in Resources */,
 				93B707AC255D129200F326EB /* bug_hex_string.pdf in Resources */,
 				938EB9752545A0D80045F463 /* tab.pdf in Resources */,
