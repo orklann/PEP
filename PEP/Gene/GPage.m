@@ -211,8 +211,6 @@
     // So we only need font size to be 1.0 for actuall NSFont;
     CGFloat fontSize = 1.0f; //[[self textState] fontSize];
     NSString *fontKey = [NSString stringWithFormat:@"%@-%f", fontName, fontSize];
-    NSLog(@"Debug: font key: %@", fontKey);
-    NSLog(@"Debug: %@", self.addedFonts);
     f = [self.addedFonts objectForKey:fontKey];
     if (f) {
         return f;
@@ -627,7 +625,6 @@
     CGFloat fontSize = 1.0f;
     NSString *fontKey = [NSString stringWithFormat:@"%@-%f", fontTag, fontSize];
     [self.addedFonts setObject:font forKey:fontKey];
-    NSLog(@"%@", self.addedFonts);
 }
 
 - (void)saveGraphicsState {
