@@ -27,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)initAllViews;
 - (void)layoutViews;
 - (void)layoutFontView;
+- (NSString*)selectedFamily;
+- (NSString*)selectedStyle;
 @end
 
 NS_ASSUME_NONNULL_END

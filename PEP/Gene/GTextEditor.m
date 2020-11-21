@@ -20,6 +20,7 @@
 #import "GTextParser.h"
 #import "GWrappedLine.h"
 #import "PEPWindow.h"
+#import "PEPMisc.h"
 
 #define kLeftArrow 123
 #define kRightArrow 124
@@ -285,6 +286,7 @@
             [self insertChar:ch];
         }
     }
+    
     if ([_delegate respondsToSelector:@selector(textStateDidChange:)]) {
         [_delegate textStateDidChange:self];
     }
@@ -1053,6 +1055,27 @@
         return [self.page getFontNameByFontTag:[currentGlyph fontName]];
     }
     return nil;
+}
+
+- (BOOL)isCurrentFontMatchesSelected {
+    BOOL result = NO;
+    NSString *pdfFontName = [self getPDFFontNameForCurrentGlyph];
+    NSString *familyName = getFontNameFromSubset(pdfFontName);
+    NSString *style = getFontStyleFromSubset(pdfFontName);
+    
+    PEPSideView *sideView = [self getSideView];
+    NSString *selectedFamily = [sideView selectedFamily];
+    NSString *selectedStyle = [sideView selectedStyle];
+    if ([familyName isEqualToString:selectedFamily] &&
+        [style isEqualToString:selectedStyle]) {
+        result = YES;
+    }
+    return result;
+}
+
+- (PEPSideView*)getSideView {
+    PEPSideView *sideView = [(PEPWindow*)self.page.doc.window sideView];
+    return sideView;
 }
 @end
 

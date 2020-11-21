@@ -211,4 +211,12 @@
     }
     return nil;
 }
+
+- (NSString*)selectedFamily {
+    return [familyList titleOfSelectedItem];
+}
+
+- (NSString*)selectedStyle {
+    return [styleList titleOfSelectedItem];
+}
 @end
