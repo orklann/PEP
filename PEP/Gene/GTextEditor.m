@@ -1037,18 +1037,6 @@
     return -1;
 }
 
-- (NSString*)getFontFamilyForCurrentGlyph {
-    GGlyph *currentGlyph = [self getCurrentGlyph];
-    NSFont *font = [self.page getCachedFontByFontTag:[currentGlyph fontName]];
-    return [font familyName];
-}
-
-- (NSString*)getFontNameForCurrentGlyph {
-    GGlyph *currentGlyph = [self getCurrentGlyph];
-    NSFont *font = [self.page getCachedFontByFontTag:[currentGlyph fontName]];
-    return [font fontName];
-}
-
 - (CGFloat)getFontSizeForCurrentGlyph {
     GGlyph *currentGlyph = [self getCurrentGlyph];
     if (currentGlyph){
