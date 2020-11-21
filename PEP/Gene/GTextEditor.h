@@ -71,8 +71,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)deleteCharacterInInsertionPoint;
 
 // Get text states
-- (CGFloat)getFontSizeForCurrentGlyph;
-- (NSString*)getPDFFontNameForCurrentGlyph;
+- (CGFloat)getFontSizeForEditor;
+- (NSString*)getPDFFontNameForEditor;
 @end
 
 NS_ASSUME_NONNULL_END

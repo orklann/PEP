@@ -1048,7 +1048,7 @@
     return -1;
 }
 
-- (CGFloat)getFontSizeForCurrentGlyph {
+- (CGFloat)getFontSizeForEditor {
     GGlyph *currentGlyph = [self getCurrentGlyph];
     if (currentGlyph){
         NSSize size = NSMakeSize([currentGlyph fontSize], 0);
@@ -1058,7 +1058,7 @@
     return -1;
 }
 
-- (NSString*)getPDFFontNameForCurrentGlyph {
+- (NSString*)getPDFFontNameForEditor {
     GGlyph *currentGlyph = [self getCurrentGlyph];
     if (currentGlyph){
         return [self.page getFontNameByFontTag:[currentGlyph fontName]];
@@ -1068,7 +1068,7 @@
 
 - (BOOL)isCurrentFontMatchesSelected {
     BOOL result = NO;
-    NSString *pdfFontName = [self getPDFFontNameForCurrentGlyph];
+    NSString *pdfFontName = [self getPDFFontNameForEditor];
     NSString *familyName = getFontNameFromSubset(pdfFontName);
     NSString *style = getFontStyleFromSubset(pdfFontName);
     

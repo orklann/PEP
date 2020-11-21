@@ -167,7 +167,7 @@
 }
 
 - (void)textStateDidChange:(GTextEditor *)editor {
-    NSString *subsetName = [editor getPDFFontNameForCurrentGlyph];
+    NSString *subsetName = [editor getPDFFontNameForEditor];
     NSString *familyName = getFontNameFromSubset(subsetName);
     
     if (familyName) {
@@ -195,7 +195,7 @@
         }
     }
     
-    CGFloat fontSize = [editor getFontSizeForCurrentGlyph];
+    CGFloat fontSize = [editor getFontSizeForEditor];
     if (fontSize != -1) {
         [fontSizeList setStringValue:[NSString stringWithFormat:@"%d pt", (int)fontSize]];
     }
