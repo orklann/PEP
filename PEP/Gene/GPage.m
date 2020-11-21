@@ -645,11 +645,22 @@
     return [[fontDict value] allKeys];
 }
 
+- (NSArray *)getNewAddedTags {
+    NSArray *newAddedTags = [self.addedFonts allKeys];
+    NSMutableArray *result = [NSMutableArray array];
+    for (NSString *key in newAddedTags) {
+        NSString *tag = [[key componentsSeparatedByString:@"-"] firstObject];
+        [result addObject:tag];
+    }
+    return result;
+}
+
 - (NSString*)generateNewPDFFontTag {
     int i = 1;
     NSString *fontTag = [NSString stringWithFormat:@"Font%d", i];
     NSArray *tags = [self getFontTags];
-    while ([tags containsObject:fontTag]) {
+    NSArray *newAddedTags = [self getNewAddedTags];
+    while ([tags containsObject:fontTag] || [newAddedTags containsObject:fontTag]) {
         i += 1;
         fontTag = [NSString stringWithFormat:@"Font%d", i];
     }
