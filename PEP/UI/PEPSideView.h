@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)layoutFontView;
 - (NSString*)selectedFamily;
 - (NSString*)selectedStyle;
+- (NSString*)getSelectedFontName;
 @end
 
 NS_ASSUME_NONNULL_END

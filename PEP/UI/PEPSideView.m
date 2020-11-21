@@ -219,4 +219,22 @@
 - (NSString*)selectedStyle {
     return [styleList titleOfSelectedItem];
 }
+
+- (NSString*)getSelectedFontName {
+    NSString *selectedFamily = [self selectedFamily];
+    NSString *result = nil;
+    if ([selectedFamily containsString:@"+"]) { // subset font and it is not available on system
+        return selectedFamily;
+    } else { // available on system
+        NSString *selectedStyle = [self selectedStyle];
+        NSDictionary *styleDictionary = [familyDictionary objectForKey:selectedFamily];
+        for (NSString *style in styleDictionary) {
+            NSString *fontNameForStyle = [styleDictionary objectForKey:style];
+            if ([selectedStyle isEqualToString:style]) {
+                return fontNameForStyle;
+            }
+        }
+    }
+    return result;
+}
 @end

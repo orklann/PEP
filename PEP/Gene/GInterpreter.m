@@ -54,6 +54,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 
 - (void)layoutStrings:(NSString*)s context:(CGContextRef)context  tj:(CGFloat)tjDelta prevTj:(int)prevTj{
     NSMutableArray *glyphs = [[page textParser] glyphs];
+    
+    /*
+     * TODO: Get rid of parameter (s)
+     */
     NSFont *font = [page getCurrentFont:s];
     CGAffineTransform tm = [[page textState] textMatrix];
     CGFloat fs = [[page textState] fontSize];

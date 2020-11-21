@@ -257,17 +257,29 @@
             insertionPointIndex--;
         }
         [self updateFontNameAndFontSize];
+        if ([_delegate respondsToSelector:@selector(textStateDidChange:)]) {
+            [_delegate textStateDidChange:self];
+        }
     } else if (keyCode == kRightArrow) {
         if (insertionPointIndex + 1 <= [glyphs count]) {
             insertionPointIndex++;
         }
         [self updateFontNameAndFontSize];
+        if ([_delegate respondsToSelector:@selector(textStateDidChange:)]) {
+            [_delegate textStateDidChange:self];
+        }
     } else if (keyCode == kUpArrow) {
         [self moveInsertionPointUp];
         [self updateFontNameAndFontSize];
+        if ([_delegate respondsToSelector:@selector(textStateDidChange:)]) {
+            [_delegate textStateDidChange:self];
+        }
     } else if (keyCode == kDownArrow) {
         [self moveInsertionPointDown];
         [self updateFontNameAndFontSize];
+        if ([_delegate respondsToSelector:@selector(textStateDidChange:)]) {
+            [_delegate textStateDidChange:self];
+        }
     } else {
         NSString *ch =[event characters];
         unichar key = [ch characterAtIndex:0];
@@ -285,10 +297,6 @@
             }
             [self insertChar:ch];
         }
-    }
-    
-    if ([_delegate respondsToSelector:@selector(textStateDidChange:)]) {
-        [_delegate textStateDidChange:self];
     }
     [self redraw];
 }
@@ -368,7 +376,7 @@
  *
  */
 
-- (void)insertChar:(NSString *)ch font:(NSFont*)font {
+- (void)insertChar:(NSString *)ch font:(NSFont*)font fontTag:(NSString*)fontName{
     NSMutableArray *glyphs = [self.page.textParser glyphs];
     
     //
@@ -377,7 +385,6 @@
     if (textBlock == nil) {
         CGAffineTransform ctm = lastDeletedGlyph.ctm;
         CGAffineTransform tm = lastDeletedGlyph.textMatrix;
-        NSString *fontName = lastDeletedGlyph.fontName;
         CGFloat fontSize = lastDeletedGlyph.fontSize;
         NSRect rectGlyphSpace;
         
@@ -406,7 +413,6 @@
     CGFloat width;
     CGAffineTransform ctm;
     CGAffineTransform tm;
-    NSString *fontName;
     CGFloat fontSize;
     CGRect rectGlyphSpace;
     
@@ -418,7 +424,6 @@
     if (currentGlyph) {
         ctm = currentGlyph.ctm;
         tm = currentGlyph.textMatrix;
-        fontName = currentGlyph.fontName;
         fontSize = currentGlyph.fontSize;
         
         // Calculate deltaX
@@ -432,7 +437,6 @@
         // we use previous glyph info
         ctm = prevGlyph.ctm;
         tm = prevGlyph.textMatrix;
-        fontName = prevGlyph.fontName;
         fontSize = prevGlyph.fontSize;
         // Also new glyph ctm need to add previous glyph width
         tm.tx += prevGlyph.width;
@@ -463,20 +467,25 @@
 - (void)insertChar:(NSString *)ch {
     if (self.isEditing) return ;
     self.isEditing = YES;
-    // Test insert character into text editor
-    // Fixme: use any font here, font is not useful by now
     NSString *fontName = [self pdfFontName];
+    NSString *newFontTag;
     CGFloat fontSize = [self fontSize];
     NSFont *font;
-    GFont *gFont = [GFont fontWithName:fontName page:self.page];
-    if (![gFont embeddedFont]) {
+    PEPSideView *sideView = [self getSideView];
+    NSString *selectedFont = [sideView getSelectedFontName];
+    if ([selectedFont containsString:@"+"]) {
+        GFont *gFont = [GFont fontWithName:fontName page:self.page];
         font = [gFont getNSFontBySize:fontSize];
     } else {
-        // This cause "test_xref.pdf" inserting character position not correct
-        // TODO: Fix it later, maybe we need to take a look at makeReadOrderGlyph() again
-        font = [NSFont fontWithName:@"Gill Sans" size:fontSize];
+        font = [NSFont fontWithName:selectedFont size:fontSize];
+        if (![self isCurrentFontMatchesSelected]) {
+            newFontTag = [self.page generateNewPDFFontTag];
+            fontName = newFontTag;
+        }
+        [self.page addNewFont:font withPDFFontTag:fontName];
     }
-    [self insertChar:ch font:font];
+    
+    [self insertChar:ch font:font fontTag:fontName];
     // Do word wrap here, use cached glyphs 
     [self doWordWrap];
     // We don't update page content, just update [GTextParser glyphs]

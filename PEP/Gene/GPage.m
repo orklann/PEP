@@ -28,6 +28,7 @@
     [p setNeedUpdate:YES];
     p.dataToUpdate = [NSMutableArray array];
     p.cachedFonts = [NSMutableDictionary dictionary];
+    p.addedFonts = [NSMutableDictionary dictionary];
     p.isRendering = NO;
     return p;
 }
@@ -210,11 +211,22 @@
     // So we only need font size to be 1.0 for actuall NSFont;
     CGFloat fontSize = 1.0f; //[[self textState] fontSize];
     NSString *fontKey = [NSString stringWithFormat:@"%@-%f", fontName, fontSize];
+    NSLog(@"Debug: font key: %@", fontKey);
+    NSLog(@"Debug: %@", self.addedFonts);
+    f = [self.addedFonts objectForKey:fontKey];
+    if (f) {
+        return f;
+    }
     f = [self.cachedFonts objectForKey:fontKey];
     return f;
 }
 
 - (NSFont*)getCachedFontForKey:(NSString*)key {
+    NSFont *font;
+    font = [self.addedFonts objectForKey:key];
+    if (font){
+        return font;
+    }
     return [self.cachedFonts objectForKey:key];
 }
 
@@ -611,6 +623,13 @@
     }
 }
 
+- (void)addNewFont:(NSFont*)font withPDFFontTag:(NSString*)fontTag {
+    CGFloat fontSize = 1.0f;
+    NSString *fontKey = [NSString stringWithFormat:@"%@-%f", fontTag, fontSize];
+    [self.addedFonts setObject:font forKey:fontKey];
+    NSLog(@"%@", self.addedFonts);
+}
+
 - (void)saveGraphicsState {
     [graphicsStateStack addObject:[graphicsState clone]];
 }
@@ -619,5 +638,24 @@
     GGraphicsState *lastObject = [graphicsStateStack lastObject];
     graphicsState = lastObject;
     [graphicsStateStack removeObject:lastObject];
+}
+
+- (NSArray *)getFontTags {
+    GDictionaryObject *fontDict = [[resources value] objectForKey:@"Font"];
+    if ([(GObject*)fontDict type] == kRefObject) {
+        fontDict = [self.parser getObjectByRef:[(GRefObject*)fontDict getRefString]];
+    }
+    return [[fontDict value] allKeys];
+}
+
+- (NSString*)generateNewPDFFontTag {
+    int i = 1;
+    NSString *fontTag = [NSString stringWithFormat:@"Font%d", i];
+    NSArray *tags = [self getFontTags];
+    while ([tags containsObject:fontTag]) {
+        i += 1;
+        fontTag = [NSString stringWithFormat:@"Font%d", i];
+    }
+    return fontTag;
 }
 @end

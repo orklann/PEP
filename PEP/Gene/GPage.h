@@ -41,6 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) BOOL isRendering;
 @property (readwrite) unsigned int lastStreamOffset;
 @property (readwrite) NSMutableDictionary *cachedFonts;
+@property (readwrite) NSMutableDictionary *addedFonts;
 @property (readwrite) NSMutableDictionary *glyphsForFontDict;
 @property (readwrite) BOOL needUpdate;
 @property (readwrite) NSMutableArray *dataToUpdate;
@@ -98,9 +99,15 @@ NS_ASSUME_NONNULL_BEGIN
 // Build cached fonts for this page
 - (void)buildCachedFonts;
 
+// Add new font with PDF font key
+- (void)addNewFont:(NSFont*)font withPDFFontTag:(NSString*)fontTag;
+
 // Graphics state stacks operation
 - (void)saveGraphicsState;
 - (void)restoreGraphicsState;
+
+// Generate new PDF font tag
+- (NSString*)generateNewPDFFontTag;
 @end
 
 NS_ASSUME_NONNULL_END
