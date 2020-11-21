@@ -495,6 +495,11 @@
         currentGlyph = [[textBlock glyphs] objectAtIndex:index];
         return currentGlyph;
     }
+    
+    if (index > [[textBlock glyphs] count] - 1) {
+        currentGlyph = [[textBlock glyphs] objectAtIndex:index - 1];
+        return currentGlyph;
+    }
     return nil;
 }
 
