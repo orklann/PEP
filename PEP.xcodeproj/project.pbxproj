@@ -715,7 +715,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = "0.16 alpha";
+				MARKETING_VERSION = "0.17 alpha";
 				PRODUCT_BUNDLE_IDENTIFIER = org.macpep.pep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -736,7 +736,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = "0.16 alpha";
+				MARKETING_VERSION = "0.17 alpha";
 				PRODUCT_BUNDLE_IDENTIFIER = org.macpep.pep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
