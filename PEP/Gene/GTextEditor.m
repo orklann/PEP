@@ -421,7 +421,7 @@
     CGFloat hAdvance = 0;
     hAdvance = getGlyphAdvanceForFont(ch, font);
     
-    if (currentGlyph) {
+    if (currentGlyph && ![self isCurrentGlyphLastGlyph]) {
         ctm = currentGlyph.ctm;
         tm = currentGlyph.textMatrix;
         fontSize = currentGlyph.fontSize;
@@ -497,6 +497,14 @@
     [[self.page textParser] setCached:NO];
     //[self.page setNeedUpdate:YES];
     self.isEditing = NO;
+}
+
+- (BOOL)isCurrentGlyphLastGlyph {
+    int index = insertionPointIndex;
+    if (index > [[textBlock glyphs] count] - 1){
+        return YES;
+    }
+    return NO;
 }
 
 - (GGlyph*)getCurrentGlyph {
