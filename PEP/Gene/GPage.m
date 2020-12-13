@@ -167,7 +167,7 @@
     self.isRendering = NO;
     
     /* Test: draw glyph bounding box */
-    /* (GGlyph * g in [textParser glyphs]) {
+    /* for (GGlyph * g in [textParser glyphs]) {
         NSRect r = [g frame];
         CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
         CGContextFillRect(context, r);
