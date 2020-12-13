@@ -477,14 +477,17 @@
         GFont *gFont = [GFont fontWithName:fontName page:self.page];
         font = [gFont getNSFontBySize:fontSize];
     } else {
-        font = [NSFont fontWithName:selectedFont size:fontSize];
         if (![self isCurrentFontMatchesSelected]) {
+            font = [NSFont fontWithName:selectedFont size:fontSize];
             newFontTag = [self.page generateNewPDFFontTag];
             fontName = newFontTag;
+            [self setPdfFontName:fontName];
+            [self.page addNewFont:font withPDFFontTag:fontName];
+        } else {
+            font = [self.page getCachedFontByFontTag:fontName];
         }
-        [self.page addNewFont:font withPDFFontTag:fontName];
     }
-    
+        
     [self insertChar:ch font:font fontTag:fontName];
     // Do word wrap here, use cached glyphs 
     [self doWordWrap];
@@ -1073,8 +1076,19 @@
 
 - (NSString*)getPDFFontNameForEditor {
     GGlyph *prevGlyph = [self getPrevGlyph];
+    NSString *fontName;
     if (prevGlyph){
-        return [self.page getFontNameByFontTag:[prevGlyph fontName]];
+        // Debug purpose
+        NSLog(@"[Debug] Added fonts: %@, font tag: %@", self.page.addedFonts, [prevGlyph fontName]);
+        for (NSString *fontTag in [self.page.addedFonts allKeys]) {
+            NSString *fontKey = [NSString stringWithFormat:@"%@-%f", [prevGlyph fontName], 1.0];
+            if ([fontTag isEqualToString:fontKey]) {
+                fontName = [[self.page.addedFonts objectForKey:fontTag] fontName];
+                return fontName;
+            }
+        }
+        fontName = [self.page getFontNameByFontTag:[prevGlyph fontName]];
+        return fontName;
     }
     return nil;
 }
