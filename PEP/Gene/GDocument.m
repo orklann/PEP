@@ -241,6 +241,7 @@
     return mode;
 }
 
+// Don't forget to add new ref to _addedRefkeys, so that we can get unique ref 
 - (NSString*)generateNewRef {
     int objectNumber = 1;
     int generationNumber = 0;
