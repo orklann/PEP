@@ -346,4 +346,11 @@ BOOL isTrailerLine(NSString *line) {
     NSMutableDictionary *xref = [self parseXRef];
     return [self getObjectByRef:refKey inXRef:xref];
 }
+
+- (BOOL)refObjectNotFound:(NSString*)refKey {
+    if ([self getObjectByRef:refKey] != nil) {
+        return NO;
+    }
+    return YES;
+}
 @end
