@@ -104,5 +104,6 @@ void printCGAffineTransform(CGAffineTransform mt);
 int signOfCGFloat(CGFloat v);
 
 // Get object number and generation number from ref string
+// Ref string is in the format "1-0", "12-0", etc
 int getObjectNumber(NSString * _Nullable ref);
 int getGenerationNumber(NSString * _Nullable ref);
