@@ -83,6 +83,7 @@
     
     // Inits
     mode = kNoneMode;
+    _addedRefkeys = [NSMutableArray array];
     
     // Test parsePages
     [self parsePages];
@@ -238,5 +239,16 @@
 
 - (GDocumentMode)mode {
     return mode;
+}
+
+- (NSString*)generateNewRef {
+    int objectNumber = 1;
+    int generationNumber = 0;
+    NSString *ref = [NSString stringWithFormat:@"%d-%d", objectNumber, generationNumber];
+    while(![parser refObjectNotFound:ref] || [_addedRefkeys containsObject:ref]) {
+        objectNumber += 1;
+        ref = [NSString stringWithFormat:@"%d-%d", objectNumber, generationNumber];
+    }
+    return ref;
 }
 @end

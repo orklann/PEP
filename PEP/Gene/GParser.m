@@ -347,10 +347,21 @@ BOOL isTrailerLine(NSString *line) {
     return [self getObjectByRef:refKey inXRef:xref];
 }
 
-- (BOOL)refObjectNotFound:(NSString*)refKey {
-    if ([self getObjectByRef:refKey] != nil) {
+- (BOOL)refObjectNotFound:(NSString*)refKey inXRef:(NSMutableDictionary*)xref {
+    GXRefEntry *x = [xref objectForKey:refKey];
+    NSMutableDictionary *prev = [xref objectForKey:@"PrevXRef"];
+    if (x) {
         return NO;
+    } else {
+        if (prev != nil) {
+            return [self refObjectNotFound:refKey inXRef:xref];
+        }
     }
     return YES;
+}
+
+- (BOOL)refObjectNotFound:(NSString*)refKey {
+    NSMutableDictionary *xref = [self parseXRef];
+    return [self refObjectNotFound:refKey inXRef:xref];
 }
 @end

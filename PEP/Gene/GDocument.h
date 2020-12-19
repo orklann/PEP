@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
     GDocumentMode mode;
 }
 
+@property (readwrite) NSMutableArray *addedRefkeys;
 @property (readwrite) GTextEditor * _Nullable textEditor;
 
 - (IBAction)saveDocumentAs:(id)sender;
@@ -34,6 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)scrollToTop;
 - (void)setMode:(GDocumentMode)m;
 - (GDocumentMode)mode;
+- (NSString*)generateNewRef;
 @end
 
 NS_ASSUME_NONNULL_END
