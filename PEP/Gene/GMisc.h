@@ -102,3 +102,7 @@ void printCGAffineTransform(CGAffineTransform mt);
 
 // Get sign of a CGFloat
 int signOfCGFloat(CGFloat v);
+
+// Get object number and generation number from ref string
+int getObjectNumber(NSString *ref);
+int getGenerationNumber(NSString *ref);

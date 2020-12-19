@@ -593,3 +593,13 @@ int signOfCGFloat(CGFloat v) {
     if (v > 0.0) return 1;
     return 0;
 }
+
+int getObjectNumber(NSString *ref) {
+    NSArray *array = [ref componentsSeparatedByString:@"-"];
+    return [[array firstObject] intValue];
+}
+
+int getGenerationNumber(NSString *ref) {
+    NSArray *array = [ref componentsSeparatedByString:@"-"];
+    return [[array lastObject] intValue];
+}

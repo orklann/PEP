@@ -58,4 +58,16 @@
     NSString *two = paddingFiveZero(number);
     XCTAssertEqualObjects(two, @"00000");
 }
+
+- (void)testGetObjectNumber {
+    NSString *ref = @"1-0";
+    int objectNumber = getObjectNumber(ref);
+    XCTAssertEqual(objectNumber, 1);
+}
+
+- (void)testGetGenerationNumber {
+    NSString *ref = @"1-0";
+    int generationNumber = getGenerationNumber(ref);
+    XCTAssertEqual(generationNumber, 0);
+}
 @end
