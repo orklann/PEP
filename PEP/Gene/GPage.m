@@ -421,7 +421,7 @@
     /*
      * 2. Generate font descriptor dictionary
      */
-    header = [NSString stringWithFormat:@"<< /Type /FontDescriptor /FontName /%@ /FontFile2 %d %d R >>",
+    header = [NSString stringWithFormat:@"<< /Type /FontDescriptor /FontName /%@ /FontFile2 %d %d R >>\n",
               [font fontName], fontFileObjectNumber, fontFileGenerationNumber];
     
     stream = [NSMutableData data];
@@ -440,7 +440,7 @@
     /*
      * 3. Generate font dictionary
      */
-    header = [NSString stringWithFormat:@"<< /Type /Font /Subtype /TrueType /BaseFont /%@ /FontDescriptor %d %d R /Encoding /MacRomanEncoding >>", [font fontName], descriptorObjectNumber, descriptorGenerationNumber];
+    header = [NSString stringWithFormat:@"<< /Type /Font /Subtype /TrueType /BaseFont /%@ /FontDescriptor %d %d R /Encoding /MacRomanEncoding >>\n", [font fontName], descriptorObjectNumber, descriptorGenerationNumber];
     
     stream = [NSMutableData data];
     [stream appendData:[header dataUsingEncoding:NSASCIIStringEncoding]];
@@ -492,7 +492,7 @@
     }
     
     // TODO: Add /ColorSpace, /ExtGState
-    NSString *dictionary = [NSString stringWithFormat:@"<< /ProcSet [ /PDF /Text ] /Font << %@ >> >>", fontArrayString];
+    NSString *dictionary = [NSString stringWithFormat:@"<< /ProcSet [ /PDF /Text ] /Font << %@ >> >>\n", fontArrayString];
     
     NSMutableData *stream = [NSMutableData data];
     [stream appendData:[dictionary dataUsingEncoding:NSASCIIStringEncoding]];;
