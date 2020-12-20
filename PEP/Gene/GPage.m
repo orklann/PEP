@@ -506,46 +506,6 @@
     
     [self.dataToUpdate addObject:binary];
 }
-/*
-- (void)addFont:(NSFont*)font withPDFFontName:(NSString*)fontKey {
-    GFont *gFont = [GFont fontWithName:fontKey page:self];
-    if (![gFont embeddedFont]) {
-        return ;
-    }
-    GDictionaryObject *fontDict = [[resources value] objectForKey:@"Font"];
-    GRefObject *fontRef = [[fontDict value] objectForKey:fontKey];
-    GDictionaryObject *fontObject = [self.parser getObjectByRef:[fontRef getRefString]];
-    GRefObject *fontDescriptorRef = [[fontObject value] objectForKey:@"FontDescriptor"];
-    GDictionaryObject *fontDescriptor = [self.parser getObjectByRef:[fontDescriptorRef getRefString]];
-    
-    // TODO: Key "FontFile2" is not always the right key, we should handle other font file keys later
-    GRefObject *fontFileRef = [[fontDescriptor value] objectForKey:@"FontFile2"];
-    int objectNumber = [fontFileRef objectNumber];
-    int generationNumber = [fontFileRef generationNumber];
-        
-    CGFontRef cgFont = CTFontCopyGraphicsFont((CTFontRef)font, nil);
-    NSData *fontData = fontDataForCGFont(cgFont);
-    
-    NSData *encodedFontData = encodeFlate(fontData);
-    
-    int length = (int)[encodedFontData length];
-    
-    NSString *header = [NSString stringWithFormat:@"<< /Length %d /Length1 %d /Filter /FlateDecode >>\nstream\n",
-                        length, length];
-    NSMutableData *stream = [NSMutableData data];
-    [stream appendData:[header dataUsingEncoding:NSASCIIStringEncoding]];
-    [stream appendData:encodedFontData];
-    NSString *end = @"\nendstream\n";
-    [stream appendData:[end dataUsingEncoding:NSASCIIStringEncoding]];
-
-    // Create a instance of GBinaryData
-    GBinaryData *binary = [GBinaryData create];
-    [binary setObjectNumber:objectNumber];
-    [binary setGenerationNumber:generationNumber];
-    [binary setData:stream];
-    
-    [self.dataToUpdate addObject:binary];
-}*/
 
 - (void)addPageStream {
     id contents = [[pageDictionary value] objectForKey:@"Contents"];
