@@ -82,7 +82,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Adding stuff as GBinaryData to page
 // Add new font into dataToUpdate, later use it to update GDocument stream
-- (void)addFont:(NSFont*)font withPDFFontName:(NSString*)fontKey;
+// Return font dictionary ref for later use in page resource's font array
+- (NSString*)addFont:(NSFont*)font withPDFFontName:(NSString*)fontKey;
+
+// Add all new added fonts into dataToUpdate for updating, which calls
+// - (NSString*)addFont:(NSFont*)font withPDFFontName:(NSString*)fontKey
+// And also create new page resource dictionary.
+- (void)addNewAddedFontsForUpdating;
 
 // Add page stream into dataToUpdate, later use it to update GDocument stream
 - (void)addPageStream;

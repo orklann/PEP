@@ -96,7 +96,6 @@
     } else if ([(GObject*)res type] == kDictionaryObject)  {
         resources = (GDictionaryObject*)res;
     }
-    
 }
 
 - (GDictionaryObject*)resources {
@@ -389,6 +388,124 @@
 }
 
 #pragma mark Adding stuff as GBinaryData to page
+- (NSString*)addFont:(NSFont*)font withPDFFontName:(NSString*)fontKey {
+    /*
+     * 1. Generate font file stream
+     */
+    CGFontRef cgFont = CTFontCopyGraphicsFont((CTFontRef)font, nil);
+    NSData *fontData = fontDataForCGFont(cgFont);
+    
+    NSData *encodedFontData = encodeFlate(fontData);
+    
+    int length = (int)[encodedFontData length];
+    
+    NSString *header = [NSString stringWithFormat:@"<< /Length %d /Length1 %d /Filter /FlateDecode >>\nstream\n",
+                        length, length];
+    NSMutableData *stream = [NSMutableData data];
+    [stream appendData:[header dataUsingEncoding:NSASCIIStringEncoding]];
+    [stream appendData:encodedFontData];
+    NSString *end = @"\nendstream\n";
+    [stream appendData:[end dataUsingEncoding:NSASCIIStringEncoding]];
+
+    // Create a instance of GBinaryData
+    NSString *fontFileRef = [doc generateNewRef];
+    int fontFileObjectNumber = getObjectNumber(fontFileRef);
+    int fontFileGenerationNumber = getGenerationNumber(fontFileRef);
+    
+    GBinaryData *binary = [GBinaryData create];
+    [binary setObjectNumber:fontFileObjectNumber];
+    [binary setGenerationNumber:fontFileGenerationNumber];
+    [binary setData:stream];
+    [self.dataToUpdate addObject:binary];
+    
+    /*
+     * 2. Generate font descriptor dictionary
+     */
+    header = [NSString stringWithFormat:@"<< /Type /FontDescriptor /FontName /%@ /FontFile2 %d %d R >>",
+              [font fontName], fontFileObjectNumber, fontFileGenerationNumber];
+    
+    stream = [NSMutableData data];
+    [stream appendData:[header dataUsingEncoding:NSASCIIStringEncoding]];
+    
+    NSString *descriptorRef = [doc generateNewRef];
+    int descriptorObjectNumber = getObjectNumber(descriptorRef);
+    int descriptorGenerationNumber = getGenerationNumber(descriptorRef);
+    
+    binary = [GBinaryData create];
+    [binary setObjectNumber:descriptorObjectNumber];
+    [binary setGenerationNumber:descriptorGenerationNumber];
+    [binary setData:stream];
+    [self.dataToUpdate addObject:binary];
+    
+    /*
+     * 3. Generate font dictionary
+     */
+    header = [NSString stringWithFormat:@"<< /Type /Font /Subtype /TrueType /BaseFont /%@ /FontDescriptor %d %d R /Encoding /MacRomanEncoding >>", [font fontName], descriptorObjectNumber, descriptorGenerationNumber];
+    
+    stream = [NSMutableData data];
+    [stream appendData:[header dataUsingEncoding:NSASCIIStringEncoding]];
+    
+    NSString *fontRef = [doc generateNewRef];
+    int fontObjectNumber = getObjectNumber(fontRef);
+    int fontGenerationNumber = getGenerationNumber(fontRef);
+    
+    binary = [GBinaryData create];
+    [binary setObjectNumber:fontObjectNumber];
+    [binary setGenerationNumber:fontGenerationNumber];
+    [binary setData:stream];
+    [self.dataToUpdate addObject:binary];
+    
+    return fontRef;
+}
+
+- (void)addNewAddedFontsForUpdating {
+    int resourcesObjectNumber = 0, resourcesGenerationNumber = 0;
+    id res = [[pageDictionary value] objectForKey:@"Resources"];
+    if ([(GObject*)res type] == kRefObject) {
+        GRefObject *ref = (GRefObject*)res;
+        resourcesObjectNumber = [ref objectNumber];
+        resourcesGenerationNumber = [ref generationNumber];
+    } else if ([(GObject*)res type] == kDictionaryObject){
+        // TODO: Should also handle the case if resources is a dictionary in page dictionary
+        NSLog(@"[Error: Not Handled] Resources is a dictionary in page dictionary, not an indirect object");
+    }
+    
+    NSMutableString *fontArrayString = [NSMutableString string];
+    
+    // Initialize fontArrayString with original font arrays
+    GDictionaryObject *fontArray = [[resources value] objectForKey:@"Font"];
+    for (NSString *fontName in [fontArray value]) {
+        GRefObject *ref = [[fontArray value] objectForKey:fontName];
+        int objectNumber = [ref objectNumber];
+        int generationNumber = [ref generationNumber];
+        [fontArrayString appendFormat:@"/%@ %d %d R ", fontName, objectNumber, generationNumber];
+    }
+    
+    // Append new created font and ref to fontArrayString
+    for (NSString *pdfFontKey in self.addedFonts) {
+        NSFont *font = [self.addedFonts objectForKey:pdfFontKey];
+        NSString *realFontKey = [[pdfFontKey componentsSeparatedByString:@"-"] firstObject];
+        NSString *fontRef = [self addFont:font withPDFFontName:realFontKey];
+        int objectNumber = getObjectNumber(fontRef);
+        int generationNumber = getGenerationNumber(fontRef);
+        [fontArrayString appendFormat:@"/%@ %d %d R ", realFontKey, objectNumber, generationNumber];
+    }
+    
+    // TODO: Add /ColorSpace, /ExtGState
+    NSString *dictionary = [NSString stringWithFormat:@"<< /ProcSet [ /PDF /Text ] /Font << %@ >> >>", fontArrayString];
+    
+    NSMutableData *stream = [NSMutableData data];
+    [stream appendData:[dictionary dataUsingEncoding:NSASCIIStringEncoding]];;
+
+    // Create a instance of GBinaryData
+    GBinaryData *binary = [GBinaryData create];
+    [binary setObjectNumber:resourcesObjectNumber];
+    [binary setGenerationNumber:resourcesGenerationNumber];
+    [binary setData:stream];
+    
+    [self.dataToUpdate addObject:binary];
+}
+/*
 - (void)addFont:(NSFont*)font withPDFFontName:(NSString*)fontKey {
     GFont *gFont = [GFont fontWithName:fontKey page:self];
     if (![gFont embeddedFont]) {
@@ -427,7 +544,7 @@
     [binary setData:stream];
     
     [self.dataToUpdate addObject:binary];
-}
+}*/
 
 - (void)addPageStream {
     id contents = [[pageDictionary value] objectForKey:@"Contents"];
@@ -561,6 +678,7 @@
     // Build page content, and add it to "dataToUpdate" array
     [self buildPageContent];
     [self addPageStream];
+    [self addNewAddedFontsForUpdating];
     
     NSMutableData *stream = [self.parser stream];
     // remove last added content from stream

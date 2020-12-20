@@ -250,6 +250,7 @@
         objectNumber += 1;
         ref = [NSString stringWithFormat:@"%d-%d", objectNumber, generationNumber];
     }
+    [_addedRefkeys addObject:ref];
     return ref;
 }
 @end
