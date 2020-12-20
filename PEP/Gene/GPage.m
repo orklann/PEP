@@ -491,7 +491,8 @@
         [fontArrayString appendFormat:@"/%@ %d %d R ", realFontKey, objectNumber, generationNumber];
     }
     
-    // TODO: Add /ColorSpace, /ExtGState
+    // TODO: Add /ColorSpace, /ExtGState (No Need if we have below TODO)
+    // TODO: Better to reuse original resource which has /ColorSpace, /ExtGState, and other settings
     NSString *dictionary = [NSString stringWithFormat:@"<< /ProcSet [ /PDF /Text ] /Font << %@ >> >>\n", fontArrayString];
     
     NSMutableData *stream = [NSMutableData data];
