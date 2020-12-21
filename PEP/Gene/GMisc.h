@@ -64,6 +64,9 @@ NSData* fontDataForCGFont(CGFontRef cgFont);
 // Sort GBinaryData array by comparing objectNumber of GBinaryData
 NSMutableArray *sortedGBinaryDataArray(NSMutableArray *array);
 
+// Grouping GBinaryData array for build new xref table
+NSMutableArray *groupingGBinaryDataArray(NSMutableArray *array);
+
 // Padding total 10 zero for object number in XRef entry
 NSString* paddingTenZero(int offset);
 

@@ -442,6 +442,32 @@ NSMutableArray *sortedGBinaryDataArray(NSMutableArray *array) {
     return ret;
 }
 
+NSMutableArray *groupingGBinaryDataArray(NSMutableArray *array) {
+    NSMutableArray *result = [NSMutableArray array];
+    NSMutableArray *group = nil;
+    GBinaryData *prevBinaryData = nil;
+    for (GBinaryData *binaryData in array) {
+        if (group == nil) {
+            group = [NSMutableArray array];
+            [group addObject:binaryData];
+            prevBinaryData = binaryData;
+        } else {
+            if ([prevBinaryData objectNumber] == [binaryData objectNumber] - 1) {
+                [group addObject:binaryData];
+                prevBinaryData = binaryData;
+            } else {
+                [result addObject:group];
+                group = nil;
+                prevBinaryData = nil;
+            }
+        }
+    }
+    if (group != nil) {
+        [result addObject:group];
+    }
+    return result;
+}
+
 NSString* paddingTenZero(int offset) {
     NSString *numberString = [NSString stringWithFormat:@"%d", offset];
     NSMutableString *ret = [NSMutableString string];

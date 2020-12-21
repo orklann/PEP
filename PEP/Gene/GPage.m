@@ -538,6 +538,27 @@
 
 - (NSData*)buildNewXRefTable {
     self.dataToUpdate = sortedGBinaryDataArray(self.dataToUpdate);
+    NSMutableArray *groups = groupingGBinaryDataArray(self.dataToUpdate);
+    NSMutableString *xrefTable = [NSMutableString string];
+    [xrefTable appendString:@"xref\r\n"];
+    
+    for (NSMutableArray *group in groups) {
+        NSMutableString *groupTable = [NSMutableString string];
+        GBinaryData *firstBinaryData = [group firstObject];
+        [groupTable appendFormat:@"%d %d\r\n", [firstBinaryData objectNumber], (int)[group count]];
+        for (GBinaryData *binaryData in group) {
+            NSString *entry = buildXRefEntry([binaryData offset], [binaryData generationNumber], @"n");
+            [groupTable appendString:entry];
+        }
+        [xrefTable appendString:groupTable];
+    }
+    
+    return [xrefTable dataUsingEncoding:NSASCIIStringEncoding];
+}
+
+/*
+- (NSData*)buildNewXRefTable {
+    self.dataToUpdate = sortedGBinaryDataArray(self.dataToUpdate);
     NSMutableString *xrefTable = [NSMutableString string];
     NSMutableString *subTable = [NSMutableString string];
     [xrefTable appendString:@"xref\r\n"];
@@ -607,7 +628,7 @@
         [xrefTable appendString:subTable];
     }
     return [xrefTable dataUsingEncoding:NSASCIIStringEncoding];
-}
+}*/
 
 - (NSData*)buildNewTrailer:(GDictionaryObject*)trailerDict
              prevStartXRef:(int)prevStartXRef
