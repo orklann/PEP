@@ -211,7 +211,7 @@
 - (CGFloat)getEditorWidth {
     // 5 points margin on both sides
     // NOTE: Remove 5 points margin on both side, so that prevent wordwrapping change
-    //       text layout while enter new text (For example: Super Mario World.pdf)
+    //       text layout while entering new text (For example: Super Mario World.pdf)
     //
     return editorWidth;// + (5 * 2);
 }
