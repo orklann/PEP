@@ -210,7 +210,8 @@
 
 - (CGFloat)getEditorWidth {
     // 5 points margin on both sides
-    return editorWidth + (5 * 2);
+    // NOTE: Remove 5 points margin on both side
+    return editorWidth;// + (5 * 2);
 }
 
 - (NSRect)enlargedFrame {
