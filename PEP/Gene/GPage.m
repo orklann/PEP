@@ -421,7 +421,9 @@
     /*
      * 2. Generate font descriptor dictionary
      */
-    header = [NSString stringWithFormat:@"<< /Type /FontDescriptor /FontName /%@ /FontFile2 %d %d R >>\n",
+    
+    // "/Flags 32" make Adobe Acrobat render new text with new font
+    header = [NSString stringWithFormat:@"<< /Type /FontDescriptor /FontName /%@ /FontFile2 %d %d R /Flags 32 >>\n",
               [font fontName], fontFileObjectNumber, fontFileGenerationNumber];
     
     stream = [NSMutableData data];
