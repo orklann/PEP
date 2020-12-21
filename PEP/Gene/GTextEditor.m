@@ -1066,7 +1066,7 @@
     NSString *fontName;
     if (prevGlyph){
         // Debug purpose
-        NSLog(@"[Debug] Added fonts: %@, font tag: %@", self.page.addedFonts, [prevGlyph fontName]);
+        // NSLog(@"[Debug] Added fonts: %@, font tag: %@", self.page.addedFonts, [prevGlyph fontName]);
         for (NSString *fontTag in [self.page.addedFonts allKeys]) {
             NSString *fontKey = [NSString stringWithFormat:@"%@-%f", [prevGlyph fontName], 1.0];
             if ([fontTag isEqualToString:fontKey]) {
