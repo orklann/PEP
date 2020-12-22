@@ -847,7 +847,7 @@
         // TODO: Better calculatation for delta y by the height
         //       (height = descent of lastWrapGlyp + ascent of next glyph) of
         //       next glyph after line break.
-        CGFloat deltaY = [lastWrapGlyph height];
+        CGFloat deltaY = [lastWrapGlyph height] + 1; // Plus 1 to make 1 point line margin
         
         // Check the sign of d component of ctm, and decide the sing of deltaY
         int sign = signOfCGFloat(wordWrapCTM.d);
