@@ -457,8 +457,9 @@ NSMutableArray *groupingGBinaryDataArray(NSMutableArray *array) {
                 prevBinaryData = binaryData;
             } else {
                 [result addObject:group];
-                group = nil;
-                prevBinaryData = nil;
+                group = [NSMutableArray array];
+                [group addObject:binaryData];
+                prevBinaryData = binaryData;
             }
         }
     }
