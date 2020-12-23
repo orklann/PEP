@@ -190,6 +190,7 @@
                     NSString *finalStyle = [components componentsJoinedByString:@""];
                     if ([finalStyle isEqualToString:style]) {
                         [styleList selectItemWithTitle:s];
+                        break;
                     }
                 }
             }
@@ -216,6 +217,7 @@
                     NSString *finalStyle = [components componentsJoinedByString:@""];
                     if ([finalStyle isEqualToString:style]) {
                         [styleList selectItemWithTitle:s];
+                        break;
                     }
                 }
             }
