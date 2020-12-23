@@ -178,7 +178,20 @@
             NSString *style = getFontStyleFromSubset(subsetName);
             if (style != nil) {
                 [self reloadStyleList];
-                [styleList selectItemWithTitle:style];
+                
+                // Select style by looping all styles for selected family.
+                // Because style will be "BoldItalic", and style in list will be "Bold Italic",
+                // So we handle this issue here too.
+                NSString *selectedFamily = [familyList titleOfSelectedItem];
+                NSDictionary *selectedFamilyDictionary = [familyDictionary objectForKey:selectedFamily];
+                NSArray *styles = [selectedFamilyDictionary allKeys];
+                for (NSString *s in styles) {
+                    NSArray *components = [s componentsSeparatedByString:@" "];
+                    NSString *finalStyle = [components componentsJoinedByString:@""];
+                    if ([finalStyle isEqualToString:style]) {
+                        [styleList selectItemWithTitle:s];
+                    }
+                }
             }
         } else {
             familyName = getSubsetFontNameFromSubset(subsetName);
@@ -190,7 +203,21 @@
             if (style != nil) {
                 [styleList removeAllItems];
                 [styleList addItemWithTitle:style];
-                [styleList selectItemWithTitle:style];
+                
+                // Select style by looping all styles for selected family.
+                // Because style will be "BoldItalic", and style in list will be "Bold Italic",
+                // So we handle this issue here too.
+                // TODO: This functions the same as above, but did not test, need some test
+                NSString *selectedFamily = [familyList titleOfSelectedItem];
+                NSDictionary *selectedFamilyDictionary = [familyDictionary objectForKey:selectedFamily];
+                NSArray *styles = [selectedFamilyDictionary allKeys];
+                for (NSString *s in styles) {
+                    NSArray *components = [s componentsSeparatedByString:@" "];
+                    NSString *finalStyle = [components componentsJoinedByString:@""];
+                    if ([finalStyle isEqualToString:style]) {
+                        [styleList selectItemWithTitle:s];
+                    }
+                }
             }
         }
     }
