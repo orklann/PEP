@@ -477,6 +477,11 @@
     // Initialize fontArrayString with original font arrays
     GDictionaryObject *fontArray = [[resources value] objectForKey:@"Font"];
     for (NSString *fontName in [fontArray value]) {
+        // NOTE: Because we add new font if selected font is the same as original PDF font, so we should overwrite origin
+        // font tag, so that we remove original font tag, if it's in added fonts
+        if ([self isFontTagInAddedFonts:fontName]) {
+            continue;
+        }
         GRefObject *ref = [[fontArray value] objectForKey:fontName];
         int objectNumber = [ref objectNumber];
         int generationNumber = [ref generationNumber];
@@ -767,5 +772,15 @@
         fontTag = [NSString stringWithFormat:@"Font%d", i];
     }
     return fontTag;
+}
+
+- (BOOL)isFontTagInAddedFonts:(NSString*)fontTag {
+    for (NSString *key in self.addedFonts) {
+        NSString *tag = [[key componentsSeparatedByString:@"-"] firstObject];
+        if ([fontTag isEqualToString:tag]) {
+            return YES;
+        }
+    }
+    return NO;
 }
 @end
