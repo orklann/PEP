@@ -30,6 +30,7 @@
     p.cachedFonts = [NSMutableDictionary dictionary];
     p.addedFonts = [NSMutableDictionary dictionary];
     p.isRendering = NO;
+    p.pageYOffsetInDoc = 0.0;
     return p;
 }
 
