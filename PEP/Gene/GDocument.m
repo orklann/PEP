@@ -102,8 +102,8 @@
     for (GPage *page in pages) {
         [page setPageYOffsetInDoc:yOffset];
         NSRect rect = [page calculatePageMediaBox];
-        CGFloat maxY = NSMaxY(rect);
-        yOffset = maxY;
+        CGFloat height = rect.size.height;
+        yOffset = height;
     }
 }
 
