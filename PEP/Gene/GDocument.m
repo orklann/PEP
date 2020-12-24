@@ -88,11 +88,23 @@
     // Test parsePages
     [self parsePages];
     
+    [self calculateAllPagesYOffset];
+    
     // parse Content of first page
     [[pages firstObject] parsePageContent];
     
     // Make all mouse events work
     [self updateTrackingAreas];
+}
+
+- (void)calculateAllPagesYOffset {
+    CGFloat yOffset = 0.0;
+    for (GPage *page in pages) {
+        [page setPageYOffsetInDoc:yOffset];
+        NSRect rect = [page calculatePageMediaBox];
+        CGFloat maxY = NSMaxY(rect);
+        yOffset = maxY;
+    }
 }
 
 - (void)updateTrackingAreas {

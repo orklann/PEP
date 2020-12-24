@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSRect highlightBlockFrame;
 }
 
+@property (readwrite) CGFloat pageYOffsetInDoc;
 @property (readwrite) BOOL isRendering;
 @property (readwrite) unsigned int lastStreamOffset;
 @property (readwrite) NSMutableDictionary *cachedFonts;

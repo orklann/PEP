@@ -189,7 +189,7 @@
 //    NSLog(@"Page media box: %@", NSStringFromRect(mediaBoxRect));
     NSRect bounds = [doc bounds];
     CGFloat pageX = NSMidX(bounds) - (w / 2);
-    CGFloat pageY = kPageMargin;
+    CGFloat pageY = kPageMargin + self.pageYOffsetInDoc;
     CGFloat pageWidth = w;
     CGFloat pageHeight = h;
     NSRect pageRectFlipped = NSMakeRect(pageX, pageY, pageWidth, pageHeight);
