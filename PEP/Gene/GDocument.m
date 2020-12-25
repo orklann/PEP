@@ -51,7 +51,9 @@
     NSRect rect = [[self window] frame];
     rect.size = NSMakeSize(1200, 1024);
     [[self window] setFrame: rect display: YES];
-        
+    
+    [[self window] layoutIfNeeded];
+    
     // User space to device space scaling
     [self scaleUnitSquareToSize:NSMakeSize(kScaleFactor, kScaleFactor)];
     
@@ -110,6 +112,10 @@
     }
     NSRect docRect = [[self.window contentView] frame];
     docRect.size.height = height * kScaleFactor;
+    NSScroller *verticalScroller = [self.enclosingScrollView verticalScroller];
+    NSRect scrollerRect = [verticalScroller bounds];
+    CGFloat scrollerWidth = scrollerRect.size.width;
+    docRect.size.width -= scrollerWidth;
     docRect.origin = NSZeroPoint;
     [self setFrame:docRect];
 }
