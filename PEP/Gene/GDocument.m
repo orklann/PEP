@@ -227,7 +227,6 @@
 - (void)mouseDown:(NSEvent *)event {
     GPage *p = [pages firstObject];
    
-    [self scrollToTop];
     [p mouseDown:event];
     /*NSUInteger i;
     NSMutableArray *glyphs = [[p textParser] glyphs];
