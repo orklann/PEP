@@ -194,7 +194,8 @@
     [bgColor set];
     NSRectFill([self bounds]);
     
-    [self drawBorder];
+    // Test: draw GDocument border with 2pt black color
+    //[self drawBorder];
     
     CGContextRef context = [[NSGraphicsContext currentContext] CGContext];
     GPage *page = [pages firstObject];
