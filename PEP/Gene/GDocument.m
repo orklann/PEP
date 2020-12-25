@@ -94,7 +94,11 @@
     
     [self resizeToFitAllPages];
     
-    [self scrollToTop];
+    // Argly hack to initaily scroll to top, because it's bugy to scroll to top after setFrame;
+    [NSTimer scheduledTimerWithTimeInterval:0.40 repeats:NO block:^(NSTimer *timer) {
+        [self scrollToTop];
+    }];
+    
     
     // parse Content of first page
     [[pages firstObject] parsePageContent];
@@ -222,6 +226,7 @@
 - (void)mouseDown:(NSEvent *)event {
     GPage *p = [pages firstObject];
    
+    [self scrollToTop];
     [p mouseDown:event];
     /*NSUInteger i;
     NSMutableArray *glyphs = [[p textParser] glyphs];
