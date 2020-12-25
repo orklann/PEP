@@ -24,8 +24,8 @@ NS_ASSUME_NONNULL_BEGIN
     PEPSideView *sideView;
 }
 
-@property (weak) IBOutlet GDocument *doc;
-@property (weak) IBOutlet NSScrollView *scrollView;
+@property (readwrite) GDocument *doc;
+@property (readwrite) NSScrollView *scrollView;
 
 - (PEPSideView*)sideView;
 - (PEPTabView*)tabView;

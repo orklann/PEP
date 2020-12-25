@@ -32,6 +32,18 @@
     needToMoveMiniaturizeButton = YES;
     needToMoveZoomButton = YES;
     
+    self.scrollView = [[NSScrollView alloc] initWithFrame:[[self contentView] frame]];
+
+    // configure the scroll view
+    [self.scrollView setBorderType:NSNoBorder];
+    [self.scrollView setHasVerticalScroller:YES];
+
+    // embed your custom view in the scroll view
+    self.doc = [[GDocument alloc] initWithFrame:[[self contentView] frame]];
+    [self.scrollView setDocumentView:self.doc];
+    [self.contentView addSubview:self.scrollView];
+    
+    
     topView = [[PEPTopView alloc] initWithFrame:NSZeroRect];
     [self.contentView addSubview:topView];
     
@@ -47,6 +59,9 @@
     [sideView initAllViews];
     
     [self layoutViews];
+    
+    // Initialize GDocument at last to make sure scrollToTop work correctly
+    [self.doc awakeFromNib];
 }
 
 /*
@@ -69,6 +84,10 @@
         scrollViewFrame.size.height = contentViewFrame.size.height - kTopViewHeight;
         scrollViewFrame.size.width -= kSideViewWidth;
         [self.scrollView setFrame:scrollViewFrame];
+        NSRect docRect = scrollViewFrame;
+        // Make sure to resize GDocument (Scroll view's document view)
+        docRect.origin = NSZeroPoint;
+        [self.doc setFrame:docRect];
         
         // Side View
         NSRect sideViewFrame = contentViewFrame;

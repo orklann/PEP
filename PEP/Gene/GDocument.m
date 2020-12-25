@@ -44,8 +44,9 @@
     rect.size = NSMakeSize(1200, 1024);
     [[self window] setFrame: rect display: YES];
     
-    rect = [self.enclosingScrollView.contentView frame]; // keep view width, and fix the right white margin
+    rect = [[self window] frame]; // keep view width, and fix the right white margin
     rect.size.height += 150;
+    rect.origin = NSZeroPoint;
     [self setFrameSize:rect.size];
     
     [self scrollToTop];
