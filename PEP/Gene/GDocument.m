@@ -37,22 +37,21 @@
     [[parser stream] writeToFile:path atomically:YES];
 }
 
+-(void)drawBorder {
+    NSRect frameRect = [self bounds];
+    NSBezierPath *textViewSurround = [NSBezierPath bezierPathWithRoundedRect:frameRect xRadius:0 yRadius:0];
+    [textViewSurround setLineWidth:2];
+    [[NSColor blackColor] set];
+    [textViewSurround stroke];
+}
+
 - (void)awakeFromNib {
     // Resize window
     NSLog(@"View: %@", NSStringFromRect(self.bounds));
     NSRect rect = [[self window] frame];
     rect.size = NSMakeSize(1200, 1024);
     [[self window] setFrame: rect display: YES];
-    
-    rect = [[self window] frame]; // keep view width, and fix the right white margin
-    rect.size.height += 150;
-    rect.origin = NSZeroPoint;
-    [self setFrameSize:rect.size];
-    
-    [self scrollToTop];
-    
-    NSLog(@"View after resizing: %@", NSStringFromRect(self.bounds));
-    
+        
     // User space to device space scaling
     [self scaleUnitSquareToSize:NSMakeSize(kScaleFactor, kScaleFactor)];
     
@@ -91,11 +90,28 @@
     
     [self calculateAllPagesYOffset];
     
+    [self resizeToFitAllPages];
+    
+    [self scrollToTop];
+    
     // parse Content of first page
     [[pages firstObject] parsePageContent];
     
     // Make all mouse events work
     [self updateTrackingAreas];
+}
+
+- (void)resizeToFitAllPages {
+    CGFloat height = kPageMargin;
+    for (GPage *page in pages) {
+        NSRect pageRect = [page calculatePageMediaBox];
+        height += pageRect.size.height;
+        height += kPageMargin;
+    }
+    NSRect docRect = [[self.window contentView] frame];
+    docRect.size.height = height * kScaleFactor;
+    docRect.origin = NSZeroPoint;
+    [self setFrame:docRect];
 }
 
 - (void)calculateAllPagesYOffset {
@@ -167,6 +183,8 @@
     NSColor *bgColor = [NSColor colorWithRed:0.93 green:0.93 blue:0.93 alpha:1.0];
     [bgColor set];
     NSRectFill([self bounds]);
+    
+    [self drawBorder];
     
     CGContextRef context = [[NSGraphicsContext currentContext] CGContext];
     GPage *page = [pages firstObject];

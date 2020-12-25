@@ -32,14 +32,18 @@
     needToMoveMiniaturizeButton = YES;
     needToMoveZoomButton = YES;
     
-    self.scrollView = [[NSScrollView alloc] initWithFrame:[[self contentView] frame]];
-
-    // configure the scroll view
+    /*
+     * Create NSScrollView and GDocument in code without Interface Builder
+     */
+    NSRect contentViewRect = [[self contentView] frame];
+    contentViewRect.origin = NSZeroPoint;
+    self.scrollView = [[NSScrollView alloc] initWithFrame:contentViewRect];
+    // Configure the scroll view
     [self.scrollView setBorderType:NSNoBorder];
     [self.scrollView setHasVerticalScroller:YES];
-
-    // embed your custom view in the scroll view
-    self.doc = [[GDocument alloc] initWithFrame:[[self contentView] frame]];
+    [self.scrollView setHasHorizontalScroller:YES];
+    // Embed your custom view in the scroll view
+    self.doc = [[GDocument alloc] initWithFrame:contentViewRect];
     [self.scrollView setDocumentView:self.doc];
     [self.contentView addSubview:self.scrollView];
     
@@ -84,10 +88,6 @@
         scrollViewFrame.size.height = contentViewFrame.size.height - kTopViewHeight;
         scrollViewFrame.size.width -= kSideViewWidth;
         [self.scrollView setFrame:scrollViewFrame];
-        NSRect docRect = scrollViewFrame;
-        // Make sure to resize GDocument (Scroll view's document view)
-        docRect.origin = NSZeroPoint;
-        [self.doc setFrame:docRect];
         
         // Side View
         NSRect sideViewFrame = contentViewFrame;
