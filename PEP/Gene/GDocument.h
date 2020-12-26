@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (IBAction)saveDocumentAs:(id)sender;
 
+- (NSMutableArray*)pages;
 - (void)saveAs:(NSString*)path;
 - (void)parsePages;
 - (NSRect)rectFromFlipped:(NSRect)r;

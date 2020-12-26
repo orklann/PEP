@@ -31,6 +31,10 @@
     }];
 }
 
+- (NSMutableArray*)pages {
+    return pages;
+}
+
 - (void)saveAs:(NSString*)path {
     GPage *firstPage = [pages firstObject];
     [firstPage incrementalUpdate];
@@ -99,9 +103,8 @@
         [self scrollToTop];
     }];
     
-    
-    // parse Content of first page
-    [[pages firstObject] parsePageContent];
+    // parse Content of all pagea
+    [self parsePagesContent];
     
     // Make all mouse events work
     [self updateTrackingAreas];
@@ -130,7 +133,8 @@
         [page setPageYOffsetInDoc:yOffset];
         NSRect rect = [page calculatePageMediaBox];
         CGFloat height = rect.size.height;
-        yOffset = height;
+        yOffset += height;
+        yOffset += kPageMargin;
     }
 }
 
@@ -148,13 +152,19 @@
     [self.window invalidateCursorRectsForView:self];
 }
 
+- (void)parsePagesContent {
+    for (GPage *page in pages) {
+        [page parsePageContent];
+    }
+}
+
 - (void)parsePages {
     parser = [GParser parser];
     NSBundle *mainBundle = [NSBundle mainBundle];
     // TODO: Use test_xref.pdf by default without ability to custom file, will
     // do it later
     //file = [mainBundle pathForResource:@"test_xref" ofType:@"pdf"];
-    file = [mainBundle pathForResource:@"Super Mario World" ofType:@"pdf"];
+    file = [mainBundle pathForResource:@"Sample_001" ofType:@"pdf"];
     NSMutableData *d = [NSMutableData dataWithContentsOfFile:file];
     [parser setStream:d];
     
@@ -198,8 +208,9 @@
     //[self drawBorder];
     
     CGContextRef context = [[NSGraphicsContext currentContext] CGContext];
-    GPage *page = [pages firstObject];
-    [page render:context];
+    for (GPage *page in pages) {
+        [page render:context];
+    }
 }
 
 // GDocument's view coordinate origin is at bottom-left which is not flipped.

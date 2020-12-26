@@ -104,7 +104,19 @@
 }
 
 - (void)translateToPageOrigin:(CGContextRef)context {
-    NSPoint o = [self origin];
+    CGFloat offsetX = 0.0;
+    CGFloat offsetY = 0.0;
+    if ([[self.doc pages] indexOfObject:self] == 0) {
+        NSPoint origin = [self origin];
+        offsetX = origin.x;
+        offsetY = origin.y;
+    } else {
+        offsetX = 0;
+        NSRect pageRect = [self calculatePageMediaBox];
+        offsetY = pageRect.size.height + kPageMargin;
+        offsetY *= -1;
+    }
+    NSPoint o = NSMakePoint(offsetX, offsetY);
     CGContextTranslateCTM(context, o.x, o.y);
 }
 
@@ -117,13 +129,17 @@
         [self initGlyphsForFontDict];
     }
     
+    // Translate context origin to page media box origin
+    [self translateToPageOrigin:context];
+    
     // Draw media box (a.k.a page boundary)
     NSRect pageRect = [self calculatePageMediaBox];
     CGContextSetRGBFillColor(context, 1.0, 1.0, 1.0, 1.0);
+    // Make origin of page rect to zero point,
+    // because we translated the origin of context to page rect above
+    pageRect.origin.y = 0;
+    pageRect.origin.x = 0;
     CGContextFillRect(context, pageRect);
-    
-    // Translate context origin to page media box origin
-    [self translateToPageOrigin:context];
     
     textState = [GTextState create];
     graphicsState = [GGraphicsState create];
@@ -158,6 +174,7 @@
     if (ctm.tx == 0.0 && ctm.ty == 0.0) {
         highlightBlockFrame = [self rectFromPageToView:highlightBlockFrame];
     }
+    
     // Draw highlith text block border
     CGContextSetLineWidth(context, 1.0 / (kScaleFactor));
     CGContextSetRGBStrokeColor(context, 0.22, 0.66, 0.99, 1.0);
