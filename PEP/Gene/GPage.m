@@ -163,8 +163,9 @@
     NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
     NSLog(@"Debug: render() executionTime = %f", executionTime);
     */
-    GTextEditor *textEditor = [doc textEditor];
-    if (textEditor != nil) {
+    
+    GTextEditor *textEditor = [self.doc textEditor];
+    if (textEditor != nil && [textEditor editorInPage] == self) {
         [textEditor draw:context];
     }
     
@@ -304,8 +305,8 @@
         [textEditor mouseDown:event];
         NSRect frame = [textEditor frame];
         NSRect viewFrame = [self rectFromPageToView:frame];
-        if (!NSPointInRect(point, viewFrame)) {
-            [doc setTextEditor:nil];
+        if (!NSPointInRect(point, viewFrame) && [textEditor editorInPage] == self) {
+           [doc setTextEditor:nil];
         }
         [self redraw];
     }
@@ -321,6 +322,7 @@
         NSRect viewFrame = [self rectFromPageToView:frame];
         if (NSPointInRect(point, viewFrame)) {
             GTextEditor *textEditor = [GTextEditor textEditorWithPage:self textBlock:tb];
+            [textEditor setEditorInPage:self];
             unsigned int index = (unsigned int)[blocks indexOfObject:tb];
             [textEditor setTextBlockIndex:index];
             [doc setTextEditor:textEditor];
@@ -328,7 +330,6 @@
             return ;
         }
     }
-
 }
 
 - (void)mouseMoved:(NSEvent*)event {

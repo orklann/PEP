@@ -606,7 +606,6 @@
         // if insertion point is at the beginning of line
         self.pdfFontName = [currentGlyph fontName];
         self.fontSize = [currentGlyph fontSize];
-        NSLog(@"Text Editor font name: %@ font size: %f glyph: %@", self.pdfFontName, self.fontSize, [currentGlyph content]);
         return ;
     }
     
@@ -614,7 +613,6 @@
         // Let's update font name, and font size based on previous glyph
         self.pdfFontName = [prevGlyph fontName];
         self.fontSize = [prevGlyph fontSize];
-        NSLog(@"Text Editor font name: %@ font size: %f glyph: %@", self.pdfFontName, self.fontSize, [prevGlyph content]);
     }
 }
 

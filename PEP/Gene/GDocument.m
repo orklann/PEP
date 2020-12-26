@@ -231,51 +231,21 @@
 }
 
 - (void)mouseMoved:(NSEvent *)event {
-     GPage *p = [pages firstObject];
-     [p mouseMoved:event];
+    for (GPage *page in pages) {
+        [page mouseMoved:event];
+    }
 }
 
 - (void)mouseDown:(NSEvent *)event {
-    GPage *p = [pages firstObject];
-   
-    [p mouseDown:event];
-    /*NSUInteger i;
-    NSMutableArray *glyphs = [[p textParser] glyphs];
-    printf("%d glyphs in text parser", (int)[glyphs count]);
-    for (i = 0; i < [glyphs count]; i++) {
-        GGlyph *g = [glyphs objectAtIndex:i];
-        printf("%s", [[g content] UTF8String]);
+    for (GPage *page in pages) {
+        [page mouseDown:event];
     }
-    printf("\n");
-    
-    NSLog(@"List of text blocks");
-    NSMutableArray *textBlocks = [[p textParser] makeTextBlocks];
-    for (i = 0; i < [textBlocks count]; i++) {
-        GTextBlock *tb = [textBlocks objectAtIndex:i];
-        NSLog(@"*****");
-        NSLog(@"%@", [tb textBlockStringWithLineFeed]);
-    }
-    NSLog(@"End list of text blocks");
-    
-    GTextBlock *lastTB = [textBlocks lastObject];
-    NSArray *glyphsArray = [lastTB glyphs];
-    for (i = 0; i < [glyphsArray count]; i++) {
-        GGlyph *g = [glyphsArray objectAtIndex:i];
-        NSLog(@"%@", [g content]);
-    }
-    
-    NSRect f = [lastTB frame];
-    NSPoint origin = f.origin;
-    origin = translatePoint(origin, [p origin]);
-    f.origin = origin;
-    */
-    //[p buildPageContent];
-    //[self setNeedsDisplay:YES];
 }
 
 - (void)keyDown:(NSEvent *)event {
-    GPage *p = [pages firstObject];
-    [p keyDown:event];
+    for (GPage *page in pages) {
+        [page keyDown:event];
+    }
 }
 
 - (BOOL)acceptsFirstResponder {

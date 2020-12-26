@@ -38,6 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
     GWrappedLine *currentWordWrapLine;
 }
 
+@property (readwrite) GPage *editorInPage;
 @property (readwrite) id delegate;
 @property (readwrite) BOOL commandsUpdated;
 @property (readwrite) NSString *pdfFontName;
