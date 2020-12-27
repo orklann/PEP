@@ -106,6 +106,10 @@
     // Argly hack to initaily scroll to top, because it's bugy to scroll to top after setFrame;
     [NSTimer scheduledTimerWithTimeInterval:0.40 repeats:NO block:^(NSTimer *timer) {
         [self scrollToTop];
+        
+        // Initially update visible pages
+        [self updateVisiblePage];
+        [self setNeedsDisplay:YES];
     }];
     
     // parse Content of all pagea
@@ -213,8 +217,19 @@
     //[self drawBorder];
     
     CGContextRef context = [[NSGraphicsContext currentContext] CGContext];
+    BOOL renderedVisiblePage = NO;
     for (GPage *page in pages) {
-        [page render:context];
+        if ([visiblePages containsObject:page]) {
+            [page render:context];
+            if (!renderedVisiblePage) {
+                renderedVisiblePage = YES;
+            }
+        } else {
+            if (renderedVisiblePage) {
+                break;
+            }
+            [page translateToPageOrigin:context];
+        }
     }
 }
 
@@ -282,7 +297,25 @@
     return ref;
 }
 
+- (void)updateVisiblePage {
+    visiblePages = [NSMutableArray array];
+    NSRect visibleRect = [self visibleRect];
+    BOOL foundPage = NO;
+    for (GPage *page in pages) {
+        NSRect pageRect = [page calculatePageMediaBox];
+        if (NSIntersectsRect(pageRect, visibleRect)) {
+            [visiblePages addObject:page];
+            if (!foundPage) foundPage = YES;
+        } else {
+            if (foundPage) {
+                break;
+            }
+        }
+    }
+}
+
 - (void)scrollViewDidEndLiveScroll:(NSNotification *)notification {
-    NSLog(@"END SCROLL");
+    [self updateVisiblePage];
+    [self setNeedsDisplay:YES];
 }
 @end

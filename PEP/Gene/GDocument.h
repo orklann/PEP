@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
     GParser *parser;
     NSTrackingArea *trackingArea;
     GDocumentMode mode;
+    NSMutableArray *visiblePages;
 }
 
 @property (readwrite) NSMutableArray *addedRefkeys;
