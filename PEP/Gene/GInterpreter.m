@@ -52,6 +52,28 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     return size.width;
 }
 
+- (void)drawGlyph:(GGlyph*)glyph context:(CGContextRef)context {
+    CTLineRef line = [glyph line];
+    CFArrayRef runs = CTLineGetGlyphRuns(line);
+    CTRunRef firstRun = CFArrayGetValueAtIndex(runs, 0);
+    CTRunDraw(firstRun, context, CFRangeMake(0, 1));
+}
+
+- (CTLineRef)getLineFromGlyph:(GGlyph*)glyph {
+    NSString *ch = [glyph content];
+    NSString *fontKey = [NSString stringWithFormat:@"%@-%f", [glyph fontName],
+                         [glyph fontSize]];
+    NSFont *font = [page getCachedFontForKey:fontKey];
+    
+    NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:ch];
+    [s addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, 1)];
+    [s addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0, 1)];
+    
+    CFAttributedStringRef attrStr = (__bridge CFAttributedStringRef)(s);
+    CTLineRef line = CTLineCreateWithAttributedString(attrStr);
+    return line;
+}
+
 - (void)layoutStrings:(NSString*)s context:(CGContextRef)context  tj:(CGFloat)tjDelta prevTj:(int)prevTj{
     NSMutableArray *glyphs = [[page textParser] glyphs];
     
@@ -126,6 +148,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             // Use font size 1.0, we set font size in text matrix already
             //[glyph setFontSize:[[page textState] fontSize]];
             [glyph setFontSize:1.0];
+            
+            // Set CFLineRef for speeding up drawing
+            CTLineRef line = [self getLineFromGlyph:glyph];
+            [glyph setLine:line];
             
             // Only set delta to first glyph of a string
             if (i == 0) {
@@ -396,10 +422,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     }
     
     CGContextSetTextMatrix(context, [glyph textMatrix]);
-    NSString *fontKey = [NSString stringWithFormat:@"%@-%f", [glyph fontName],
-                         [glyph fontSize]];
-    NSFont *font = [page getCachedFontForKey:fontKey];
-    NSString *ch = [glyph content];
-    [self drawString:ch font:font context:context];
+    [self drawGlyph:glyph context:context];
 }
 @end

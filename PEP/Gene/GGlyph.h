@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
     CGFloat height;
 }
 
+@property (readwrite) CTLineRef line;
 @property (readwrite) int delta;
 @property (readwrite) int indexOfBlock;
 @property (readwrite) CGFloat width;
