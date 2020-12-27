@@ -338,11 +338,10 @@
         return ;
     }
     
-    
     if ([doc textEditor]) {
-        [self redraw];
         return ;
     }
+    
     NSPoint location = [event locationInWindow];
     NSPoint point = [self.doc convertPoint:location fromView:nil];
     NSArray *blocks = [[self textParser] makeTextBlocks];
