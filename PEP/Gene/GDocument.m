@@ -61,6 +61,11 @@
     // User space to device space scaling
     [self scaleUnitSquareToSize:NSMakeSize(kScaleFactor, kScaleFactor)];
     
+    // Setup notification for NSScrollViewDidEndLiveScrollNotification
+    [[NSNotificationCenter  defaultCenter] addObserver:self selector:@selector(scrollViewDidEndLiveScroll:)
+                                                  name:NSScrollViewDidEndLiveScrollNotification
+                                                object:self.enclosingScrollView];
+    
     GParser *p = [GParser parser];
     NSBundle *mainBundle = [NSBundle mainBundle];
     NSString *path = [mainBundle pathForResource:@"PEP_Incremental" ofType:@"pdf"];
@@ -275,5 +280,9 @@
     }
     [_addedRefkeys addObject:ref];
     return ref;
+}
+
+- (void)scrollViewDidEndLiveScroll:(NSNotification *)notification {
+    NSLog(@"END SCROLL");
 }
 @end
