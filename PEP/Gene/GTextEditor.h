@@ -74,6 +74,9 @@ NS_ASSUME_NONNULL_BEGIN
 // Get text states
 - (CGFloat)getFontSizeForEditor;
 - (NSString*)getPDFFontNameForEditor;
+
+// Stop blink timer
+- (void)stopBlinkTimer;
 @end
 
 NS_ASSUME_NONNULL_END

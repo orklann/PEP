@@ -1102,5 +1102,10 @@
     PEPSideView *sideView = [(PEPWindow*)self.page.doc.window sideView];
     return sideView;
 }
+
+- (void)stopBlinkTimer {
+    [blinkTimer invalidate];
+    blinkTimer = nil;
+}
 @end
 

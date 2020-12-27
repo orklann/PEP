@@ -306,7 +306,8 @@
         NSRect frame = [textEditor frame];
         NSRect viewFrame = [self rectFromPageToView:frame];
         if (!NSPointInRect(point, viewFrame) && [textEditor editorInPage] == self) {
-           [doc setTextEditor:nil];
+            [textEditor stopBlinkTimer];
+            [doc setTextEditor:nil];
         }
         [self redraw];
     }
