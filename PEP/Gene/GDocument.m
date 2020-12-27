@@ -66,6 +66,12 @@
                                                   name:NSScrollViewDidEndLiveScrollNotification
                                                 object:self.enclosingScrollView];
     
+    // Setup notification for NSScrollViewDidLiveScrollNotification
+    [[NSNotificationCenter  defaultCenter] addObserver:self selector:@selector(scrollViewDidLiveScroll:)
+                                                  name:NSScrollViewDidLiveScrollNotification
+                                                object:self.enclosingScrollView];
+
+    
     GParser *p = [GParser parser];
     NSBundle *mainBundle = [NSBundle mainBundle];
     NSString *path = [mainBundle pathForResource:@"PEP_Incremental" ofType:@"pdf"];
@@ -315,6 +321,11 @@
 }
 
 - (void)scrollViewDidEndLiveScroll:(NSNotification *)notification {
+    [self updateVisiblePage];
+    [self setNeedsDisplay:YES];
+}
+
+- (void)scrollViewDidLiveScroll:(NSNotification *)notification {
     [self updateVisiblePage];
     [self setNeedsDisplay:YES];
 }
