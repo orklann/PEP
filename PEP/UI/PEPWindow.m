@@ -23,6 +23,11 @@
 }
 
 - (void)awakeFromNib {
+    NSRect rect = [self frame];
+    rect.size = NSMakeSize(1200, 1024);
+    [self setFrame: rect display: YES];
+    [self layoutIfNeeded];
+    
     [self setTitle:@""];
     [self setTitlebarAppearsTransparent:YES];
     self.movableByWindowBackground = YES;
