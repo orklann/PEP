@@ -25,7 +25,7 @@
 - (void)awakeFromNib {
     NSRect rect = [self frame];
     rect.size = NSMakeSize(1200, 1024);
-    [self setFrame: rect display: YES];
+    [self setFrame: rect display:NO];
     [self layoutIfNeeded];
     
     [self setTitle:@""];
@@ -50,6 +50,7 @@
     // Embed your custom view in the scroll view
     self.doc = [[GDocument alloc] initWithFrame:contentViewRect];
     [self.scrollView setDocumentView:self.doc];
+    [self.scrollView setScrollsDynamically:YES];
     [self.contentView addSubview:self.scrollView];
     
     

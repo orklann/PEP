@@ -25,6 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *visiblePages;
 }
 
+@property (readwrite) BOOL forceDrawAllPage;
 @property (readwrite) NSMutableArray *addedRefkeys;
 @property (readwrite) GTextEditor * _Nullable textEditor;
 

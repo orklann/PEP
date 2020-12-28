@@ -50,7 +50,8 @@
 }
 
 - (void)awakeFromNib {
-    // Resize window
+    self.forceDrawAllPage = YES;
+    
     NSLog(@"View: %@", NSStringFromRect(self.bounds));
     
     // User space to device space scaling
@@ -102,15 +103,19 @@
     
     [self calculateAllPagesYOffset];
     
+    
     [self resizeToFitAllPages];
     
     // Argly hack to initaily scroll to top, because it's bugy to scroll to top after setFrame;
-    [NSTimer scheduledTimerWithTimeInterval:0.40 repeats:NO block:^(NSTimer *timer) {
+    [NSTimer scheduledTimerWithTimeInterval:0.05 repeats:NO block:^(NSTimer *timer) {
         [self scrollToTop];
-        
+    
         // Initially update visible pages
+        //self.forceDrawAllPage = YES;
         [self updateVisiblePage];
-        [self setNeedsDisplay:YES];
+        //[self setNeedsDisplay:YES];
+    
+        //self.forceDrawAllPage = NO;
     }];
     
     // parse Content of all pagea
@@ -118,6 +123,7 @@
     
     // Make all mouse events work
     [self updateTrackingAreas];
+    
 }
 
 - (void)resizeToFitAllPages {
@@ -209,18 +215,34 @@
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
-    [super drawRect:dirtyRect];
-    NSColor *bgColor = [NSColor colorWithRed:0.93 green:0.93 blue:0.93 alpha:1.0];
-    [bgColor set];
-    NSRectFill([self bounds]);
+    NSLog(@"drawRect:");
+    CGContextRef context = [[NSGraphicsContext currentContext] CGContext];
+    
+    if (self.forceDrawAllPage) {
+        NSLog(@"Draw all page");
+        [super drawRect:dirtyRect];
+        NSColor *bgColor = [NSColor colorWithRed:0.93 green:0.93 blue:0.93 alpha:1.0];
+        [bgColor set];
+        NSRectFill([self bounds]);
+        
+        for (GPage *page in pages) {
+            [page render:context];
+        }
+        return ;
+    }
     
     // Test: draw GDocument border with 2pt black color
     //[self drawBorder];
     
-    CGContextRef context = [[NSGraphicsContext currentContext] CGContext];
     BOOL renderedVisiblePage = NO;
+    NSLog(@"=====Visible Pages=====");
+    for (GPage *page in visiblePages) {
+        NSLog(@"page %d", (int)[pages indexOfObject:page]);
+    }
+    
     for (GPage *page in pages) {
         if ([visiblePages containsObject:page]) {
+            NSLog(@"render page: %d", (int)[pages indexOfObject:page]);
             [page render:context];
             if (!renderedVisiblePage) {
                 renderedVisiblePage = YES;
@@ -229,6 +251,7 @@
             if (renderedVisiblePage) {
                 break;
             }
+            NSLog(@"not render page: %d", (int)[pages indexOfObject:page]);
             [page translateToPageOrigin:context];
         }
     }
@@ -252,12 +275,14 @@
 }
 
 - (void)mouseMoved:(NSEvent *)event {
+    self.forceDrawAllPage = NO;
     for (GPage *page in pages) {
         [page mouseMoved:event];
     }
 }
 
 - (void)mouseDown:(NSEvent *)event {
+    self.forceDrawAllPage = NO;
     for (GPage *page in pages) {
         [page mouseDown:event];
     }
@@ -278,7 +303,7 @@
         _textEditor = nil;
     }
     mode = m;
-    [self setNeedsDisplay:YES];
+    [self setNeedsDisplayInRect:[self visibleRect]];
 }
 
 - (GDocumentMode)mode {
@@ -317,11 +342,11 @@
 
 - (void)scrollViewDidEndLiveScroll:(NSNotification *)notification {
     [self updateVisiblePage];
-    [self setNeedsDisplay:YES];
+    [self setNeedsDisplayInRect:[self visibleRect]];
 }
 
 - (void)scrollViewDidLiveScroll:(NSNotification *)notification {
     [self updateVisiblePage];
-    [self setNeedsDisplay:YES];
+    [self setNeedsDisplayInRect:[self visibleRect]];
 }
 @end

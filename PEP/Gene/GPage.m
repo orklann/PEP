@@ -129,16 +129,23 @@
         [self initGlyphsForFontDict];
     }
     
+    
     // Translate context origin to page media box origin
     [self translateToPageOrigin:context];
     
-    // Draw media box (a.k.a page boundary)
     NSRect pageRect = [self calculatePageMediaBox];
+    
+    NSRect backgroundRect = NSMakeRect(-1 * pageRect.origin.x, -1 * kPageMargin, [doc bounds].size.width, pageRect.size.height + (kPageMargin*2));
+    CGContextSetRGBFillColor(context, 0.93, 0.93, 0.93, 1.0);
+    CGContextFillRect(context, backgroundRect);
+    
+    // Draw media box (a.k.a page boundary)
     CGContextSetRGBFillColor(context, 1.0, 1.0, 1.0, 1.0);
     // Make origin of page rect to zero point,
     // because we translated the origin of context to page rect above
     pageRect.origin.y = 0;
     pageRect.origin.x = 0;
+    NSLog(@"page rect: %@", NSStringFromRect(pageRect));
     CGContextFillRect(context, pageRect);
     
     textState = [GTextState create];
@@ -380,7 +387,7 @@
 }
 
 - (void)redraw {
-    [[self doc] setNeedsDisplay:YES];
+    [[self doc] setNeedsDisplayInRect:[[self doc] visibleRect]];
 }
 
 - (void)initCommands {

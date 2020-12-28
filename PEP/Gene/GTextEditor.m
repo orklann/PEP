@@ -135,7 +135,7 @@
 - (void)redraw {
     if (self.isEditing) return ;
     GDocument *doc = (GDocument*)[(GPage*)self.page doc];
-    [doc setNeedsDisplay:YES];
+    [doc setNeedsDisplayInRect:[doc visibleRect]];
 }
 
 - (void)drawInsertionPoint:(CGContextRef)context {
