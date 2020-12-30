@@ -512,14 +512,7 @@
     [self insertChar:ch font:font fontTag:fontName];
     // Do word wrap here, use cached glyphs 
     [self doWordWrap];
-    // We don't update page content, just update [GTextParser glyphs]
-    // And udpate its readOrderGlyphs by setting no cached below
-    //[self.page buildPageContent];
-    //[self.page addFont:font withPDFFontName:fontName];
-    //[self.page addPageStream];
-    //[self.page incrementalUpdate];
     [[self.page textParser] setCached:NO];
-    //[self.page setNeedUpdate:YES];
     self.isEditing = NO;
 }
 
@@ -568,10 +561,6 @@
     // Do word wrap
     [self doWordWrap];
     [[self.page textParser] setCached:NO];
-    //[self.page buildPageContent];
-    //[self.page addPageStream];
-    //[self.page incrementalUpdate];
-    //[self.page setNeedUpdate:YES];
     self.isEditing = NO;
 }
 
