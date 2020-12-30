@@ -289,8 +289,8 @@
 }
 
 - (void)keyDown:(NSEvent *)event {
-    for (GPage *page in pages) {
-        [page keyDown:event];
+    if ([self textEditor]) {
+        [[self textEditor] keyDown:event];
     }
 }
 

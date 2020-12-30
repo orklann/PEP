@@ -192,7 +192,7 @@
     self.isRendering = NO;
     
     /* Test: draw glyph bounding box */
-    /* for (GGlyph * g in [textParser glyphs]) {
+    /*for (GGlyph * g in [textParser glyphs]) {
         NSRect r = [g frame];
         CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
         CGContextFillRect(context, r);
@@ -288,15 +288,7 @@
 }
 
 - (void)keyDown:(NSEvent*)event {
-    if ([doc textEditor]) {
-        [[doc textEditor] keyDown:event];
-    }
     
-    /*
-    [self buildPageContent];
-    [self setNeedUpdate:YES];
-    [self redraw];
-    */
 }
 
 - (void)mouseDown:(NSEvent*)event {
@@ -466,9 +458,9 @@
     [self.dataToUpdate addObject:binary];
     
     /*
-     * 3. Generate font dictionary
+     * 3. Generate font dictionary:
      */
-    header = [NSString stringWithFormat:@"<< /Type /Font /Subtype /TrueType /BaseFont /%@ /FontDescriptor %d %d R /Encoding /MacRomanEncoding >>\n", [font fontName], descriptorObjectNumber, descriptorGenerationNumber];
+    header = [NSString stringWithFormat:@"<< /Type /Font /Subtype /TrueType /BaseFont /%@ /FontDescriptor %d %d R /Encoding /MacRomanEncoding  >>\n", [font fontName], descriptorObjectNumber, descriptorGenerationNumber];
     
     stream = [NSMutableData data];
     [stream appendData:[header dataUsingEncoding:NSASCIIStringEncoding]];
@@ -501,7 +493,14 @@
     NSMutableString *fontArrayString = [NSMutableString string];
     
     // Initialize fontArrayString with original font arrays
-    GDictionaryObject *fontArray = [[resources value] objectForKey:@"Font"];
+    GDictionaryObject *fontArray;
+    GObject *refObject = [[resources value] objectForKey:@"Font"];
+    if ([refObject type] == kRefObject) {
+        fontArray = [parser getObjectByRef:[(GRefObject*)refObject getRefString]];
+    } else {
+        fontArray = (GDictionaryObject*)refObject;
+    }
+    
     for (NSString *fontName in [fontArray value]) {
         // NOTE: Because we add new font if selected font is the same as original PDF font, so we should overwrite origin
         // font tag, so that we remove original font tag, if it's in added fonts
@@ -550,7 +549,7 @@
     } else { // contents is a GArrayObject, TODO: handle this later
         
     }
-    
+        
     NSData *encodedFontData = encodeFlate(pageContent);
     int length = (int)[encodedFontData length];
     NSMutableData *stream = [NSMutableData data];
@@ -559,6 +558,7 @@
     [stream appendData:encodedFontData];
     NSString *end = @"\nendstream\n";
     [stream appendData:[end dataUsingEncoding:NSASCIIStringEncoding]];
+
     
     // Create a instance of GBinaryData
     GBinaryData *binary = [GBinaryData create];
@@ -734,5 +734,20 @@
         }
     }
     return NO;
+}
+
+- (CTLineRef)getLineFromGlyph:(GGlyph*)glyph {
+    NSString *ch = [glyph content];
+    NSString *fontKey = [NSString stringWithFormat:@"%@-%f", [glyph fontName],
+                         [glyph fontSize]];
+    NSFont *font = [self getCachedFontForKey:fontKey];
+    
+    NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:ch];
+    [s addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, 1)];
+    [s addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0, 1)];
+    
+    CFAttributedStringRef attrStr = (__bridge CFAttributedStringRef)(s);
+    CTLineRef line = CTLineCreateWithAttributedString(attrStr);
+    return line;
 }
 @end

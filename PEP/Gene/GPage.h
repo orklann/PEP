@@ -115,6 +115,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Generate new PDF font tag
 - (NSString*)generateNewPDFFontTag;
+
+// Get CTLineRef for glyph in page
+- (CTLineRef)getLineFromGlyph:(GGlyph*)glyph;
 @end
 
 NS_ASSUME_NONNULL_END

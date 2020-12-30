@@ -52,7 +52,6 @@ NSString *getFontNameFromSubset(NSString* subsetName) {
     NSString *fontName = [list lastObject];
     list = [fontName componentsSeparatedByString:@"-"];
     fontName = [list firstObject];
-    
     NSRegularExpression *regexp = [NSRegularExpression
         regularExpressionWithPattern:@"([a-z])([A-Z])"
         options:0

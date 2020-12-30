@@ -59,21 +59,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CTRunDraw(firstRun, context, CFRangeMake(0, 1));
 }
 
-- (CTLineRef)getLineFromGlyph:(GGlyph*)glyph {
-    NSString *ch = [glyph content];
-    NSString *fontKey = [NSString stringWithFormat:@"%@-%f", [glyph fontName],
-                         [glyph fontSize]];
-    NSFont *font = [page getCachedFontForKey:fontKey];
-    
-    NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:ch];
-    [s addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, 1)];
-    [s addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0, 1)];
-    
-    CFAttributedStringRef attrStr = (__bridge CFAttributedStringRef)(s);
-    CTLineRef line = CTLineCreateWithAttributedString(attrStr);
-    return line;
-}
-
 - (void)layoutStrings:(NSString*)s context:(CGContextRef)context  tj:(CGFloat)tjDelta prevTj:(int)prevTj{
     NSMutableArray *glyphs = [[page textParser] glyphs];
     
@@ -150,7 +135,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             [glyph setFontSize:1.0];
             
             // Set CFLineRef for speeding up drawing
-            CTLineRef line = [self getLineFromGlyph:glyph];
+            CTLineRef line = [page getLineFromGlyph:glyph];
             [glyph setLine:line];
             
             // Only set delta to first glyph of a string

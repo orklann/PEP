@@ -299,6 +299,7 @@
                 ch = @" ";  // NOTE: ch is now a Tab character, not a space
             }
             [self insertChar:ch];
+            [self updateFontNameAndFontSize];
         }
     }
     [self redraw];
@@ -399,8 +400,13 @@
         [g setTextMatrix:tm];
         [g setFontName:fontName];
         [g setFontSize:fontSize];
+        // Set CFLineRef for speeding up drawing
+        CTLineRef line = [self.page getLineFromGlyph:g];
+        [g setLine:line];
+        
         [glyphs addObject:g]; // Add this new glyph at the end
 
+        
         // Add the new glyph index to text editor's editing glyphs
         [self addGlyphIndexToEditingGlyphs:(int)[glyphs count] - 1];
         insertionPointIndex++;
@@ -451,6 +457,10 @@
     [g setTextMatrix:tm];
     [g setFontName:fontName];
     [g setFontSize:fontSize];
+    // Set CFLineRef for speeding up drawing
+    CTLineRef line = [self.page getLineFromGlyph:g];
+    [g setLine:line];
+    
     
     // Set width for new glyph
     NSSize s = NSMakeSize(hAdvance, 0);
@@ -462,6 +472,10 @@
     // Add the new glyph index to text editor's editing glyphs
     [self addGlyphIndexToEditingGlyphs:(int)[glyphs count] - 1];
     insertionPointIndex++;
+    
+    // Update text block immediately to prevent only update text block while redrawing,
+    // which will sometimes cause glyph index out of bounds for [GTextEditor getCurrentGlyph] etc
+    textBlock = [self getTextBlock];
     
     // Update cached glyphs for word wrap use
     [self updateCachedGlyphs:[textBlock glyphs] newGlyph:g];
@@ -494,7 +508,7 @@
             [self.page addNewFont:font withPDFFontTag:fontName];
         }
     }
-        
+    
     [self insertChar:ch font:font fontTag:fontName];
     // Do word wrap here, use cached glyphs 
     [self doWordWrap];
@@ -613,6 +627,11 @@
         // Let's update font name, and font size based on previous glyph
         self.pdfFontName = [prevGlyph fontName];
         self.fontSize = [prevGlyph fontSize];
+    } else {
+        // If prevGlyph is nil, which means we are at the last glyph
+        GGlyph *lastGlyph = [[textBlock glyphs] lastObject];
+        self.pdfFontName = [lastGlyph fontName];
+        self.fontSize = [lastGlyph fontSize];
     }
 }
 
@@ -1066,6 +1085,10 @@
 - (NSString*)getPDFFontNameForEditor {
     GGlyph *prevGlyph = [self getPrevGlyph];
     NSString *fontName;
+    if (!prevGlyph){
+        prevGlyph = [[textBlock glyphs] lastObject];
+    }
+    
     if (prevGlyph){
         // Debug purpose
         // NSLog(@"[Debug] Added fonts: %@, font tag: %@", self.page.addedFonts, [prevGlyph fontName]);

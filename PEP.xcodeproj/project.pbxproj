@@ -13,6 +13,7 @@
 		930ACC9B250759780092206C /* GDecoders.m in Sources */ = {isa = PBXBuildFile; fileRef = 930ACC9A250759780092206C /* GDecoders.m */; };
 		930ACC9D250763C30092206C /* GDecodersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 930ACC9C250763C30092206C /* GDecodersTests.m */; };
 		930B09BB25412AEE00ED00BD /* GMiscTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 930B09BA25412AEE00ED00BD /* GMiscTests.m */; };
+		930FA4AA259C696C004D1F7D /* bug_extra_char.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 930FA4A9259C696B004D1F7D /* bug_extra_char.pdf */; };
 		931221C724F0137F00929C01 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 931221C624F0137F00929C01 /* AppDelegate.m */; };
 		931221C924F0139300929C01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 931221C824F0139300929C01 /* Assets.xcassets */; };
 		931221CC24F0139300929C01 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 931221CA24F0139300929C01 /* MainMenu.xib */; };
@@ -95,6 +96,7 @@
 		930ACC9A250759780092206C /* GDecoders.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDecoders.m; sourceTree = "<group>"; };
 		930ACC9C250763C30092206C /* GDecodersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDecodersTests.m; sourceTree = "<group>"; };
 		930B09BA25412AEE00ED00BD /* GMiscTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GMiscTests.m; sourceTree = "<group>"; };
+		930FA4A9259C696B004D1F7D /* bug_extra_char.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = bug_extra_char.pdf; sourceTree = "<group>"; };
 		931221C224F0137F00929C01 /* PEP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PEP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		931221C524F0137F00929C01 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		931221C624F0137F00929C01 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -301,6 +303,7 @@
 			children = (
 				939291322562474B003F062A /* Images */,
 				93386D432568F6BD00B63E8E /* Super Mario World.pdf */,
+				930FA4A9259C696B004D1F7D /* bug_extra_char.pdf */,
 				93B707AD255D129E00F326EB /* bug_hex_string.pdf */,
 				93DB0FC1255CCD410030F33A /* Sample_001.pdf */,
 				93899B0325594F04001D79A8 /* A Sample PDF(Updated).pdf */,
@@ -486,6 +489,7 @@
 				9301BEFD25554A11000C6F4E /* A Sample PDF.pdf in Resources */,
 				93386D442568F6BD00B63E8E /* Super Mario World.pdf in Resources */,
 				93899B0425594F04001D79A8 /* A Sample PDF(Updated).pdf in Resources */,
+				930FA4AA259C696C004D1F7D /* bug_extra_char.pdf in Resources */,
 				938EB9772545A0F50045F463 /* tab.pdf in Resources */,
 				9363D9512508994E0075FEF0 /* test_xref.pdf in Resources */,
 				9392915925625AF0003F062A /* image.png in Resources */,
