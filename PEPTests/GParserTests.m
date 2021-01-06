@@ -686,6 +686,7 @@
     NSString *path = [bundle pathForResource:@"test_xref" ofType:@"pdf"];
     NSData *d = [NSData dataWithContentsOfFile:path];
     [p setStream:d];
+    [p updateXRefDictionary];
     
     NSDictionary *dict = [p parseXRef];
     
