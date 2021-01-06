@@ -50,7 +50,7 @@
 }
 
 - (void)awakeFromNib {
-    self.forceDrawAllPage = YES;
+    self.forceDrawAllPage = NO;
     
     NSLog(@"View: %@", NSStringFromRect(self.bounds));
     
@@ -174,13 +174,39 @@
     }
 }
 
+- (void)parsePagesByRef:(GRefObject*)refObject {
+    GDictionaryObject *object = [parser getObjectByRef:[refObject getRefString]];
+    GNameObject *type = [[object value] objectForKey:@"Type"];
+    
+    // It's pages dictionary object with /Type /Pages
+    if ([[type value] isEqualToString:@"Pages"]) {
+        GArrayObject *kids = [[object value] objectForKey:@"Kids"];
+        NSArray *array = [kids value];
+        NSUInteger i;
+        for (i = 0; i < [array count]; i++) {
+            GRefObject *ref = (GRefObject*)[array objectAtIndex:i];
+            [self parsePagesByRef:ref];
+        }
+    } else if ([[type value] isEqualToString:@"Page"]){ // It's page dictionary object with /Type /Page
+        GPage *page = [GPage create];
+        [page setPageDictionary:object];
+        [page setParser:parser];
+        [page setDocument:self];
+        [pages addObject:page];
+        [page setLastStreamOffset:(unsigned int)[[[parser lexer] stream] length]];
+    }
+}
+
 - (void)parsePages {
+    pages = [NSMutableArray array];
+    
     parser = [GParser parser];
     NSBundle *mainBundle = [NSBundle mainBundle];
     // TODO: Use test_xref.pdf by default without ability to custom file, will
     // do it later
     //file = [mainBundle pathForResource:@"test_xref" ofType:@"pdf"];
     file = [mainBundle pathForResource:@"Sample_001" ofType:@"pdf"];
+    //file = @"/Users/aaron/Downloads/Jazz_Theory_Explained.pdf";
     NSMutableData *d = [NSMutableData dataWithContentsOfFile:file];
     [parser setStream:d];
     
@@ -193,29 +219,12 @@
     NSLog(@"Root ref: %@", [root getRefString]);
     GDictionaryObject *catalogObject = [parser getObjectByRef:[root getRefString]];
     GRefObject *pagesRef = [[catalogObject value] objectForKey:@"Pages"];
-    // Get pages dictionary object
-    GDictionaryObject *pagesObject = [parser getObjectByRef:[pagesRef getRefString]];
-    GArrayObject *kids = [[pagesObject value] objectForKey:@"Kids"];
+    [self parsePagesByRef:pagesRef];
     
-    // Get GPage array
-    pages = [NSMutableArray array];
-    NSArray *array = [kids value];
-    NSUInteger i;
-    for (i = 0; i < [array count]; i++) {
-        GRefObject *ref = (GRefObject*)[array objectAtIndex:i];
-        GDictionaryObject *pageDict = [parser getObjectByRef:[ref getRefString]];
-        GPage *page = [GPage create];
-        [page setPageDictionary:pageDict];
-        [page setParser:parser];
-        [page setDocument:self];
-        [pages addObject:page];
-        [page setLastStreamOffset:(unsigned int)[[[parser lexer] stream] length]];
-    }
     NSLog(@"[GDocument parsePages] pages: %ld", [pages count]);
 }
 
 - (void)drawRect:(NSRect)dirtyRect {
-    NSLog(@"drawRect:");
     CGContextRef context = [[NSGraphicsContext currentContext] CGContext];
     
     if (self.forceDrawAllPage) {
@@ -251,7 +260,6 @@
             if (renderedVisiblePage) {
                 break;
             }
-            NSLog(@"not render page: %d", (int)[pages indexOfObject:page]);
             [page translateToPageOrigin:context];
         }
     }
