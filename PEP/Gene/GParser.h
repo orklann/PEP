@@ -24,6 +24,7 @@ BOOL isTrailerLine(NSString *line);
 @interface GParser : NSObject {
     GLexer *lexer;
     NSMutableArray *objects;
+    NSMutableDictionary *xRefDictionary;
 }
 
 + (id)parser;
@@ -35,6 +36,7 @@ BOOL isTrailerLine(NSString *line);
 - (id)parseNextObject;
 - (void)parse; // parse tokens from lexer into GObjects array
 - (unsigned int)getStartXRef;
+- (void)updateXRefDictionary; 
 - (NSMutableDictionary *)parseXRef;
 - (GDictionaryObject*)getTrailer;
 - (id)getObjectByRef:(NSString*)refKey;

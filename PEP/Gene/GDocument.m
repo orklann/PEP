@@ -73,7 +73,9 @@
     NSString *path = [mainBundle pathForResource:@"PEP_Incremental" ofType:@"pdf"];
     NSMutableData *d = [NSMutableData dataWithContentsOfFile:path];
     [p setStream:d];
-       
+    
+    [p updateXRefDictionary];
+    
     GStreamObject *stream = [p getObjectByRef:@"29-0"];
     NSData *decodedFontData = [stream getDecodedStreamContent];
     
@@ -205,10 +207,12 @@
     // TODO: Use test_xref.pdf by default without ability to custom file, will
     // do it later
     //file = [mainBundle pathForResource:@"test_xref" ofType:@"pdf"];
-    file = [mainBundle pathForResource:@"Sample_001" ofType:@"pdf"];
-    //file = @"/Users/aaron/Downloads/Jazz_Theory_Explained.pdf";
+    //file = [mainBundle pathForResource:@"Sample_001" ofType:@"pdf"];
+    file = @"/Users/aaron/Downloads/Jazz_Theory_Explained.pdf";
     NSMutableData *d = [NSMutableData dataWithContentsOfFile:file];
     [parser setStream:d];
+    
+    [parser updateXRefDictionary];
     
     // Get trailer
     GDictionaryObject *trailer = [parser getTrailer];

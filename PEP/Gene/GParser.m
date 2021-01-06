@@ -313,6 +313,24 @@ BOOL isTrailerLine(NSString *line) {
     return (GDictionaryObject*)[self parseNextObject];
 }
 
+
+// Update xRefDictionary for using as a cache to speed up, it's used in [self getObjectByRef:];
+- (void)updateXRefDictionary {
+    xRefDictionary = [NSMutableDictionary dictionary];
+    NSMutableDictionary *xref = [self parseXRef];
+    NSMutableDictionary *prevDictionary = xref;
+    // Loop through all key/objects and add to xRefDictionary, stop it while there is no prev xref found
+    while(prevDictionary != nil) {
+        for (NSString *key in prevDictionary) {
+            NSArray *keys = [xRefDictionary allKeys];
+            if ([keys containsObject:key]) continue;
+            GXRefEntry *entry = [prevDictionary objectForKey:key];
+            [xRefDictionary setValue:entry forKey:key];
+        }
+        prevDictionary = [prevDictionary objectForKey:@"PrevXRef"];
+    }
+}
+
 - (NSMutableDictionary *)parseXRef {
     unsigned int startXRef = [self getStartXRef];
     NSMutableDictionary *dict = [self parseXRef:startXRef];
@@ -324,7 +342,7 @@ BOOL isTrailerLine(NSString *line) {
     return [self getTrailer:startXRef];
 }
 
-- (id)getObjectByRef:(NSString *)refKey inXRef:(NSMutableDictionary*)xref {
+/*- (id)getObjectByRef:(NSString *)refKey inXRef:(NSMutableDictionary*)xref {
     GXRefEntry *x = [xref objectForKey:refKey];
     NSMutableDictionary *prev = [xref objectForKey:@"PrevXRef"];
     
@@ -340,11 +358,14 @@ BOOL isTrailerLine(NSString *line) {
     [[self lexer] setPos:offset];
     GIndirectObject* contentIndirect = (GIndirectObject*)[self parseNextObject];
     return [contentIndirect object];
-}
+}*/
 
 - (id)getObjectByRef:(NSString*)refKey {
-    NSMutableDictionary *xref = [self parseXRef];
-    return [self getObjectByRef:refKey inXRef:xref];
+    GXRefEntry *x = [xRefDictionary objectForKey:refKey];
+    unsigned int offset = [x offset];
+    [[self lexer] setPos:offset];
+    GIndirectObject* contentIndirect = (GIndirectObject*)[self parseNextObject];
+    return [contentIndirect object];
 }
 
 - (BOOL)refObjectNotFound:(NSString*)refKey inXRef:(NSMutableDictionary*)xref {
