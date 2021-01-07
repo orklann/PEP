@@ -16,7 +16,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GDocument : NSView {
-    NSMutableAttributedString *s;
     NSString *file;
     NSMutableArray *pages;
     GParser *parser;

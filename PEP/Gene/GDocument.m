@@ -67,35 +67,6 @@
                                                   name:NSScrollViewDidLiveScrollNotification
                                                 object:self.enclosingScrollView];
 
-    
-    GParser *p = [GParser parser];
-    NSBundle *mainBundle = [NSBundle mainBundle];
-    NSString *path = [mainBundle pathForResource:@"PEP_Incremental" ofType:@"pdf"];
-    NSMutableData *d = [NSMutableData dataWithContentsOfFile:path];
-    [p setStream:d];
-    
-    [p updateXRefDictionary];
-    
-    GStreamObject *stream = [p getObjectByRef:@"29-0"];
-    NSData *decodedFontData = [stream getDecodedStreamContent];
-    
-    CGDataProviderRef cgdata = CGDataProviderCreateWithCFData((CFDataRef)decodedFontData);
-    CGFontRef font = CGFontCreateWithDataProvider(cgdata);
-    NSFont *f = (NSFont*)CFBridgingRelease(CTFontCreateWithGraphicsFont(font, 144, nil, nil));
-    
-    // Test tables
-    printTableTagsForCGFont(font);
-    
-    // change font size
-    // f = [NSFont fontWithDescriptor:[f fontDescriptor] size:144];
-    
-    s = [[NSMutableAttributedString alloc] initWithString:@"PEPB"];
-    [s addAttribute:NSFontAttributeName value:f range:NSMakeRange(0, 4)];
-    [s addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0, 4)];
-    
-    CFRelease(font);
-    CFRelease(cgdata);
-    
     // Inits
     mode = kNoneMode;
     _addedRefkeys = [NSMutableArray array];
