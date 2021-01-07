@@ -113,11 +113,8 @@
         [self scrollToTop];
     
         // Initially update visible pages
-        //self.forceDrawAllPage = YES;
         [self updateVisiblePage];
-        //[self setNeedsDisplay:YES];
-    
-        //self.forceDrawAllPage = NO;
+        [self setNeedsDisplayInRect:[self visibleRect]];
     }];
     
     // parse Content of all pagea
@@ -207,8 +204,8 @@
     // TODO: Use test_xref.pdf by default without ability to custom file, will
     // do it later
     //file = [mainBundle pathForResource:@"test_xref" ofType:@"pdf"];
-    //file = [mainBundle pathForResource:@"Sample_001" ofType:@"pdf"];
-    file = @"/Users/aaron/Downloads/Jazz_Theory_Explained.pdf";
+    file = [mainBundle pathForResource:@"Sample_001" ofType:@"pdf"];
+    //file = @"/Users/aaron/Downloads/Jazz_Theory_Explained.pdf";
     NSMutableData *d = [NSMutableData dataWithContentsOfFile:file];
     [parser setStream:d];
     
