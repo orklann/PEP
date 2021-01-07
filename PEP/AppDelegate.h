@@ -16,5 +16,8 @@
 
 @property (weak) IBOutlet PEPWindow *window;
 @property (weak) IBOutlet NSWindow *openPDFWindow;
+
+// Bug report, new issue
+- (IBAction)newIssue:(id)sender;
 @end
 

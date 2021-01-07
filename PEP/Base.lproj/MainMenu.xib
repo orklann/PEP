@@ -701,8 +701,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="526" height="320"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" id="3pr-jx-OR3">
-                        <rect key="frame" x="18" y="61" width="490" height="249"/>
+                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="3pr-jx-OR3">
+                        <rect key="frame" x="18" y="48" width="490" height="262"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <textFieldCell key="cell" selectable="YES" id="6dX-Es-orW">
                             <font key="font" usesAppearanceFont="YES"/>
@@ -710,7 +710,7 @@
 
 PEP is still in alpha stage, so you may encounter bugs frequently, like text display issues, crashes, lag, etc. 
 
-I recommend you to just try to open simple PDF files at the moment, so PEP can handle it right.  And the most important, if you feel good to share your PDF file while you think PEP has bugs to handle it,  just hit the “Report Bug” button below, it will direct you to the issue tracker website, there you can upload your PDF and write some feedback there. This will help me to fix the bug.
+I recommend you to just try to open simple PDF files at the moment, so PEP can handle it right.  And the most important, if you feel good to share your PDF file while you think PEP has bugs to handle it,  just hit the “Report Bug” button below (Need a Github account), it will direct you to the issue tracker website, there you can upload your PDF and write some feedback there. This will help me to fix the bug.
 
 Good luck, have fun.
 
@@ -719,21 +719,27 @@ Good luck, have fun.
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" id="Rok-oJ-6QB">
+                    <button verticalHuggingPriority="750" id="Rok-oJ-6QB">
                         <rect key="frame" x="258" y="13" width="104" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Report Bug" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dD2-XT-jT2">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="newIssue:" target="Voe-Tx-rLC" id="NCn-iO-Zli"/>
+                        </connections>
                     </button>
-                    <button verticalHuggingPriority="750" fixedFrame="YES" id="yY9-oG-wU9">
+                    <button verticalHuggingPriority="750" id="yY9-oG-wU9">
                         <rect key="frame" x="164" y="13" width="96" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Open PDF" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="byb-Nt-MBD">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="newIssue:" target="-1" id="HEO-GY-t7g"/>
+                        </connections>
                     </button>
                 </subviews>
             </view>

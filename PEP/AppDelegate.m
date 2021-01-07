@@ -14,6 +14,13 @@
 
 @implementation AppDelegate
 
+- (IBAction)newIssue:(id)sender {
+#define kNewIssueLink @"https://github.com/orklann/PEP/issues/new"
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:kNewIssueLink]];
+    NSLog(@"newIssue");
+}
+
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
     [self.window setDelegate:self];
