@@ -15,6 +15,7 @@
 #import "GLine.h"
 #import "GTextBlock.h"
 #import "GMisc.h"
+#import "AppDelegate.h"
 
 @implementation GDocument
 
@@ -29,6 +30,11 @@
             return ;
          }
     }];
+}
+
+- (IBAction)openDocument:(id)sender {
+    AppDelegate *delegate = (AppDelegate*)[NSApp delegate];
+    [delegate.openPDFWindow makeKeyAndOrderFront:sender];
 }
 
 - (NSMutableArray*)pages {

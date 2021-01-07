@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) GTextEditor * _Nullable textEditor;
 
 - (IBAction)saveDocumentAs:(id)sender;
+- (IBAction)openDocument:(id)sender;
 
 - (NSMutableArray*)pages;
 - (void)saveAs:(NSString*)path;

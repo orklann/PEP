@@ -11,10 +11,6 @@
 #import "PEPWindow.h"
 #import "PEPConstants.h"
 
-@interface AppDelegate ()
-
-@property (weak) IBOutlet PEPWindow *window;
-@end
 
 @implementation AppDelegate
 
