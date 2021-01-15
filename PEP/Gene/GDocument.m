@@ -57,7 +57,8 @@
 
 - (void)awakeFromNib {
     self.forceDrawAllPage = NO;
-    
+    self.dataToUpdate = [NSMutableArray array];
+
     NSLog(@"View: %@", NSStringFromRect(self.bounds));
     
     // User space to device space scaling

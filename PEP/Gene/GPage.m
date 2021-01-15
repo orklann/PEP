@@ -26,7 +26,6 @@
 + (id)create {
     GPage *p = [[GPage alloc] init];
     [p setNeedUpdate:YES];
-    p.dataToUpdate = [NSMutableArray array];
     p.cachedFonts = [NSMutableDictionary dictionary];
     p.addedFonts = [NSMutableDictionary dictionary];
     p.isRendering = NO;
@@ -434,7 +433,7 @@
     [binary setObjectNumber:fontFileObjectNumber];
     [binary setGenerationNumber:fontFileGenerationNumber];
     [binary setData:stream];
-    [self.dataToUpdate addObject:binary];
+    [doc.dataToUpdate addObject:binary];
     
     /*
      * 2. Generate font descriptor dictionary
@@ -455,7 +454,7 @@
     [binary setObjectNumber:descriptorObjectNumber];
     [binary setGenerationNumber:descriptorGenerationNumber];
     [binary setData:stream];
-    [self.dataToUpdate addObject:binary];
+    [doc.dataToUpdate addObject:binary];
     
     /*
      * 3. Generate font dictionary:
@@ -473,7 +472,7 @@
     [binary setObjectNumber:fontObjectNumber];
     [binary setGenerationNumber:fontGenerationNumber];
     [binary setData:stream];
-    [self.dataToUpdate addObject:binary];
+    [doc.dataToUpdate addObject:binary];
     
     return fontRef;
 }
@@ -536,7 +535,7 @@
     [binary setGenerationNumber:resourcesGenerationNumber];
     [binary setData:stream];
     
-    [self.dataToUpdate addObject:binary];
+    [doc.dataToUpdate addObject:binary];
 }
 
 - (void)addPageStream {
@@ -566,12 +565,12 @@
     [binary setGenerationNumber:generationNumber];
     [binary setData:stream];
     
-    [self.dataToUpdate addObject:binary];
+    [doc.dataToUpdate addObject:binary];
 }
 
 - (NSData*)buildNewXRefTable {
-    self.dataToUpdate = sortedGBinaryDataArray(self.dataToUpdate);
-    NSMutableArray *groups = groupingGBinaryDataArray(self.dataToUpdate);
+    doc.dataToUpdate = sortedGBinaryDataArray(doc.dataToUpdate);
+    NSMutableArray *groups = groupingGBinaryDataArray(doc.dataToUpdate);
     NSMutableString *xrefTable = [NSMutableString string];
     [xrefTable appendString:@"xref\r\n"];
     
@@ -630,9 +629,9 @@
 
     // Append GBinaryData array data into parser/lexer stream
     int i;
-    for (i = 0; i < [self.dataToUpdate count]; i++) {
+    for (i = 0; i < [doc.dataToUpdate count]; i++) {
         int offset = (int)[stream length];
-        GBinaryData *b = [self.dataToUpdate objectAtIndex:i];
+        GBinaryData *b = [doc.dataToUpdate objectAtIndex:i];
         [b setOffset:offset];
         NSData *d = [b getDataAsIndirectObject];
         [stream appendData:d];
@@ -648,7 +647,7 @@
                     newStartXRef:startXRef];
     
     [stream appendData:data];
-    [self.dataToUpdate removeAllObjects];
+    [doc.dataToUpdate removeAllObjects];
 }
 
 - (void)setCachedFont:(NSString*)fontName fontSize:(CGFloat)fontSize {

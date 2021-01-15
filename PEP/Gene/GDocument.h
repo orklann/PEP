@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) BOOL forceDrawAllPage;
 @property (readwrite) NSMutableArray *addedRefkeys;
 @property (readwrite) GTextEditor * _Nullable textEditor;
+@property (readwrite) NSMutableArray *dataToUpdate;
 
 - (IBAction)saveDocumentAs:(id)sender;
 - (IBAction)openDocument:(id)sender;
