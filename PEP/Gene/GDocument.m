@@ -97,6 +97,7 @@
     NSLog(@"GDocument: Debug incremental update");
     for (GPage *page in pages) {
         [page incrementalUpdate];
+        page.dirty = NO;
     }
     
     NSMutableData *stream = [parser stream];
