@@ -127,6 +127,7 @@
     
     [stream appendData:data];
     [self.dataToUpdate removeAllObjects];
+    [parser updateXRefDictionary];
 }
 
 -(void)drawBorder {

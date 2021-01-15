@@ -375,7 +375,7 @@ BOOL isTrailerLine(NSString *line) {
         return NO;
     } else {
         if (prev != nil) {
-            return [self refObjectNotFound:refKey inXRef:xref];
+            return [self refObjectNotFound:refKey inXRef:prev];
         }
     }
     return YES;
