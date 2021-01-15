@@ -94,12 +94,6 @@ NS_ASSUME_NONNULL_BEGIN
 // Add page stream into dataToUpdate, later use it to update GDocument stream
 - (void)addPageStream;
 
-// Build new xref table
-- (NSData*)buildNewXRefTable;
-- (NSData*)buildNewTrailer:(GDictionaryObject*)trailerDict
-             prevStartXRef:(int)prevStartXRef
-              newStartXRef:(int)newStartXRef;
-
 // Incremental update
 - (void)incrementalUpdate;
 

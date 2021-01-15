@@ -40,6 +40,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setMode:(GDocumentMode)m;
 - (GDocumentMode)mode;
 - (NSString*)generateNewRef;
+
+// Build new xref table and new trailer 
+- (NSData*)buildNewXRefTable;
+- (NSData*)buildNewTrailer:(GDictionaryObject*)trailerDict
+             prevStartXRef:(int)prevStartXRef
+              newStartXRef:(int)newStartXRef;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -14,6 +14,7 @@
 #import "GWord.h"
 #import "GLine.h"
 #import "GTextBlock.h"
+#import "GBinaryData.h"
 #import "GMisc.h"
 #import "AppDelegate.h"
 
@@ -42,9 +43,90 @@
 }
 
 - (void)saveAs:(NSString*)path {
-    GPage *firstPage = [pages firstObject];
-    [firstPage incrementalUpdate];
+    [self incrementalUpdate];
     [[parser stream] writeToFile:path atomically:YES];
+}
+
+- (NSData*)buildNewXRefTable {
+    self.dataToUpdate = sortedGBinaryDataArray(self.dataToUpdate);
+    NSMutableArray *groups = groupingGBinaryDataArray(self.dataToUpdate);
+    NSMutableString *xrefTable = [NSMutableString string];
+    [xrefTable appendString:@"xref\r\n"];
+    
+    for (NSMutableArray *group in groups) {
+        NSMutableString *groupTable = [NSMutableString string];
+        GBinaryData *firstBinaryData = [group firstObject];
+        [groupTable appendFormat:@"%d %d\r\n", [firstBinaryData objectNumber], (int)[group count]];
+        for (GBinaryData *binaryData in group) {
+            NSString *entry = buildXRefEntry([binaryData offset], [binaryData generationNumber], @"n");
+            [groupTable appendString:entry];
+        }
+        [xrefTable appendString:groupTable];
+    }
+    
+    return [xrefTable dataUsingEncoding:NSASCIIStringEncoding];
+}
+
+- (NSData*)buildNewTrailer:(GDictionaryObject*)trailerDict
+             prevStartXRef:(int)prevStartXRef
+              newStartXRef:(int)newStartXRef {
+    NSMutableString *ret = [NSMutableString string];
+    [ret appendString:@"trailer\r\n"];
+    
+    // Add "\Prev" key
+    GNumberObject *prev = [[trailerDict value] objectForKey:@"Prev"];
+    if (!prev) {
+        GNumberObject *addedPrev = [GNumberObject create];
+        NSString *s = [NSString stringWithFormat:@"%d", prevStartXRef];
+        [addedPrev setType:kNumberObject];
+        [addedPrev setRawContent:[s dataUsingEncoding:NSASCIIStringEncoding]];
+        [addedPrev parse];
+        [[trailerDict value] setObject:addedPrev forKey:@"Prev"];
+    } else {
+        // NOTE: Check if it works as expected later
+        [prev setIntValue:prevStartXRef];
+    }
+    [ret appendString:[trailerDict toString]];
+    NSString *startXRef = [NSString stringWithFormat:@"\r\nstartxref\r\n%d\r\n%%EOF\r\n", newStartXRef];
+    [ret appendString:startXRef];
+    return [ret dataUsingEncoding:NSASCIIStringEncoding];
+}
+
+
+- (void)incrementalUpdate {
+    NSLog(@"GDocument: Debug incremental update");
+    for (GPage *page in pages) {
+        [page incrementalUpdate];
+    }
+    
+    NSMutableData *stream = [parser stream];
+    // remove last added content from stream
+    //[stream setLength:self.lastStreamOffset];
+    
+    int prevStartXRef = [parser getStartXRef];
+    GDictionaryObject *trailerDict = [parser getTrailer];
+
+    // Append GBinaryData array data into parser/lexer stream
+    int i;
+    for (i = 0; i < [self.dataToUpdate count]; i++) {
+        int offset = (int)[stream length];
+        GBinaryData *b = [self.dataToUpdate objectAtIndex:i];
+        [b setOffset:offset];
+        NSData *d = [b getDataAsIndirectObject];
+        [stream appendData:d];
+    }
+    
+    // Append XRef table
+    int startXRef = (int)[stream length];
+    NSData *data = [self buildNewXRefTable];
+    [stream appendData:data];
+    
+    data = [self buildNewTrailer:trailerDict
+                   prevStartXRef:prevStartXRef
+                    newStartXRef:startXRef];
+    
+    [stream appendData:data];
+    [self.dataToUpdate removeAllObjects];
 }
 
 -(void)drawBorder {
