@@ -301,6 +301,7 @@
             [self insertChar:ch];
             [self updateFontNameAndFontSize];
         }
+        self.page.dirty = YES;
     }
     [self redraw];
 }

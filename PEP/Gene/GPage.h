@@ -45,6 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) NSMutableDictionary *addedFonts;
 @property (readwrite) NSMutableDictionary *glyphsForFontDict;
 @property (readwrite) BOOL needUpdate;
+@property (readwrite) BOOL dirty;
 
 + (id)create;
 - (void)setPageDictionary:(GDictionaryObject*)d;

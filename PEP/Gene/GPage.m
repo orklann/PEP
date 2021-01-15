@@ -30,6 +30,7 @@
     p.addedFonts = [NSMutableDictionary dictionary];
     p.isRendering = NO;
     p.pageYOffsetInDoc = 0.0;
+    p.dirty = NO;
     return p;
 }
 
@@ -614,6 +615,7 @@
 }
 
 - (void)incrementalUpdate {
+    if (!self.dirty) return ;
     NSLog(@"Debug incremental update");
     // Build page content, and add it to "dataToUpdate" array
     [self buildPageContent];
