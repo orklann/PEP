@@ -16,7 +16,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GDocument : NSView {
-    NSString *file;
     NSMutableArray *pages;
     GParser *parser;
     NSTrackingArea *trackingArea;
@@ -24,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *visiblePages;
 }
 
+@property (readwrite) NSString *file;
 @property (readwrite) BOOL forceDrawAllPage;
 @property (readwrite) NSMutableArray *addedRefkeys;
 @property (readwrite) GTextEditor * _Nullable textEditor;

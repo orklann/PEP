@@ -15,7 +15,6 @@
                         NSWindowStyleMaskClosable | NSWindowStyleMaskFullSizeContentView
                         | NSWindowStyleMaskTitled;
     PEPWindow *w = [[PEPWindow alloc] initWithContentRect:NSZeroRect styleMask:masks backing:NSBackingStoreBuffered defer:NO];
-    [w initialize];
     return w;
 }
 
@@ -80,9 +79,6 @@
     [sideView initAllViews];
     
     [self layoutViews];
-    
-    // Initialize GDocument at last to make sure scrollToTop work correctly
-    [self.doc awakeFromNib];
 }
 
 /*

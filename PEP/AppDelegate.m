@@ -21,9 +21,25 @@
 }
 
 - (IBAction)openDocument:(id)sender {
-    self.window = [PEPWindow window];
-    [self.window makeKeyAndOrderFront:sender];
-    [self.window setDelegate:self];
+    NSOpenPanel* panel = [NSOpenPanel openPanel];
+    [panel setCanChooseDirectories:NO];
+    [panel setAllowsMultipleSelection:NO];
+    [panel setAllowedFileTypes:@[@"pdf"]];
+    
+    [panel beginWithCompletionHandler:^(NSInteger result){
+     if (result == NSFileHandlingPanelOKButton) {
+         NSURL *theDoc = [[panel URLs] objectAtIndex:0];
+         self.window = [PEPWindow window];
+         [self.window initialize];
+         [self.window makeKeyAndOrderFront:sender];
+         [self.window setDelegate:self];
+         
+         // Initialize GDocument at last to make sure scrollToTop work correctly
+         [self.window.doc setFile:[theDoc path]];
+         [self.window.doc awakeFromNib];
+     }
+
+    }];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
