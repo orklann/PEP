@@ -684,32 +684,39 @@
         <window title="Open PDF" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="" animationBehavior="default" id="gkQ-EM-ma3">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="609" y="486" width="526" height="320"/>
+            <rect key="contentRect" x="609" y="486" width="718" height="401"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" id="864-qg-cHU">
-                <rect key="frame" x="0.0" y="0.0" width="526" height="320"/>
+                <rect key="frame" x="0.0" y="0.0" width="718" height="401"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="3pr-jx-OR3">
-                        <rect key="frame" x="18" y="48" width="490" height="262"/>
+                        <rect key="frame" x="18" y="39" width="682" height="347"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <textFieldCell key="cell" selectable="YES" id="6dX-Es-orW">
                             <font key="font" usesAppearanceFont="YES"/>
-                            <string key="title">Note: 
+                            <mutableString key="title">Note: 
 
-PEP is still in alpha stage, so you may encounter bugs frequently, like text display issues, crashes, lag, etc. 
+PEP is still in alpha, so you may encounter frequent bugs, such as text rendering issues, crashes, lag, etc. 
 
-I recommend you to just try to open simple PDF files at the moment, so PEP can handle it right.  And the most important, if you feel good to share your PDF file while you think PEP has bugs to handle it,  just hit the “Report Bug” button below (Need a Github account), it will direct you to the issue tracker website, there you can upload your PDF and write some feedback there. This will help me to fix the bug.
+Instead of implementing all PDF features one by one according to the PDF specification. I prefer to take a simple try-and-error approach. This approach works as  follows:
 
-Good luck, have fun.
+* You simply try opening some PDFs and see if PEP works for them.
+* Report back with your PDF and a simple comments
+* I will try to pick up your problems and fix them.
+* Then new versions of PEP will be released. 
 
--Aaron</string>
+I recommend that you only open simple PDF files for now, so that PEP can handle them properly. And the most important thing, if you feel good to share your PDF file while you think PEP has bugs to deal with, just click the "Report Bug" button below (you need a Github account), it will direct you to the issue tracker website, there you can upload your PDF and write some comments. Thank you for helping me to improve the project.
+
+Good luck and have fun.
+
+-Aaron</mutableString>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" id="Rok-oJ-6QB">
-                        <rect key="frame" x="258" y="13" width="104" height="32"/>
+                        <rect key="frame" x="354" y="13" width="104" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Report Bug" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dD2-XT-jT2">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -720,7 +727,7 @@ Good luck, have fun.
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" id="yY9-oG-wU9">
-                        <rect key="frame" x="164" y="13" width="96" height="32"/>
+                        <rect key="frame" x="260" y="13" width="96" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Open PDF" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="byb-Nt-MBD">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -732,7 +739,7 @@ Good luck, have fun.
                     </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="-17" y="-141"/>
+            <point key="canvasLocation" x="48" y="-171.5"/>
         </window>
     </objects>
 </document>
