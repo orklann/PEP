@@ -14,10 +14,11 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate,
                                     PEPTabDelegate, PEPToolDelegate>
 
-@property (weak) IBOutlet PEPWindow *window;
+@property (readwrite) IBOutlet PEPWindow *window;
 @property (weak) IBOutlet NSWindow *openPDFWindow;
 
 // Bug report, new issue
 - (IBAction)newIssue:(id)sender;
+- (IBAction)openDocument:(id)sender;
 @end
 

@@ -33,11 +33,6 @@
     }];
 }
 
-- (IBAction)openDocument:(id)sender {
-    AppDelegate *delegate = (AppDelegate*)[NSApp delegate];
-    [delegate.openPDFWindow makeKeyAndOrderFront:sender];
-}
-
 - (NSMutableArray*)pages {
     return pages;
 }

@@ -20,10 +20,14 @@
     NSLog(@"newIssue");
 }
 
+- (IBAction)openDocument:(id)sender {
+    self.window = [PEPWindow window];
+    [self.window makeKeyAndOrderFront:sender];
+    [self.window setDelegate:self];
+}
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     // Insert code here to initialize your application
-    [self.window setDelegate:self];
 }
 
 

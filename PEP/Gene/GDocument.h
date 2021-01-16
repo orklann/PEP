@@ -30,7 +30,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) NSMutableArray *dataToUpdate;
 
 - (IBAction)saveDocumentAs:(id)sender;
-- (IBAction)openDocument:(id)sender;
 
 - (NSMutableArray*)pages;
 - (void)saveAs:(NSString*)path;

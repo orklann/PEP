@@ -683,6 +683,7 @@
         </menu>
         <window title="Open PDF" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="" animationBehavior="default" id="gkQ-EM-ma3">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
+            <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="609" y="486" width="526" height="320"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" id="864-qg-cHU">
@@ -726,7 +727,7 @@ Good luck, have fun.
                             <font key="font" metaFont="system"/>
                         </buttonCell>
                         <connections>
-                            <action selector="newIssue:" target="-1" id="HEO-GY-t7g"/>
+                            <action selector="openDocument:" target="Voe-Tx-rLC" id="hqB-3g-CUF"/>
                         </connections>
                     </button>
                 </subviews>

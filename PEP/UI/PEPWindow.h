@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) NSScrollView *scrollView;
 
 + (id)window;
-- (void)awakeFromNib;
+- (void)initialize;
 - (PEPSideView*)sideView;
 - (PEPTabView*)tabView;
 - (PEPToolbarView*)toolbarView;

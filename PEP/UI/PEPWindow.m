@@ -12,10 +12,11 @@
 
 + (id)window {
     NSUInteger masks = NSWindowStyleMaskResizable | NSWindowStyleMaskMiniaturizable |
-                        NSWindowStyleMaskFullScreen | NSWindowStyleMaskClosable | NSWindowStyleMaskFullSizeContentView;
-    PEPWindow *window = [[PEPWindow alloc] initWithContentRect:NSZeroRect styleMask:masks backing:NSBackingStoreBuffered defer:YES];
-    [self awakeFromNib];
-    return window;
+                        NSWindowStyleMaskClosable | NSWindowStyleMaskFullSizeContentView
+                        | NSWindowStyleMaskTitled;
+    PEPWindow *w = [[PEPWindow alloc] initWithContentRect:NSZeroRect styleMask:masks backing:NSBackingStoreBuffered defer:NO];
+    [w initialize];
+    return w;
 }
 
 - (PEPSideView*)sideView {
@@ -30,17 +31,19 @@
     return toolbarView;
 }
 
-- (void)awakeFromNib {
+- (void)initialize {
+    NSLog(@"Debug: PEPWindow initialize");
     NSRect rect = [self frame];
     rect.size = NSMakeSize(1200, 1024);
-    [self setFrame: rect display:NO];
+    [self setFrame:rect display:NO];
+    [self center];
     [self layoutIfNeeded];
     
     [self setTitle:@""];
     [self setTitlebarAppearsTransparent:YES];
     self.movableByWindowBackground = YES;
     [self setAppearance:[NSAppearance appearanceNamed:NSAppearanceNameAqua]];
-    
+
     needToMoveCloseButton = YES;
     needToMoveMiniaturizeButton = YES;
     needToMoveZoomButton = YES;
