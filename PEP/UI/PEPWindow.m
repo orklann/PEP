@@ -10,6 +10,14 @@
 
 @implementation PEPWindow
 
++ (id)window {
+    NSUInteger masks = NSWindowStyleMaskResizable | NSWindowStyleMaskMiniaturizable |
+                        NSWindowStyleMaskFullScreen | NSWindowStyleMaskClosable | NSWindowStyleMaskFullSizeContentView;
+    PEPWindow *window = [[PEPWindow alloc] initWithContentRect:NSZeroRect styleMask:masks backing:NSBackingStoreBuffered defer:YES];
+    [self awakeFromNib];
+    return window;
+}
+
 - (PEPSideView*)sideView {
     return sideView;
 }

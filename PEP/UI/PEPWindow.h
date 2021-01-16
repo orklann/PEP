@@ -27,8 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) GDocument *doc;
 @property (readwrite) NSScrollView *scrollView;
 
-
-
++ (id)window;
+- (void)awakeFromNib;
 - (PEPSideView*)sideView;
 - (PEPTabView*)tabView;
 - (PEPToolbarView*)toolbarView;

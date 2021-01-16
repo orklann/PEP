@@ -16,7 +16,6 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
                 <outlet property="openPDFWindow" destination="gkQ-EM-ma3" id="ETR-YY-Tt8"/>
-                <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -682,19 +681,8 @@
             </items>
             <point key="canvasLocation" x="140" y="154"/>
         </menu>
-        <window title="PEP" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g" customClass="PEPWindow">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
-            <view key="contentView" appearanceType="aqua" id="EiT-Mj-1SZ" customClass="PEPContentView">
-                <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
-                <autoresizingMask key="autoresizingMask"/>
-            </view>
-            <point key="canvasLocation" x="141" y="-120"/>
-        </window>
-        <window title="Open PDF" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="gkQ-EM-ma3">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+        <window title="Open PDF" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="" animationBehavior="default" id="gkQ-EM-ma3">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="609" y="486" width="526" height="320"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" id="864-qg-cHU">
@@ -706,7 +694,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <textFieldCell key="cell" selectable="YES" id="6dX-Es-orW">
                             <font key="font" usesAppearanceFont="YES"/>
-                            <mutableString key="title">Note: 
+                            <string key="title">Note: 
 
 PEP is still in alpha stage, so you may encounter bugs frequently, like text display issues, crashes, lag, etc. 
 
@@ -714,7 +702,7 @@ I recommend you to just try to open simple PDF files at the moment, so PEP can h
 
 Good luck, have fun.
 
--Aaron</mutableString>
+-Aaron</string>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
@@ -743,7 +731,7 @@ Good luck, have fun.
                     </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="712" y="-111"/>
+            <point key="canvasLocation" x="-17" y="-141"/>
         </window>
     </objects>
 </document>
