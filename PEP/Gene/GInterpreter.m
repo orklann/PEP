@@ -293,8 +293,13 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }
 
 - (void)eval_Tj_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
-    NSString *string = [(GLiteralStringsObject*)[[cmdObj args] objectAtIndex:0]
-                        value];
+    NSString *string;
+    GObject *a = [[cmdObj args] objectAtIndex:0];
+    if ([a type] == kLiteralStringsObject) {
+        string = [(GLiteralStringsObject*)a value];
+    } else if ([a type] == kHexStringsObject) {
+        string = [(GHexStringsObject*)a stringValue];
+    }
     [self layoutStrings:string context:context tj:0 prevTj:0];
 }
 
