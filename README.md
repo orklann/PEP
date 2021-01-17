@@ -13,6 +13,9 @@ the [download](https://macpep.org/download) page for the prototype alpha version
 ## What I am working on
 I update PEP almost everyday. Please check out the official website ([PEP](https://macpep.org/)) to see news and downloads.
 
+## Join the community
+Join our [discord](https://discord.gg/Fvs8xS7As6) to chat with other people about PEP, or anything on PDFs.
+
 ## Roadmap
 
 I don't have any roadmap yet, but i will publish one later at the right moment. I hope someone will see the potential of PEP, and donate towards it to speed up the development process.
