@@ -17,7 +17,11 @@
 - (IBAction)newIssue:(id)sender {
 #define kNewIssueLink @"https://github.com/orklann/PEP/issues/new"
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:kNewIssueLink]];
-    NSLog(@"newIssue");
+}
+
+- (IBAction)joinDiscord:(id)sender {
+#define kDiscordLink @"https://discord.gg/Fvs8xS7As6"
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:kDiscordLink]];
 }
 
 - (IBAction)openDocument:(id)sender {

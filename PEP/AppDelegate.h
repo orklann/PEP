@@ -17,8 +17,9 @@
 @property (readwrite) IBOutlet PEPWindow *window;
 @property (weak) IBOutlet NSWindow *openPDFWindow;
 
-// Bug report, new issue
+// Bug report, new issue, join discord
 - (IBAction)newIssue:(id)sender;
 - (IBAction)openDocument:(id)sender;
+- (IBAction)joinDiscord:(id)sender;
 @end
 
