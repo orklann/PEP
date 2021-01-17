@@ -44,6 +44,15 @@
     
     GRefObject *ref = [[fonts value] objectForKey:fontName];
     GDictionaryObject *font = [parser getObjectByRef:[ref getRefString]];
+    
+    // For /Type0 /Subtype font
+    GNameObject *subType = [[font value] objectForKey:@"Subtype"];
+    if ([[subType value] isEqualToString:@"Type0"]) {
+        GArrayObject *decendantFonts = [[font value] objectForKey:@"DescendantFonts"];
+        GRefObject *firstFontRef = [[decendantFonts value] firstObject];
+        font = [parser getObjectByRef:[firstFontRef getRefString]];
+    }
+    
     ref = [[font value] objectForKey:@"FontDescriptor"];
     // Not font descriptor found, just use `BaseFont`, and this font should be
     // not a embedded font.
