@@ -13,5 +13,5 @@
 #include <stdio.h>
 
 NSData* decodeFlate(NSData *data);
-
+NSData *decodeASCII85(NSData *data);
 #endif /* GDecoders_h */
