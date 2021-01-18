@@ -49,7 +49,15 @@ NSData *decodeASCII85(NSData *data) {
                 b[2] = (value - b[3]) / 256 % 256;
                 b[1] = (value - b[3] - b[2]) / (256  * 256) % 256;
                 b[0] = (value - b[3] - b[2] - b[1]) / ( 256 * 256 * 256) % 256;
-                [result appendBytes:(unsigned char*)b length:4];
+                int count = 0;
+                for (int j = 0; j < 4; j++) {
+                    if (b[j] != 0) {
+                        count++;
+                    } else {
+                        break;
+                    }
+                }
+                [result appendBytes:(unsigned char*)b length:count];
                 bytesNumber = 0;
             }
         } else if (ascii == 'z') {
