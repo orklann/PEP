@@ -8,6 +8,7 @@
 
 #include "GDecoders.h"
 #include <zlib.h>
+#include "GMisc.h"
 
 // Use zlib in system to decode 
 NSData* decodeFlate(NSData *data) {
@@ -86,6 +87,8 @@ NSData *decodeASCII85(NSData *data) {
                 [result appendBytes:(unsigned char*)b length:bytesNumber-1];
                 break;
             }
+        } else if (isWhiteSpaceChar(ascii)) {
+            continue;
         }
     }
     return [NSData dataWithData:result];

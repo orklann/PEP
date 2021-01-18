@@ -567,7 +567,8 @@ void prettyLogCharCodesForWords(NSArray * _Nullable words) {
 BOOL isWhiteSpaceChar(char c) {
     if (c == ' ' ||
         c == '\t' ||
-        c == '\n' || c == '\r' ) {
+        c == '\n' || c == '\r' ||
+        c == '\0' || c == 0x09) {
         return YES;
     }
     return NO;
