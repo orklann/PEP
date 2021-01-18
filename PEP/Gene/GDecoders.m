@@ -32,7 +32,6 @@ NSData *decodeASCII85(NSData *data) {
     unsigned char c[5];
     unsigned char *stream = (unsigned char *)[data bytes];
     int i = 0;
-    printf("\n");
     for (i = 0; i < [data length]; i++) {
         unsigned char ascii = (unsigned char)(*(stream + i));
         if (ascii >= '!' && ascii <= 'u') {
@@ -81,6 +80,5 @@ NSData *decodeASCII85(NSData *data) {
             }
         }
     }
-    printf("\n");
     return [NSData dataWithData:result];
 }
