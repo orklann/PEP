@@ -597,6 +597,18 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
         if ([[(GNameObject*)decodeMethod value] isEqualToString:@"FlateDecode"]) {
             decodedData = decodeFlate(streamContent);
         }
+    } else if ([(GObject*)decodeMethod type] == kArrayObject) { // Multiple filters
+        GArrayObject *filters = (GArrayObject*)decodeMethod;
+        decodedData = streamContent;
+        for (GNameObject *decoder in [filters value]) {
+            if ([[decoder value]
+                 isEqualToString:@"ASCII85Decode"]) {
+                decodedData = decodeASCII85(decodedData);
+            } else if ([[decoder value]
+                        isEqualToString:@"FlateDecode"]){
+                decodedData = decodeFlate(decodedData);
+            }
+        }
     }
     return decodedData;
 }

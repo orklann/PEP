@@ -35,7 +35,6 @@ NSData *decodeASCII85(NSData *data) {
     int i = 0;
     for (i = 0; i < [data length]; i++) {
         unsigned char ascii = (unsigned char)(*(stream + i));
-        unsigned char nextASCII = (unsigned char)(*(stream + i + 1));
         if (ascii >= '!' && ascii <= 'u') {
             c[bytesNumber] = ascii - 33; // 33 is ascii `!`
             bytesNumber += 1;
@@ -46,33 +45,43 @@ NSData *decodeASCII85(NSData *data) {
                 value += c[2] * (85 * 85);
                 value += c[3] * 85;
                 value += c[4];
-                // we calculate 4 decoded bytes from last to first
-                b[3] = value % 256;
-                b[2] = (value - b[3]) / 256 % 256;
-                b[1] = (value - b[3] - b[2]) / (256  * 256) % 256;
-                b[0] = (value - b[3] - b[2] - b[1]) / ( 256 * 256 * 256) % 256;
                 
-                if (nextASCII == '~') { // If last group of bytes is less than 4, padding with 0s
-                    int count = 0;
-                    for (int j = 3; j >= 0; j--) {
-                        if (b[j] == 0) {
-                            count++;
-                        } else {
-                            break;
-                        }
-                    }
-                    count = 4 - count;
-                    [result appendBytes:(unsigned char*)b length:count];
-                    break;
-                } else {
-                    [result appendBytes:(unsigned char*)b length:4];
-                }
+                // we calculate 4 decoded bytes from last to first
+                b[3] = (int)(value % 256);
+                b[2] = (int)((value - b[3]) / 256 % 256);
+                b[1] = (int)((value - (b[2] * 256) - b[3]) / (256 * 256) % 256);
+                b[0] = (int)((value - (b[1] * 256 * 256) - (b[2] * 256) - b[3]) / ( 256 * 256 * 256) % 256);
+                
+                [result appendBytes:(unsigned char*)b length:4];
                 bytesNumber = 0;
             }
         } else if (ascii == 'z') {
             [result appendBytes:(unsigned char*)"\0\0\0\0" length:4];
         } else if (isWhiteSpaceChar(ascii)) {
             continue;
+        } else if (ascii == '~') {
+            if (bytesNumber > 1 && bytesNumber < 5) {
+                for (int j = bytesNumber; j < 5; j++) {
+                    c[j] = 'u' - 33;
+                }
+                unsigned char b[4]; // Store 4 decoded bytes
+                value = c[0] * (85 * 85 * 85 * 85);
+                value += c[1] * (85 * 85 * 85);
+                value += c[2] * (85 * 85);
+                value += c[3] * 85;
+                value += c[4];
+                
+                // we calculate 4 decoded bytes from last to first
+                b[3] = (int)(value % 256);
+                b[2] = (int)((value - b[3]) / 256 % 256);
+                b[1] = (int)((value - (b[2] * 256) - b[3]) / (256 * 256) % 256);
+                b[0] = (int)((value - (b[1] * 256 * 256) - (b[2] * 256) - b[3]) / ( 256 * 256 * 256) % 256);
+                
+                // TODO: After padding 4 - bytesNumber of 'u's, we can just get bytesNumber-1 the decocded bytes
+                //       Maybe buggy, let's see later
+                [result appendBytes:(unsigned char*)b length:bytesNumber -1];
+                break;
+            }
         }
     }
     return [NSData dataWithData:result];
