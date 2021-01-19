@@ -47,6 +47,7 @@ NSData *decodeASCII85(NSData *data) {
                 value += c[4];
                 
                 // we calculate 4 decoded bytes from last to first
+                // TODO: Use bitwise operations to improve the performance
                 b[3] = (int)(value % 256);
                 b[2] = (int)((value - b[3]) / 256 % 256);
                 b[1] = (int)((value - (b[2] * 256) - b[3]) / (256 * 256) % 256);
@@ -72,6 +73,7 @@ NSData *decodeASCII85(NSData *data) {
                 value += c[4];
                 
                 // we calculate 4 decoded bytes from last to first
+                // TODO: Use bitwise operations to improve the performance
                 b[3] = (int)(value % 256);
                 b[2] = (int)((value - b[3]) / 256 % 256);
                 b[1] = (int)((value - (b[2] * 256) - b[3]) / (256 * 256) % 256);
