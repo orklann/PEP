@@ -16,8 +16,12 @@
 
 @property (readwrite) IBOutlet PEPWindow *window;
 @property (weak) IBOutlet NSWindow *openPDFWindow;
+@property (weak) IBOutlet NSWindow *logPageContentWindow;
+@property (weak) IBOutlet NSTextField *pageNumber;
 
 // Bug report, new issue, join discord
+- (IBAction)showLogPageWindow:(id)sender;
+- (IBAction)logPageContent:(id)sender;
 - (IBAction)newIssue:(id)sender;
 - (IBAction)openDocument:(id)sender;
 - (IBAction)joinDiscord:(id)sender;

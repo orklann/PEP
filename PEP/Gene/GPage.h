@@ -112,6 +112,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Get CTLineRef for glyph in page
 - (CTLineRef)getLineFromGlyph:(GGlyph*)glyph;
+
+// Debug
+- (void)logPageContent;
 @end
 
 NS_ASSUME_NONNULL_END

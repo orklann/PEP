@@ -14,6 +14,16 @@
 
 @implementation AppDelegate
 
+- (IBAction)showLogPageWindow:(id)sender {
+    [self.logPageContentWindow makeKeyAndOrderFront:sender];
+}
+
+- (IBAction)logPageContent:(id)sender {
+    NSLog(@"Log content of page number: %@", [self.pageNumber stringValue]);
+    NSInteger pageNumber = [[self.pageNumber stringValue] integerValue];
+    [[self.window doc] logPageContent:(int)pageNumber];
+}
+
 - (IBAction)newIssue:(id)sender {
 #define kNewIssueLink @"https://github.com/orklann/PEP/issues/new"
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:kNewIssueLink]];

@@ -45,6 +45,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSData*)buildNewTrailer:(GDictionaryObject*)trailerDict
              prevStartXRef:(int)prevStartXRef
               newStartXRef:(int)newStartXRef;
+
+// Debug:
+- (void)logPageContent:(int)pageNumber;
 @end
 
 NS_ASSUME_NONNULL_END

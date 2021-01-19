@@ -415,4 +415,12 @@
     [self updateVisiblePage];
     [self setNeedsDisplayInRect:[self visibleRect]];
 }
+
+#pragma Debug
+- (void)logPageContent:(int)pageNumber {
+    if (pageNumber >= 1 && pageNumber <= [pages count]) {
+        GPage *page = [pages objectAtIndex:pageNumber-1];
+        [page logPageContent];
+    }
+}
 @end

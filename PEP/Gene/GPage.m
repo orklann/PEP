@@ -677,4 +677,9 @@
     CTLineRef line = CTLineCreateWithAttributedString(attrStr);
     return line;
 }
+
+#pragma Debug
+- (void)logPageContent {
+    printData(pageContent);
+}
 @end

@@ -15,7 +15,9 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate">
             <connections>
+                <outlet property="logPageContentWindow" destination="g78-5F-tFx" id="PiO-Wj-UVN"/>
                 <outlet property="openPDFWindow" destination="gkQ-EM-ma3" id="ETR-YY-Tt8"/>
+                <outlet property="pageNumber" destination="UV6-2l-V5l" id="3lO-hd-16b"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -648,7 +650,7 @@
                             <menuItem title="Log Page" id="Ulu-7Q-bbP">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="print:" target="-1" id="fcI-n5-cNs"/>
+                                    <action selector="showLogPageWindow:" target="Voe-Tx-rLC" id="GG9-Dx-xpH"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -764,6 +766,48 @@ Good luck and have fun.
                 </subviews>
             </view>
             <point key="canvasLocation" x="48" y="-171.5"/>
+        </window>
+        <window title="Log Page Content" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="g78-5F-tFx">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
+            <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="863" y="686" width="270" height="100"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
+            <view key="contentView" id="E2t-97-tC3">
+                <rect key="frame" x="0.0" y="0.0" width="270" height="100"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="Y3m-UE-NCm">
+                        <rect key="frame" x="50" y="57" width="62" height="23"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" title="Page:" id="IIG-9L-Yoi">
+                            <font key="font" usesAppearanceFont="YES"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UV6-2l-V5l">
+                        <rect key="frame" x="101" y="59" width="109" height="21"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="f0S-eN-qXB">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" id="4mG-Dy-wJt">
+                        <rect key="frame" x="100" y="13" width="90" height="32"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <buttonCell key="cell" type="push" title="Print Log" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Gsg-4y-WsJ">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="logPageContent:" target="Voe-Tx-rLC" id="He3-xH-6N8"/>
+                        </connections>
+                    </button>
+                </subviews>
+            </view>
+            <point key="canvasLocation" x="622" y="138"/>
         </window>
     </objects>
 </document>
