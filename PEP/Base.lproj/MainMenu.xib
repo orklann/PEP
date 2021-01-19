@@ -641,6 +641,19 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="Debug" id="vXY-KT-Ocn">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Debug" id="z8W-xE-n5c">
+                        <items>
+                            <menuItem title="Log Page" id="Ulu-7Q-bbP">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="print:" target="-1" id="fcI-n5-cNs"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="Window" id="aUF-d1-5bR">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Window" systemMenu="window" id="Td7-aD-5lo">
