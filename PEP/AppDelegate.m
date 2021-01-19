@@ -22,6 +22,7 @@
     NSLog(@"Log content of page number: %@", [self.pageNumber stringValue]);
     NSInteger pageNumber = [[self.pageNumber stringValue] integerValue];
     [[self.window doc] logPageContent:(int)pageNumber];
+    printf("=== End Log page content of page: %s ===", [[self.pageNumber stringValue] UTF8String]);
 }
 
 - (IBAction)newIssue:(id)sender {
