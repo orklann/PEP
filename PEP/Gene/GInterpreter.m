@@ -330,7 +330,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 - (void)eval_TStar_Command:(CGContextRef)context command:(GCommandObject*)cmdObj  {
     CGFloat tl = [[page textState] leading];
     tl = -1 * tl;
-    [[page textState] setLeading:tl];
     
     CGAffineTransform tm = [[page textState] lineMatrix];
     tm.tx += 0;
