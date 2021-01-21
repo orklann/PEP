@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (CGFloat)render;
 - (void)setRise:(CGFloat)r;
 - (CGFloat)rise;
-
+- (GTextState*)clone;
 @end
 
 NS_ASSUME_NONNULL_END

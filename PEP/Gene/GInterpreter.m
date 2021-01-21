@@ -234,6 +234,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             } else if (isCommand(cmd, @"TL")) { // TL
                 NSArray *args = getCommandArgs(commands, 1);
                 [(GCommandObject*)obj setArgs:args];
+            } else if (isCommand(cmd, @"T*")) { // T*
+                // Do nothing
             } else {
                 //NSLog(@"GInterpreter:parseCommands not handle %@ operator", cmd);
             }
@@ -321,6 +323,16 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [[page textState] setLeading:tl];
 }
 
+- (void)eval_TStar_Command:(CGContextRef)context command:(GCommandObject*)cmdObj  {
+    CGFloat tl = [[page textState] leading];
+    tl = -1 * tl;
+    CGAffineTransform tm = [[page textState] textMatrix];
+    tm.tx = 0;
+    tm.ty += tl;
+    [[page textState] setTextMatrix:tm];
+    CGContextSetTextMatrix(context, tm);
+}
+
 - (void)eval_TJ_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     GArrayObject *array = [[cmdObj args] objectAtIndex:0];
     int i;
@@ -388,6 +400,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_Td_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"TL")) { // eval TL
                     [self eval_TL_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"T*")) { // eval T*
+                    [self eval_TStar_Command:context command:cmdObj];
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }

@@ -97,4 +97,18 @@
 - (CGFloat)rise {
     return rise;
 }
+
+- (GTextState*)clone {
+    GTextState *newTextState = [GTextState create];
+    [newTextState setFontName:fontName];
+    [newTextState setFontSize:fontSize];
+    [newTextState setTextMatrix:textMatrix];
+    [newTextState setCharSpace:charSpace];
+    [newTextState setWordSpace:wordSpace];
+    [newTextState setScale:scale];
+    [newTextState setLeading:leading];
+    [newTextState setRender:render];
+    [newTextState setRise:rise];
+    return newTextState;
+}
 @end

@@ -31,6 +31,7 @@ NS_ASSUME_NONNULL_BEGIN
     GTextState *textState;
     GGraphicsState *graphicsState;
     NSMutableArray *graphicsStateStack;
+    NSMutableArray *textStateStack;
     NSMutableArray *glyphs;
     GTextParser *textParser;
     NSPoint origin;

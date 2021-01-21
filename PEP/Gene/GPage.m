@@ -151,6 +151,7 @@
     textState = [GTextState create];
     graphicsState = [GGraphicsState create];
     graphicsStateStack = [NSMutableArray array];
+    textStateStack = [NSMutableArray array];
     
     if (self.needUpdate) {
         textParser = [GTextParser create];
@@ -615,12 +616,17 @@
 
 - (void)saveGraphicsState {
     [graphicsStateStack addObject:[graphicsState clone]];
+    [textStateStack addObject:[textState clone]];
 }
 
 - (void)restoreGraphicsState {
     GGraphicsState *lastObject = [graphicsStateStack lastObject];
     graphicsState = lastObject;
     [graphicsStateStack removeObject:lastObject];
+    
+    GTextState *lastTextState = [textStateStack lastObject];
+    textState = lastTextState;
+    [textStateStack removeObject:lastTextState];
 }
 
 - (NSArray *)getFontTags {
