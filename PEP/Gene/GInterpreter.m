@@ -236,6 +236,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                 [(GCommandObject*)obj setArgs:args];
             } else if (isCommand(cmd, @"T*")) { // T*
                 // Do nothing
+            } else if (isCommand(cmd, @"'")) { // '
+                NSArray *args = getCommandArgs(commands, 1);
+                [(GCommandObject*)obj setArgs:args];
             } else {
                 //NSLog(@"GInterpreter:parseCommands not handle %@ operator", cmd);
             }
@@ -311,9 +314,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 - (void)eval_Td_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     CGFloat tx = [[[cmdObj args] objectAtIndex:0] getRealValue];
     CGFloat ty = [[[cmdObj args] objectAtIndex:1] getRealValue];
-    CGAffineTransform tm = CGAffineTransformIdentity;
-    tm.tx = tx;
-    tm.ty = ty;
+    CGAffineTransform tm = [[page textState] textMatrix];
+    tm.tx += tx;
+    tm.ty += ty;
     [[page textState] setTextMatrix:tm];
     CGContextSetTextMatrix(context, tm);
 }
@@ -331,6 +334,27 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     tm.ty += tl;
     [[page textState] setTextMatrix:tm];
     CGContextSetTextMatrix(context, tm);
+}
+
+- (void)eval_Single_Quote_Command:(CGContextRef)context command:(GCommandObject*)cmdObj  {
+    // The same as T*
+    CGFloat tl = [[page textState] leading];
+    tl = -1 * tl;
+    CGAffineTransform tm = [[page textState] textMatrix];
+    tm.tx = 0;
+    tm.ty += tl;
+    [[page textState] setTextMatrix:tm];
+    CGContextSetTextMatrix(context, tm);
+    
+    // The same as Tj
+    NSString *string;
+    GObject *a = [[cmdObj args] objectAtIndex:0];
+    if ([a type] == kLiteralStringsObject) {
+        string = [(GLiteralStringsObject*)a value];
+    } else if ([a type] == kHexStringsObject) {
+        string = [(GHexStringsObject*)a stringValue];
+    }
+    [self layoutStrings:string context:context tj:0 prevTj:0];
 }
 
 - (void)eval_TJ_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -402,6 +426,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_TL_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"T*")) { // eval T*
                     [self eval_TStar_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"'")) { // eval '
+                    
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }
