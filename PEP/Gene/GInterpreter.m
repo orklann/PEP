@@ -342,11 +342,12 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     // The same as T*
     CGFloat tl = [[page textState] leading];
     tl = -1 * tl;
-    CGAffineTransform tm = [[page textState] textMatrix];
-    tm.tx = 0;
+    
+    CGAffineTransform tm = [[page textState] lineMatrix];
+    tm.tx += 0;
     tm.ty += tl;
     [[page textState] setTextMatrix:tm];
-    CGContextSetTextMatrix(context, tm);
+    [[page textState] setLineMatrix:tm];
     
     // The same as Tj
     NSString *string;
@@ -429,7 +430,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                 } else if (isCommand(cmd, @"T*")) { // eval T*
                     [self eval_TStar_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"'")) { // eval '
-                    
+                    [self eval_Single_Quote_Command:context command:cmdObj];
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }
