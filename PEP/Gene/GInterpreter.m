@@ -315,11 +315,11 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 - (void)eval_Td_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     CGFloat tx = [[[cmdObj args] objectAtIndex:0] getRealValue];
     CGFloat ty = [[[cmdObj args] objectAtIndex:1] getRealValue];
-    CGAffineTransform tm = [[page textState] textMatrix];
+    CGAffineTransform tm = [[page textState] lineMatrix];
     tm.tx += tx;
     tm.ty += ty;
     [[page textState] setTextMatrix:tm];
-    CGContextSetTextMatrix(context, tm);
+    [[page textState] setLineMatrix:tm];
 }
 
 - (void)eval_TL_Command:(CGContextRef)context command:(GCommandObject*)cmdObj  {
@@ -330,11 +330,13 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 - (void)eval_TStar_Command:(CGContextRef)context command:(GCommandObject*)cmdObj  {
     CGFloat tl = [[page textState] leading];
     tl = -1 * tl;
-    CGAffineTransform tm = [[page textState] textMatrix];
-    tm.tx = 0;
+    [[page textState] setLeading:tl];
+    
+    CGAffineTransform tm = [[page textState] lineMatrix];
+    tm.tx += 0;
     tm.ty += tl;
     [[page textState] setTextMatrix:tm];
-    CGContextSetTextMatrix(context, tm);
+    [[page textState] setLineMatrix:tm];
 }
 
 - (void)eval_Single_Quote_Command:(CGContextRef)context command:(GCommandObject*)cmdObj  {
