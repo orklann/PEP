@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSString *fontName;
     CGFloat fontSize;
     CGAffineTransform textMatrix;
+    CGAffineTransform lineMatrix;
     CGFloat charSpace;
     CGFloat wordSpace;
     CGFloat scale;
@@ -30,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (CGFloat)fontSize;
 - (void)setTextMatrix:(CGAffineTransform)tm;
 - (CGAffineTransform)textMatrix;
+- (void)setLineMatrix:(CGAffineTransform)lm;
+- (CGAffineTransform)lineMatrix;
 - (void)setCharSpace:(CGFloat)cs;
 - (CGFloat)charSpace;
 - (void)setWordSpace:(CGFloat)ws;

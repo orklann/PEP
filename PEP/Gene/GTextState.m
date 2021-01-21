@@ -24,6 +24,7 @@
     rise = 0;
     fontSize = 1.0;
     textMatrix = CGAffineTransformIdentity;
+    lineMatrix = CGAffineTransformIdentity;
 }
 
 - (void)setFontName:(NSString*)name {
@@ -48,6 +49,14 @@
 
 - (CGAffineTransform)textMatrix {
     return textMatrix;
+}
+
+- (void)setLineMatrix:(CGAffineTransform)lm {
+    lineMatrix = lm;
+}
+
+- (CGAffineTransform)lineMatrix {
+    return lineMatrix;
 }
 
 - (void)setCharSpace:(CGFloat)cs {
@@ -103,6 +112,7 @@
     [newTextState setFontName:fontName];
     [newTextState setFontSize:fontSize];
     [newTextState setTextMatrix:textMatrix];
+    [newTextState setLineMatrix:lineMatrix];
     [newTextState setCharSpace:charSpace];
     [newTextState setWordSpace:wordSpace];
     [newTextState setScale:scale];
