@@ -283,6 +283,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGFloat f = [[args objectAtIndex:5] getRealValue];
     CGAffineTransform tm = CGAffineTransformMake(a, b, c, d, e, f);
     [[page textState] setTextMatrix:tm];
+    [[page textState] setLineMatrix:tm];
     CGContextSetTextMatrix(context, tm);
 }
 
