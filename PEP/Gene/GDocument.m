@@ -342,14 +342,14 @@
 
 - (void)mouseMoved:(NSEvent *)event {
     self.forceDrawAllPage = NO;
-    for (GPage *page in pages) {
+    for (GPage *page in visiblePages) {
         [page mouseMoved:event];
     }
 }
 
 - (void)mouseDown:(NSEvent *)event {
     self.forceDrawAllPage = NO;
-    for (GPage *page in pages) {
+    for (GPage *page in visiblePages) {
         [page mouseDown:event];
     }
 }
