@@ -123,7 +123,7 @@
     }
     
     glyphPos = 0;
-    
+
     GWord *currentWord = [GWord create];
     GGlyph *nextGlyph = [self currentGlyph];
     while(nextGlyph != nil) {
@@ -135,8 +135,9 @@
             
             // Handle edge case: where more than two white spaces stick
             // together. We add each white space as a single word until we
-            // reach a none white space
-            while (isWhiteSpaceGlyph(nextGlyph)) {
+            // reach a none white space.
+            // nextGlyph == nil means last glyph is a white space, so we stop while loop in this case
+            while (isWhiteSpaceGlyph(nextGlyph) && nextGlyph != nil) {
                 currentWord = [GWord create];
                 [currentWord addGlyph:nextGlyph];
                 [words addObject:currentWord];
