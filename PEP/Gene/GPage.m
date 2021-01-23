@@ -83,8 +83,6 @@
         pageContent = (NSMutableData*)[contentStream getDecodedStreamContent];
     }
     
-    printData(pageContent);
-    
     // Automatically parse resources
     [self parseResources];
 }
