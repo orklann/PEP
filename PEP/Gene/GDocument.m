@@ -412,8 +412,21 @@
 }
 
 - (void)scrollViewDidLiveScroll:(NSNotification *)notification {
+    NSArray *oldVisiblePages = [NSArray arrayWithArray:visiblePages];
     [self updateVisiblePage];
-    [self setNeedsDisplayInRect:[self visibleRect]];
+    
+    // Only redraw while visible pages are changed
+    if (![visiblePages isEqualToArray:oldVisiblePages]) {
+        NSRect rect = NSZeroRect;
+        for (GPage *p in visiblePages) {
+            NSRect pageRect = [p calculatePageMediaBox];
+            pageRect.size.width = [self bounds].size.width;
+            pageRect.origin.x = 0;
+            rect = NSUnionRect(rect, pageRect);
+        }
+        self.preparedContentRect = rect;
+        [self setNeedsDisplayInRect:rect];
+    }
 }
 
 #pragma Debug
@@ -422,5 +435,11 @@
         GPage *page = [pages objectAtIndex:pageNumber-1];
         [page logPageContent];
     }
+}
+
+// This make sure NSView also draw the overdraw region, so that visible pages are fully drawn,
+// not only the visible rect
+- (void)prepareContentInRect:(NSRect)rect {
+    [super prepareContentInRect:self.preparedContentRect];
 }
 @end
