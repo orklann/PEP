@@ -261,6 +261,8 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
         unbalanced += 1;
     } else if (next == ']') {
         unbalanced -= 1;
+        [d appendBytes:(unsigned char*)&next length:1];
+        [self nextChar];
     }
     while(unbalanced != 0) {
         if (next == '[') {

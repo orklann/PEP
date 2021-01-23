@@ -332,6 +332,16 @@
     }
 }
 
+- (void)testGParserParseArrayObject2 {
+    GParser *p = [GParser parser];
+    char *b = "[]";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    XCTAssertEqual([objs count], 1);
+}
+
 - (void)testParserDictionaryObject2 {
     GParser *p = [GParser parser];
     /*char *b = "<</Type/Catalog/Pages 7 0 R "
