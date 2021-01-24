@@ -71,13 +71,19 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGFloat h = 1.0; // we need this in graphics state
     CGFloat rise = [[page textState] rise];
     CGFloat cs = [[page textState] charSpace];
-    CGFloat wc = [[page textState] wordSpace];
+    // wordspace only apply to 0x32 (space) charater, see below for check this
+    CGFloat wc = 0; // by default is 0 for none space characters (0x32)
     CGAffineTransform trm = CGAffineTransformMake(fs*h, 0, 0, fs, 0, rise);
     CGAffineTransform rm = CGAffineTransformConcat(trm, tm);
     NSInteger i;
     CGFloat tj = 0.0;
     for (i = 0; i < [s length]; i++) {
         NSString *ch = [s substringWithRange:NSMakeRange(i, 1)];
+        if ([ch isEqualToString:@" "]) {
+            wc = [[page textState] wordSpace];
+        } else {
+            wc = 0;
+        }
         // Add glyph chars for font in GPage
         [page addGlyph:ch font:[[page textState] fontName]];
         
@@ -228,6 +234,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             } else if (isCommand(cmd, @"Tc")) { // Tc
                 NSArray *args = getCommandArgs(commands, 1);
                 [(GCommandObject*)obj setArgs:args];
+            } else if (isCommand(cmd, @"Tw")) { // Tw
+                NSArray *args = getCommandArgs(commands, 1);
+                [(GCommandObject*)obj setArgs:args];
             } else if (isCommand(cmd, @"Td")) { // Td
                 NSArray *args = getCommandArgs(commands, 2);
                 [(GCommandObject*)obj setArgs:args];
@@ -360,6 +369,11 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [[page textState] setCharSpace:tc];
 }
 
+- (void)eval_Tw_Command:(CGContextRef)context command:(GCommandObject*)cmdObj  {
+    CGFloat tw = [[[cmdObj args] objectAtIndex:0] getRealValue];
+    [[page textState] setWordSpace:tw];
+}
+
 - (void)eval_TStar_Command:(CGContextRef)context command:(GCommandObject*)cmdObj  {
     CGFloat tl = [[page textState] leading];
     tl = -1 * tl;
@@ -474,6 +488,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_TD_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"Tc")) { // eval Tc
                     [self eval_Tc_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"Tw")) { // eval Tw
+                    [self eval_Tw_Command:context command:cmdObj];
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }
