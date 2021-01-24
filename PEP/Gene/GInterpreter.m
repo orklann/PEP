@@ -239,6 +239,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             } else if (isCommand(cmd, @"'")) { // '
                 NSArray *args = getCommandArgs(commands, 1);
                 [(GCommandObject*)obj setArgs:args];
+            } else if (isCommand(cmd, @"TD")) { // TD
+                NSArray *args = getCommandArgs(commands, 2);
+                [(GCommandObject*)obj setArgs:args];
             } else {
                 //NSLog(@"GInterpreter:parseCommands not handle %@ operator", cmd);
             }
@@ -316,8 +319,27 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGFloat tx = [[[cmdObj args] objectAtIndex:0] getRealValue];
     CGFloat ty = [[[cmdObj args] objectAtIndex:1] getRealValue];
     CGAffineTransform tm = [[page textState] lineMatrix];
-    tm.tx += tx;
-    tm.ty += ty;
+    CGAffineTransform m = CGAffineTransformIdentity;
+    m.tx = tx;
+    m.ty = ty;
+    tm = CGAffineTransformConcat(m, tm);
+    [[page textState] setTextMatrix:tm];
+    [[page textState] setLineMatrix:tm];
+}
+
+- (void)eval_TD_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    CGFloat tx = [[[cmdObj args] objectAtIndex:0] getRealValue];
+    CGFloat ty = [[[cmdObj args] objectAtIndex:1] getRealValue];
+    
+    // Set leading in text state
+    [[page textState] setLeading:ty * -1];
+    
+    // The same as Td operator
+    CGAffineTransform tm = [[page textState] lineMatrix];
+    CGAffineTransform m = CGAffineTransformIdentity;
+    m.tx = tx;
+    m.ty = ty;
+    tm = CGAffineTransformConcat(m, tm);
     [[page textState] setTextMatrix:tm];
     [[page textState] setLineMatrix:tm];
 }
@@ -338,8 +360,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     tl = -1 * tl;
     
     CGAffineTransform tm = [[page textState] lineMatrix];
-    tm.tx += 0;
-    tm.ty += tl;
+    CGAffineTransform m = CGAffineTransformIdentity;
+    m.tx = 0;
+    m.ty = tl;
+    tm = CGAffineTransformConcat(m, tm);
     [[page textState] setTextMatrix:tm];
     [[page textState] setLineMatrix:tm];
 }
@@ -350,8 +374,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     tl = -1 * tl;
     
     CGAffineTransform tm = [[page textState] lineMatrix];
-    tm.tx += 0;
-    tm.ty += tl;
+    CGAffineTransform m = CGAffineTransformIdentity;
+    m.tx = 0;
+    m.ty = tl;
+    tm = CGAffineTransformConcat(m, tm);
     [[page textState] setTextMatrix:tm];
     [[page textState] setLineMatrix:tm];
     
@@ -439,6 +465,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_Single_Quote_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"BT")) { // eval BT
                     [self eval_BT_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"TD")) { // eval TD
+                    [self eval_TD_Command:context command:cmdObj];
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }
