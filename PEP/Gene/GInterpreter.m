@@ -355,6 +355,11 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [[page textState] setLeading:tl];
 }
 
+- (void)eval_Tc_Command:(CGContextRef)context command:(GCommandObject*)cmdObj  {
+    CGFloat tc = [[[cmdObj args] objectAtIndex:0] getRealValue];
+    [[page textState] setCharSpace:tc];
+}
+
 - (void)eval_TStar_Command:(CGContextRef)context command:(GCommandObject*)cmdObj  {
     CGFloat tl = [[page textState] leading];
     tl = -1 * tl;
@@ -467,6 +472,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_BT_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"TD")) { // eval TD
                     [self eval_TD_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"Tc")) { // eval Tc
+                    [self eval_Tc_Command:context command:cmdObj];
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }
