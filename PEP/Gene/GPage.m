@@ -483,7 +483,7 @@
     } else if ([(GObject*)res type] == kDictionaryObject){
         // We handle this case below: resources is a dictionary,
         // not an indrect object
-        NSLog(@"resources is a dictionary: %@", [(GDictionaryObject *)res toString]);
+        NSLog(@"(Handled) resources is a dictionary: %@", [(GDictionaryObject *)res toString]);
         resources = (GDictionaryObject*)res;
     }
     
