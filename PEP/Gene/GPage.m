@@ -433,7 +433,6 @@
     [binary setGenerationNumber:fontFileGenerationNumber];
     [binary setData:stream];
     [doc.dataToUpdate addObject:binary];
-    
     /*
      * 2. Generate font descriptor dictionary
      */
@@ -454,7 +453,6 @@
     [binary setGenerationNumber:descriptorGenerationNumber];
     [binary setData:stream];
     [doc.dataToUpdate addObject:binary];
-    
     /*
      * 3. Generate font dictionary:
      */
@@ -472,7 +470,6 @@
     [binary setGenerationNumber:fontGenerationNumber];
     [binary setData:stream];
     [doc.dataToUpdate addObject:binary];
-    
     return fontRef;
 }
 
@@ -484,8 +481,10 @@
         resourcesObjectNumber = [ref objectNumber];
         resourcesGenerationNumber = [ref generationNumber];
     } else if ([(GObject*)res type] == kDictionaryObject){
-        // TODO: Should also handle the case if resources is a dictionary in page dictionary
-        NSLog(@"[Error: Not Handled] Resources is a dictionary in page dictionary, not an indirect object");
+        // We handle this case below: resources is a dictionary,
+        // not an indrect object
+        NSLog(@"resources is a dictionary: %@", [(GDictionaryObject *)res toString]);
+        resources = (GDictionaryObject*)res;
     }
     
     NSMutableString *fontArrayString = [NSMutableString string];
@@ -498,7 +497,7 @@
     } else {
         fontArray = (GDictionaryObject*)refObject;
     }
-    
+
     for (NSString *fontName in [fontArray value]) {
         // NOTE: Because we add new font if selected font is the same as original PDF font, so we should overwrite origin
         // font tag, so that we remove original font tag, if it's in added fonts
@@ -510,7 +509,7 @@
         int generationNumber = [ref generationNumber];
         [fontArrayString appendFormat:@"/%@ %d %d R ", fontName, objectNumber, generationNumber];
     }
-    
+
     // Append new created font and ref to fontArrayString
     for (NSString *pdfFontKey in self.addedFonts) {
         NSFont *font = [self.addedFonts objectForKey:pdfFontKey];
@@ -525,15 +524,36 @@
     // TODO: Better to reuse original resource which has /ColorSpace, /ExtGState, and other settings
     NSString *dictionary = [NSString stringWithFormat:@"<< /ProcSet [ /PDF /Text ] /Font << %@ >> >>\n", fontArrayString];
     
-    NSMutableData *stream = [NSMutableData data];
-    [stream appendData:[dictionary dataUsingEncoding:NSASCIIStringEncoding]];;
+    //  Resources is a dictionary
+    if ([(GObject*)res type] == kDictionaryObject){
+        GParser *p = [GParser parser];
+        [p setStream:[dictionary dataUsingEncoding:NSASCIIStringEncoding]];
+        GDictionaryObject *dictionaryObject = [p parseNextObject];
+        [[pageDictionary value] setObject:dictionaryObject forKey:@"Resources"];
+    } else { // Resources is an indirect object
+        NSMutableData *stream = [NSMutableData data];
+        [stream appendData:[dictionary dataUsingEncoding:NSASCIIStringEncoding]];
 
+        // Create a instance of GBinaryData
+        GBinaryData *binary = [GBinaryData create];
+        [binary setObjectNumber:resourcesObjectNumber];
+        [binary setGenerationNumber:resourcesGenerationNumber];
+        [binary setData:stream];
+        
+        [doc.dataToUpdate addObject:binary];
+    }
+}
+
+- (void)addPageDictionaryForUpdating {
+    NSMutableData *stream = [NSMutableData data];
+    [stream appendData:[[pageDictionary toString]
+                        dataUsingEncoding:NSASCIIStringEncoding]];
+    printData(stream);
     // Create a instance of GBinaryData
     GBinaryData *binary = [GBinaryData create];
-    [binary setObjectNumber:resourcesObjectNumber];
-    [binary setGenerationNumber:resourcesGenerationNumber];
+    [binary setObjectNumber:[self.pageRef objectNumber]];
+    [binary setGenerationNumber:[self.pageRef generationNumber]];
     [binary setData:stream];
-    
     [doc.dataToUpdate addObject:binary];
 }
 
@@ -574,6 +594,7 @@
     [self buildPageContent];
     [self addPageStream];
     [self addNewAddedFontsForUpdating];
+    [self addPageDictionaryForUpdating];
 }
 
 - (void)setCachedFont:(NSString*)fontName fontSize:(CGFloat)fontSize {

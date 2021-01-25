@@ -248,6 +248,7 @@
         [page setPageDictionary:object];
         [page setParser:parser];
         [page setDocument:self];
+        [page setPageRef:refObject];
         [pages addObject:page];
         [page setLastStreamOffset:(unsigned int)[[[parser lexer] stream] length]];
     }
