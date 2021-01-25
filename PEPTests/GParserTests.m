@@ -404,6 +404,33 @@
     }
 }
 
+- (void)testGParserParseDictionaryObject2 {
+    GParser *p = [GParser parser];
+    char *b = "<</Type/Page/Parent 7 0 R/Resources 10 0 R/MediaBox[0 0 612 792]/Group<</S/Transparency/CS/DeviceRGB/I true>>/Contents 2 0 R>>";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    NSInteger i = 0;
+    for (i = 0; i < [objs count]; i++) {
+        if (i == 0) {
+            GDictionaryObject *obj = [objs objectAtIndex:i];
+            NSMutableDictionary *dict = [obj value];
+            for (id key in dict) {
+                id v = [dict objectForKey:key];
+                if ([key isEqualToString:@"Type"]) {
+                    // This is the most important test in this case
+                    // Because we test [GNameObject toString]
+                    XCTAssertEqualObjects([(GNameObject*)v toString], @"/Page");
+                } else if ([key isEqualToString:@"Parent"]){
+                    XCTAssertEqual([(GRefObject*)v objectNumber], 7);
+                }
+            }
+        }
+    }
+}
+
+
 - (void)testGParserParseStreamObject {
     GParser *p = [GParser parser];
     char *b = "<</Length 4 >>stream\n"

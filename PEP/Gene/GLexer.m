@@ -244,6 +244,7 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     NSMutableData *d = [NSMutableData dataWithCapacity:100];
     unsigned char next = [self nextChar];
     while(!isWhiteSpace(next)) {
+        if (isDelimiter(next)) break;
         [d appendBytes:(unsigned char*)&next length:1];
         next = [self nextChar];
     }
