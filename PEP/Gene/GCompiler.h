@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
     GPage *page;
 }
 + (id)compilerWithPage:(GPage*)page;
-- (void)setPage:(GPage*)p;\
+- (void)setPage:(GPage*)p;
 - (NSString*)compile;
 @end
 
