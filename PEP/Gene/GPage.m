@@ -542,6 +542,9 @@
         
         [doc.dataToUpdate addObject:binary];
     }
+    
+    // Update resource by parsing it
+    [self parseResources];
 }
 
 - (void)addPageDictionaryForUpdating {
