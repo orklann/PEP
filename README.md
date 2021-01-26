@@ -16,6 +16,10 @@ I update PEP almost everyday. Please check out the official website ([PEP](https
 ## Join the community
 Join our [discord](https://discord.gg/Fvs8xS7As6) to chat with other people about PEP, or anything on PDFs.
 
+## Patreon
+Show your love, If you would like to show your appreciation or even help fund development, the project has a [Patreon](https://www.patreon.com/aaronelkins) page.
+
+
 ## Roadmap
 
 I don't have any roadmap yet, but i will publish one later at the right moment. I hope someone will see the potential of PEP, and donate towards it to speed up the development process.
