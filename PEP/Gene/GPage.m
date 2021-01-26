@@ -564,8 +564,17 @@
         GRefObject *contentRef = (GRefObject*)contents;
         objectNumber = [contentRef objectNumber];
         generationNumber = [contentRef generationNumber];
-    } else { // contents is a GArrayObject, TODO: handle this later
+    } else { // contents is a GArrayObject
+        NSString *newContentRef = [doc generateNewRef];
+        objectNumber = getObjectNumber(newContentRef);
+        generationNumber = getGenerationNumber(newContentRef);
         
+        // Also update "Contents" for pageDictionary
+        GParser *p = [GParser parser];
+        NSString *s = [NSString stringWithFormat:@"%d %d R ", objectNumber, generationNumber];
+        [p setStream:[s dataUsingEncoding:NSASCIIStringEncoding]];
+        GRefObject *refObject = [p parseNextObject];
+        [[pageDictionary value] setObject:refObject forKey:@"Contents"];
     }
         
     NSData *encodedFontData = encodeFlate(pageContent);
