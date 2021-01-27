@@ -71,6 +71,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGFloat h = 1.0; // we need this in graphics state
     CGFloat rise = [[page textState] rise];
     CGFloat cs = [[page textState] charSpace];
+    CGFloat currentCharacterSpace = [[page textState] charSpace];
     // wordspace only apply to 0x32 (space) charater, see below for check this
     CGFloat wc = 0; // by default is 0 for none space characters (0x32)
     CGFloat currentWordspace = [[page textState] wordSpace];
@@ -145,8 +146,11 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             CTLineRef line = [page getLineFromGlyph:glyph];
             [glyph setLine:line];
             
-            // Set current wordspace
+            // Set current word space
             [glyph setWordSpace:currentWordspace];
+            
+            // Set current character space
+            [glyph setCharacterSpace:currentCharacterSpace];
             
             // Only set delta to first glyph of a string
             if (i == 0) {
