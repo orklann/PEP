@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface GCompiler : NSObject {
     GPage *page;
-    CGFloat currentWordspace;
+    CGFloat currentWordSpace;
 }
 + (id)compilerWithPage:(GPage*)page;
 - (void)setPage:(GPage*)p;
