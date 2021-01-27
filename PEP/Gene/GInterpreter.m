@@ -73,6 +73,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGFloat cs = [[page textState] charSpace];
     // wordspace only apply to 0x32 (space) charater, see below for check this
     CGFloat wc = 0; // by default is 0 for none space characters (0x32)
+    CGFloat currentWordspace = [[page textState] wordSpace];
     CGAffineTransform trm = CGAffineTransformMake(fs*h, 0, 0, fs, 0, rise);
     CGAffineTransform rm = CGAffineTransformConcat(trm, tm);
     NSInteger i;
@@ -143,6 +144,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             // Set CFLineRef for speeding up drawing
             CTLineRef line = [page getLineFromGlyph:glyph];
             [glyph setLine:line];
+            
+            // Set current wordspace
+            [glyph setWordspace:currentWordspace];
             
             // Only set delta to first glyph of a string
             if (i == 0) {

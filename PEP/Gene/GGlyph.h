@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readwrite) CTLineRef line;
 @property (readwrite) int delta;
+@property (readwrite) CGFloat wordspace;
 @property (readwrite) int indexOfBlock;
 @property (readwrite) CGFloat width;
 @property (readwrite) NSRect frameInGlyphSpace;
