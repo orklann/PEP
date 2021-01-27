@@ -31,13 +31,15 @@
     [result appendString:@"q\n"];
     
     currentWordSpace = [prevGlyph wordSpace];
+    currentCharSpace = [prevGlyph characterSpace];
     
     NSMutableString *currentTJ = [NSMutableString string];
     [currentTJ appendString:[self startTJWithGlyph:prevGlyph]];
     int i = 1;
     for (i = 1; i < [glyphs count]; ++i) {
         GGlyph *nextGlyph = [glyphs objectAtIndex:i];
-        if ([self glyph:prevGlyph inSameLineWithGlyph:nextGlyph] && currentWordSpace == [nextGlyph wordSpace]) {
+        if ([self glyph:prevGlyph inSameLineWithGlyph:nextGlyph] && currentWordSpace == [nextGlyph wordSpace]
+            && currentCharSpace == [nextGlyph characterSpace]) {
             if ([nextGlyph delta] == 0) {
                 [currentTJ appendString:[nextGlyph literalString]];
             } else {
@@ -48,6 +50,7 @@
             [currentTJ appendString:kEndTJ];
             [result appendString:currentTJ];
             currentWordSpace = [nextGlyph wordSpace];
+            currentCharSpace = [nextGlyph characterSpace];
             currentTJ = [NSMutableString string];
             [currentTJ appendString:[self startTJWithGlyph:nextGlyph]];
         }
@@ -100,8 +103,10 @@
     [result appendString:@"BT\n"];
     
     // Tw operator
-    
     [result appendFormat:@"%f Tw\n", currentWordSpace];
+    
+    // Tc operator
+    [result appendFormat:@"%f Tc\n", currentCharSpace];
     
     // Tm operator
     NSString *tm = [NSString stringWithFormat:@"%f %f %f %f %f %f Tm\n",
