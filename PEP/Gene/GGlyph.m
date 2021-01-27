@@ -14,7 +14,7 @@
 + (id)create {
     GGlyph *g = [[GGlyph alloc] init];
     [g setDelta:0];
-    [g setWordspace:0];
+    [g setWordSpace:0];
     return g;
 }
 

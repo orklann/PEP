@@ -30,14 +30,14 @@
     GGlyph *prevGlyph = [glyphs firstObject];
     [result appendString:@"q\n"];
     
-    currentWordspace = [prevGlyph wordspace];
+    currentWordspace = [prevGlyph wordSpace];
     
     NSMutableString *currentTJ = [NSMutableString string];
     [currentTJ appendString:[self startTJWithGlyph:prevGlyph]];
     int i = 1;
     for (i = 1; i < [glyphs count]; ++i) {
         GGlyph *nextGlyph = [glyphs objectAtIndex:i];
-        if ([self glyph:prevGlyph inSameLineWithGlyph:nextGlyph] && currentWordspace == [nextGlyph wordspace]) {
+        if ([self glyph:prevGlyph inSameLineWithGlyph:nextGlyph] && currentWordspace == [nextGlyph wordSpace]) {
             if ([nextGlyph delta] == 0) {
                 [currentTJ appendString:[nextGlyph literalString]];
             } else {
@@ -47,7 +47,7 @@
         } else {
             [currentTJ appendString:kEndTJ];
             [result appendString:currentTJ];
-            currentWordspace = [nextGlyph wordspace];
+            currentWordspace = [nextGlyph wordSpace];
             currentTJ = [NSMutableString string];
             [currentTJ appendString:[self startTJWithGlyph:nextGlyph]];
         }

@@ -146,7 +146,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             [glyph setLine:line];
             
             // Set current wordspace
-            [glyph setWordspace:currentWordspace];
+            [glyph setWordSpace:currentWordspace];
             
             // Only set delta to first glyph of a string
             if (i == 0) {
