@@ -75,6 +75,7 @@
 		93DEC33F25401E1700E280B0 /* GEncodersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DEC33E25401E1700E280B0 /* GEncodersTests.m */; };
 		93DEC3422540238C00E280B0 /* GBinaryData.m in Sources */ = {isa = PBXBuildFile; fileRef = 93DEC3412540238C00E280B0 /* GBinaryData.m */; };
 		93E336FD24F1265300F91F74 /* GLexer.m in Sources */ = {isa = PBXBuildFile; fileRef = 93E336F824F1254300F91F74 /* GLexer.m */; };
+		93FEFCDB25CBC33F0095E19D /* GEncodingsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93FEFCDA25CBC33F0095E19D /* GEncodingsTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -198,6 +199,7 @@
 		93E336FC24F1256000F91F74 /* GLexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GLexer.h; sourceTree = "<group>"; };
 		93E73A75256794430060EEBC /* GTextEditorDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTextEditorDelegate.h; sourceTree = "<group>"; };
 		93FEFCD725CBC1D30095E19D /* GEncodings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GEncodings.h; sourceTree = "<group>"; };
+		93FEFCDA25CBC33F0095E19D /* GEncodingsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GEncodingsTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +267,7 @@
 				930ACC9C250763C30092206C /* GDecodersTests.m */,
 				93DEC33E25401E1700E280B0 /* GEncodersTests.m */,
 				930B09BA25412AEE00ED00BD /* GMiscTests.m */,
+				93FEFCDA25CBC33F0095E19D /* GEncodingsTests.m */,
 				9397A56E25653D48003969B8 /* PEPMiscTests.m */,
 				931221DB24F0139700929C01 /* Info.plist */,
 			);
@@ -561,6 +564,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93FEFCDB25CBC33F0095E19D /* GEncodingsTests.m in Sources */,
 				9320C01A2519C7F8008F20B0 /* GInterpreterTests.m in Sources */,
 				9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */,
 				930ACC9D250763C30092206C /* GDecodersTests.m in Sources */,

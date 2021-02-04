@@ -9,7 +9,7 @@
 #ifndef GEncodings_h
 #define GEncodings_h
 
-char ExpertEncoding[][] = {
+char* ExpertEncoding[] = {
   "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
   "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
   "space", "exclamsmall", "Hungarumlautsmall", "", "dollaroldstyle",
@@ -53,7 +53,7 @@ char ExpertEncoding[][] = {
   "Ydieresissmall"};
 
 
-char MacExpertEncoding[][] = {
+char* MacExpertEncoding[] = {
   "", "", "", "", "", "", "", "", "", "", "", "", "", "",
   "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
   "space", "exclamsmall", "Hungarumlautsmall", "centoldstyle",
@@ -96,7 +96,7 @@ char MacExpertEncoding[][] = {
   "periodsuperior", "Dotaccentsmall", "Ringsmall", "", "", "", ""};
 
 
-char MacRomanEncoding[][] = {
+char* MacRomanEncoding[] = {
   "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
   "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
   "space", "exclam", "quotedbl", "numbersign", "dollar", "percent",
@@ -132,7 +132,7 @@ char MacRomanEncoding[][] = {
   "tilde", "macron", "breve", "dotaccent", "ring", "cedilla", "hungarumlaut",
   "ogonek", "caron"};
 
-char StandardEncoding[][] = {
+char* StandardEncoding[] = {
   "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
   "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
   "space", "exclam", "quotedbl", "numbersign", "dollar", "percent",
@@ -160,7 +160,7 @@ char StandardEncoding[][] = {
   "", "", "", "dotlessi", "", "", "lslash", "oslash", "oe", "germandbls", "",
   "", "", ""};
 
-char WinAnsiEncoding[][] = {
+char* WinAnsiEncoding[] = {
   "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
   "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
   "space", "exclam", "quotedbl", "numbersign", "dollar", "percent",
@@ -196,7 +196,7 @@ char WinAnsiEncoding[][] = {
   "ugrave", "uacute", "ucircumflex", "udieresis", "yacute", "thorn",
   "ydieresis"};
 
-char SymbolSetEncoding[][] = {
+char* SymbolSetEncoding[] = {
   "", "", "", "", "", "", "", "", "", "", "", "", "", "",
   "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
   "space", "exclam", "universal", "numbersign", "existential", "percent",
@@ -234,7 +234,7 @@ char SymbolSetEncoding[][] = {
   "bracketrightex", "bracketrightbt", "bracerighttp", "bracerightmid",
   "bracerightbt", ""};
 
-char ZapfDingbatsEncoding[][] = {
+char* ZapfDingbatsEncoding[] = {
   "", "", "", "", "", "", "", "", "", "", "", "", "", "",
   "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
   "space", "a1", "a2", "a202", "a3", "a4", "a5", "a119", "a118", "a117",
