@@ -29,7 +29,8 @@
     NSString *result = [NSString stringWithFormat:@"%s", space];
     XCTAssertEqualObjects(result, test);
     
-    char *a = MacRomanEncoding[97];
+    char **encoding = MacRomanEncoding;
+    char *a = encoding[97];
     test = @"a";
     result = [NSString stringWithFormat:@"%s", a];
     XCTAssertEqualObjects(result, test);
