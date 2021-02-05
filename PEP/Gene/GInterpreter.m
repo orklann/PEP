@@ -11,6 +11,8 @@
 #import "GMisc.h"
 #import "GPage.h"
 #import "GGlyph.h"
+#import "GEncodings.h"
+#import "GDocument.h"
 
 BOOL isCommand(NSString *cmd, NSString *cmd2) {
     return [cmd isEqualToString:cmd2];
@@ -312,6 +314,25 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGFloat fontSize = [[[cmdObj args] objectAtIndex:1] getRealValue];
     [[page textState] setFontName:fontName];
     [[page textState] setFontSize:fontSize];
+    
+    GDocument *doc = (GDocument*)[page doc];
+    NSString *encoding = [[doc fontEncodings] objectForKey:fontName];
+    char **encodingPointer = NULL;
+    if ([encoding isEqualToString:@"StandardEncoding"]) {
+        encodingPointer = StandardEncoding;
+    } else if ([encoding isEqualToString:@"MacRomanEncoding"]) {
+        encodingPointer = MacRomanEncoding;
+    } else if ([encoding isEqualToString:@"WinAnsiEncoding"]) {
+        encodingPointer = WinAnsiEncoding;
+    } else if ([encoding isEqualToString:@"MacExpertEncoding"]) {
+        encodingPointer = MacExpertEncoding;
+    }
+    
+    if (encodingPointer == NULL) {
+        NSLog(@"Error: encodingPointer is NULL in eval_Tf_Command:command:");
+    }
+    
+    [[page textState] setEncoding:encodingPointer];
   
     // Get font size in user space
     CGSize size = NSMakeSize(1.0, 1.0);

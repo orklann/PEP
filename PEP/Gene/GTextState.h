@@ -23,6 +23,10 @@ NS_ASSUME_NONNULL_BEGIN
     CGFloat rise;
 }
 
+// Extra text states which are not in the spec,
+// but for the design of PEP
+@property (readwrite) char * _Nonnull * _Nonnull encoding;
+
 + (id)create;
 - (void)initTextState;
 - (void)setFontName:(NSString*)name;

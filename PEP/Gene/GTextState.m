@@ -119,6 +119,7 @@
     [newTextState setLeading:leading];
     [newTextState setRender:render];
     [newTextState setRise:rise];
+    [newTextState setEncoding:_encoding];
     return newTextState;
 }
 @end
