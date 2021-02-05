@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *visiblePages;
 }
 
+@property (readwrite) NSMutableDictionary *fontEncodings;
 @property (readwrite) NSString *file;
 @property (readwrite) BOOL forceDrawAllPage;
 @property (readwrite) NSMutableArray *addedRefkeys;
@@ -45,6 +46,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSData*)buildNewTrailer:(GDictionaryObject*)trailerDict
              prevStartXRef:(int)prevStartXRef
               newStartXRef:(int)newStartXRef;
+
+
+// Build fonts encoding dictionary
+- (void)buildFontEncodings;
 
 // Debug:
 - (void)logPageContent:(int)pageNumber;

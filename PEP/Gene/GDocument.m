@@ -177,6 +177,9 @@
     // parse Content of all pagea
     [self parsePagesContent];
     
+    // Build font encodings for all page
+    [self buildFontEncodings];
+    
     // Make all mouse events work
     [self updateTrackingAreas];
     
@@ -427,6 +430,13 @@
         }
         self.preparedContentRect = rect;
         [self setNeedsDisplayInRect:rect];
+    }
+}
+
+- (void)buildFontEncodings {
+    self.fontEncodings = [NSMutableDictionary dictionary];
+    for (GPage *page in pages) {
+        [page buildFontEncodings];
     }
 }
 

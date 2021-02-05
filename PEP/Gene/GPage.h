@@ -114,6 +114,9 @@ NS_ASSUME_NONNULL_BEGIN
 // Get CTLineRef for glyph in page
 - (CTLineRef)getLineFromGlyph:(GGlyph*)glyph;
 
+// Build font encodings in page
+- (void)buildFontEncodings;
+
 // Debug
 - (void)logPageContent;
 @end

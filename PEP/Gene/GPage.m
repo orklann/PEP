@@ -709,6 +709,40 @@
     return line;
 }
 
+- (void)buildFontEncodings {
+    id fonts = [[resources value] objectForKey:@"Font"];
+    if ([(GObject*)fonts type] == kRefObject) {
+        fonts = [parser getObjectByRef:[fonts getRefString]];
+    }
+    
+    GDictionaryObject *fontsDictionary = (GDictionaryObject*)fonts;
+    for (NSString *fontTagKey in [[fontsDictionary value] allKeys]) {
+        GRefObject *fontRef = [[fontsDictionary value] objectForKey:fontTagKey];
+        GDictionaryObject *font = [parser getObjectByRef:[fontRef getRefString]];
+        id encoding = [[font value] objectForKey:@"Encoding"];
+        NSString *encodingString;
+        if ([(GObject*)encoding type] == kRefObject) {
+            encoding = [parser getObjectByRef:[encoding getRefString]];
+            if ([(GObject*)encoding type] == kDictionaryObject) {
+                GDictionaryObject *encodingDictionary = (GDictionaryObject*)encoding;
+                GNameObject *baseEncoding = [[encodingDictionary value] objectForKey:@"BaseEncoding"];
+                encodingString = [baseEncoding value];
+            } else {
+                NSLog(@"[Not implemented] in [GPage buildFontEncodings] while font (%@) encoding is a object of: %@",
+                      fontTagKey, encoding);
+            }
+            
+        } else if ([(GObject*)encoding type] == kNameObject) {
+            encodingString = [(GNameObject*)encoding value];
+        }
+        
+        if ([doc.fontEncodings objectForKey:fontTagKey] == nil) {
+            [doc.fontEncodings setValue:encodingString forKey:fontTagKey];
+        }
+    }
+    
+}
+
 #pragma Debug
 - (void)logPageContent {
     printData(pageContent);
