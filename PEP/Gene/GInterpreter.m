@@ -39,6 +39,38 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }
 
 - (CGFloat)drawString:(NSString*)ch font:(NSFont*)font context:(CGContextRef)context {
+    CTFontRef coreFont = (__bridge CTFontRef)(font);
+    char **encoding = [[page textState] encoding];
+    CGFloat width = 0.0;
+    if (encoding != NULL) {
+        unichar charCode = [ch characterAtIndex:0];
+        if (charCode > 255) {
+            NSLog(@"Error: char code is greater than 255, it's not a latin character");
+        }
+        char *glyphNameChars = encoding[charCode];
+        NSString *glyphName = [NSString stringWithFormat:@"%s", glyphNameChars];
+        CGGlyph a = CTFontGetGlyphWithName(coreFont, (__bridge CFStringRef)glyphName);
+        CGGlyph g[1];
+        CGPoint p[1];
+        g[0] = a;
+        p[0] = NSZeroPoint;
+        CGContextSetFillColorWithColor(context, [[NSColor blackColor] CGColor]);
+        CTFontDrawGlyphs(coreFont, g, p, 1, context);
+        
+        // Get glyph width
+        CGRect rect;
+        CGFontRef cgFont = CTFontCopyGraphicsFont((CTFontRef)coreFont, nil);
+        CGFontGetGlyphBBoxes(cgFont, &a, 1, &rect);
+        width = rect.size.width / CGFontGetUnitsPerEm(cgFont) * font.pointSize;
+    } else {
+        NSLog(@"Error: [[GPage textState] encoding] is NULL");
+        return 0.0;
+    }
+    return width;
+}
+
+/* == Old draw string method
+- (CGFloat)drawString:(NSString*)ch font:(NSFont*)font context:(CGContextRef)context {
     NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:ch];
     [s addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, 1)];
     [s addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0, 1)];
@@ -52,7 +84,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CTRunGetAdvances(firstRun, CFRangeMake(0, 1), &size);
     CFRelease(line);
     return size.width;
-}
+}*/
 
 - (void)drawGlyph:(GGlyph*)glyph context:(CGContextRef)context {
     CTLineRef line = [glyph line];
@@ -479,6 +511,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 
 - (void)eval:(CGContextRef)context {
     //NSDate *methodStart = [NSDate date];
+    // TODO: Remove this line after fixing issue #15 https://github.com/orklann/PEP/issues/15
+    [page setNeedUpdate:YES];
     if ([page needUpdate]) {
         [self parseCommands];
         [page buildCachedFonts];
