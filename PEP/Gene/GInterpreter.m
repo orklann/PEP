@@ -58,10 +58,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         CTFontDrawGlyphs(coreFont, g, p, 1, context);
         
         // Get glyph width
-        CGRect rect;
-        CGFontRef cgFont = CTFontCopyGraphicsFont((CTFontRef)coreFont, nil);
-        CGFontGetGlyphBBoxes(cgFont, &a, 1, &rect);
-        width = rect.size.width / CGFontGetUnitsPerEm(cgFont) * font.pointSize;
+        width = CTFontGetAdvancesForGlyphs(coreFont, kCTFontOrientationHorizontal, g, NULL, 1);
     } else {
         NSLog(@"Error: [[GPage textState] encoding] is NULL");
         return 0.0;
@@ -124,10 +121,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         [page addGlyph:ch font:[[page textState] fontName]];
         
         CGContextSetTextMatrix(context, rm);
-        [self drawString:ch font:font context:context];
-        
-        CGFloat hAdvance = getGlyphAdvanceForFont(ch, font);
-        
+        CGFloat hAdvance = [self drawString:ch font:font context:context];
+        NSLog(@"1, width: %f", hAdvance);
+        CGFloat width = getGlyphAdvanceForFont(ch, font);
+        NSLog(@"width: %f", width);
         // Test: draw bounding box for glyph
         //CGRect r = getGlyphBoundingBox(ch, font, rm);
         //CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
