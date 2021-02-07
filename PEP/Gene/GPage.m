@@ -694,21 +694,6 @@
     return NO;
 }
 
-- (CTLineRef)getLineFromGlyph:(GGlyph*)glyph {
-    NSString *ch = [glyph content];
-    NSString *fontKey = [NSString stringWithFormat:@"%@-%f", [glyph fontName],
-                         [glyph fontSize]];
-    NSFont *font = [self getCachedFontForKey:fontKey];
-    
-    NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:ch];
-    [s addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, 1)];
-    [s addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0, 1)];
-    
-    CFAttributedStringRef attrStr = (__bridge CFAttributedStringRef)(s);
-    CTLineRef line = CTLineCreateWithAttributedString(attrStr);
-    return line;
-}
-
 - (void)buildFontEncodings {
     id fonts = [[resources value] objectForKey:@"Font"];
     if ([(GObject*)fonts type] == kRefObject) {

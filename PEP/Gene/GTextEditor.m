@@ -401,9 +401,10 @@
         [g setTextMatrix:tm];
         [g setFontName:fontName];
         [g setFontSize:fontSize];
-        // Set CFLineRef for speeding up drawing
-        CTLineRef line = [self.page getLineFromGlyph:g];
-        [g setLine:line];
+        [g setFont:font];
+        
+        // TODO: Need to set [g glyph];
+        
         
         [glyphs addObject:g]; // Add this new glyph at the end
 
@@ -458,10 +459,9 @@
     [g setTextMatrix:tm];
     [g setFontName:fontName];
     [g setFontSize:fontSize];
-    // Set CFLineRef for speeding up drawing
-    CTLineRef line = [self.page getLineFromGlyph:g];
-    [g setLine:line];
+    [g setFont:font];
     
+    // TODO: Need to set [g glyph]
     
     // Set width for new glyph
     NSSize s = NSMakeSize(hAdvance, 0);

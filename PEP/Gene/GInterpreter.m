@@ -38,6 +38,24 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     input = data;
 }
 
+- (CGGlyph)getCGGlyphForGGlyph:(GGlyph*)glyph {
+    CTFontRef coreFont = (__bridge CTFontRef)([glyph font]);
+    char **encoding = [[page textState] encoding];
+    CGGlyph ret = -1;
+    if (encoding != NULL) {
+        unichar charCode = [[glyph content] characterAtIndex:0];
+        if (charCode > 255) {
+            NSLog(@"Error: char code is greater than 255, it's not a latin character");
+        }
+        char *glyphNameChars = encoding[charCode];
+        NSString *glyphName = [NSString stringWithFormat:@"%s", glyphNameChars];
+        ret = CTFontGetGlyphWithName(coreFont, (__bridge CFStringRef)glyphName);
+    } else {
+        NSLog(@"Error: encoding is NULL in [GInterpreter getCGGlyphForGGlyph:]");
+    }
+    return ret;
+}
+
 - (CGFloat)drawString:(NSString*)ch font:(NSFont*)font context:(CGContextRef)context {
     CTFontRef coreFont = (__bridge CTFontRef)(font);
     char **encoding = [[page textState] encoding];
@@ -84,10 +102,13 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }*/
 
 - (void)drawGlyph:(GGlyph*)glyph context:(CGContextRef)context {
-    CTLineRef line = [glyph line];
-    CFArrayRef runs = CTLineGetGlyphRuns(line);
-    CTRunRef firstRun = CFArrayGetValueAtIndex(runs, 0);
-    CTRunDraw(firstRun, context, CFRangeMake(0, 1));
+    CTFontRef coreFont = (__bridge CTFontRef)([glyph font]);
+    CGGlyph g[1];
+    CGPoint p[1];
+    g[0] = [glyph glyph];
+    p[0] = NSZeroPoint;
+    CGContextSetFillColorWithColor(context, [[NSColor blackColor] CGColor]);
+    CTFontDrawGlyphs(coreFont, g, p, 1, context);
 }
 
 - (void)layoutStrings:(NSString*)s context:(CGContextRef)context  tj:(CGFloat)tjDelta prevTj:(int)prevTj{
@@ -122,9 +143,13 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         
         CGContextSetTextMatrix(context, rm);
         CGFloat hAdvance = [self drawString:ch font:font context:context];
+        
+        /* TODO: Remove me
         NSLog(@"1, width: %f", hAdvance);
         CGFloat width = getGlyphAdvanceForFont(ch, font);
         NSLog(@"width: %f", width);
+         */
+        
         // Test: draw bounding box for glyph
         //CGRect r = getGlyphBoundingBox(ch, font, rm);
         //CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
@@ -169,19 +194,21 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             [glyph setTextMatrix:rm];
             NSString *fontName = [[page textState] fontName];
             [glyph setFontName:fontName];
+            [glyph setFont:font];
+            
             // Use font size 1.0, we set font size in text matrix already
             //[glyph setFontSize:[[page textState] fontSize]];
             [glyph setFontSize:1.0];
-            
-            // Set CFLineRef for speeding up drawing
-            CTLineRef line = [page getLineFromGlyph:glyph];
-            [glyph setLine:line];
             
             // Set current word space
             [glyph setWordSpace:currentWordspace];
             
             // Set current character space
             [glyph setCharacterSpace:currentCharacterSpace];
+            
+            // Set CGGlyph for GGGlyph
+            CGGlyph g = [self getCGGlyphForGGlyph:glyph];
+            [glyph setGlyph:g];
             
             // Only set delta to first glyph of a string
             if (i == 0) {
@@ -508,8 +535,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 
 - (void)eval:(CGContextRef)context {
     //NSDate *methodStart = [NSDate date];
-    // TODO: Remove this line after fixing issue #15 https://github.com/orklann/PEP/issues/15
-    [page setNeedUpdate:YES];
     if ([page needUpdate]) {
         [self parseCommands];
         [page buildCachedFonts];
