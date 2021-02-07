@@ -144,12 +144,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         CGContextSetTextMatrix(context, rm);
         CGFloat hAdvance = [self drawString:ch font:font context:context];
         
-        /* TODO: Remove me
-        NSLog(@"1, width: %f", hAdvance);
-        CGFloat width = getGlyphAdvanceForFont(ch, font);
-        NSLog(@"width: %f", width);
-         */
-        
         // Test: draw bounding box for glyph
         //CGRect r = getGlyphBoundingBox(ch, font, rm);
         //CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
