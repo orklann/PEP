@@ -57,6 +57,7 @@
 		9392915925625AF0003F062A /* image.png in Resources */ = {isa = PBXBuildFile; fileRef = 9392915725625AF0003F062A /* image.png */; };
 		9397A56A25652DB5003969B8 /* PEPMisc.m in Sources */ = {isa = PBXBuildFile; fileRef = 9397A56925652DB5003969B8 /* PEPMisc.m */; };
 		9397A56F25653D48003969B8 /* PEPMiscTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9397A56E25653D48003969B8 /* PEPMiscTests.m */; };
+		93A46B6425DB9FE30078D2FA /* GFontInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A46B6325DB9FE30078D2FA /* GFontInfo.m */; };
 		93A8692A251399760033DC22 /* GPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A86929251399760033DC22 /* GPage.m */; };
 		93A8692D25147ECA0033DC22 /* GMisc.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A8692C25147ECA0033DC22 /* GMisc.m */; };
 		93B707AC255D129200F326EB /* bug_hex_string.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93B707AB255D129200F326EB /* bug_hex_string.pdf */; };
@@ -165,6 +166,8 @@
 		9397A56825652DB5003969B8 /* PEPMisc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEPMisc.h; sourceTree = "<group>"; };
 		9397A56925652DB5003969B8 /* PEPMisc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEPMisc.m; sourceTree = "<group>"; };
 		9397A56E25653D48003969B8 /* PEPMiscTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEPMiscTests.m; sourceTree = "<group>"; };
+		93A46B6225DB9FE30078D2FA /* GFontInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GFontInfo.h; sourceTree = "<group>"; };
+		93A46B6325DB9FE30078D2FA /* GFontInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GFontInfo.m; sourceTree = "<group>"; };
 		93A86928251399760033DC22 /* GPage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GPage.h; sourceTree = "<group>"; };
 		93A86929251399760033DC22 /* GPage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GPage.m; sourceTree = "<group>"; };
 		93A8692B25147ECA0033DC22 /* GMisc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMisc.h; sourceTree = "<group>"; };
@@ -368,6 +371,8 @@
 				931ECFB02518911A00E26EFA /* GInterpreter.m */,
 				9373EEF4251C84A80066AD2A /* GFont.h */,
 				9373EEF5251C84A80066AD2A /* GFont.m */,
+				93A46B6225DB9FE30078D2FA /* GFontInfo.h */,
+				93A46B6325DB9FE30078D2FA /* GFontInfo.m */,
 				93427467252082CA00CA3DBE /* GGraphicsState.h */,
 				93427468252082CA00CA3DBE /* GGraphicsState.m */,
 				9373EEF1251C7E840066AD2A /* GTextState.h */,
@@ -551,6 +556,7 @@
 				93DEC3422540238C00E280B0 /* GBinaryData.m in Sources */,
 				9346A86125305B2800804506 /* GTextBlock.m in Sources */,
 				930ACC9B250759780092206C /* GDecoders.m in Sources */,
+				93A46B6425DB9FE30078D2FA /* GFontInfo.m in Sources */,
 				93C0E61D256119F700D4E508 /* PEPTabView.m in Sources */,
 				93576003255FC6F600102C92 /* PEPWindow.m in Sources */,
 				9373EEF3251C7E840066AD2A /* GTextState.m in Sources */,
