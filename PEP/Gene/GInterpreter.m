@@ -13,6 +13,7 @@
 #import "GGlyph.h"
 #import "GEncodings.h"
 #import "GDocument.h"
+#import "GFontInfo.h"
 
 BOOL isCommand(NSString *cmd, NSString *cmd2) {
     return [cmd isEqualToString:cmd2];
@@ -77,6 +78,16 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         
         // Get glyph width
         width = CTFontGetAdvancesForGlyphs(coreFont, kCTFontOrientationHorizontal, g, NULL, 1);
+        
+        // if width from CGGlyph is zero, we need to lookup it in fontInfos dictionary in GDocument
+        if (width == 0.0) {
+            NSLog(@"Debug: width == 0.0");
+            NSString *fontTag = [[page textState] fontName];
+            GFontInfo *fontInfo = [page.doc.fontInfos objectForKey:fontTag];
+            NSLog(@"Debug: Font info object: %@", fontInfo);
+            width = [fontInfo getCharWidth:charCode];
+            NSLog(@"Debug: new width:%f", width);
+        }
     } else {
         NSLog(@"Error: [[GPage textState] encoding] is NULL");
         return 0.0;

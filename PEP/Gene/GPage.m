@@ -747,7 +747,8 @@
         
         NSMutableArray *array = [NSMutableArray array];
         for (GNumberObject *v in [widthArray value]) {
-            NSNumber *n = [NSNumber numberWithInt:(int)([v realValue])];
+            NSLog(@"Debug: v->realValue: %f", [v getRealValue]);
+            NSNumber *n = [NSNumber numberWithInt:(int)([v getRealValue])];
             [array addObject:n];
         }
         [fontInfo setWidths:array];
