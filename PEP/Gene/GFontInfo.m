@@ -13,4 +13,11 @@
     GFontInfo *o = [[GFontInfo alloc] init];
     return o;
 }
+
+- (CGFloat)getCharWidth:(unichar)charCode {
+    NSUInteger index = charCode - self.firstChar;
+    NSNumber *widthNumber = [self.widths objectAtIndex:index];
+    CGFloat width = [widthNumber floatValue];
+    return (CGFloat)(width / 1000.0);
+}
 @end

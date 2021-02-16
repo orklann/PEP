@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) NSMutableArray *widths;
 
 + (id)create;
+- (CGFloat)getCharWidth:(unichar)charCode;
 @end
 
 NS_ASSUME_NONNULL_END
