@@ -58,6 +58,7 @@
 		9397A56A25652DB5003969B8 /* PEPMisc.m in Sources */ = {isa = PBXBuildFile; fileRef = 9397A56925652DB5003969B8 /* PEPMisc.m */; };
 		9397A56F25653D48003969B8 /* PEPMiscTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9397A56E25653D48003969B8 /* PEPMiscTests.m */; };
 		93A46B6425DB9FE30078D2FA /* GFontInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A46B6325DB9FE30078D2FA /* GFontInfo.m */; };
+		93A46B6825DBA1E50078D2FA /* GFontInfoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A46B6725DBA1E50078D2FA /* GFontInfoTests.m */; };
 		93A8692A251399760033DC22 /* GPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A86929251399760033DC22 /* GPage.m */; };
 		93A8692D25147ECA0033DC22 /* GMisc.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A8692C25147ECA0033DC22 /* GMisc.m */; };
 		93B707AC255D129200F326EB /* bug_hex_string.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93B707AB255D129200F326EB /* bug_hex_string.pdf */; };
@@ -168,6 +169,7 @@
 		9397A56E25653D48003969B8 /* PEPMiscTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEPMiscTests.m; sourceTree = "<group>"; };
 		93A46B6225DB9FE30078D2FA /* GFontInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GFontInfo.h; sourceTree = "<group>"; };
 		93A46B6325DB9FE30078D2FA /* GFontInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GFontInfo.m; sourceTree = "<group>"; };
+		93A46B6725DBA1E50078D2FA /* GFontInfoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GFontInfoTests.m; sourceTree = "<group>"; };
 		93A86928251399760033DC22 /* GPage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GPage.h; sourceTree = "<group>"; };
 		93A86929251399760033DC22 /* GPage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GPage.m; sourceTree = "<group>"; };
 		93A8692B25147ECA0033DC22 /* GMisc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GMisc.h; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 				930ACC9C250763C30092206C /* GDecodersTests.m */,
 				93DEC33E25401E1700E280B0 /* GEncodersTests.m */,
 				930B09BA25412AEE00ED00BD /* GMiscTests.m */,
+				93A46B6725DBA1E50078D2FA /* GFontInfoTests.m */,
 				93FEFCDA25CBC33F0095E19D /* GEncodingsTests.m */,
 				9397A56E25653D48003969B8 /* PEPMiscTests.m */,
 				931221DB24F0139700929C01 /* Info.plist */,
@@ -574,6 +577,7 @@
 				9320C01A2519C7F8008F20B0 /* GInterpreterTests.m in Sources */,
 				9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */,
 				930ACC9D250763C30092206C /* GDecodersTests.m in Sources */,
+				93A46B6825DBA1E50078D2FA /* GFontInfoTests.m in Sources */,
 				9397A56F25653D48003969B8 /* PEPMiscTests.m in Sources */,
 				93DC04C624F7B474003AC9B0 /* GParserTests.m in Sources */,
 				9359739625416F1000BB217D /* GPageTests.m in Sources */,
