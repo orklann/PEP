@@ -165,6 +165,15 @@
     
     [self resizeToFitAllPages];
     
+    // parse Content of all pagea
+    [self parsePagesContent];
+    
+    // Build font encodings for all page
+    [self buildFontEncodings];
+    
+    // Build font infos for all pages
+    [self buildFontInfos];
+    
     // Argly hack to initaily scroll to top, because it's bugy to scroll to top after setFrame;
     [NSTimer scheduledTimerWithTimeInterval:0.05 repeats:NO block:^(NSTimer *timer) {
         [self scrollToTop];
@@ -173,12 +182,6 @@
         [self updateVisiblePage];
         [self setNeedsDisplayInRect:[self visibleRect]];
     }];
-    
-    // parse Content of all pagea
-    [self parsePagesContent];
-    
-    // Build font encodings for all page
-    [self buildFontEncodings];
     
     // Make all mouse events work
     [self updateTrackingAreas];
@@ -437,6 +440,13 @@
     self.fontEncodings = [NSMutableDictionary dictionary];
     for (GPage *page in pages) {
         [page buildFontEncodings];
+    }
+}
+
+- (void)buildFontInfos {
+    self.fontInfos = [NSMutableDictionary dictionary];
+    for (GPage *page in pages) {
+        [page buildFontInfos];
     }
 }
 

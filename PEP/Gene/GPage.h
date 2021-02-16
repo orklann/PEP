@@ -114,6 +114,9 @@ NS_ASSUME_NONNULL_BEGIN
 // Build font encodings in page
 - (void)buildFontEncodings;
 
+// Build font infos in page
+- (void)buildFontInfos;
+
 // Debug
 - (void)logPageContent;
 @end

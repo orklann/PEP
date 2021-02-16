@@ -20,6 +20,7 @@
 #import "GGlyph.h"
 #import "GCompiler.h"
 #import "GBinaryData.h"
+#import "GFontInfo.h"
 
 @implementation GPage
 
@@ -726,6 +727,35 @@
         }
     }
     
+}
+
+- (void)buildFontInfos {
+    id fonts = [[resources value] objectForKey:@"Font"];
+    if ([(GObject*)fonts type] == kRefObject) {
+        fonts = [parser getObjectByRef:[fonts getRefString]];
+    }
+    
+    GDictionaryObject *fontsDictionary = (GDictionaryObject*)fonts;
+    for (NSString *fontTagKey in [[fontsDictionary value] allKeys]) {
+        GRefObject *fontRef = [[fontsDictionary value] objectForKey:fontTagKey];
+        GDictionaryObject *font = [parser getObjectByRef:[fontRef getRefString]];
+        
+        GFontInfo *fontInfo = [GFontInfo create];
+        GNumberObject *firstChar = [[font value] objectForKey:@"FirstChar"];
+        GArrayObject *widthArray = [[font value] objectForKey:@"Widths"];
+        [fontInfo setFirstChar:(int)[firstChar realValue]];
+        
+        NSMutableArray *array = [NSMutableArray array];
+        for (GNumberObject *v in [widthArray value]) {
+            NSNumber *n = [NSNumber numberWithInt:(int)([v realValue])];
+            [array addObject:n];
+        }
+        [fontInfo setWidths:array];
+        
+        if ([doc.fontInfos objectForKey:fontTagKey] == nil) {
+            [doc.fontInfos setValue:fontInfo forKey:fontTagKey];
+        }
+    }
 }
 
 #pragma Debug

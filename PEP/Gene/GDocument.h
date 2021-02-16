@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 @property (readwrite) NSMutableDictionary *fontEncodings;
+@property (readwrite) NSMutableDictionary *fontInfos;
 @property (readwrite) NSString *file;
 @property (readwrite) BOOL forceDrawAllPage;
 @property (readwrite) NSMutableArray *addedRefkeys;
@@ -50,6 +51,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Build fonts encoding dictionary
 - (void)buildFontEncodings;
+
+// Build fonts infos dictionary
+- (void)buildFontInfos;
 
 // Debug:
 - (void)logPageContent:(int)pageNumber;
