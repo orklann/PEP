@@ -747,11 +747,16 @@
         
         NSMutableArray *array = [NSMutableArray array];
         for (GNumberObject *v in [widthArray value]) {
-            NSLog(@"Debug: v->realValue: %f", [v getRealValue]);
             NSNumber *n = [NSNumber numberWithInt:(int)([v getRealValue])];
             [array addObject:n];
         }
         [fontInfo setWidths:array];
+        
+        // Missing width in font descriptor
+        GRefObject *fontDescriptorRef = [[font value] objectForKey:@"FontDescriptor"];
+        GDictionaryObject *fontDescriptor = [parser getObjectByRef:[fontDescriptorRef getRefString]];
+        GNumberObject *missingWidth = [[fontDescriptor value] objectForKey:@"MissingWidth"];
+        [fontInfo setMissingWidth:(int)[missingWidth getRealValue]];
         
         if ([doc.fontInfos objectForKey:fontTagKey] == nil) {
             [doc.fontInfos setValue:fontInfo forKey:fontTagKey];

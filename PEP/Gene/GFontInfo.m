@@ -17,7 +17,8 @@
 - (CGFloat)getCharWidth:(unichar)charCode {
     NSUInteger index = charCode - self.firstChar;
     if (index >= [self.widths count] || index < 0) {
-        return 0.0;
+        NSLog(@"Debug: missing width: %d", (int)[self missingWidth]);
+        return (CGFloat)([self missingWidth] / 1000.0);
     }
     NSNumber *widthNumber = [self.widths objectAtIndex:index];
     CGFloat width = [widthNumber floatValue];
