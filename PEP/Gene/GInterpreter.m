@@ -84,23 +84,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     return width;
 }
 
-/* == Old draw string method
-- (CGFloat)drawString:(NSString*)ch font:(NSFont*)font context:(CGContextRef)context {
-    NSMutableAttributedString *s = [[NSMutableAttributedString alloc] initWithString:ch];
-    [s addAttribute:NSFontAttributeName value:font range:NSMakeRange(0, 1)];
-    [s addAttribute:NSForegroundColorAttributeName value:[NSColor blackColor] range:NSMakeRange(0, 1)];
-    
-    CFAttributedStringRef attrStr = (__bridge CFAttributedStringRef)(s);
-    CTLineRef line = CTLineCreateWithAttributedString(attrStr);
-    CTLineDraw(line, context);
-    CFArrayRef runs = CTLineGetGlyphRuns(line);
-    CTRunRef firstRun = CFArrayGetValueAtIndex(runs, 0);
-    CGSize size;
-    CTRunGetAdvances(firstRun, CFRangeMake(0, 1), &size);
-    CFRelease(line);
-    return size.width;
-}*/
-
 - (void)drawGlyph:(GGlyph*)glyph context:(CGContextRef)context {
     CTFontRef coreFont = (__bridge CTFontRef)([glyph font]);
     CGGlyph g[1];
