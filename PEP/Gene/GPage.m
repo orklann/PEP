@@ -743,7 +743,7 @@
         GFontInfo *fontInfo = [GFontInfo create];
         GNumberObject *firstChar = [[font value] objectForKey:@"FirstChar"];
         GArrayObject *widthArray = [[font value] objectForKey:@"Widths"];
-        [fontInfo setFirstChar:(int)[firstChar realValue]];
+        [fontInfo setFirstChar:(int)[firstChar getRealValue]];
         
         NSMutableArray *array = [NSMutableArray array];
         for (GNumberObject *v in [widthArray value]) {

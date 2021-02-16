@@ -81,13 +81,12 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         
         // if width from CGGlyph is zero, we need to lookup it in fontInfos dictionary in GDocument
         if (width == 0.0) {
-            NSLog(@"Debug: width == 0.0");
             NSString *fontTag = [[page textState] fontName];
             GFontInfo *fontInfo = [page.doc.fontInfos objectForKey:fontTag];
-            NSLog(@"Debug: Font info object: %@", fontInfo);
             width = [fontInfo getCharWidth:charCode];
-            NSLog(@"Debug: new width:%f", width);
         }
+        //Debug:
+        //NSLog(@"Debug: font: %@ %c width: %f char code:%d", [[page textState] fontName], charCode, width, charCode);
     } else {
         NSLog(@"Error: [[GPage textState] encoding] is NULL");
         return 0.0;
