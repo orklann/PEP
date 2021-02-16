@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
     
 }
 
+@property (readwrite) NSString* fontTag;
 @property (readwrite) unichar firstChar;
 @property (readwrite) NSMutableArray *widths;
 
