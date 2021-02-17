@@ -408,6 +408,9 @@
         CGGlyph cgGlyph = [self.page.interpreter getCGGlyphForGGlyph:g];
         [g setGlyph:cgGlyph];
         
+        // Update width for new glyph
+        [g updateGlyphWidth];
+        
         [glyphs addObject:g]; // Add this new glyph at the end
 
         
@@ -423,7 +426,6 @@
     GGlyph *currentGlyph = [self getCurrentGlyph];
     GGlyph *prevGlyph = [self getPrevGlyph];
     
-    CGFloat width;
     CGAffineTransform ctm;
     CGAffineTransform tm;
     CGFloat fontSize;
@@ -431,21 +433,22 @@
     
     GGlyph *g = [GGlyph create];
     [g setContent:ch];
-    CGFloat hAdvance = 0;
-    hAdvance = getGlyphAdvanceForFont(ch, font);
     
     if (currentGlyph && ![self isCurrentGlyphLastGlyph]) {
         ctm = currentGlyph.ctm;
         tm = currentGlyph.textMatrix;
         fontSize = currentGlyph.fontSize;
         
+        // These three are needed for updating width below
+        [g setTextMatrix:tm];
+        [g setEncoding:currentGlyph.encoding];
+        [g setFont:font];
+        
         // Calculate deltaX
-        NSSize s = NSMakeSize(hAdvance, 0);
-        s = CGSizeApplyAffineTransform(s, tm);
-        CGFloat deltaX = s.width;
+        [g updateGlyphWidth];
+        CGFloat deltaX = g.width;
         
         [self moveGlyphsIncludeAfter:currentGlyph byDeltaX:deltaX];
-        [g setEncoding:currentGlyph.encoding];
     } else {
         // Current glyph is nil, means we are at the end of text block,
         // we use previous glyph info
@@ -467,11 +470,8 @@
     CGGlyph cgGlyph = [self.page.interpreter getCGGlyphForGGlyph:g];
     [g setGlyph:cgGlyph];
     
-    // Set width for new glyph
-    NSSize s = NSMakeSize(hAdvance, 0);
-    s = CGSizeApplyAffineTransform(s, tm);
-    width = s.width;
-    [g setWidth:width];
+    // Update width for new glyph
+    [g updateGlyphWidth];
     [glyphs addObject:g];
 
     // Add the new glyph index to text editor's editing glyphs

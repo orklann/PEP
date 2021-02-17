@@ -9,6 +9,9 @@
 #import "GGlyph.h"
 #import "GObjects.h"
 #import "GMisc.h"
+#import "GFontInfo.h"
+#import "GPage.h"
+#import "GDocument.h"
 
 @implementation GGlyph
 + (id)create {
@@ -183,5 +186,39 @@
     NSArray *args = [NSArray arrayWithObject:string];
     [tjCommand setArgs:args];
     return tjCommand;
+}
+
+- (void)updateGlyphWidth {
+    CTFontRef coreFont = (__bridge CTFontRef)(self.font);
+    char **encoding = [self encoding];
+    CGFloat width = 0.0;
+    if (encoding != NULL) {
+        unichar charCode = [content characterAtIndex:0];
+        if (charCode > 255) {
+            NSLog(@"Error: char code is greater than 255, it's not a latin character");
+        }
+        char *glyphNameChars = encoding[charCode];
+        NSString *glyphName = [NSString stringWithFormat:@"%s", glyphNameChars];
+        CGGlyph a = CTFontGetGlyphWithName(coreFont, (__bridge CFStringRef)glyphName);
+        CGGlyph g[1];
+        g[0] = a;
+        
+        // Get glyph width
+        width = CTFontGetAdvancesForGlyphs(coreFont, kCTFontOrientationHorizontal, g, NULL, 1);
+        
+        // if width from CGGlyph is zero, we need to lookup it in fontInfos dictionary in GDocument
+        if (width == 0.0) {
+            NSString *fontTag = [[self.page textState] fontName];
+            GFontInfo *fontInfo = [self.page.doc.fontInfos objectForKey:fontTag];
+            width = [fontInfo getCharWidth:charCode];
+        }
+    } else {
+        NSLog(@"Error: encoding in [GGlyph updateGlyphWidth] is NULL");
+        width = 0.0;
+    }
+    
+    NSSize s = NSMakeSize(width, 0);
+    s = CGSizeApplyAffineTransform(s, self.textMatrix);
+    self.width = s.width;
 }
 @end

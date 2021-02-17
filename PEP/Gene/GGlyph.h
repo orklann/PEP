@@ -10,6 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class GPage;
+
 @interface GGlyph : NSObject {
     NSRect frame;
     NSString *content;
@@ -17,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
     CGFloat height;
 }
 
+@property (readwrite) GPage *page;
 @property (readwrite) NSFont *font;
 @property (readwrite) CGGlyph glyph;
 @property (readwrite) int delta;
@@ -44,6 +47,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString*)literalString;
 - (NSString*)complieToOperators;
 - (NSArray*)compileToCommands;
+- (void)updateGlyphWidth;
 @end
 
 NS_ASSUME_NONNULL_END

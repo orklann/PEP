@@ -173,6 +173,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             CGRect rectGlyphSpace = getGlyphBoundingBoxGlyphSpace(ch, font);
             [glyph setFrameInGlyphSpace:rectGlyphSpace];
             
+            [glyph setPage:page];
             [glyph setPoint:p];
             [glyph setContent:ch];
             [glyph setWidth:s.width];
