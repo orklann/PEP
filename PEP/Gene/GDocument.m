@@ -168,6 +168,9 @@
     // parse Content of all pagea
     [self parsePagesContent];
     
+    // Build cached fonts for all pages
+    [self buildCachedFonts];
+    
     // Build font encodings for all page
     [self buildFontEncodings];
     
@@ -447,6 +450,13 @@
     self.fontInfos = [NSMutableDictionary dictionary];
     for (GPage *page in pages) {
         [page buildFontInfos];
+    }
+}
+
+- (void)buildCachedFonts {
+    self.cachedFonts = [NSMutableDictionary dictionary];
+    for (GPage *page in pages) {
+        [page buildCachedFonts];
     }
 }
 

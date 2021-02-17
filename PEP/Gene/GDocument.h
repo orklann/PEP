@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *visiblePages;
 }
 
+@property (readwrite) NSMutableDictionary *cachedFonts;
 @property (readwrite) NSMutableDictionary *fontEncodings;
 @property (readwrite) NSMutableDictionary *fontInfos;
 @property (readwrite) NSString *file;
@@ -54,6 +55,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Build fonts infos dictionary
 - (void)buildFontInfos;
+
+// Build cached fonts dictionary
+- (void)buildCachedFonts;
 
 // Debug:
 - (void)logPageContent:(int)pageNumber;

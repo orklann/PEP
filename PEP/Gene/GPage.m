@@ -27,7 +27,6 @@
 + (id)create {
     GPage *p = [[GPage alloc] init];
     [p setNeedUpdate:YES];
-    p.cachedFonts = [NSMutableDictionary dictionary];
     p.addedFonts = [NSMutableDictionary dictionary];
     p.isRendering = NO;
     p.pageYOffsetInDoc = 0.0;
@@ -239,7 +238,7 @@
     if (f) {
         return f;
     }
-    f = [self.cachedFonts objectForKey:fontKey];
+    f = [[self cachedFonts] objectForKey:fontKey];
     return f;
 }
 
@@ -249,7 +248,7 @@
     if (font){
         return font;
     }
-    return [self.cachedFonts objectForKey:key];
+    return [[self cachedFonts] objectForKey:key];
 }
 
 - (NSFont*)getCachedFontByFontTag:(NSString*)fontTag {
@@ -612,31 +611,44 @@
 
 - (void)setCachedFont:(NSString*)fontName fontSize:(CGFloat)fontSize {
     NSString *fontKey = [NSString stringWithFormat:@"%@-%f", fontName, fontSize];
-    NSFont *existFont = [self.cachedFonts objectForKey:fontKey];
+    NSFont *existFont = [[self cachedFonts] objectForKey:fontKey];
     if (existFont) return ;
     GFont *font = [GFont fontWithName:fontName page:self];
     NSFont *f = [font getNSFontBySize:fontSize];
-    [self.cachedFonts setObject:f forKey:fontKey];
+    [[self cachedFonts] setObject:f forKey:fontKey];
 }
 
 - (void)buildCachedFonts {
-    [self.cachedFonts removeAllObjects];
-    NSMutableArray *commands = [self commands];
-    NSUInteger i;
-    for (i = 0; i < [commands count]; i++) {
-        id obj = [commands objectAtIndex:i];
-        if ([(GObject*) obj type] == kCommandObject) {
-            GCommandObject *cmdObj = (GCommandObject*)obj;
-            NSString *cmd = [cmdObj cmd];
-            if (isCommand(cmd, @"Tf")) { // eval Tf
-                NSString *fontName = [(GNameObject*)[[cmdObj args] objectAtIndex:0] value];
-                // [[self textState] fontSize] (set by Tj operator) used in text matrix,
-                // So we only need font size to be 1.0 for actuall NSFont;
-                CGFloat fontSize = 1.0f; //[[[cmdObj args] objectAtIndex:1] getRealValue];
-                [self setCachedFont:fontName fontSize:fontSize];
-            }
-        }
+    id res = [[pageDictionary value] objectForKey:@"Resources"];
+    if ([(GObject*)res type] == kRefObject) {
+        GRefObject *ref = (GRefObject*)res;
+        resources = [parser getObjectByRef:[ref getRefString]];
+    } else if ([(GObject*)res type] == kDictionaryObject){
+        // We handle this case below: resources is a dictionary,
+        // not an indrect object
+        NSLog(@"(Handled) resources is a dictionary: %@", [(GDictionaryObject *)res toString]);
+        resources = (GDictionaryObject*)res;
     }
+    
+    GDictionaryObject *fontDictionary;
+    GObject *refObject = [[resources value] objectForKey:@"Font"];
+    if ([refObject type] == kRefObject) {
+        fontDictionary = [parser getObjectByRef:[(GRefObject*)refObject getRefString]];
+    } else {
+        fontDictionary = (GDictionaryObject*)refObject;
+    }
+    
+    for (NSString *fontName in [[fontDictionary value] allKeys]) {
+        // [[self textState] fontSize] (set by Tj operator) used in text matrix,
+        // So we only need font size to be 1.0 for actuall NSFont;
+        CGFloat fontSize = 1.0f; //[[[cmdObj args] objectAtIndex:1] getRealValue];
+        [self setCachedFont:fontName fontSize:fontSize];
+    }
+}
+
+// Just return document's cached fonts, it's now in document scope
+- (NSMutableDictionary*)cachedFonts {
+    return doc.cachedFonts;
 }
 
 - (void)addNewFont:(NSFont*)font withPDFFontTag:(NSString*)fontTag {

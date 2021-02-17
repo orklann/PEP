@@ -43,7 +43,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) CGFloat pageYOffsetInDoc;
 @property (readwrite) BOOL isRendering;
 @property (readwrite) unsigned int lastStreamOffset;
-@property (readwrite) NSMutableDictionary *cachedFonts;
 @property (readwrite) NSMutableDictionary *addedFonts;
 @property (readwrite) NSMutableDictionary *glyphsForFontDict;
 @property (readwrite) BOOL needUpdate;
@@ -102,6 +101,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Build cached fonts for this page
 - (void)buildCachedFonts;
+- (NSMutableDictionary*)cachedFonts;
 
 // Add new font with PDF font key
 - (void)addNewFont:(NSFont*)font withPDFFontTag:(NSString*)fontTag;

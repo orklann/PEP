@@ -505,7 +505,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     //NSDate *methodStart = [NSDate date];
     if ([page needUpdate]) {
         [self parseCommands];
-        [page buildCachedFonts];
         NSMutableArray *commands = [self commands];
         NSUInteger i;
         for (i = 0; i < [commands count]; i++) {
