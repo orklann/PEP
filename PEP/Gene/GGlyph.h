@@ -27,6 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) CGFloat characterSpace;
 @property (readwrite) int indexOfBlock;
 @property (readwrite) CGFloat width;
+@property (readwrite) CGFloat widthInGlyphSpace;
 @property (readwrite) NSRect frameInGlyphSpace;
 @property (readwrite) CGAffineTransform ctm;
 @property (readwrite) CGAffineTransform textMatrix;
@@ -47,7 +48,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString*)literalString;
 - (NSString*)complieToOperators;
 - (NSArray*)compileToCommands;
+
+// Update glyph width (a.k.a advance), frame (in user space and in glyph space)
 - (void)updateGlyphWidth;
+- (void)updateGlyphFrame;
+- (void)updateGlyphFrameInGlyphSpace;
 @end
 
 NS_ASSUME_NONNULL_END

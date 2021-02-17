@@ -217,8 +217,30 @@
         width = 0.0;
     }
     
+    self.widthInGlyphSpace = width;
     NSSize s = NSMakeSize(width, 0);
     s = CGSizeApplyAffineTransform(s, self.textMatrix);
     self.width = s.width;
+}
+
+- (void)updateGlyphFrame {
+    [self updateGlyphWidth];
+    CTFontRef coreFont = (__bridge CTFontRef)(self.font);
+    CGFloat width = self.widthInGlyphSpace;
+    CGFloat ascent = CTFontGetAscent(coreFont);
+    CGFloat descent = CTFontGetDescent(coreFont);
+    CGRect textRect = NSMakeRect(0, 0 - descent, width, descent + ascent);
+    textRect = CGRectApplyAffineTransform(textRect, self.textMatrix);
+    self.frame = CGRectApplyAffineTransform(textRect, self.ctm);
+    self.height = self.frame.size.height;
+}
+
+- (void)updateGlyphFrameInGlyphSpace {
+    [self updateGlyphWidth];
+    CTFontRef coreFont = (__bridge CTFontRef)(self.font);
+    CGFloat width = self.widthInGlyphSpace;
+    CGFloat ascent = CTFontGetAscent(coreFont);
+    CGFloat descent = CTFontGetDescent(coreFont);
+    self.frameInGlyphSpace = NSMakeRect(0, 0 - descent, width, descent + ascent);
 }
 @end

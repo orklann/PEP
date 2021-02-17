@@ -393,11 +393,9 @@
         CGAffineTransform ctm = lastDeletedGlyph.ctm;
         CGAffineTransform tm = lastDeletedGlyph.textMatrix;
         CGFloat fontSize = lastDeletedGlyph.fontSize;
-        NSRect rectGlyphSpace;
         
         GGlyph *g = [GGlyph create];
-        rectGlyphSpace = getGlyphBoundingBoxGlyphSpace(ch, font);
-        [g setFrameInGlyphSpace:rectGlyphSpace];
+
         [g setContent:ch];
         [g setCtm:ctm];
         [g setTextMatrix:tm];
@@ -410,6 +408,8 @@
         
         // Update width for new glyph
         [g updateGlyphWidth];
+        [g updateGlyphFrame];
+        [g updateGlyphFrameInGlyphSpace];
         
         [glyphs addObject:g]; // Add this new glyph at the end
 
@@ -429,7 +429,6 @@
     CGAffineTransform ctm;
     CGAffineTransform tm;
     CGFloat fontSize;
-    CGRect rectGlyphSpace;
     
     GGlyph *g = [GGlyph create];
     [g setContent:ch];
@@ -460,8 +459,6 @@
         [g setEncoding:prevGlyph.encoding];
     }
     
-    rectGlyphSpace = getGlyphBoundingBoxGlyphSpace(ch, font);
-    [g setFrameInGlyphSpace:rectGlyphSpace];
     [g setCtm:ctm];
     [g setTextMatrix:tm];
     [g setFontName:fontName];
@@ -472,6 +469,9 @@
     
     // Update width for new glyph
     [g updateGlyphWidth];
+    [g updateGlyphFrame];
+    [g updateGlyphFrameInGlyphSpace];
+    
     [glyphs addObject:g];
 
     // Add the new glyph index to text editor's editing glyphs

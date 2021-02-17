@@ -137,47 +137,21 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         CGContextSetTextMatrix(context, rm);
         CGFloat hAdvance = [self drawString:ch font:font context:context];
         
-        // Test: draw bounding box for glyph
-        //CGRect r = getGlyphBoundingBox(ch, font, rm);
-        //CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
-        //CGContextFillRect(context, r);
-        
         
         if ([page needUpdate]) {
             //
             // Make glyphs for GTextParser
             //
             
-            CGRect r = getGlyphBoundingBox(ch, font, rm);
-            
-            // Apply current context matrix to get the right frame of glyph
-            r = CGRectApplyAffineTransform(r, [[page graphicsState] ctm]);
-            
-            
             NSPoint p = CGContextGetTextPosition(context);
             // Apply current context matrix to get the right point for glyph
             p = CGPointApplyAffineTransform(p, [[page graphicsState] ctm]);
             
-            // Convert glyph width from glyph space to text space
-            // Glyph space are defined by EM square and glyph origin
-            // hAdvance is a floating point here = width / unitsPerEM
-            NSSize s = NSMakeSize(hAdvance, 0);
-            s = CGSizeApplyAffineTransform(s, rm);
-            
             GGlyph *glyph = [GGlyph create];
-            
-            // We set frame here, but we also recalculate frame in [GGlyph frame]
-            // So we need frame in glyph space, and convert it to text space and
-            // user space in [GGlyph frame]
-            [glyph setFrame:r];
-            CGRect rectGlyphSpace = getGlyphBoundingBoxGlyphSpace(ch, font);
-            [glyph setFrameInGlyphSpace:rectGlyphSpace];
             
             [glyph setPage:page];
             [glyph setPoint:p];
             [glyph setContent:ch];
-            [glyph setWidth:s.width];
-            [glyph setHeight:r.size.height];
             [glyph setCtm:[[page graphicsState] ctm]];
             [glyph setTextMatrix:rm];
             NSString *fontName = [[page textState] fontName];
@@ -200,6 +174,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             // Set CGGlyph for GGGlyph
             CGGlyph g = [self getCGGlyphForGGlyph:glyph];
             [glyph setGlyph:g];
+
+            [glyph updateGlyphFrame];
+            [glyph updateGlyphFrameInGlyphSpace];
             
             // Only set delta to first glyph of a string
             if (i == 0) {

@@ -17,16 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 // Print NSData in character strings
 void printData(NSData *data);
 
-// Get glyph width
-CGFloat getGlyphAdvanceForFont(NSString *ch, NSFont *font);
-
-// Get glyph bounding box, in user space.
-NSRect getGlyphBoundingBox(NSString *ch, NSFont *font, CGAffineTransform tm);
-
-// Get glyph bounding box, in glyph space
-// Without apply any matrix.
-NSRect getGlyphBoundingBoxGlyphSpace(NSString *ch, NSFont *font);
-
 // Compare method for sorting glyphs in read order
 int compareGlyphs(GGlyph *a, GGlyph *b);
 
