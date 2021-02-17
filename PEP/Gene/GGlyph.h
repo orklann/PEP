@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) NSString *fontName;
 @property (readwrite) CGFloat fontSize;
 @property (readwrite) int lineIndex;
+@property (readwrite) char * _Nonnull * _Nonnull encoding;
 
 + (id)create;
 - (void)setFrame:(NSRect)f;

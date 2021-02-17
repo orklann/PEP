@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Cocoa/Cocoa.h>
 #import "GParser.h"
+#import "GGlyph.h"
 
 @class GPage;
 NS_ASSUME_NONNULL_BEGIN
@@ -28,6 +29,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2);
 - (NSMutableArray*)commands;
 - (void)parseCommands;
 - (void)eval:(CGContextRef)context;
+
+- (CGGlyph)getCGGlyphForGGlyph:(GGlyph*)glyph;
 @end
 
 NS_ASSUME_NONNULL_END

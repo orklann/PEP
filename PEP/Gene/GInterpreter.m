@@ -41,7 +41,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 
 - (CGGlyph)getCGGlyphForGGlyph:(GGlyph*)glyph {
     CTFontRef coreFont = (__bridge CTFontRef)([glyph font]);
-    char **encoding = [[page textState] encoding];
+    char **encoding = [glyph encoding];
     CGGlyph ret = -1;
     if (encoding != NULL) {
         unichar charCode = [[glyph content] characterAtIndex:0];
@@ -192,6 +192,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             
             // Set current character space
             [glyph setCharacterSpace:currentCharacterSpace];
+            
+            // Set current encoding
+            [glyph setEncoding:[[page textState] encoding]];
             
             // Set CGGlyph for GGGlyph
             CGGlyph g = [self getCGGlyphForGGlyph:glyph];
@@ -361,14 +364,14 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     GDocument *doc = (GDocument*)[page doc];
     NSString *encoding = [[doc fontEncodings] objectForKey:fontName];
     char **encodingPointer = NULL;
-    if ([encoding isEqualToString:@"StandardEncoding"]) {
-        encodingPointer = StandardEncoding;
-    } else if ([encoding isEqualToString:@"MacRomanEncoding"]) {
+    if ([encoding isEqualToString:@"MacRomanEncoding"]) {
         encodingPointer = MacRomanEncoding;
     } else if ([encoding isEqualToString:@"WinAnsiEncoding"]) {
         encodingPointer = WinAnsiEncoding;
     } else if ([encoding isEqualToString:@"MacExpertEncoding"]) {
         encodingPointer = MacExpertEncoding;
+    } else {
+        encodingPointer = StandardEncoding;
     }
     
     if (encodingPointer == NULL) {

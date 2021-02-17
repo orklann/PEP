@@ -155,13 +155,13 @@
         textParser = [GTextParser create];
     }
         
-    GInterpreter *interpreter = [GInterpreter create];
-    [interpreter setPage:self];
-    [interpreter setParser:parser];
-    [interpreter setInput:pageContent];
+    _interpreter = [GInterpreter create];
+    [_interpreter setPage:self];
+    [_interpreter setParser:parser];
+    [_interpreter setInput:pageContent];
     
     //NSDate *methodStart = [NSDate date];
-    [interpreter eval:context];
+    [_interpreter eval:context];
     
     /* Measrure time */
     /*

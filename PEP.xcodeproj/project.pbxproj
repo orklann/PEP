@@ -67,6 +67,7 @@
 		93C0E61D256119F700D4E508 /* PEPTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C0E61C256119F700D4E508 /* PEPTabView.m */; };
 		93C0E62425611E9100D4E508 /* PEPTab.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C0E62325611E9100D4E508 /* PEPTab.m */; };
 		93C0E62C2561412F00D4E508 /* PEPToolbarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C0E62B2561412F00D4E508 /* PEPToolbarView.m */; };
+		93CA1E6825DCACB900DF7949 /* GEncodings.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CA1E6725DCACB900DF7949 /* GEncodings.m */; };
 		93D48C1E2536CAAA002DD41B /* GTextEditor.m in Sources */ = {isa = PBXBuildFile; fileRef = 93D48C1D2536CAAA002DD41B /* GTextEditor.m */; };
 		93DB0FC0255CCD350030F33A /* Sample_001.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93DB0FBF255CCD350030F33A /* Sample_001.pdf */; };
 		93DB0FC2255CCD410030F33A /* Sample_001.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93DB0FC1255CCD410030F33A /* Sample_001.pdf */; };
@@ -186,6 +187,7 @@
 		93C0E62A2561412F00D4E508 /* PEPToolbarView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEPToolbarView.h; sourceTree = "<group>"; };
 		93C0E62B2561412F00D4E508 /* PEPToolbarView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEPToolbarView.m; sourceTree = "<group>"; };
 		93C0E63125614CF800D4E508 /* PEPTabDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEPTabDelegate.h; sourceTree = "<group>"; };
+		93CA1E6725DCACB900DF7949 /* GEncodings.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GEncodings.m; sourceTree = "<group>"; };
 		93D48C1C2536CAAA002DD41B /* GTextEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTextEditor.h; sourceTree = "<group>"; };
 		93D48C1D2536CAAA002DD41B /* GTextEditor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTextEditor.m; sourceTree = "<group>"; };
 		93DB0FBF255CCD350030F33A /* Sample_001.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = Sample_001.pdf; sourceTree = "<group>"; };
@@ -405,6 +407,7 @@
 				935CC18025374A23005758B5 /* GConstants.h */,
 				93E73A75256794430060EEBC /* GTextEditorDelegate.h */,
 				93FEFCD725CBC1D30095E19D /* GEncodings.h */,
+				93CA1E6725DCACB900DF7949 /* GEncodings.m */,
 			);
 			path = Gene;
 			sourceTree = "<group>";
@@ -535,6 +538,7 @@
 			files = (
 				9373EEF6251C84A80066AD2A /* GFont.m in Sources */,
 				9392912F25624202003F062A /* PEPTool.m in Sources */,
+				93CA1E6825DCACB900DF7949 /* GEncodings.m in Sources */,
 				93427469252082CA00CA3DBE /* GGraphicsState.m in Sources */,
 				93159E62252B09F400F87451 /* GTextParser.m in Sources */,
 				93311A0E254D456000D58E06 /* GWrappedLine.m in Sources */,

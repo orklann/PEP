@@ -21,6 +21,8 @@
 #import "GWrappedLine.h"
 #import "PEPWindow.h"
 #import "PEPMisc.h"
+#import "GInterpreter.h"
+#import "GEncodings.h"
 
 #define kLeftArrow 123
 #define kRightArrow 124
@@ -402,9 +404,9 @@
         [g setFontName:fontName];
         [g setFontSize:fontSize];
         [g setFont:font];
-        
-        // TODO: Need to set [g glyph];
-        
+        [g setEncoding:MacExpertEncoding];
+        CGGlyph cgGlyph = [self.page.interpreter getCGGlyphForGGlyph:g];
+        [g setGlyph:cgGlyph];
         
         [glyphs addObject:g]; // Add this new glyph at the end
 
@@ -443,6 +445,7 @@
         CGFloat deltaX = s.width;
         
         [self moveGlyphsIncludeAfter:currentGlyph byDeltaX:deltaX];
+        [g setEncoding:currentGlyph.encoding];
     } else {
         // Current glyph is nil, means we are at the end of text block,
         // we use previous glyph info
@@ -451,6 +454,7 @@
         fontSize = prevGlyph.fontSize;
         // Also new glyph ctm need to add previous glyph width
         tm.tx += prevGlyph.width;
+        [g setEncoding:prevGlyph.encoding];
     }
     
     rectGlyphSpace = getGlyphBoundingBoxGlyphSpace(ch, font);
@@ -460,8 +464,8 @@
     [g setFontName:fontName];
     [g setFontSize:fontSize];
     [g setFont:font];
-    
-    // TODO: Need to set [g glyph]
+    CGGlyph cgGlyph = [self.page.interpreter getCGGlyphForGGlyph:g];
+    [g setGlyph:cgGlyph];
     
     // Set width for new glyph
     NSSize s = NSMakeSize(hAdvance, 0);

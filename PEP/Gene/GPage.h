@@ -14,6 +14,7 @@
 #import "GGraphicsState.h"
 #import "GTextParser.h"
 #import "GTextEditor.h"
+#import "GInterpreter.h"
 
 @class GDocument;
 @class GFont;
@@ -47,6 +48,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) NSMutableDictionary *glyphsForFontDict;
 @property (readwrite) BOOL needUpdate;
 @property (readwrite) BOOL dirty;
+@property (readwrite) GInterpreter *interpreter;
 
 + (id)create;
 - (void)setPageDictionary:(GDictionaryObject*)d;
