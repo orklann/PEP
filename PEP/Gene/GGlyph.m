@@ -191,30 +191,33 @@
 - (void)updateGlyphWidth {
     CTFontRef coreFont = (__bridge CTFontRef)(self.font);
     char **encoding = [self encoding];
+    CGGlyph a;
     CGFloat width = 0.0;
+    unichar charCode = [content characterAtIndex:0];
+    if (charCode > 255) {
+        NSLog(@"Error: char code is greater than 255, it's not a latin character");
+    }
+    
     if (encoding != NULL) {
-        unichar charCode = [content characterAtIndex:0];
-        if (charCode > 255) {
-            NSLog(@"Error: char code is greater than 255, it's not a latin character");
-        }
         char *glyphNameChars = encoding[charCode];
         NSString *glyphName = [NSString stringWithFormat:@"%s", glyphNameChars];
-        CGGlyph a = CTFontGetGlyphWithName(coreFont, (__bridge CFStringRef)glyphName);
-        CGGlyph g[1];
-        g[0] = a;
+        a = CTFontGetGlyphWithName(coreFont, (__bridge CFStringRef)glyphName);
         
-        // Get glyph width
-        width = CTFontGetAdvancesForGlyphs(coreFont, kCTFontOrientationHorizontal, g, NULL, 1);
-        
-        // if width from CGGlyph is zero, we need to lookup it in fontInfos dictionary in GDocument
-        if (width == 0.0) {
-            NSString *fontTag = [[self.page textState] fontName];
-            GFontInfo *fontInfo = [self.page.doc.fontInfos objectForKey:fontTag];
-            width = [fontInfo getCharWidth:charCode];
-        }
     } else {
-        NSLog(@"Error: encoding in [GGlyph updateGlyphWidth] is NULL");
-        width = 0.0;
+        CTFontGetGlyphsForCharacters(coreFont, &charCode, &a, 1);
+    }
+    
+    CGGlyph g[1];
+    g[0] = a;
+    
+    // Get glyph width
+    width = CTFontGetAdvancesForGlyphs(coreFont, kCTFontOrientationHorizontal, g, NULL, 1);
+    
+    // if width from CGGlyph is zero, we need to lookup it in fontInfos dictionary in GDocument
+    if (width == 0.0) {
+        NSString *fontTag = [[self.page textState] fontName];
+        GFontInfo *fontInfo = [self.page.doc.fontInfos objectForKey:fontTag];
+        width = [fontInfo getCharWidth:charCode];
     }
     
     self.widthInGlyphSpace = width;

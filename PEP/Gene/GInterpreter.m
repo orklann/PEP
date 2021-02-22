@@ -43,16 +43,16 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CTFontRef coreFont = (__bridge CTFontRef)([glyph font]);
     char **encoding = [glyph encoding];
     CGGlyph ret = -1;
+    unichar charCode = [[glyph content] characterAtIndex:0];
+    if (charCode > 255) {
+        NSLog(@"Error: char code is greater than 255, it's not a latin character");
+    }
     if (encoding != NULL) {
-        unichar charCode = [[glyph content] characterAtIndex:0];
-        if (charCode > 255) {
-            NSLog(@"Error: char code is greater than 255, it's not a latin character");
-        }
         char *glyphNameChars = encoding[charCode];
         NSString *glyphName = [NSString stringWithFormat:@"%s", glyphNameChars];
         ret = CTFontGetGlyphWithName(coreFont, (__bridge CFStringRef)glyphName);
     } else {
-        NSLog(@"Error: encoding is NULL in [GInterpreter getCGGlyphForGGlyph:]");
+        CTFontGetGlyphsForCharacters(coreFont, &charCode, &ret, 1);
     }
     return ret;
 }
@@ -61,36 +61,38 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CTFontRef coreFont = (__bridge CTFontRef)(font);
     char **encoding = [[page textState] encoding];
     CGFloat width = 0.0;
+    CGGlyph a;
+    unichar charCode = [ch characterAtIndex:0];
+    if (charCode > 255) {
+        NSLog(@"Error: char code is greater than 255, it's not a latin character");
+    }
+    
     if (encoding != NULL) {
-        unichar charCode = [ch characterAtIndex:0];
-        if (charCode > 255) {
-            NSLog(@"Error: char code is greater than 255, it's not a latin character");
-        }
         char *glyphNameChars = encoding[charCode];
         NSString *glyphName = [NSString stringWithFormat:@"%s", glyphNameChars];
-        CGGlyph a = CTFontGetGlyphWithName(coreFont, (__bridge CFStringRef)glyphName);
-        CGGlyph g[1];
-        CGPoint p[1];
-        g[0] = a;
-        p[0] = NSZeroPoint;
-        CGContextSetFillColorWithColor(context, [[NSColor blackColor] CGColor]);
-        CTFontDrawGlyphs(coreFont, g, p, 1, context);
-        
-        // Get glyph width
-        width = CTFontGetAdvancesForGlyphs(coreFont, kCTFontOrientationHorizontal, g, NULL, 1);
-        
-        // if width from CGGlyph is zero, we need to lookup it in fontInfos dictionary in GDocument
-        if (width == 0.0) {
-            NSString *fontTag = [[page textState] fontName];
-            GFontInfo *fontInfo = [page.doc.fontInfos objectForKey:fontTag];
-            width = [fontInfo getCharWidth:charCode];
-        }
-        //Debug:
-        //NSLog(@"Debug: font: %@ %c width: %f char code:%d", [[page textState] fontName], charCode, width, charCode);
+        a = CTFontGetGlyphWithName(coreFont, (__bridge CFStringRef)glyphName);
     } else {
-        NSLog(@"Error: [[GPage textState] encoding] is NULL");
-        return 0.0;
+        CTFontGetGlyphsForCharacters(coreFont, &charCode, &a, 1);
     }
+    
+    CGGlyph g[1];
+    CGPoint p[1];
+    g[0] = a;
+    p[0] = NSZeroPoint;
+    CGContextSetFillColorWithColor(context, [[NSColor blackColor] CGColor]);
+    CTFontDrawGlyphs(coreFont, g, p, 1, context);
+    
+    // Get glyph width
+    width = CTFontGetAdvancesForGlyphs(coreFont, kCTFontOrientationHorizontal, g, NULL, 1);
+    
+    // if width from CGGlyph is zero, we need to lookup it in fontInfos dictionary in GDocument
+    if (width == 0.0) {
+        NSString *fontTag = [[page textState] fontName];
+        GFontInfo *fontInfo = [page.doc.fontInfos objectForKey:fontTag];
+        width = [fontInfo getCharWidth:charCode];
+    }
+    //Debug:
+    //NSLog(@"Debug: font: %@ %c width: %f char code:%d", [[page textState] fontName], charCode, width, charCode);
     return width;
 }
 
@@ -349,11 +351,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     } else if ([encoding isEqualToString:@"MacExpertEncoding"]) {
         encodingPointer = MacExpertEncoding;
     } else {
-        encodingPointer = StandardEncoding;
-    }
-    
-    if (encodingPointer == NULL) {
-        NSLog(@"Error: encodingPointer is NULL in eval_Tf_Command:command:");
+        encodingPointer = NULL;
     }
     
     [[page textState] setEncoding:encodingPointer];
