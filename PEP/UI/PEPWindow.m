@@ -118,6 +118,8 @@
         // Hide side view
         [sideView setFrame:NSZeroRect];
     }
+    
+    [self.doc resizeToFitAllPages];
 }
 
 - (void)layoutIfNeeded {

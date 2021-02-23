@@ -59,6 +59,8 @@ NS_ASSUME_NONNULL_BEGIN
 // Build cached fonts dictionary
 - (void)buildCachedFonts;
 
+- (void)resizeToFitAllPages;
+
 // Debug:
 - (void)logPageContent:(int)pageNumber;
 @end

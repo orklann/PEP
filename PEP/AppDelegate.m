@@ -72,6 +72,7 @@
 
 - (void)windowDidResize:(NSNotification *)notification {
     [self.window needToMoveButtons];
+    [self.window layoutIfNeeded];
 }
 
 - (void)tabDidActive:(PEPTab *)tab {
