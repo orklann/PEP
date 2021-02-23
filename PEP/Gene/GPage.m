@@ -743,8 +743,8 @@
 
 - (void)buildFontInfos {
     // Debug:
-    //int index = (int)[doc.pages indexOfObject:self] + 1;
-    //NSLog(@"buildFontInfos for page: %d", index);
+    int index = (int)[doc.pages indexOfObject:self] + 1;
+    NSLog(@"buildFontInfos for page: %d", index);
     id fonts = [[resources value] objectForKey:@"Font"];
     if ([(GObject*)fonts type] == kRefObject) {
         fonts = [parser getObjectByRef:[fonts getRefString]];
@@ -764,6 +764,9 @@
         
         NSMutableArray *array = [NSMutableArray array];
         if (widthArray != nil) {
+            if ([(GObject*)widthArray type] == kRefObject) {
+                widthArray = [parser getObjectByRef:[(GRefObject*)widthArray getRefString]];
+            }
             for (GNumberObject *v in [widthArray value]) {
                 NSNumber *n = [NSNumber numberWithInt:(int)([v getRealValue])];
                 [array addObject:n];
