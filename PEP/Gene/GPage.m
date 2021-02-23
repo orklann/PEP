@@ -742,6 +742,9 @@
 }
 
 - (void)buildFontInfos {
+    // Debug:
+    //int index = (int)[doc.pages indexOfObject:self] + 1;
+    //NSLog(@"buildFontInfos for page: %d", index);
     id fonts = [[resources value] objectForKey:@"Font"];
     if ([(GObject*)fonts type] == kRefObject) {
         fonts = [parser getObjectByRef:[fonts getRefString]];
@@ -755,20 +758,25 @@
         GFontInfo *fontInfo = [GFontInfo create];
         GNumberObject *firstChar = [[font value] objectForKey:@"FirstChar"];
         GArrayObject *widthArray = [[font value] objectForKey:@"Widths"];
-        [fontInfo setFirstChar:(int)[firstChar getRealValue]];
+        if (firstChar != nil) {
+            [fontInfo setFirstChar:(int)[firstChar getRealValue]];
+        }
         
         NSMutableArray *array = [NSMutableArray array];
-        for (GNumberObject *v in [widthArray value]) {
-            NSNumber *n = [NSNumber numberWithInt:(int)([v getRealValue])];
-            [array addObject:n];
+        if (widthArray != nil) {
+            for (GNumberObject *v in [widthArray value]) {
+                NSNumber *n = [NSNumber numberWithInt:(int)([v getRealValue])];
+                [array addObject:n];
+            }
         }
         [fontInfo setWidths:array];
-        
         // Missing width in font descriptor
         GRefObject *fontDescriptorRef = [[font value] objectForKey:@"FontDescriptor"];
-        GDictionaryObject *fontDescriptor = [parser getObjectByRef:[fontDescriptorRef getRefString]];
-        GNumberObject *missingWidth = [[fontDescriptor value] objectForKey:@"MissingWidth"];
-        [fontInfo setMissingWidth:(int)[missingWidth getRealValue]];
+        if (fontDescriptorRef != nil) {
+            GDictionaryObject *fontDescriptor = [parser getObjectByRef:[fontDescriptorRef getRefString]];
+            GNumberObject *missingWidth = [[fontDescriptor value] objectForKey:@"MissingWidth"];
+            [fontInfo setMissingWidth:(int)[missingWidth getRealValue]];
+        }
         
         if ([doc.fontInfos objectForKey:fontTagKey] == nil) {
             [doc.fontInfos setValue:fontInfo forKey:fontTagKey];
