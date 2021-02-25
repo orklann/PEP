@@ -30,6 +30,8 @@
 		93311A12254EA60500D58E06 /* PEP_Incremental.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93311A11254EA60500D58E06 /* PEP_Incremental.pdf */; };
 		93386D382568E6D400B63E8E /* Super Mario World.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93386D372568E6D400B63E8E /* Super Mario World.pdf */; };
 		93386D442568F6BD00B63E8E /* Super Mario World.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93386D432568F6BD00B63E8E /* Super Mario World.pdf */; };
+		933F589825E77C7900D28996 /* GFontEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 933F589725E77C7900D28996 /* GFontEncoding.m */; };
+		933F589E25E77DCE00D28996 /* GFontEncodingTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 933F589D25E77DCE00D28996 /* GFontEncodingTests.m */; };
 		93427469252082CA00CA3DBE /* GGraphicsState.m in Sources */ = {isa = PBXBuildFile; fileRef = 93427468252082CA00CA3DBE /* GGraphicsState.m */; };
 		9346A86125305B2800804506 /* GTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 9346A86025305B2800804506 /* GTextBlock.m */; };
 		9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9355AEB824F12DCC00764E36 /* GLexerTests.m */; };
@@ -128,6 +130,9 @@
 		93311A11254EA60500D58E06 /* PEP_Incremental.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = PEP_Incremental.pdf; path = PEPTests/pdf/PEP_Incremental.pdf; sourceTree = SOURCE_ROOT; };
 		93386D372568E6D400B63E8E /* Super Mario World.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Super Mario World.pdf"; sourceTree = "<group>"; };
 		93386D432568F6BD00B63E8E /* Super Mario World.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "Super Mario World.pdf"; path = "PEPTests/pdf/Super Mario World.pdf"; sourceTree = SOURCE_ROOT; };
+		933F589625E77C7900D28996 /* GFontEncoding.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GFontEncoding.h; sourceTree = "<group>"; };
+		933F589725E77C7900D28996 /* GFontEncoding.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GFontEncoding.m; sourceTree = "<group>"; };
+		933F589D25E77DCE00D28996 /* GFontEncodingTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GFontEncodingTests.m; sourceTree = "<group>"; };
 		93427467252082CA00CA3DBE /* GGraphicsState.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GGraphicsState.h; sourceTree = "<group>"; };
 		93427468252082CA00CA3DBE /* GGraphicsState.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GGraphicsState.m; sourceTree = "<group>"; };
 		9346A85F25305B2800804506 /* GTextBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTextBlock.h; sourceTree = "<group>"; };
@@ -276,6 +281,7 @@
 				930B09BA25412AEE00ED00BD /* GMiscTests.m */,
 				93A46B6725DBA1E50078D2FA /* GFontInfoTests.m */,
 				93FEFCDA25CBC33F0095E19D /* GEncodingsTests.m */,
+				933F589D25E77DCE00D28996 /* GFontEncodingTests.m */,
 				9397A56E25653D48003969B8 /* PEPMiscTests.m */,
 				931221DB24F0139700929C01 /* Info.plist */,
 			);
@@ -378,6 +384,8 @@
 				9373EEF5251C84A80066AD2A /* GFont.m */,
 				93A46B6225DB9FE30078D2FA /* GFontInfo.h */,
 				93A46B6325DB9FE30078D2FA /* GFontInfo.m */,
+				933F589625E77C7900D28996 /* GFontEncoding.h */,
+				933F589725E77C7900D28996 /* GFontEncoding.m */,
 				93427467252082CA00CA3DBE /* GGraphicsState.h */,
 				93427468252082CA00CA3DBE /* GGraphicsState.m */,
 				9373EEF1251C7E840066AD2A /* GTextState.h */,
@@ -536,6 +544,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				933F589825E77C7900D28996 /* GFontEncoding.m in Sources */,
 				9373EEF6251C84A80066AD2A /* GFont.m in Sources */,
 				9392912F25624202003F062A /* PEPTool.m in Sources */,
 				93CA1E6825DCACB900DF7949 /* GEncodings.m in Sources */,
@@ -580,6 +589,7 @@
 				93FEFCDB25CBC33F0095E19D /* GEncodingsTests.m in Sources */,
 				9320C01A2519C7F8008F20B0 /* GInterpreterTests.m in Sources */,
 				9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */,
+				933F589E25E77DCE00D28996 /* GFontEncodingTests.m in Sources */,
 				930ACC9D250763C30092206C /* GDecodersTests.m in Sources */,
 				93A46B6825DBA1E50078D2FA /* GFontInfoTests.m in Sources */,
 				9397A56F25653D48003969B8 /* PEPMiscTests.m in Sources */,

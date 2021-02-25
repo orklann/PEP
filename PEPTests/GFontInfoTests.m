@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 #import "GFontInfo.h"
 
+
 @interface GFontInfoTests : XCTestCase
 
 @end
@@ -40,5 +41,4 @@
     width = [fontInfo getCharWidth:ch];
     XCTAssertEqual(width, 0.25);
 }
-
 @end
