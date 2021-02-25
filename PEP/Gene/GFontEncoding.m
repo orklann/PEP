@@ -16,7 +16,7 @@
 }
 
 - (void)parseDifference:(GArrayObject*)differenceArray {
-    _difference = [NSMutableDictionary dictionary];
+    _differences = [NSMutableDictionary dictionary];
     NSInteger startIndex = 0;
     for (GObject *ele in [differenceArray value]) {
         if ([ele type] == kNumberObject) {
@@ -24,15 +24,15 @@
         } else {
             NSNumber *index = [NSNumber numberWithInteger:startIndex];
             NSString *glyphName = [(GNameObject*)ele value];
-            [_difference setObject:glyphName forKey:index];
+            [_differences setObject:glyphName forKey:index];
             startIndex++;
         }
     }
 }
 
-- (NSString*)getGlyphNameInDifference:(int)codeIndex {
+- (NSString*)getGlyphNameInDifferences:(int)codeIndex {
     NSNumber *index = [NSNumber numberWithInt:codeIndex];
-    NSString *glyphName = [_difference objectForKey:index];
+    NSString *glyphName = [_differences objectForKey:index];
     return glyphName;
 }
 @end

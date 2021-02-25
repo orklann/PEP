@@ -35,23 +35,23 @@
     [fe parseDifference:array];
     
     NSString *name;
-    name = [fe getGlyphNameInDifference:174];
+    name = [fe getGlyphNameInDifferences:174];
     XCTAssertEqualObjects(name, @"AE");
     
-    name = [fe getGlyphNameInDifference:175];
+    name = [fe getGlyphNameInDifferences:175];
     XCTAssertEqualObjects(name, @"Oslash");
     
-    name = [fe getGlyphNameInDifference:177];
+    name = [fe getGlyphNameInDifferences:177];
     XCTAssertEqualObjects(name, @"plusminus");
     
-    name = [fe getGlyphNameInDifference:180];
+    name = [fe getGlyphNameInDifferences:180];
     XCTAssertEqualObjects(name, @"yen");
     
-    name = [fe getGlyphNameInDifference:181];
+    name = [fe getGlyphNameInDifferences:181];
     XCTAssertEqualObjects(name, @"mu");
     
     // name should be nil
-    name = [fe getGlyphNameInDifference:199];
+    name = [fe getGlyphNameInDifferences:199];
     XCTAssertEqualObjects(name, nil);
 }
 

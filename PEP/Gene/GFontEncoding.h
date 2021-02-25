@@ -16,11 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 @property (readwrite) NSString *encoding;
-@property (readwrite) NSMutableDictionary *difference;
+@property (readwrite) NSMutableDictionary *differences;
 
 + (id)create;
 - (void)parseDifference:(GArrayObject*)differenceArray;
-- (NSString*)getGlyphNameInDifference:(int)codeIndex;
+- (NSString*)getGlyphNameInDifferences:(int)codeIndex;
 @end
 
 NS_ASSUME_NONNULL_END

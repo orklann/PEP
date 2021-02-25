@@ -50,7 +50,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         NSLog(@"Error: char code is greater than 255, it's not a latin character");
     }
     if (encoding != NULL) {
-        NSString *glyphName = [fontEncoding getGlyphNameInDifference:charCode];
+        NSString *glyphName = [fontEncoding getGlyphNameInDifferences:charCode];
         if (glyphName == nil) {
             char *glyphNameChars = encoding[charCode];
             glyphName = [NSString stringWithFormat:@"%s", glyphNameChars];
@@ -74,7 +74,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     }
     
     if (encoding != NULL) {
-        NSString *glyphName = [fontEncoding getGlyphNameInDifference:charCode];
+        NSString *glyphName = [fontEncoding getGlyphNameInDifferences:charCode];
         if (glyphName == nil) {
             char *glyphNameChars = encoding[charCode];
             glyphName = [NSString stringWithFormat:@"%s", glyphNameChars];
