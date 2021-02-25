@@ -32,6 +32,10 @@
 
 - (NSString*)getGlyphNameInDifference:(int)codeIndex {
     NSNumber *index = [NSNumber numberWithInt:codeIndex];
+    NSString *glyphName = [_difference objectForKey:index];
+    if (glyphName != nil) {
+        NSLog(@"index: %d glyph name: %@", index, glyphName);
+    }
     return [_difference objectForKey:index];
 }
 @end

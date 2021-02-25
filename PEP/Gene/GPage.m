@@ -21,6 +21,7 @@
 #import "GCompiler.h"
 #import "GBinaryData.h"
 #import "GFontInfo.h"
+#import "GFontEncoding.h"
 
 @implementation GPage
 
@@ -719,23 +720,31 @@
         GDictionaryObject *font = [parser getObjectByRef:[fontRef getRefString]];
         id encoding = [[font value] objectForKey:@"Encoding"];
         NSString *encodingString;
+        GArrayObject *differencesArray;
         if ([(GObject*)encoding type] == kRefObject) {
             encoding = [parser getObjectByRef:[encoding getRefString]];
             if ([(GObject*)encoding type] == kDictionaryObject) {
                 GDictionaryObject *encodingDictionary = (GDictionaryObject*)encoding;
                 GNameObject *baseEncoding = [[encodingDictionary value] objectForKey:@"BaseEncoding"];
                 encodingString = [baseEncoding value];
+                
+                // Difference array
+                differencesArray = [[encodingDictionary value] objectForKey:@"Differences"];
             } else {
                 NSLog(@"[Not implemented] in [GPage buildFontEncodings] while font (%@) encoding is a object of: %@",
                       fontTagKey, encoding);
             }
-            
         } else if ([(GObject*)encoding type] == kNameObject) {
             encodingString = [(GNameObject*)encoding value];
         }
         
+        
+        GFontEncoding *fontEncoding = [GFontEncoding create];
+        [fontEncoding setEncoding:encodingString];
+        [fontEncoding parseDifference:differencesArray];
+        
         if ([doc.fontEncodings objectForKey:fontTagKey] == nil) {
-            [doc.fontEncodings setValue:encodingString forKey:fontTagKey];
+            [doc.fontEncodings setValue:fontEncoding forKey:fontTagKey];
         }
     }
     

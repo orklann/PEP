@@ -11,6 +11,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class GPage;
+@class GFontEncoding;
 
 @interface GGlyph : NSObject {
     NSRect frame;
@@ -35,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) CGFloat fontSize;
 @property (readwrite) int lineIndex;
 @property (readwrite) char * _Nonnull * _Nonnull encoding;
+@property (readwrite) GFontEncoding* fontEncoding;
 
 + (id)create;
 - (void)setFrame:(NSRect)f;

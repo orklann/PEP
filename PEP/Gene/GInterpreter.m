@@ -14,6 +14,7 @@
 #import "GEncodings.h"
 #import "GDocument.h"
 #import "GFontInfo.h"
+#import "GFontEncoding.h"
 
 BOOL isCommand(NSString *cmd, NSString *cmd2) {
     return [cmd isEqualToString:cmd2];
@@ -42,14 +43,18 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 - (CGGlyph)getCGGlyphForGGlyph:(GGlyph*)glyph {
     CTFontRef coreFont = (__bridge CTFontRef)([glyph font]);
     char **encoding = [glyph encoding];
+    GFontEncoding *fontEncoding = [glyph fontEncoding];
     CGGlyph ret = -1;
     unichar charCode = [[glyph content] characterAtIndex:0];
     if (charCode > 255) {
         NSLog(@"Error: char code is greater than 255, it's not a latin character");
     }
     if (encoding != NULL) {
-        char *glyphNameChars = encoding[charCode];
-        NSString *glyphName = [NSString stringWithFormat:@"%s", glyphNameChars];
+        NSString *glyphName = [fontEncoding getGlyphNameInDifference:charCode];
+        if (glyphName == nil) {
+            char *glyphNameChars = encoding[charCode];
+            glyphName = [NSString stringWithFormat:@"%s", glyphNameChars];
+        }
         ret = CTFontGetGlyphWithName(coreFont, (__bridge CFStringRef)glyphName);
     } else {
         CTFontGetGlyphsForCharacters(coreFont, &charCode, &ret, 1);
@@ -60,6 +65,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 - (CGFloat)drawString:(NSString*)ch font:(NSFont*)font context:(CGContextRef)context {
     CTFontRef coreFont = (__bridge CTFontRef)(font);
     char **encoding = [[page textState] encoding];
+    GFontEncoding *fontEncoding = [[page textState] fontEncoding];
     CGFloat width = 0.0;
     CGGlyph a;
     unichar charCode = [ch characterAtIndex:0];
@@ -68,8 +74,11 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     }
     
     if (encoding != NULL) {
-        char *glyphNameChars = encoding[charCode];
-        NSString *glyphName = [NSString stringWithFormat:@"%s", glyphNameChars];
+        NSString *glyphName = [fontEncoding getGlyphNameInDifference:charCode];
+        if (glyphName == nil) {
+            char *glyphNameChars = encoding[charCode];
+            glyphName = [NSString stringWithFormat:@"%s", glyphNameChars];
+        }
         a = CTFontGetGlyphWithName(coreFont, (__bridge CFStringRef)glyphName);
     } else {
         CTFontGetGlyphsForCharacters(coreFont, &charCode, &a, 1);
@@ -172,6 +181,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             
             // Set current encoding
             [glyph setEncoding:[[page textState] encoding]];
+            
+            // Set current font encoding
+            [glyph setFontEncoding:[[page textState] fontEncoding]];
             
             // Set CGGlyph for GGGlyph
             CGGlyph g = [self getCGGlyphForGGlyph:glyph];
@@ -342,7 +354,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [[page textState] setFontSize:fontSize];
     
     GDocument *doc = (GDocument*)[page doc];
-    NSString *encoding = [[doc fontEncodings] objectForKey:fontName];
+    GFontEncoding *fontEncoding = [[doc fontEncodings] objectForKey:fontName];
+    NSString *encoding = [fontEncoding encoding];
+    
     char **encodingPointer = NULL;
     if ([encoding isEqualToString:@"MacRomanEncoding"]) {
         encodingPointer = MacRomanEncoding;
@@ -355,6 +369,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     }
     
     [[page textState] setEncoding:encodingPointer];
+    [[page textState] setFontEncoding:fontEncoding];
   
     // Get font size in user space
     CGSize size = NSMakeSize(1.0, 1.0);

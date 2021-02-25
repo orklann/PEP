@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface GFontEncoding : NSObject {
     
 }
+
+@property (readwrite) NSString *encoding;
 @property (readwrite) NSMutableDictionary *difference;
 
 + (id)create;
