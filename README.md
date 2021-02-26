@@ -6,7 +6,7 @@ For now, PEP is work-in-progress and it's constantly updated everyday.
 
 Currently working on the core, a PDF engine called Gene from scratch.
 
-**PEP is now able to edit the sample PDF, and save as new PDF.** please check it out in
+**PEP is now able to open and edit external PDFs, and save as new PDF.** please check it out in
 the [download](https://macpep.org/download) page for alpha version.
 
 
