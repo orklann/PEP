@@ -24,6 +24,15 @@ void printData(NSData *data) {
     printf("\n");
 }
 
+void printNSStringHex(NSString *s) {
+    printf("\n");
+    int i;
+    for (i = 0; i < [s length]; i++) {
+        printf("%x ", [s characterAtIndex:i]);
+    }
+    printf("\n\n");
+}
+
 // return -1 if glyph a is before b, return 1 if glyph b is before glyph a
 int compareGlyphs(GGlyph *a, GGlyph *b) {
     NSPoint pa = [a frame].origin;

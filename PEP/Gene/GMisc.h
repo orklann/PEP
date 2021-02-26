@@ -17,6 +17,9 @@ NS_ASSUME_NONNULL_BEGIN
 // Print NSData in character strings
 void printData(NSData *data);
 
+// Print NSString as hex char code
+void printNSStringHex(NSString *s);
+
 // Compare method for sorting glyphs in read order
 int compareGlyphs(GGlyph *a, GGlyph *b);
 
