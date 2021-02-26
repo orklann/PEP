@@ -217,31 +217,26 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
                     case 'n': // 'n'
                     {
                         [s appendFormat:@"%c", '\n'];
-                        next = [self nextChar];
                         break;
                     }
                     case 'r': // 'r'
                     {
                         [s appendFormat:@"%c", '\r'];
-                        next = [self nextChar];
                         break;
                     }
                     case 't': // 't'
                     {
                         [s appendFormat:@"%c", '\t'];
-                        next = [self nextChar];
                         break;
                     }
                     case 'b': // 'b'
                     {
                         [s appendFormat:@"%c", '\b'];
-                        next = [self nextChar];
                         break;
                     }
                     case 'f': // 'f'
                     {
                         [s appendFormat:@"%c", '\f'];
-                        next = [self nextChar];
                         break;
                     }
                     case '(': // '('
@@ -249,7 +244,6 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
                     case '\\':
                     {
                         [s appendFormat:@"%c", next];
-                        next = [self nextChar];
                         break;
                     }
                     case '\r':
@@ -258,12 +252,10 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
                         if (ch2 == '\n') {
                             next = [self nextChar];
                         }
-                        next = [self nextChar];
                         break;
                     }
                     case '\n':
                     {
-                        next = [self nextChar];
                         break;
                     }
                     case '0':
@@ -289,12 +281,12 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
                         }
                         long result = strtol([ddd UTF8String], NULL, 8);
                         [s appendFormat:@"%c", (unsigned char)result];
-                        next = [self nextChar];
                         break;
                     }
                     default:
                         break;
                 }
+                break; // This line fixed issue #20
             }
             default:
             {
