@@ -800,4 +800,8 @@
 - (void)logPageContent {
     printData(pageContent);
 }
+
+- (int)pageNumber {
+    return (int)([doc.pages indexOfObject:self] + 1);
+}
 @end

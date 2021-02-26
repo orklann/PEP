@@ -121,6 +121,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Debug
 - (void)logPageContent;
+
+- (int)pageNumber;
 @end
 
 NS_ASSUME_NONNULL_END
