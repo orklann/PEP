@@ -257,6 +257,18 @@
         return YES;
     }
     
+    // Check if next glyph a is farther away from prev glyph, the threshold distance is 2 times the width
+    // of the prev glyph. threshold = 2 * (width of prev glyph)
+    if (prevGlyph != nil && a != nil) {
+        CGRect f1 = [prevGlyph frame];
+        CGRect f2 = [a frame];
+        CGFloat distance = fabs(f2.origin.x - f1.origin.x);
+        CGFloat threshold = 2 * f1.size.width;
+        if (distance > threshold) {
+            return YES;
+        }
+    }
+    
     return NO;
 }
 
