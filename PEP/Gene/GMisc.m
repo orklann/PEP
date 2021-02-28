@@ -12,6 +12,7 @@
 #import "GLine.h"
 #import "GTextBlock.h"
 #import "GBinaryData.h"
+#import "GConstants.h"
 
 void printData(NSData *data) {
     NSUInteger i;
@@ -216,7 +217,7 @@ BOOL separateLines(GLine *a, GLine *b) {
     CGFloat heightB = NSHeight([b frame]);
     
     
-    CGFloat xTolerance = 5; // Fix value: 5 points
+    CGFloat xTolerance = kLinesPostionThresold;
     CGFloat heightTolerance = 0.05; // Percentage
     CGFloat yTolerance = (heightA + heightB) / 2 + ((heightA + heightB) * 0.3);
     

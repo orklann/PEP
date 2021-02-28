@@ -12,6 +12,7 @@
 #import "GWord.h"
 #import "GLine.h"
 #import "GTextBlock.h"
+#import "GConstants.h"
 
 @implementation GTextParser
 + (id)create {
@@ -204,7 +205,7 @@
 
 // From left to right, and colum by colum, used for multiple colum text layout
 - (void)makeReadOrderLines {
-    CGFloat distanceThrehold = 5; // Left position of two lines delta threshold
+    CGFloat distanceThrehold = kLinesPostionThresold; // Left position of two lines delta threshold
     NSMutableArray *initialLines = [NSMutableArray arrayWithArray:lines];
     NSMutableArray *result = [NSMutableArray array];
     NSMutableArray *tmp = [NSMutableArray array];

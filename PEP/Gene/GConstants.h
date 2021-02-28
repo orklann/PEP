@@ -13,4 +13,6 @@
 // 96 (96 pixels per inch), so we get the scale factor is 1/72*96
 #define kScaleFactor 96.0/72.0
 
+#define kLinesPostionThresold 5.0
+
 #endif /* GConstants_h */
