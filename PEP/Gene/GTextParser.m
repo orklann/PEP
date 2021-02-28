@@ -202,6 +202,32 @@
     return lines;
 }
 
+// From left to right, and colum by colum, used for multiple colum text layout
+- (void)makeReadOrderLines {
+    NSMutableArray *initialLines = [NSMutableArray arrayWithArray:lines];
+    NSMutableArray *result = [NSMutableArray array];
+    NSMutableArray *tmp = [NSMutableArray array];
+    while ([initialLines count] > 0) {
+        GLine *currentLine = [initialLines firstObject];
+        NSRect f1 = [currentLine frame];
+        [result addObject:currentLine];
+        [tmp addObject:currentLine];
+        for (int i = 1; i < [initialLines count]; i++) {
+            GLine *nextLine = [initialLines objectAtIndex:i];
+            NSRect f2 = [nextLine frame];
+            CGFloat minX = NSMinX(f1);
+            CGFloat maxX = NSMaxX(f1);
+            if (f2.origin.x >= minX && f2.origin.x <= maxX) {
+                [result addObject:nextLine];
+                [tmp addObject:nextLine];
+            }
+        }
+        [initialLines removeObjectsInArray:tmp];
+    }
+    // Update lines
+    lines = result;
+}
+
 - (NSMutableArray*)makeTextBlocks {
     if (cached) return textBlocks;
     [self makeLines];
@@ -211,6 +237,9 @@
     if ([lines count] <= 0) {
         return textBlocks;
     }
+    
+    // Make read order lines first
+    [self makeReadOrderLines];
     
     GTextBlock *textBlock = [GTextBlock create];
     GLine *currentLine = [lines firstObject];
