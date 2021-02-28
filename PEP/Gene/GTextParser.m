@@ -204,6 +204,7 @@
 
 // From left to right, and colum by colum, used for multiple colum text layout
 - (void)makeReadOrderLines {
+    CGFloat distanceThrehold = 5; // Left position of two lines delta threshold
     NSMutableArray *initialLines = [NSMutableArray arrayWithArray:lines];
     NSMutableArray *result = [NSMutableArray array];
     NSMutableArray *tmp = [NSMutableArray array];
@@ -217,7 +218,7 @@
             NSRect f2 = [nextLine frame];
             CGFloat minX = NSMinX(f1);
             CGFloat maxX = NSMaxX(f1);
-            if (f2.origin.x >= minX && f2.origin.x <= maxX) {
+            if (fabs(f2.origin.x - minX) <= distanceThrehold && f2.origin.x <= maxX) {
                 [result addObject:nextLine];
                 [tmp addObject:nextLine];
             }
