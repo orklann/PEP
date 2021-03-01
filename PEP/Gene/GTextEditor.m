@@ -121,6 +121,7 @@
         // By this, we get glyphs read for GTextParser to get the text block
         [self restoreEditingGlyphsToGlyphs];
         GTextParser *textParser = [GTextParser create];
+        [textParser setUseTJTexts:NO];
         [textParser setGlyphs:glyphs];
         GTextBlock *tb = [textParser mergeLinesToTextblock];
         return tb;
@@ -129,6 +130,7 @@
 
 - (GTextBlock*)getTextBlockByCachedGlyphs {
     GTextParser *textParser = [GTextParser create];
+    [textParser setUseTJTexts:NO];
     [textParser setGlyphs:cachedGlyphs];
     GTextBlock *tb = [textParser mergeLinesToTextblock];
     return tb;
