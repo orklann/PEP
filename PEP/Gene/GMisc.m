@@ -13,6 +13,7 @@
 #import "GTextBlock.h"
 #import "GBinaryData.h"
 #import "GConstants.h"
+#import "GTJText.h"
 
 void printData(NSData *data) {
     NSUInteger i;
@@ -89,7 +90,65 @@ int compareGlyphs(GGlyph *a, GGlyph *b) {
     }
     
     
-    // if one glyph is to the left, is goese befor
+    // if one glyph is to the left, is goes before
+    if (aMaxX < pb.x) {
+        return -1;
+    }
+    
+    if (pa.x > bMaxX) {
+        return 1;
+    }
+    
+    return ret;
+}
+
+// return -1 if GTJText a is before b, return 1 if GTJText b is before a
+int compareTJTexts(GTJText *a, GTJText *b) {
+    NSPoint pa = [a frame].origin;
+    NSPoint pb = [b frame].origin;
+
+    
+    CGFloat aMaxY = NSMaxY([a frame]);
+    CGFloat bMaxY = NSMaxY([b frame]);
+    CGFloat aMaxX = NSMaxX([a frame]);
+    CGFloat bMaxX = NSMaxX([b frame]);
+    CGFloat aMidY = NSMidY([a frame]);
+    CGFloat bMidY = NSMidY([b frame]);
+
+    
+    // if two GTJTexts are located at more or less the same y coordinate,
+    // the one to the left goes before, if not, else the one which start
+    // higher up is sorted first.
+    CGFloat aHeight = [a frame].size.height;
+    CGFloat bHeight = [b frame].size.height;
+    
+    CGFloat tolerance = 0.1;
+    int ret = -1;
+    if (fabs(pa.y - pb.y) / fabs(aHeight + bHeight) <= tolerance) {
+        if (pa.x < pb.x) {
+            ret = -1;
+            return ret;
+        } else {
+            ret = 1;
+            return ret;
+        }
+    }
+    
+    if (aMidY <= bMidY) return 1;
+    
+    if (bMidY <= aMidY) return -1;
+    
+    // if one GTJText is located above another, it goese before
+    if (aMaxY > pb.y) {
+        return -1;
+    }
+    
+    if (pa.y < bMaxY) {
+        return 1;
+    }
+    
+    
+    // if one GTJText is to the left, is goes before
     if (aMaxX < pb.x) {
         return -1;
     }
