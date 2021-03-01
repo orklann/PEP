@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (id)create;
 - (void)addGlyph:(GGlyph*)g;
+- (void)addGlyphs:(NSArray*)gs;
 - (NSMutableArray *)glyphs;
 - (void)setGlyphs:(NSMutableArray*)array;
 - (NSRect)frame;

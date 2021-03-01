@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setCached:(BOOL)c;
 - (NSMutableArray*)glyphs;
 - (void)setGlyphs:(NSMutableArray*)gs;
+- (NSMutableArray*)tjTexts;
 - (void)setTJTexts:(NSMutableArray*)texts;
 - (NSMutableArray*)readOrderGlyphs;
 - (GGlyph*)peekPrevGlyph;

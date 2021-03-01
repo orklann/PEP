@@ -20,6 +20,10 @@
     [glyphs addObject:g];
 }
 
+- (void)addGlyphs:(NSArray*)gs {
+    [glyphs addObjectsFromArray:gs];
+}
+
 - (NSMutableArray *)glyphs {
     return glyphs;
 }
@@ -31,11 +35,12 @@
 
 - (NSRect)frame {
     if (cached) return frame;
-    NSRect frame = NSZeroRect;
+    NSRect totalRect= NSZeroRect;
     for (GGlyph *g in glyphs) {
-        frame = NSUnionRect(frame, [g frame]);
+        totalRect = NSUnionRect(totalRect, [g frame]);
     }
     cached = YES;
+    frame = totalRect;
     return frame;
 }
 @end

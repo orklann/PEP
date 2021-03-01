@@ -15,6 +15,7 @@
 #import "GDocument.h"
 #import "GFontInfo.h"
 #import "GFontEncoding.h"
+#import "GTJText.h"
 
 BOOL isCommand(NSString *cmd, NSString *cmd2) {
     return [cmd isEqualToString:cmd2];
@@ -115,7 +116,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CTFontDrawGlyphs(coreFont, g, p, 1, context);
 }
 
-- (void)layoutStrings:(NSString*)s context:(CGContextRef)context  tj:(CGFloat)tjDelta prevTj:(int)prevTj{
+// Return new created glyphs
+- (NSMutableArray*)layoutStrings:(NSString*)s context:(CGContextRef)context  tj:(CGFloat)tjDelta prevTj:(int)prevTj{
+    NSMutableArray *newCreatedGlyphs = [NSMutableArray array];
     NSMutableArray *glyphs = [[page textParser] glyphs];
     
     /*
@@ -197,6 +200,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                 [glyph setDelta:prevTj];
             }
             [glyphs addObject:glyph];
+            [newCreatedGlyphs addObject:glyph];
         }
         
         // Fixed: Right side of text not align
@@ -212,6 +216,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         [[page textState] setTextMatrix:tm];
         rm = CGAffineTransformConcat(trm, tm);
     }
+    
+    return newCreatedGlyphs;
 }
 
 - (NSMutableArray*)commands {
@@ -387,7 +393,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     } else if ([a type] == kHexStringsObject) {
         string = [(GHexStringsObject*)a stringValue];
     }
-    [self layoutStrings:string context:context tj:0 prevTj:0];
+    NSMutableArray *glyphs = [self layoutStrings:string context:context tj:0 prevTj:0];
+    GTJText *text = [GTJText create];
+    [text addGlyphs:glyphs];
+    [[[page textParser] tjTexts] addObject:text];
 }
 
 - (void)eval_Td_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -479,6 +488,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 
 - (void)eval_TJ_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     GArrayObject *array = [[cmdObj args] objectAtIndex:0];
+    GTJText *text = [GTJText create];
     int i;
     CGFloat tjDelta = 0.0;
     int prevTj = 0;
@@ -508,10 +518,12 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             } else if ([(GObject*)a type] == kHexStringsObject) {
                 string = [(GHexStringsObject*)a stringValue];
             }
-            [self layoutStrings:string context:context tj:tjDelta prevTj:prevTj];
+            NSMutableArray *glyphs = [self layoutStrings:string context:context tj:tjDelta prevTj:prevTj];
+            [text addGlyphs:glyphs];
             tjDelta = 0.0;
         }
     }
+    [[[page textParser] tjTexts] addObject:text];
 }
 
 - (void)eval:(CGContextRef)context {

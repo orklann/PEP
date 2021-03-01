@@ -13,6 +13,7 @@
 #import "GLine.h"
 #import "GTextBlock.h"
 #import "GConstants.h"
+#import "GTJText.h"
 
 @implementation GTextParser
 + (id)create {
@@ -31,6 +32,10 @@
 
 - (void)setGlyphs:(NSMutableArray*)gs {
     glyphs = gs;
+}
+
+- (NSMutableArray*)tjTexts {
+    return tjTexts;
 }
 
 - (void)setTJTexts:(NSMutableArray*)texts {
