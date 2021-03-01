@@ -27,6 +27,11 @@
     [tp setWords:ws];
     [tp setLines:ls];
     [tp setCached:NO];
+    /* Default we will make read order glyphs by using tjTexts array
+     * Only not to use tjTexts while in GPage's buildPageContent, in there
+     * We directly call makeReadOrderGlyphs
+     */
+    [tp setUseTJTexts:YES];
     return tp;
 }
 
@@ -40,6 +45,10 @@
 
 - (void)setTJTexts:(NSMutableArray*)texts {
     tjTexts = texts;
+}
+
+- (void)setUseTJTexts:(BOOL)flag {
+    useTJTexts = flag;
 }
 
 - (void)setCached:(BOOL)c {
@@ -116,6 +125,15 @@
     cached = YES;
 }
 
+- (void)makeReadOrderGlyphsWithTJTexts {
+    if (cached) return ;
+    tjTexts = quicksortGTJTexts(tjTexts);
+    readOrderGlyphs = [NSMutableArray array];
+    for (GTJText *text in tjTexts) {
+        [readOrderGlyphs addObjectsFromArray:[text glyphs]];
+    }
+    cached = YES;
+}
 
 /*
  * White spaces break words, and words break by geometry too
@@ -124,7 +142,11 @@
 - (NSMutableArray*)makeWords{
     if (cached) return words;
     
-    [self makeReadOrderGlyphs];
+    if (useTJTexts) {
+        [self makeReadOrderGlyphsWithTJTexts];
+    } else {
+        [self makeReadOrderGlyphs];
+    }
     
     cached = YES;
     

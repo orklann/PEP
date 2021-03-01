@@ -24,9 +24,11 @@ NS_ASSUME_NONNULL_BEGIN
     unsigned int glyphPos;
     unsigned int wordPos;
     BOOL cached;
+    BOOL useTJTexts;
 }
 
 + (id)create;
+- (void)setUseTJTexts:(BOOL)flag;
 - (void)setCached:(BOOL)c;
 - (NSMutableArray*)glyphs;
 - (void)setGlyphs:(NSMutableArray*)gs;
