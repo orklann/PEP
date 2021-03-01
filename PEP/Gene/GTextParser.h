@@ -20,6 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *words;
     NSMutableArray *lines;
     NSMutableArray *textBlocks;
+    NSMutableArray *tjTexts;
     unsigned int glyphPos;
     unsigned int wordPos;
     BOOL cached;
@@ -29,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setCached:(BOOL)c;
 - (NSMutableArray*)glyphs;
 - (void)setGlyphs:(NSMutableArray*)gs;
+- (void)setTJTexts:(NSMutableArray*)texts;
 - (NSMutableArray*)readOrderGlyphs;
 - (GGlyph*)peekPrevGlyph;
 - (GGlyph*)nextGlyph;

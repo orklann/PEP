@@ -18,9 +18,11 @@
 + (id)create {
     GTextParser *tp = [[GTextParser alloc] init];
     NSMutableArray *gs = [NSMutableArray array];
+    NSMutableArray *texts = [NSMutableArray array];
     NSMutableArray *ws = [NSMutableArray array];
     NSMutableArray *ls = [NSMutableArray array];
     [tp setGlyphs:gs];
+    [tp setTJTexts:texts];
     [tp setWords:ws];
     [tp setLines:ls];
     [tp setCached:NO];
@@ -29,6 +31,10 @@
 
 - (void)setGlyphs:(NSMutableArray*)gs {
     glyphs = gs;
+}
+
+- (void)setTJTexts:(NSMutableArray*)texts {
+    tjTexts = texts;
 }
 
 - (void)setCached:(BOOL)c {
