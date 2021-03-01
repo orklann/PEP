@@ -200,6 +200,36 @@ NSMutableArray* quicksortGlyphs(NSMutableArray *array) {
     return array;
 }
 
+NSMutableArray* quicksortGTJTexts(NSMutableArray *array) {
+    NSMutableArray *less = [NSMutableArray array];
+    NSMutableArray *greater = [NSMutableArray array];
+    NSMutableArray *result = [NSMutableArray array];
+    if ([array count] > 1) {
+        // Choose pivot to the middle can improve the performance
+        // If all glyphs in array is sorted already
+        int pivotIndex = (int)([array count] / 2);
+        GTJText *pivot = [array objectAtIndex:pivotIndex];
+        for (GTJText *t in array) {
+            if ([t isEqualTo:pivot]) {
+                continue;
+            }
+            if (compareTJTexts(pivot, t) == 1) { // less, g is before pivot
+                [less addObject:t];
+            } else if (compareTJTexts(pivot, t) == -1) { // greater, g is after pivot
+                [greater addObject:t];
+            }
+        }
+        [result addObjectsFromArray:quicksortGlyphs(less)];
+        [result addObject:pivot];
+        [result addObjectsFromArray:quicksortGlyphs(greater)];
+        return result;
+    } else {
+        return array;
+    }
+    
+    return array;
+}
+
 /*
  * Note: I am ok with this implementation, but I also notice that we might
  * change it - the compareGlyphs() function.

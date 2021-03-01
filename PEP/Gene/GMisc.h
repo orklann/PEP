@@ -32,9 +32,9 @@ BOOL glyphsInTheSameLine(GGlyph *a, GGlyph *b);
 
 NSMutableArray *sortGlyphsInReadOrder(NSMutableArray *glyphs);
 
-// quick sort not used yet
-// TODO: Use quick sort to improve performance
+
 NSMutableArray* quicksortGlyphs(NSMutableArray *array);
+NSMutableArray* quicksortGTJTexts(NSMutableArray *array);
 
 // Check if two words form a line
 BOOL separateWords(GWord* a, GWord*b);
