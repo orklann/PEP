@@ -353,7 +353,12 @@
 - (void)mouseMoved:(NSEvent *)event {
     self.forceDrawAllPage = NO;
     for (GPage *page in visiblePages) {
-        [page mouseMoved:event];
+        NSPoint location = [event locationInWindow];
+        NSPoint point = [self convertPoint:location fromView:nil];
+        if (NSPointInRect(point, [page calculatePageMediaBox])) {
+            [page mouseMoved:event];
+            break;
+        }
     }
 }
 
