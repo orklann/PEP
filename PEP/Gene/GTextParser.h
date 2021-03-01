@@ -20,7 +20,15 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *words;
     NSMutableArray *lines;
     NSMutableArray *textBlocks;
+    
+    /*
+     * Use GTJText, which contans all glyphs of one Tj or TJ commands,
+     * with it, we can speed up to make read order glyphs in GTextParser,
+     * so that, we have no lag while highlight current text block in mouse
+     * cursor.
+     */
     NSMutableArray *tjTexts;
+    
     unsigned int glyphPos;
     unsigned int wordPos;
     BOOL cached;
