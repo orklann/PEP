@@ -65,6 +65,7 @@
 		93A8692D25147ECA0033DC22 /* GMisc.m in Sources */ = {isa = PBXBuildFile; fileRef = 93A8692C25147ECA0033DC22 /* GMisc.m */; };
 		93B707AC255D129200F326EB /* bug_hex_string.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93B707AB255D129200F326EB /* bug_hex_string.pdf */; };
 		93B707AE255D129E00F326EB /* bug_hex_string.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93B707AD255D129E00F326EB /* bug_hex_string.pdf */; };
+		93BACA2D25ECD0BB00DDEC59 /* GTJText.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BACA2C25ECD0B900DDEC59 /* GTJText.m */; };
 		93C0E6162560F5A200D4E508 /* PEPTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C0E6152560F5A200D4E508 /* PEPTopView.m */; };
 		93C0E61D256119F700D4E508 /* PEPTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C0E61C256119F700D4E508 /* PEPTabView.m */; };
 		93C0E62425611E9100D4E508 /* PEPTab.m in Sources */ = {isa = PBXBuildFile; fileRef = 93C0E62325611E9100D4E508 /* PEPTab.m */; };
@@ -182,6 +183,8 @@
 		93A8692C25147ECA0033DC22 /* GMisc.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GMisc.m; sourceTree = "<group>"; };
 		93B707AB255D129200F326EB /* bug_hex_string.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = bug_hex_string.pdf; sourceTree = "<group>"; };
 		93B707AD255D129E00F326EB /* bug_hex_string.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = bug_hex_string.pdf; path = PEPTests/pdf/bug_hex_string.pdf; sourceTree = SOURCE_ROOT; };
+		93BACA2B25ECD0B900DDEC59 /* GTJText.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GTJText.h; sourceTree = "<group>"; };
+		93BACA2C25ECD0B900DDEC59 /* GTJText.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GTJText.m; sourceTree = "<group>"; };
 		93C0E6142560F5A200D4E508 /* PEPTopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEPTopView.h; sourceTree = "<group>"; };
 		93C0E6152560F5A200D4E508 /* PEPTopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEPTopView.m; sourceTree = "<group>"; };
 		93C0E61B256119F700D4E508 /* PEPTabView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEPTabView.h; sourceTree = "<group>"; };
@@ -372,6 +375,8 @@
 				93DC04C824F7B6EB003AC9B0 /* GObjects.m */,
 				93DEC3402540238C00E280B0 /* GBinaryData.h */,
 				93DEC3412540238C00E280B0 /* GBinaryData.m */,
+				93BACA2B25ECD0B900DDEC59 /* GTJText.h */,
+				93BACA2C25ECD0B900DDEC59 /* GTJText.m */,
 				93DC04C224F7B335003AC9B0 /* GParser.h */,
 				93DC04C324F7B335003AC9B0 /* GParser.m */,
 				93DEC33B25401C3D00E280B0 /* GEncoders.h */,
@@ -570,6 +575,7 @@
 				9397A56A25652DB5003969B8 /* PEPMisc.m in Sources */,
 				93E336FD24F1265300F91F74 /* GLexer.m in Sources */,
 				93DEC3422540238C00E280B0 /* GBinaryData.m in Sources */,
+				93BACA2D25ECD0BB00DDEC59 /* GTJText.m in Sources */,
 				9346A86125305B2800804506 /* GTextBlock.m in Sources */,
 				930ACC9B250759780092206C /* GDecoders.m in Sources */,
 				93A46B6425DB9FE30078D2FA /* GFontInfo.m in Sources */,
