@@ -22,7 +22,7 @@ Show your love, If you would like to show your appreciation or even help fund de
 
 ## Roadmap
 
-I don't have any roadmap yet, but i will publish one later at the right moment. I hope someone will see the potential of PEP, and donate towards it to speed up the development process.
+A simple [Roadmap](https://github.com/orklann/PEP/projects/1) is presented on Github.
 
 ## Screenshots
 ![](https://raw.githubusercontent.com/orklann/PEP/master/Screenshots/pep_alpha_focus_ui.png)
