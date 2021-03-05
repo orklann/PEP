@@ -22,7 +22,7 @@ Show your love, If you would like to show your appreciation or even help fund de
 
 ## Roadmap
 
-A simple [Roadmap](https://github.com/orklann/PEP/projects/1) is presented on Github.
+A simple [roadmap](https://github.com/orklann/PEP/projects/1) is presented on Github.
 
 ## Screenshots
 ![](https://raw.githubusercontent.com/orklann/PEP/master/Screenshots/pep_alpha_focus_ui.png)
