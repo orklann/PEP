@@ -208,6 +208,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             CGGlyph g = [self getCGGlyphForGGlyph:glyph];
             [glyph setGlyph:g];
 
+            [glyph updateGlyphWidth];
             [glyph updateGlyphFrame];
             [glyph updateGlyphFrameInGlyphSpace];
             

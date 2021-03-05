@@ -228,7 +228,6 @@
 }
 
 - (void)updateGlyphFrame {
-    [self updateGlyphWidth];
     CTFontRef coreFont = (__bridge CTFontRef)(self.font);
     CGFloat width = self.widthInGlyphSpace;
     CGFloat ascent = CTFontGetAscent(coreFont);
@@ -240,7 +239,6 @@
 }
 
 - (void)updateGlyphFrameInGlyphSpace {
-    [self updateGlyphWidth];
     CTFontRef coreFont = (__bridge CTFontRef)(self.font);
     CGFloat width = self.widthInGlyphSpace;
     CGFloat ascent = CTFontGetAscent(coreFont);
