@@ -181,7 +181,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             [glyph setFontName:fontName];
             [glyph setFont:font];
             
-            // Use font size 1.0, we set font size in text matrix already
+            // Use font size 1.0, we set font size in text matrix already,
+            // We set the literal font size in fs below
             //[glyph setFontSize:[[page textState] fontSize]];
             [glyph setFontSize:1.0];
             
@@ -190,6 +191,12 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             
             // Set current character space
             [glyph setCharacterSpace:currentCharacterSpace];
+            
+            // Set rise
+            [glyph setRise:rise];
+            
+            // Set literal font size
+            [glyph setFs:fs];
             
             // Set current encoding
             [glyph setEncoding:[[page textState] encoding]];

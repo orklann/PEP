@@ -19,6 +19,7 @@
     [g setDelta:0];
     [g setWordSpace:0];
     [g setCharacterSpace:0];
+    [g setRise:0];
     return g;
 }
 

@@ -26,6 +26,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) int delta;
 @property (readwrite) CGFloat wordSpace;
 @property (readwrite) CGFloat characterSpace;
+@property (readwrite) CGFloat rise;
+@property (readwrite) CGFloat fs;
 @property (readwrite) int indexOfBlock;
 @property (readwrite) CGFloat width;
 @property (readwrite) CGFloat widthInGlyphSpace;

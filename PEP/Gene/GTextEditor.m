@@ -690,11 +690,12 @@
 - (void)setCTM:(CGAffineTransform)ctm
     textMatrix:(CGAffineTransform)textMatrix
       forGlyph:(GGlyph*)glyph {
-    NSMutableArray *glyphs = [[self.page textParser] glyphs];
-    int indexOfPage = (int)[glyphs indexOfObject:glyph];
-    GGlyph *g = [glyphs objectAtIndex:indexOfPage];
+    NSMutableArray *textParserGlyphs = [[self.page textParser] glyphs];
+    int indexOfPage = (int)[textParserGlyphs indexOfObject:glyph];
+    GGlyph *g = [textParserGlyphs objectAtIndex:indexOfPage];
     [g setCtm:ctm];
     [g setTextMatrix:textMatrix];
+    [g setTextMatrixForRendering:textMatrix];
 }
 
 - (void)moveLine:(GLine*)line byDeltaY:(int)deltaY {
