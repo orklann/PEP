@@ -401,6 +401,7 @@
         [g setContent:ch];
         [g setCtm:ctm];
         [g setTextMatrix:tm];
+        [g setTextMatrixForRendering:tm];
         [g setFontName:fontName];
         [g setFontSize:fontSize];
         [g setFont:font];
@@ -442,6 +443,7 @@
         
         // These three are needed for updating width below
         [g setTextMatrix:tm];
+        [g setTextMatrixForRendering:tm];
         [g setEncoding:currentGlyph.encoding];
         [g setFont:font];
         
@@ -463,6 +465,7 @@
     
     [g setCtm:ctm];
     [g setTextMatrix:tm];
+    [g setTextMatrixForRendering:tm];
     [g setFontName:fontName];
     [g setFontSize:fontSize];
     [g setFont:font];

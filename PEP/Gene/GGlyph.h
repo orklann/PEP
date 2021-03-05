@@ -32,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) NSRect frameInGlyphSpace;
 @property (readwrite) CGAffineTransform ctm;
 @property (readwrite) CGAffineTransform textMatrix;
+@property (readwrite) CGAffineTransform textMatrixForRendering;
 @property (readwrite) NSString *fontName;
 @property (readwrite) CGFloat fontSize;
 @property (readwrite) int lineIndex;
