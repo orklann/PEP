@@ -695,7 +695,16 @@
     GGlyph *g = [textParserGlyphs objectAtIndex:indexOfPage];
     [g setCtm:ctm];
     [g setTextMatrix:textMatrix];
-    [g setTextMatrixForRendering:textMatrix];
+    
+    if ([glyphs indexOfObject:g] == 0 || atNewLinePosition) {
+        [g setTextMatrixForRendering:textMatrix];
+    } else {
+        int index = (int)[glyphs indexOfObject:g];
+        GGlyph *prevGlyph = [glyphs objectAtIndex:index - 1];
+        CGAffineTransform tm = [prevGlyph textMatrix];
+        tm.tx += [prevGlyph width];
+        [g setTextMatrixForRendering:tm];
+    }
 }
 
 - (void)moveLine:(GLine*)line byDeltaY:(int)deltaY {
@@ -741,6 +750,7 @@
     NSArray *words = [tb words];
     //prettyLogForWords(words);
     
+    atNewLinePosition = NO; // YES means is line breaking, glyph is at the start of new line
     wordWrapCTM = ctm;
     wordWrapTextMatrix = textMatrix;
     widthLeft = [self getEditorWidth];
@@ -850,6 +860,9 @@
     // Take account for glyph delta in operator in "TJ"
     wordWrapTextMatrix.tx += [g width];
     lastWrapGlyph = g;
+    if (atNewLinePosition) {
+        atNewLinePosition = NO;
+    }
     return [g width];
 }
 
@@ -883,6 +896,7 @@
         // start of text, in this case, the last wrapped glyph in a '\n' glyph
         //
     }
+    atNewLinePosition = YES;
 }
 
 - (void)updateCachedGlyphs:(NSArray*)glyphs newGlyph:(GGlyph*)newGlyph {

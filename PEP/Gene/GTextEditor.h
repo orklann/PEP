@@ -36,6 +36,7 @@ NS_ASSUME_NONNULL_BEGIN
     BOOL everWrapWord;
     NSMutableArray *wordWrappedLines;
     GWrappedLine *currentWordWrapLine;
+    BOOL atNewLinePosition;
 }
 
 @property (readwrite) GPage *editorInPage;
