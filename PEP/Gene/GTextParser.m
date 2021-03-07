@@ -329,15 +329,13 @@
         CGRect f2 = [a frame];
         CGFloat maxX = NSMaxX(f1);
         CGFloat distance = fabs(f2.origin.x - maxX);
-        CGFloat threshold = 1 / 20.0 * f1.size.width;
-        if ((distance >= threshold && f2.origin.x >= maxX) || /* distance bigger than threshold*/
-            (f2.origin.x < maxX && distance >= f1.size.width) /*
-                                                                current glpyh is before prev glyph, and
-                                                                distance is bigger than prev width, in
-                                                                this case, we can imagine there is a
-                                                                line break between them. so need to
-                                                                break word.
+        CGFloat threshold = f1.size.width / 4;  // threshold to be prev glyph width / 4
+        CGFloat yThreshold = 2.0;               // y-distance threshold to be 2px
+        if ((distance >= threshold && f2.origin.x >= maxX) || /*
+                                                               * after prev glyph and distance
+                                                               * bigger than threshold
                                                                */
+            fabs(f2.origin.y - f1.origin.y) >= yThreshold   // or two glyphs are not in the same line
             ) {
             return YES;
         }
