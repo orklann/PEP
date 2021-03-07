@@ -197,7 +197,7 @@
         [words addObject:currentWord];
     }
     
-    //prettyLogForWords(words);
+    prettyLogForWords(words);
     return words;
 }
 
@@ -321,14 +321,24 @@
         return YES;
     }
     
-    // Check if next glyph a is farther away from prev glyph, the threshold distance is 2 times the width
-    // of the prev glyph. threshold = 2 * (width of prev glyph)
+    // Check if next glyph a is farther away from prev glyph, the threshold distance is 1/20 * width
+    // of the prev glyph. threshold = 1/20 * (width of prev glyph)
+    
     if (prevGlyph != nil && a != nil) {
         CGRect f1 = [prevGlyph frame];
         CGRect f2 = [a frame];
-        CGFloat distance = fabs(f2.origin.x - f1.origin.x);
-        CGFloat threshold = 2 * f1.size.width;
-        if (distance > threshold) {
+        CGFloat maxX = NSMaxX(f1);
+        CGFloat distance = fabs(f2.origin.x - maxX);
+        CGFloat threshold = 1 / 20.0 * f1.size.width;
+        if ((distance >= threshold && f2.origin.x >= maxX) || /* distance bigger than threshold*/
+            (f2.origin.x < maxX && distance >= f1.size.width) /*
+                                                                current glpyh is before prev glyph, and
+                                                                distance is bigger than prev width, in
+                                                                this case, we can imagine there is a
+                                                                line break between them. so need to
+                                                                break word.
+                                                               */
+            ) {
             return YES;
         }
     }
