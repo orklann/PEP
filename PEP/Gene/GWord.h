@@ -23,7 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 /*
- * Word distance to prev word in text space, this property is only used in word wrapping in text parser
+ * Word distance between this word and previous word in text space, this property is only used in word
+ * wrapping in text parser
  */
 @property (readwrite) CGFloat wordDistance;
 

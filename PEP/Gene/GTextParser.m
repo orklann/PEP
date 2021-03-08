@@ -213,6 +213,12 @@
     
     wordPos = 0;
     
+    /*
+     * About word distance:
+     * 1. Word distance in first word of the text block is 0.
+     * 2. Word distance in first word of a line is kNoWordDisctance
+     */
+    
     GLine *currentLine = [GLine create];
     GWord *currentWord = [self currentWord];
     [currentWord setWordDistance:0];
