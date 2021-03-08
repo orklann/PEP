@@ -12,7 +12,8 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /*
- * Indicate that we have no native distance between words, we can add our own distance while doing
+ * Indicate that we have no native distance between words, for example the last word in previous line
+ * and first word in current line, we can add our own distance while doing
  * word wrapping.
  */
 #define kNoWordDistance -1
