@@ -14,6 +14,7 @@
     GWord *w = [[GWord alloc] init];
     NSMutableArray *gs = [NSMutableArray array];
     [w setGlyphs:gs];
+    [w setWordDistance:kNoWordDistance];
     return w;
 }
 
