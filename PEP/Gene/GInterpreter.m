@@ -176,7 +176,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             [glyph setContent:ch];
             [glyph setCtm:[[page graphicsState] ctm]];
             [glyph setTextMatrix:rm];
-            [glyph setTextMatrixForRendering:rm];
             NSString *fontName = [[page textState] fontName];
             [glyph setFontName:fontName];
             [glyph setFont:font];
@@ -617,7 +616,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         CGContextConcatCTM(context, [glyph ctm]);
     }
     
-    CGContextSetTextMatrix(context, [glyph textMatrixForRendering]);
+    CGContextSetTextMatrix(context, [glyph textMatrix]);
     [self drawGlyph:glyph context:context];
 }
 @end

@@ -401,7 +401,6 @@
         [g setContent:ch];
         [g setCtm:ctm];
         [g setTextMatrix:tm];
-        [g setTextMatrixForRendering:tm];
         [g setFontName:fontName];
         [g setFontSize:fontSize];
         [g setFont:font];
@@ -443,7 +442,6 @@
         
         // These three are needed for updating width below
         [g setTextMatrix:tm];
-        [g setTextMatrixForRendering:tm];
         [g setEncoding:currentGlyph.encoding];
         [g setFont:font];
         
@@ -465,7 +463,6 @@
     
     [g setCtm:ctm];
     [g setTextMatrix:tm];
-    [g setTextMatrixForRendering:tm];
     [g setFontName:fontName];
     [g setFontSize:fontSize];
     [g setFont:font];
@@ -695,32 +692,6 @@
     GGlyph *g = [textParserGlyphs objectAtIndex:indexOfPage];
     [g setCtm:ctm];
     [g setTextMatrix:textMatrix];
-    
-    if ([glyphs indexOfObject:g] == 0 || atNewLinePosition) {
-        [g setTextMatrixForRendering:textMatrix];
-    } else {
-        int index = (int)[glyphs indexOfObject:g];
-        GGlyph *prevGlyph = [glyphs objectAtIndex:index - 1];
-        CGAffineTransform tm = [prevGlyph textMatrixForRendering];
-        
-        // We need 1.0 here, because we concat with text matrix which applied font size in it
-        // in interpreter
-        CGFloat fs = 1.0;
-        CGFloat cs = [prevGlyph characterSpace];
-        CGFloat wc = [prevGlyph wordSpace];
-        CGFloat h = 1.0; // we need this in graphics state
-        CGFloat hAdvance = [prevGlyph widthInGlyphSpace];
-        CGFloat tj = [g delta];
-        
-        // See "9.4.4 Text space details"
-        CGFloat tx = ((hAdvance - (tj/1000.0)) * fs + cs + wc) * h;
-        CGFloat ty = 0; // TODO: Handle vertical advance for vertical text layout
-        CGAffineTransform tf = CGAffineTransformMake(1, 0, 0, 1, tx, ty);
-        tm = CGAffineTransformConcat(tf, tm);
-        [g setTextMatrixForRendering:tm];
-        [g updateGlyphFrame];
-        [g updateGlyphFrameInGlyphSpace];
-    }
 }
 
 - (void)moveLine:(GLine*)line byDeltaY:(int)deltaY {
