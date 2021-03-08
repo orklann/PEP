@@ -761,6 +761,9 @@
         CGFloat wordWidth = [word getWordWidth];
         CGFloat wordDistance = [word wordDistance];
         if (wordDistance == kNoWordDistance) {
+            // TODO: Change word distance to the value of width of one `space`,
+            //       we eval this `space` width to be the first glyph of current
+            //       word.
             wordDistance = 0;
         }
         
@@ -774,13 +777,10 @@
             currentLine = [GLine create];
             [currentLine addWord:word];
             
-            // Update widthLeft
+            // Update widthLeft, don't need to care about word distance,
+            // we are at the beginning of line
             widthLeft = [self getEditorWidth];
-            CGFloat wordDistance = [word wordDistance];
-            if (wordDistance == kNoWordDistance) {
-                wordDistance = 0;
-            }
-            widthLeft -= (wordWidth + wordDistance);
+            widthLeft -= wordWidth;
         }
     }
     
