@@ -196,6 +196,22 @@
         CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
         CGContextFillRect(context, r);
     }*/
+    
+    /* Test word distance
+    for (GWord *w in [textParser words]) {
+        CGFloat wordDistance = [w wordDistance];
+        if (wordDistance != 0 && wordDistance != kNoWordDistance) {
+            NSRect r = [w frame];
+            CGAffineTransform ctm = [[[w glyphs] firstObject] ctm];
+            NSSize s = NSMakeSize(wordDistance, 0);
+            s = CGSizeApplyAffineTransform(s, ctm);
+            r.origin.x -= s.width;
+            r.size.width = s.width;
+            CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.5);
+            CGContextFillRect(context, r);
+        }
+    }
+    */
 }
 
 // Calculate media box for PDF page in user space coordinate
