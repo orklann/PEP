@@ -161,6 +161,10 @@
     GWord *currentWord = [GWord create];
     GGlyph *nextGlyph = [self currentGlyph];
     while(nextGlyph != nil) {
+        /*
+         * Geometry word break first, so if a large word splitted in two lines
+         * we break it into two smaller words in two lines
+         */
         if ([self isGlyphBreakWord:nextGlyph]) { // Geometry word break
             // Add previous word
             if ([[currentWord glyphs] count] > 0)  {
@@ -169,7 +173,7 @@
             currentWord = [GWord create];
             [currentWord addGlyph:nextGlyph];
             nextGlyph = [self nextGlyph];
-        } else if (isWhiteSpaceGlyph(nextGlyph)) {
+        } else if (isWhiteSpaceGlyph(nextGlyph)) { // White space break two words
             // Add previous word
             if ([[currentWord glyphs] count] > 0)  {
                 [words addObject:currentWord];
