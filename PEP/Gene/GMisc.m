@@ -318,6 +318,19 @@ BOOL separateLines(GLine *a, GLine *b) {
     return NO;
 }
 
+// Get word distance between current word and previous word
+CGFloat getWordDistance(GWord *prev, GWord *current) {
+    NSRect f1 = [prev frame];
+    NSRect f2 = [current frame];
+    CGAffineTransform ctm1 = [[[prev glyphs] firstObject] ctm];
+    CGAffineTransform ctm2 = [[[current glyphs] firstObject] ctm];
+    ctm1 = CGAffineTransformInvert(ctm1);
+    ctm2 = CGAffineTransformInvert(ctm2);
+    f1 = CGRectApplyAffineTransform(f1, ctm1);
+    f2 = CGRectApplyAffineTransform(f2, ctm2);
+    return (NSMinX(f2) - NSMaxX(f1));
+}
+
 NSPoint translatePoint(NSPoint p, NSPoint newOrigin) {
     CGFloat nx = p.x + newOrigin.x;
     CGFloat ny = p.y + newOrigin.y;

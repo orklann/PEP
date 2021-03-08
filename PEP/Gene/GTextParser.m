@@ -215,17 +215,22 @@
     
     GLine *currentLine = [GLine create];
     GWord *currentWord = [self currentWord];
+    [currentWord setWordDistance:0];
     [currentLine addWord:currentWord];
     GWord *nextWord = [self nextWord];
+    CGFloat wordDistance;
     while(nextWord != nil) {
         if (separateWords(currentWord, nextWord)) {
             [currentLine addWord:nextWord];
+            wordDistance = getWordDistance(currentWord, nextWord);
+            [nextWord setWordDistance:wordDistance];
             currentWord = nextWord;
         } else { // In this case, line breaks happens
             [lines addObject:currentLine];
             currentWord = nextWord;
             currentLine = [GLine create];
             [currentLine addWord:currentWord];
+            [currentWord setWordDistance:kNoWordDistance];
         }
         nextWord = [self nextWord];
     }

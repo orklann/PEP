@@ -32,7 +32,6 @@ BOOL glyphsInTheSameLine(GGlyph *a, GGlyph *b);
 
 NSMutableArray *sortGlyphsInReadOrder(NSMutableArray *glyphs);
 
-
 NSMutableArray* quicksortGlyphs(NSMutableArray *array);
 NSMutableArray* quicksortGTJTexts(NSMutableArray *array);
 
@@ -44,6 +43,9 @@ CGFloat distance(NSPoint a, NSPoint b);
 
 // Check if two lines form a text block
 BOOL separateLines(GLine *a, GLine *b);
+
+// Get word distance between current word and previous word
+CGFloat getWordDistance(GWord *prev, GWord *current);
 
 // Translate point to new origin
 // Here we assume old origin is at (0, 0) 
