@@ -221,7 +221,7 @@
      * About word distance:
      * 1. Word distance in first word of the text block is 0.
      * 2. Word distance in first word of a line is kNoWordDisctance
-     * 3. Word distance is applied by CTM for the first glyph
+     * 3. Word distance is applied by CTM of the first glyph
      */
     
     GLine *currentLine = [GLine create];
