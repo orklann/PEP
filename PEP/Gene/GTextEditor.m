@@ -74,6 +74,7 @@
     if ([_delegate respondsToSelector:@selector(textStateDidChange:)]) {
         [_delegate textStateDidChange:self];
     }
+    [self doWordWrap];
     return self;
 }
 
@@ -733,6 +734,65 @@
 }
 
 - (void)doWordWrap {
+    NSMutableArray *lines = [self wordWrapToLines];
+    printf("Lines after wordWrapping: %d lines\n", (int)[lines count]);
+    for (GLine *line in lines) {
+        NSLog(@"%@", [line lineString]);
+    }
+    printf("===END===\n");
+}
+
+/*
+ * This method do word wrapping and create final result lines, but
+ * all glyphs in lines do not update it's text matrix, we do it in
+ * align methods, like leftAlignLines, rightAlignLines,
+ * centerAlignLines, leftRightAlignLines.
+ */
+- (NSMutableArray*)wordWrapToLines {
+    // Fixme: Should be
+    // GTextBlock *tb = [self getTextBlockByCachedGlyphs]; for real case
+    GTextBlock *tb = textBlock;
+    NSArray *words = [tb words];
+
+    NSMutableArray *lines = [NSMutableArray array];
+    CGFloat widthLeft = [self getEditorWidth];
+    GLine *currentLine = [GLine create];
+    for (GWord *word in words) {
+        CGFloat wordWidth = [word getWordWidth];
+        CGFloat wordDistance = [word wordDistance];
+        if (wordDistance == kNoWordDistance) {
+            wordDistance = 0;
+        }
+        
+        // Choose if to line break or not
+        if (widthLeft - wordWidth - wordDistance >= 0) {
+            [currentLine addWord:word];
+            widthLeft -= (wordWidth + wordDistance);
+        } else { // Do line break by creating a new line as current line
+            [lines addObject:currentLine];
+            
+            currentLine = [GLine create];
+            [currentLine addWord:word];
+            
+            // Update widthLeft
+            widthLeft = [self getEditorWidth];
+            CGFloat wordDistance = [word wordDistance];
+            if (wordDistance == kNoWordDistance) {
+                wordDistance = 0;
+            }
+            widthLeft -= (wordWidth + wordDistance);
+        }
+    }
+    
+    // Add remaining current line in case it's not an empty line
+    if ([[currentLine words] count] > 0) {
+        [lines addObject:currentLine];
+    }
+    return lines;
+}
+
+/*
+- (void)doWordWrap {
     GTextBlock *tb = [self getTextBlockByCachedGlyphs];
     NSArray *words = [tb words];
     //prettyLogForWords(words);
@@ -781,7 +841,7 @@
     //words = [tb words];
     //prettyLogForWords(words);
 }
-
+*/
 - (CGFloat)wrapWord:(GWord*)w {
     CGFloat totalWidth = 0.0;
     CGFloat localWidthLeft = widthLeft;

@@ -161,7 +161,15 @@
     GWord *currentWord = [GWord create];
     GGlyph *nextGlyph = [self currentGlyph];
     while(nextGlyph != nil) {
-        if (isWhiteSpaceGlyph(nextGlyph)) {
+        if ([self isGlyphBreakWord:nextGlyph]) { // Geometry word break
+            // Add previous word
+            if ([[currentWord glyphs] count] > 0)  {
+                [words addObject:currentWord];
+            }
+            currentWord = [GWord create];
+            [currentWord addGlyph:nextGlyph];
+            nextGlyph = [self nextGlyph];
+        } else if (isWhiteSpaceGlyph(nextGlyph)) {
             // Add previous word
             if ([[currentWord glyphs] count] > 0)  {
                 [words addObject:currentWord];
@@ -179,14 +187,6 @@
             }
             
             currentWord = [GWord create];
-        } else if ([self isGlyphBreakWord:nextGlyph]) { // Geometry word break
-            // Add previous word
-            if ([[currentWord glyphs] count] > 0)  {
-                [words addObject:currentWord];
-            }
-            currentWord = [GWord create];
-            [currentWord addGlyph:nextGlyph];
-            nextGlyph = [self nextGlyph];
         } else {
             [currentWord addGlyph:nextGlyph];
             nextGlyph = [self nextGlyph];
@@ -197,7 +197,7 @@
         [words addObject:currentWord];
     }
     
-    prettyLogForWords(words);
+    //prettyLogForWords(words);
     return words;
 }
 
@@ -217,6 +217,7 @@
      * About word distance:
      * 1. Word distance in first word of the text block is 0.
      * 2. Word distance in first word of a line is kNoWordDisctance
+     * 3. Word distance is applied by CTM for the first glyph
      */
     
     GLine *currentLine = [GLine create];
