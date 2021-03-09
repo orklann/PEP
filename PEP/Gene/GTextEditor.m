@@ -735,11 +735,14 @@
 
 - (void)doWordWrap {
     NSMutableArray *lines = [self wordWrapToLines];
+    
     printf("Lines after wordWrapping: %d lines\n", (int)[lines count]);
     for (GLine *line in lines) {
         NSLog(@"%@", [line lineString]);
     }
     printf("===END===\n");
+    
+    [self leftAlignLines:lines];
 }
 
 /*
@@ -749,9 +752,7 @@
  * centerAlignLines, leftRightAlignLines.
  */
 - (NSMutableArray*)wordWrapToLines {
-    // Fixme: Should be
-    // GTextBlock *tb = [self getTextBlockByCachedGlyphs]; for real case
-    GTextBlock *tb = textBlock;
+    GTextBlock *tb = [self getTextBlockByCachedGlyphs];
     NSArray *words = [tb words];
     NSArray *originalLines = [tb lines];
     
@@ -797,6 +798,66 @@
     }
     return lines;
 }
+
+- (void)leftAlignLines:(NSArray*)lines {
+    for (GLine *l in lines) {
+        CGAffineTransform textMatrix = [l startTextMatrix];
+        for (GWord *w in [l words]) {
+            textMatrix = [self updateTextMatrixForGlyphsInWord:w withTextMatrix:textMatrix];
+        }
+    }
+}
+
+- (CGAffineTransform)updateTextMatrixForGlyphsInWord:(GWord*)word
+                                      withTextMatrix:(CGAffineTransform)startTextMatrix {
+    CGAffineTransform ctm = [[[word glyphs] firstObject] ctm];
+    CGAffineTransform ctmInverted = CGAffineTransformInvert(ctm);
+    CGSize size = NSMakeSize([word wordDistance], 0);
+    size = CGSizeApplyAffineTransform(size, ctmInverted);
+    
+    // Word distance now is in text space, after applied by inveted CTM
+    CGFloat wordDistance = size.width;
+    CGAffineTransform textMatrix = startTextMatrix;
+    textMatrix.tx += wordDistance;
+    GGlyph *currentGlyph = nil;
+    
+    for (GGlyph *glyph in [word glyphs]) {
+        if ([[word glyphs] indexOfObject:glyph] == 0) { // first glyph, just set text matrix
+            [glyph setTextMatrix:textMatrix];
+            
+            // Add glyph width to text matrix
+            CGFloat width = [glyph width];
+            CGSize size = NSMakeSize(width, 0);
+            size = CGSizeApplyAffineTransform(size, ctmInverted);
+            width = size.width;
+            textMatrix.tx += width;
+            currentGlyph = glyph;
+        } else {
+            CGRect f1 = [currentGlyph frame];
+            CGRect f2 = [glyph frame];
+            
+            // Add glyph distance
+            CGFloat glyphDistance = NSMinX(f2) - NSMaxX(f1);
+            CGSize size = NSMakeSize(glyphDistance, 0);
+            size = CGSizeApplyAffineTransform(size, ctmInverted);
+            glyphDistance = size.width;
+            textMatrix.tx += glyphDistance;
+            
+            // Set text matrix
+            [glyph setTextMatrix:textMatrix];
+            
+            // After that, just add glyph width to text matrix
+            CGFloat width = [glyph width];
+            size = NSMakeSize(width, 0);
+            size = CGSizeApplyAffineTransform(size, ctmInverted);
+            width = size.width;
+            textMatrix.tx += width;
+            currentGlyph = glyph;
+        }
+    }
+    return textMatrix;
+}
+
 
 - (CGAffineTransform)getStartTextMatrix:(NSArray*)lines originalLines:(NSArray*)originalLines {
     /*
