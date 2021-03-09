@@ -753,7 +753,8 @@
     // GTextBlock *tb = [self getTextBlockByCachedGlyphs]; for real case
     GTextBlock *tb = textBlock;
     NSArray *words = [tb words];
-
+    NSArray *originalLines = [tb lines];
+    
     NSMutableArray *lines = [NSMutableArray array];
     CGFloat widthLeft = [self getEditorWidth];
     GLine *currentLine = [GLine create];
@@ -772,6 +773,9 @@
             [currentLine addWord:word];
             widthLeft -= (wordWidth + wordDistance);
         } else { // Do line break by creating a new line as current line
+            CGAffineTransform startTextMatrix = [self getStartTextMatrix:lines
+                                                           originalLines:originalLines];
+            [currentLine setStartTextMatrix:startTextMatrix];
             [lines addObject:currentLine];
             
             currentLine = [GLine create];
@@ -786,11 +790,41 @@
     
     // Add remaining current line in case it's not an empty line
     if ([[currentLine words] count] > 0) {
+        CGAffineTransform startTextMatrix = [self getStartTextMatrix:lines
+                                                       originalLines:originalLines];
+        [currentLine setStartTextMatrix:startTextMatrix];
         [lines addObject:currentLine];
     }
     return lines;
 }
 
+- (CGAffineTransform)getStartTextMatrix:(NSArray*)lines originalLines:(NSArray*)originalLines {
+    /*
+     * Get startTextMatrix of original line.
+     * If line index is out of bound of original lines, it's set to
+     * 1) startTextMatrix = (startTextMatrix of previous line) and
+     * 2) startTextMatrix.ty += delta of last two lines textMatrix
+     */
+    int lineIndex = (int)[lines count];
+    CGAffineTransform startTextMatrix;
+    GLine *originalLine = [originalLines objectAtIndex:lineIndex];
+    if (originalLine) { // line index is in the bound of original lines
+        startTextMatrix = [originalLine startTextMatrix];
+    } else { // line index is out of bound of original lines
+        startTextMatrix = [[originalLines lastObject] startTextMatrix];
+        CGAffineTransform ctm = [[[[originalLines lastObject] glyphs] firstObject] ctm];
+        CGAffineTransform ctmInverted = CGAffineTransformInvert(ctm);
+        GLine *l1 = [originalLines objectAtIndex:[originalLines count] - 2];
+        GLine *l2 = [originalLines lastObject];
+        CGRect f1 = [l1 frame];
+        CGRect f2 = [l2 frame];
+        f1 = CGRectApplyAffineTransform(f1, ctmInverted);
+        f2 = CGRectApplyAffineTransform(f2, ctmInverted);
+        CGFloat deltaY = f2.origin.y - f1.origin.y;
+        startTextMatrix.ty += deltaY;
+    }
+    return startTextMatrix;
+}
 /*
 - (void)doWordWrap {
     GTextBlock *tb = [self getTextBlockByCachedGlyphs];

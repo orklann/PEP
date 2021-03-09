@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
     NSMutableArray *words;
     NSRect frame;
 }
+
+@property (readwrite) CGAffineTransform startTextMatrix;
+
 + (id)create;
 - (void)setWords:(NSMutableArray*)ws;
 - (void)addWord:(GWord*)w;

@@ -237,6 +237,11 @@
             [nextWord setWordDistance:wordDistance];
             currentWord = nextWord;
         } else { // In this case, line breaks happens
+            // Set startTextMatrix for current line
+            GGlyph *firstGlyph = [[currentLine glyphs] firstObject];
+            [currentLine setStartTextMatrix:[firstGlyph textMatrix]];
+            
+            // Add current line to lines array
             [lines addObject:currentLine];
             currentWord = nextWord;
             currentLine = [GLine create];
@@ -247,6 +252,11 @@
     }
     
     if ([[currentLine words] count] > 0) {
+        // Set startTextMatrix for current line
+        GGlyph *firstGlyph = [[currentLine glyphs] firstObject];
+        [currentLine setStartTextMatrix:[firstGlyph textMatrix]];
+        
+        // Add current line to lines array
         [lines addObject:currentLine];
     }
     return lines;
