@@ -659,13 +659,13 @@
 - (void)moveGlyphsAfter:(GGlyph*)startGlyph byDeltaX:(CGFloat)deltaX {
     NSArray *textBlockGlyphs =  [textBlock glyphs];
     int startIndex = (int)[textBlockGlyphs indexOfObject:startGlyph];
-    NSPoint startPoint = [startGlyph point];
+    NSPoint startPoint = [startGlyph frame].origin;
     startPoint.x += ([startGlyph width] / 2);
     
     int i;
     for (i = startIndex + 1; i < [textBlockGlyphs count]; i++) {
         GGlyph *g = [textBlockGlyphs objectAtIndex:i];
-        NSPoint p = [g point];
+        NSPoint p = [g frame].origin;
         if (p.x >= startPoint.x) {
             //NSLog(@"index: %d %@", i, [g content]);
             [self moveGlyph:g byDeltaX:deltaX byDeltaY:0];
