@@ -636,7 +636,7 @@
 - (void)moveGlyphsIncludeAfter:(GGlyph*)startGlyph byDeltaX:(CGFloat)deltaX {
     NSArray *textBlockGlyphs =  [textBlock glyphs];
     int startIndex = (int)[textBlockGlyphs indexOfObject:startGlyph];
-    NSPoint startPoint = [startGlyph point];
+    NSPoint startPoint = [startGlyph frame].origin;
     startPoint.x += ([startGlyph width] / 2);
     
     //NSLog(@"index: (start) %@", [startGlyph content]);
@@ -645,7 +645,7 @@
     int i;
     for (i = startIndex + 1; i < [textBlockGlyphs count]; i++) {
         GGlyph *g = [textBlockGlyphs objectAtIndex:i];
-        NSPoint p = [g point];
+        NSPoint p = [g frame].origin;
         if (p.x >= startPoint.x) {
             //NSLog(@"index: %d %@", i, [g content]);
             [self moveGlyph:g byDeltaX:deltaX byDeltaY:0];
@@ -734,10 +734,18 @@
 }
 
 - (void)doWordWrap {
+    /*NSArray *lines1 = [textBlock lines];
+    printf("--Lines before wordWrapping: %d lines\n", (int)[lines1 count]);
+    for (GLine *line in lines1) {
+        NSLog(@"%@", [line lineString]);
+    }
+    printf("===END===\n");
+    prettyLogForWords([textBlock words]);
+    */
     NSMutableArray *lines = [self wordWrapToLines];
     
-    /* Test: log out lines after word warpping
-    printf("++Lines after wordWrapping: %d lines\n", (int)[lines count]);
+    // Test: log out lines after word warpping
+    /*printf("++Lines after wordWrapping: %d lines\n", (int)[lines count]);
     for (GLine *line in lines) {
         NSLog(@"%@", [line lineString]);
     }
@@ -769,6 +777,7 @@
             //       we eval this `space` width to be the first glyph of current
             //       word.
             wordDistance = 0;
+            [word setWordDistance:wordDistance];
         }
         
         // Choose if to line break or not
@@ -782,6 +791,7 @@
             [lines addObject:currentLine];
             
             currentLine = [GLine create];
+            [word setWordDistance:kNoWordDistance];
             [currentLine addWord:word];
             
             // Update widthLeft, don't need to care about word distance,
@@ -825,16 +835,20 @@
     wordDistance = size.width;
     CGAffineTransform textMatrix = startTextMatrix;
     textMatrix.tx += wordDistance;
-    GGlyph *currentGlyph = nil;
+    GGlyph *prevGlyph = nil;
+    
+    // Text matrix of previous glyph before changing it's text matrix
+    CGAffineTransform prevTextMatrix = CGAffineTransformIdentity;
     
     for (GGlyph *glyph in [word glyphs]) {
         if ([[word glyphs] indexOfObject:glyph] == 0) { // first glyph, just set text matrix
+            prevTextMatrix = [glyph textMatrix];
             [glyph setTextMatrix:textMatrix];
             
             // Add glyph width to text matrix
             CGFloat width = [glyph width];
             textMatrix.tx += width;
-            currentGlyph = glyph;
+            prevGlyph = glyph;
         } else {
             // Add glyph distance
             /*
@@ -842,21 +856,22 @@
              * Note: CGAffineTransform deltaTM = CGAffineTransformConcat(tm1, tm2);
              *       the order of tm1, tm2 here matters
              */
-            CGAffineTransform tm1 = [currentGlyph textMatrix];
-            tm1.tx += [currentGlyph width];
+            CGAffineTransform tm1 = prevTextMatrix;
+            tm1.tx += [prevGlyph width];
             CGAffineTransform tm2 = [glyph textMatrix];
             tm1 = CGAffineTransformInvert(tm1);
             CGAffineTransform deltaTM = CGAffineTransformConcat(tm1, tm2);
             CGFloat glyphDistance = deltaTM.tx;
             textMatrix.tx += glyphDistance;
             
-            // Set text matrix
+            // Saved current text matrix as prevTextMatrix and set text matrix
+            prevTextMatrix = [glyph textMatrix];
             [glyph setTextMatrix:textMatrix];
             
             // After that, just add glyph width to text matrix
             CGFloat width = [glyph width];
             textMatrix.tx += width;
-            currentGlyph = glyph;
+            prevGlyph = glyph;
         }
     }
     return textMatrix;
