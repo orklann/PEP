@@ -347,9 +347,8 @@
         return YES;
     }
     
-    // Check if next glyph a is farther away from prev glyph, the threshold distance is 1/20 * width
-    // of the prev glyph. threshold = 1/20 * (width of prev glyph)
-    
+    // Check if next glyph a is farther away from prev glyph, the threshold distance is 1/4 width
+    // of the prev glyph. threshold = 1/4 * (width of prev glyph)
     if (prevGlyph != nil && a != nil) {
         CGRect f1 = [prevGlyph frame];
         CGRect f2 = [a frame];

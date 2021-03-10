@@ -736,13 +736,15 @@
 - (void)doWordWrap {
     NSMutableArray *lines = [self wordWrapToLines];
     
-    printf("Lines after wordWrapping: %d lines\n", (int)[lines count]);
+    /* Test: log out lines after word warpping
+    printf("++Lines after wordWrapping: %d lines\n", (int)[lines count]);
     for (GLine *line in lines) {
         NSLog(@"%@", [line lineString]);
     }
     printf("===END===\n");
-    
+    */
     [self leftAlignLines:lines];
+    [textBlock setLines:lines];
 }
 
 /*
@@ -752,9 +754,9 @@
  * centerAlignLines, leftRightAlignLines.
  */
 - (NSMutableArray*)wordWrapToLines {
-    GTextBlock *tb = [self getTextBlockByCachedGlyphs];
-    NSArray *words = [tb words];
-    NSArray *originalLines = [tb lines];
+    textBlock = [self getTextBlockByCachedGlyphs];
+    NSArray *words = [textBlock words];
+    NSArray *originalLines = [textBlock lines];
     
     NSMutableArray *lines = [NSMutableArray array];
     CGFloat widthLeft = [self getEditorWidth];
@@ -812,11 +814,15 @@
                                       withTextMatrix:(CGAffineTransform)startTextMatrix {
     CGAffineTransform ctm = [[[word glyphs] firstObject] ctm];
     CGAffineTransform ctmInverted = CGAffineTransformInvert(ctm);
-    CGSize size = NSMakeSize([word wordDistance], 0);
+    CGFloat wordDistance = [word wordDistance];
+    if (wordDistance == kNoWordDistance) {
+        wordDistance = 0.0;
+    }
+    CGSize size = NSMakeSize(wordDistance, 0);
     size = CGSizeApplyAffineTransform(size, ctmInverted);
     
     // Word distance now is in text space, after applied by inveted CTM
-    CGFloat wordDistance = size.width;
+    wordDistance = size.width;
     CGAffineTransform textMatrix = startTextMatrix;
     textMatrix.tx += wordDistance;
     GGlyph *currentGlyph = nil;
@@ -827,20 +833,21 @@
             
             // Add glyph width to text matrix
             CGFloat width = [glyph width];
-            CGSize size = NSMakeSize(width, 0);
-            size = CGSizeApplyAffineTransform(size, ctmInverted);
-            width = size.width;
             textMatrix.tx += width;
             currentGlyph = glyph;
         } else {
-            CGRect f1 = [currentGlyph frame];
-            CGRect f2 = [glyph frame];
-            
             // Add glyph distance
-            CGFloat glyphDistance = NSMinX(f2) - NSMaxX(f1);
-            CGSize size = NSMakeSize(glyphDistance, 0);
-            size = CGSizeApplyAffineTransform(size, ctmInverted);
-            glyphDistance = size.width;
+            /*
+             * Calculate glyph distance in text space.
+             * Note: CGAffineTransform deltaTM = CGAffineTransformConcat(tm1, tm2);
+             *       the order of tm1, tm2 here matters
+             */
+            CGAffineTransform tm1 = [currentGlyph textMatrix];
+            tm1.tx += [currentGlyph width];
+            CGAffineTransform tm2 = [glyph textMatrix];
+            tm1 = CGAffineTransformInvert(tm1);
+            CGAffineTransform deltaTM = CGAffineTransformConcat(tm1, tm2);
+            CGFloat glyphDistance = deltaTM.tx;
             textMatrix.tx += glyphDistance;
             
             // Set text matrix
@@ -848,9 +855,6 @@
             
             // After that, just add glyph width to text matrix
             CGFloat width = [glyph width];
-            size = NSMakeSize(width, 0);
-            size = CGSizeApplyAffineTransform(size, ctmInverted);
-            width = size.width;
             textMatrix.tx += width;
             currentGlyph = glyph;
         }
@@ -868,8 +872,9 @@
      */
     int lineIndex = (int)[lines count];
     CGAffineTransform startTextMatrix;
-    GLine *originalLine = [originalLines objectAtIndex:lineIndex];
-    if (originalLine) { // line index is in the bound of original lines
+    
+    if (lineIndex <= [originalLines count] - 1) { // line index is in the bound of original lines
+        GLine *originalLine = [originalLines objectAtIndex:lineIndex];
         startTextMatrix = [originalLine startTextMatrix];
     } else { // line index is out of bound of original lines
         startTextMatrix = [[originalLines lastObject] startTextMatrix];
