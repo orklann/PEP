@@ -1306,5 +1306,15 @@
     [blinkTimer invalidate];
     blinkTimer = nil;
 }
+
+/*
+ * Because we can not use TJTexts to make read order glyphs, we just broke the TJ text structures
+ * by adding new glyphs, so we build and cache text block without using TJTexts.
+ */
+- (void)dealloc {
+    [self.page.textParser setCached:NO];
+    [self.page.textParser setUseTJTexts:NO];
+    [self.page.textParser makeTextBlocks];
+}
 @end
 
