@@ -62,9 +62,6 @@
     return s;
 }
 
-/* Return width of a word, this is different from the width of the frame of a
- * word, we calculate this width by adding all width of glyphs in it.
- */
 - (CGFloat)getWordWidth {
     return frame.size.width;
 }
