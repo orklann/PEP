@@ -278,7 +278,12 @@ BOOL separateWords(GWord* a, GWord*b) {
     CGFloat heightTolerance = (heightA + heightB) * 0.05;
     if (dy <= heightTolerance) {
         CGFloat dx = fabs(xA - xB);
-        CGFloat widthTolerance = (widthA + widthB);
+        /*
+         * This is for classify two columns, bigger than this value is means
+         * two words are in two different columns, so don't combine them into
+         * a line.
+         */
+        CGFloat widthTolerance = 2 * (widthA + widthB);
         if (dx <= widthTolerance) {
             return YES;
         }
