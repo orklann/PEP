@@ -276,6 +276,7 @@ BOOL separateWords(GWord* a, GWord*b) {
     
     CGFloat dy = fabs(yMinA - yMinB);
     CGFloat heightTolerance = (heightA + heightB) * 0.05;
+    
     if (dy <= heightTolerance) {
         CGFloat dx = fabs(xA - xB);
         /*
@@ -283,7 +284,7 @@ BOOL separateWords(GWord* a, GWord*b) {
          * two words are in two different columns, so don't combine them into
          * a line.
          */
-        CGFloat widthTolerance = 2 * (widthA + widthB);
+        CGFloat widthTolerance = widthA + widthB;
         if (dx <= widthTolerance) {
             return YES;
         }
