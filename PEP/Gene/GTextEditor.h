@@ -14,7 +14,6 @@
 @class GTextBlock;
 @class GPage;
 @class GLine;
-@class GWrappedLine;
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GTextEditor : NSObject {
@@ -27,16 +26,9 @@ NS_ASSUME_NONNULL_BEGIN
     GGlyph *lastDeletedGlyph;
     CGFloat editorWidth;
     CGFloat editorHeight;
-    CGAffineTransform wordWrapCTM;
-    CGAffineTransform wordWrapTextMatrix;
     CGAffineTransform ctm;
     CGAffineTransform textMatrix;
     CGFloat widthLeft;
-    GGlyph *lastWrapGlyph;
-    BOOL everWrapWord;
-    NSMutableArray *wordWrappedLines;
-    GWrappedLine *currentWordWrapLine;
-    BOOL atNewLinePosition;
 }
 
 @property (readwrite) GPage *editorInPage;

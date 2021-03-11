@@ -25,7 +25,6 @@
 		9320C01C251A1552008F20B0 /* irig_keys_25.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9320C01B251A1552008F20B0 /* irig_keys_25.pdf */; };
 		9320C01E251A1569008F20B0 /* irig_keys_25.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9320C01D251A1568008F20B0 /* irig_keys_25.pdf */; };
 		932FF6EC2563D79800808652 /* PEPSideView.m in Sources */ = {isa = PBXBuildFile; fileRef = 932FF6EB2563D79800808652 /* PEPSideView.m */; };
-		93311A0E254D456000D58E06 /* GWrappedLine.m in Sources */ = {isa = PBXBuildFile; fileRef = 93311A0D254D456000D58E06 /* GWrappedLine.m */; };
 		93311A10254EA5EF00D58E06 /* PEP_Incremental.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93311A0F254EA5EF00D58E06 /* PEP_Incremental.pdf */; };
 		93311A12254EA60500D58E06 /* PEP_Incremental.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93311A11254EA60500D58E06 /* PEP_Incremental.pdf */; };
 		93386D382568E6D400B63E8E /* Super Mario World.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 93386D372568E6D400B63E8E /* Super Mario World.pdf */; };
@@ -125,8 +124,6 @@
 		9320C01D251A1568008F20B0 /* irig_keys_25.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = irig_keys_25.pdf; path = PEPTests/pdf/irig_keys_25.pdf; sourceTree = SOURCE_ROOT; };
 		932FF6EA2563D79800808652 /* PEPSideView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PEPSideView.h; sourceTree = "<group>"; };
 		932FF6EB2563D79800808652 /* PEPSideView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PEPSideView.m; sourceTree = "<group>"; };
-		93311A0C254D456000D58E06 /* GWrappedLine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GWrappedLine.h; sourceTree = "<group>"; };
-		93311A0D254D456000D58E06 /* GWrappedLine.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GWrappedLine.m; sourceTree = "<group>"; };
 		93311A0F254EA5EF00D58E06 /* PEP_Incremental.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PEP_Incremental.pdf; sourceTree = "<group>"; };
 		93311A11254EA60500D58E06 /* PEP_Incremental.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = PEP_Incremental.pdf; path = PEPTests/pdf/PEP_Incremental.pdf; sourceTree = SOURCE_ROOT; };
 		93386D372568E6D400B63E8E /* Super Mario World.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "Super Mario World.pdf"; sourceTree = "<group>"; };
@@ -401,8 +398,6 @@
 				935BCC39252C61B900868C01 /* GWord.m */,
 				938A4E6D252EEFDF00504235 /* GLine.h */,
 				938A4E6E252EEFDF00504235 /* GLine.m */,
-				93311A0C254D456000D58E06 /* GWrappedLine.h */,
-				93311A0D254D456000D58E06 /* GWrappedLine.m */,
 				9346A85F25305B2800804506 /* GTextBlock.h */,
 				9346A86025305B2800804506 /* GTextBlock.m */,
 				93159E60252B09F400F87451 /* GTextParser.h */,
@@ -555,7 +550,6 @@
 				93CA1E6825DCACB900DF7949 /* GEncodings.m in Sources */,
 				93427469252082CA00CA3DBE /* GGraphicsState.m in Sources */,
 				93159E62252B09F400F87451 /* GTextParser.m in Sources */,
-				93311A0E254D456000D58E06 /* GWrappedLine.m in Sources */,
 				93D48C1E2536CAAA002DD41B /* GTextEditor.m in Sources */,
 				93159E5F252AEB5E00F87451 /* GGlyph.m in Sources */,
 				9307B2AA255A6996000468A9 /* GCompiler.m in Sources */,

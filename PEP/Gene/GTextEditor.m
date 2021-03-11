@@ -18,7 +18,6 @@
 #import "GConstants.h"
 #import "GBinaryData.h"
 #import "GTextParser.h"
-#import "GWrappedLine.h"
 #import "PEPWindow.h"
 #import "PEPMisc.h"
 #import "GInterpreter.h"
@@ -51,7 +50,7 @@
     self.editingGlyphs = [NSMutableArray array];
     editorWidth = [textBlock frame].size.width;
     editorHeight = [textBlock frame].size.height;
-    everWrapWord = NO;
+
     // Initialize ctm, textMatrix (First glyph)
     GGlyph *firstGlyph = [[textBlock glyphs] firstObject];
     ctm = [firstGlyph ctm];
@@ -903,160 +902,6 @@
     }
     return startTextMatrix;
 }
-/*
-- (void)doWordWrap {
-    GTextBlock *tb = [self getTextBlockByCachedGlyphs];
-    NSArray *words = [tb words];
-    //prettyLogForWords(words);
-    
-    atNewLinePosition = NO; // YES means is line breaking, glyph is at the start of new line
-    wordWrapCTM = ctm;
-    wordWrapTextMatrix = textMatrix;
-    widthLeft = [self getEditorWidth];
-    GGlyph *firstGlyph = [[tb glyphs] firstObject];
-    editorHeight = [firstGlyph height];
-    lastWrapGlyph = nil;
-    wordWrappedLines = [NSMutableArray array];
-    currentWordWrapLine = [GWrappedLine create];
-    for (GWord *word in words) {
-        CGFloat wordWidth = [word getWordWidth];
-        if (wordWidth >= [self getEditorWidth] && widthLeft > 0) {
-            // In case next word width is bigger than editor width and there is room
-            // in current line (that is widthLeft > 0)
-            // Need line break in [self wrapWord:]
-            wordWidth = [self wrapWord:word];
-            widthLeft -= wordWidth;
-        } else if (widthLeft - wordWidth >= 0) {
-            wordWidth = [self wrapWord:word];
-            widthLeft -= wordWidth;
-        } else {
-            GGlyph *glyph = [[word glyphs] firstObject];
-            if (!isWhiteSpaceGlyph(glyph)) {
-                [self lineBreak];
-                // Add new line to word wrapped lines array, and create a new line
-                [wordWrappedLines addObject:currentWordWrapLine];
-                currentWordWrapLine = [GWrappedLine create];
-            }
-            wordWidth = [self wrapWord:word];
-            widthLeft -= wordWidth;
-        }
-    }
-    
-    // Add the last line because we don't have a line break at the end
-    // If there is any glyph in last line
-    if ([[currentWordWrapLine glyphs] count] > 0) {
-        [wordWrappedLines addObject:currentWordWrapLine];
-    }
-    everWrapWord = YES;
-    // Test wrapping result
-    //tb = [self getTextBlockByCachedGlyphs];
-    //words = [tb words];
-    //prettyLogForWords(words);
-}
-*/
-- (CGFloat)wrapWord:(GWord*)w {
-    CGFloat totalWidth = 0.0;
-    CGFloat localWidthLeft = widthLeft;
-    for (GGlyph *g in [w glyphs]) {
-        CGFloat glyphWidth = [g width];
-        CGFloat width;
-        if (isReturnGlyph(g)) { // Manual line break
-            /*
-             * If '\n' is at the end of text, we do line break before
-             * wrap glyph, to make sure we have a new line to enter text
-             */
-            GTextBlock *tb = [self getTextBlockByCachedGlyphs];
-            NSArray *glyphs = [tb glyphs];
-            if ([[glyphs lastObject] isEqualTo:g]) {
-                [self lineBreak];
-            }
-            // Add new line to word wrapped lines array, and create a new line
-            [currentWordWrapLine addGlyph:g];
-            [wordWrappedLines addObject:currentWordWrapLine];
-            currentWordWrapLine = [GWrappedLine create];
-            totalWidth = 0.0;
-            localWidthLeft = [self getEditorWidth];
-            width = [self wrapGlyph:g];
-            totalWidth += width;
-            
-            // Line break delay to here, to make sure \n is at the end of
-            // line before line breaks
-            [self lineBreak];
-        } else if (localWidthLeft - glyphWidth >= 0) {
-            width = [self wrapGlyph:g];
-            totalWidth += width;
-            [currentWordWrapLine addGlyph:g];
-        } else {
-            // NOTE: We can only do word wrapping in this?
-            //       Means it's start word wrapping in glyph wide.
-            //       TODO: Consider as an option later
-            if (!isWhiteSpaceGlyph(g)) {
-                [self lineBreak];
-                // Add new line to word wrapped lines array, and create a new line
-                [wordWrappedLines addObject:currentWordWrapLine];
-                currentWordWrapLine = [GWrappedLine create];
-            }
-            totalWidth = 0.0;
-            localWidthLeft = [self getEditorWidth];
-            width = [self wrapGlyph:g];
-            totalWidth += width;
-            [currentWordWrapLine addGlyph:g];
-        }
-        localWidthLeft -= width;
-    }
-    return totalWidth;
-}
-
-- (CGFloat)wrapGlyph:(GGlyph*)g {
-    NSMutableArray *glyphs = [[self.page textParser] glyphs];
-    if (![glyphs containsObject:g]) {
-        // urh, this should never happens
-        return 0.0;
-    }
-    
-    [self setCTM:wordWrapCTM textMatrix:wordWrapTextMatrix forGlyph:g];
-    wordWrapCTM = [g ctm];
-    // Take account for glyph delta in operator in "TJ"
-    wordWrapTextMatrix.tx += [g width];
-    lastWrapGlyph = g;
-    if (atNewLinePosition) {
-        atNewLinePosition = NO;
-    }
-    return [g width];
-}
-
-- (void)lineBreak {
-    if (lastWrapGlyph) {
-        wordWrapCTM = ctm;
-        //GWrappedLine *currentLine = [self getCurrentWrappedLine];
-        //GGlyph *firstGlyph = [[currentLine glyphs] firstObject];
-        CGAffineTransform lastTextMatrix = [lastWrapGlyph textMatrix];
-        wordWrapTextMatrix = textMatrix;
-        // Now, even we don't add 2 points to the deltaY, it will also work,
-        // since we have updated compareGlyphs().
-        //
-        // Note: We have updated makeReadOrderGlyphs (actually it's compareGlyphs())
-        //       to make it more robust for uneven heights of glyphs.
-        // TODO: Better calculatation for delta y by the height
-        //       (height = descent of lastWrapGlyp + ascent of next glyph) of
-        //       next glyph after line break.
-        CGFloat deltaY = [lastWrapGlyph height] + 1; // Plus 1 to make 1 point line margin
-        
-        // Check the sign of d component of ctm, and decide the sing of deltaY
-        int sign = signOfCGFloat(wordWrapCTM.d);
-        deltaY = -1 * sign * deltaY;
-        wordWrapTextMatrix.ty = lastTextMatrix.ty + deltaY;
-        widthLeft = [self getEditorWidth];
-        editorHeight += deltaY;
-    } else {
-        //
-        // We currently don't handle if last wrapped glyph is nil
-        // NOTE: We always get last wrap glyph even we do line break at the
-        // start of text, in this case, the last wrapped glyph in a '\n' glyph
-        //
-    }
-    atNewLinePosition = YES;
-}
 
 - (void)updateCachedGlyphs:(NSArray*)glyphs newGlyph:(GGlyph*)newGlyph {
     cachedGlyphs = [NSMutableArray arrayWithArray:glyphs];
@@ -1070,179 +915,59 @@
 
 #pragma Insertion point manage
 - (void)moveInsertionPointDown {
-    if (!everWrapWord) {
-        int currentLineIndex = [textBlock getLineIndex:insertionPointIndex];
-        if (currentLineIndex != -1) { // No errors
-            if (currentLineIndex + 1 <= [[textBlock lines] count] - 1) {
-                int nextLineIndex = currentLineIndex + 1;
-                GLine *nextLine = [[textBlock lines] objectAtIndex:nextLineIndex];
-                int glyphIndexInCurrentLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
-                
-                
-                if (glyphIndexInCurrentLine >= (int)[[nextLine glyphs] count]) {
-                    insertionPointIndex = (int)[glyphs count];
-                } else {
-                    int glyphIndexInNextLine = glyphIndexInCurrentLine;
-                    GGlyph *currentGlyph = [[nextLine glyphs] objectAtIndex:glyphIndexInNextLine];
-                    insertionPointIndex = currentGlyph.indexOfBlock;
-                }
-            }
-        } else if (insertionPointIndex == [glyphs count]) {
-            // No need to handle insertion point in last position, because we
-            // have no next line to move to
-        }
-    } else {
-        GWrappedLine *currentLine = [self getCurrentWrappedLine];
-        GWrappedLine *nextLine = [self getNextWrappedLine];
-        if (nextLine) {
-            GGlyph *currentGlyph = [self getCurrentWrappedGlyph];
-            if (currentGlyph == nil) {
-                // This means we are moving down, and also we are at the end of
-                // text, do nothing is a right choice.
+    int currentLineIndex = [textBlock getLineIndex:insertionPointIndex];
+    if (currentLineIndex != -1) { // No errors
+        if (currentLineIndex + 1 <= [[textBlock lines] count] - 1) {
+            int nextLineIndex = currentLineIndex + 1;
+            GLine *nextLine = [[textBlock lines] objectAtIndex:nextLineIndex];
+            int glyphIndexInCurrentLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
+            
+            
+            if (glyphIndexInCurrentLine >= (int)[[nextLine glyphs] count]) {
+                insertionPointIndex = (int)[glyphs count];
             } else {
-                int indexOfLine = [currentLine indexforGlyph:currentGlyph];
-                if (indexOfLine > [[nextLine glyphs] count] - 1) {
-                    indexOfLine = (int)[[nextLine glyphs] count] - 1;
-                }
-                GGlyph *glyphInNextLine = [nextLine getGlyphByIndex:indexOfLine];
-                insertionPointIndex = [self indexOfWrappedGlyph:glyphInNextLine];
+                int glyphIndexInNextLine = glyphIndexInCurrentLine;
+                GGlyph *currentGlyph = [[nextLine glyphs] objectAtIndex:glyphIndexInNextLine];
+                insertionPointIndex = currentGlyph.indexOfBlock;
             }
         }
+    } else if (insertionPointIndex == [glyphs count]) {
+        // No need to handle insertion point in last position, because we
+        // have no next line to move to
     }
 }
 
 - (void)moveInsertionPointUp {
-    if (!everWrapWord) {
-        int currentLineIndex = [textBlock getLineIndex:insertionPointIndex];
-        // Curernt line is valid, and insertion point is not at the end of text block
-        if (currentLineIndex != -1 && insertionPointIndex != [glyphs count]) {
+    int currentLineIndex = [textBlock getLineIndex:insertionPointIndex];
+    // Curernt line is valid, and insertion point is not at the end of text block
+    if (currentLineIndex != -1 && insertionPointIndex != [glyphs count]) {
+        if (currentLineIndex - 1 >= 0) {
+            int previousLineIndex = currentLineIndex - 1;
+            GLine *prevLine = [[textBlock lines] objectAtIndex:previousLineIndex];
+            int glyphIndexInCurrentLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
+            if (glyphIndexInCurrentLine > (int)[[prevLine glyphs] count] - 1) {
+                glyphIndexInCurrentLine = (int)[[prevLine glyphs] count] - 1;
+            }
+            int glyphIndexInPrevLine = glyphIndexInCurrentLine;
+            GGlyph *currentGlyph = [[prevLine glyphs] objectAtIndex:glyphIndexInPrevLine];
+            insertionPointIndex = currentGlyph.indexOfBlock;
+        }
+    } else if (insertionPointIndex == [glyphs count]) { // Edge case: insertion point is at the end of text
+        int currentLineIndex = [textBlock getLineIndex:insertionPointIndex - 1];
+        if (currentLineIndex != -1) { // No errors
             if (currentLineIndex - 1 >= 0) {
                 int previousLineIndex = currentLineIndex - 1;
                 GLine *prevLine = [[textBlock lines] objectAtIndex:previousLineIndex];
-                int glyphIndexInCurrentLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
+                int glyphIndexInCurrentLine = [textBlock getGlyphIndexInLine:insertionPointIndex-1];
                 if (glyphIndexInCurrentLine > (int)[[prevLine glyphs] count] - 1) {
                     glyphIndexInCurrentLine = (int)[[prevLine glyphs] count] - 1;
                 }
                 int glyphIndexInPrevLine = glyphIndexInCurrentLine;
                 GGlyph *currentGlyph = [[prevLine glyphs] objectAtIndex:glyphIndexInPrevLine];
-                insertionPointIndex = currentGlyph.indexOfBlock;
-            }
-        } else if (insertionPointIndex == [glyphs count]) { // Edge case: insertion point is at the end of text
-            int currentLineIndex = [textBlock getLineIndex:insertionPointIndex - 1];
-            if (currentLineIndex != -1) { // No errors
-                if (currentLineIndex - 1 >= 0) {
-                    int previousLineIndex = currentLineIndex - 1;
-                    GLine *prevLine = [[textBlock lines] objectAtIndex:previousLineIndex];
-                    int glyphIndexInCurrentLine = [textBlock getGlyphIndexInLine:insertionPointIndex-1];
-                    if (glyphIndexInCurrentLine > (int)[[prevLine glyphs] count] - 1) {
-                        glyphIndexInCurrentLine = (int)[[prevLine glyphs] count] - 1;
-                    }
-                    int glyphIndexInPrevLine = glyphIndexInCurrentLine;
-                    GGlyph *currentGlyph = [[prevLine glyphs] objectAtIndex:glyphIndexInPrevLine];
-                    insertionPointIndex = currentGlyph.indexOfBlock + 1;
-                }
+                insertionPointIndex = currentGlyph.indexOfBlock + 1;
             }
         }
-    } else {
-        GWrappedLine *currentLine = [self getCurrentWrappedLine];
-        GWrappedLine *prevLine = [self getPrevWrappedLine];
-        if (prevLine) {
-            GGlyph *currentGlyph = [self getCurrentWrappedGlyph];
-            int indexOfLine = [currentLine indexforGlyph:currentGlyph];
-            // We are at the end of text to get -1 returned. Just put index of
-            // line to last index.
-            if (indexOfLine == -1) {
-                indexOfLine = (int)[[currentLine glyphs] count] - 1;
-            }
-            if (indexOfLine > [[prevLine glyphs] count] - 1) {
-                indexOfLine = (int)[[prevLine glyphs] count] - 1;
-            }
-            GGlyph *glyphInNextLine = [prevLine getGlyphByIndex:indexOfLine];
-            insertionPointIndex = [self indexOfWrappedGlyph:glyphInNextLine];
-         }
     }
-}
-
-#pragma GWrappedLine functions
-- (GGlyph*)getCurrentWrappedGlyph {
-    int index = insertionPointIndex;
-    
-    // We are at the end of text, so we return nil;
-    if (index > [glyphs count] - 1) {
-        return nil;
-    }
-    
-    int i = 0;
-    for (GWrappedLine *l in wordWrappedLines) {
-        for (GGlyph *g in [l glyphs]) {
-            if (i == index) {
-                return g;
-            }
-            i++;
-        }
-    }
-    
-    // No current glyph found, uh, this should happen at the top, we have
-    // return nil already.
-    return nil;
-}
-
-- (GWrappedLine*)getCurrentWrappedLine {
-    int index = insertionPointIndex;
-    
-    // We are at the end of text, so we return last
-    // line.
-    if (index > [glyphs count] - 1) {
-        return [wordWrappedLines lastObject];
-    }
-    
-    int i = 0;
-    GGlyph *glyph;
-    for (GWrappedLine *l in wordWrappedLines) {
-        for (GGlyph *g in [l glyphs]) {
-            glyph = g; // To make compiler happy, not to show unused variable warning.
-            if (i == index) {
-                return l;
-            }
-            i++;
-        }
-    }
-    
-    // No current line found, uhh, this shoud never happen.
-    return nil;
-}
-
-- (GWrappedLine*)getPrevWrappedLine {
-    GWrappedLine *currentLine = [self getCurrentWrappedLine];
-    int indexOfCurrentLine = (int)[wordWrappedLines indexOfObject:currentLine];
-    if (indexOfCurrentLine >= 1) {
-        return [wordWrappedLines objectAtIndex:indexOfCurrentLine - 1];
-    }
-    return nil;
-}
-
-- (GWrappedLine*)getNextWrappedLine {
-    GWrappedLine *currentLine = [self getCurrentWrappedLine];
-    int linesCount = (int)[wordWrappedLines count];
-    int indexOfCurrentLine = (int)[wordWrappedLines indexOfObject:currentLine];
-    if (indexOfCurrentLine + 1 <= linesCount - 1) {
-        return [wordWrappedLines objectAtIndex:indexOfCurrentLine + 1];
-    }
-    return nil;
-}
-
-- (int)indexOfWrappedGlyph:(GGlyph*)glyph {
-    int index = 0;
-    for (GWrappedLine *l in wordWrappedLines) {
-     for (GGlyph *g in [l glyphs]) {
-         if ([g isEqualTo:glyph]) {
-             return index;
-         }
-         index++;
-     }
-    }
-    // No glyph found, return -1
-    return -1;
 }
 
 - (CGFloat)getFontSizeForEditor {
