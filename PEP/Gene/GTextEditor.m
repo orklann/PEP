@@ -74,7 +74,7 @@
     if ([_delegate respondsToSelector:@selector(textStateDidChange:)]) {
         [_delegate textStateDidChange:self];
     }
-    [self doWordWrap];
+    
     return self;
 }
 
