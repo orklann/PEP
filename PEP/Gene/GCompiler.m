@@ -154,6 +154,7 @@
     CGFloat wc = [prevGlyph wordSpace];
     CGFloat fs = [prevGlyph fs];
     // Reverse from GInterpeter layoutStrings method
+    // See "9.4.4 Text space details"
     delta = (glyphDistance / h - wc - cs) / fs * 1000.0;
     return delta;
 }
