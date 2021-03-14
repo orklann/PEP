@@ -390,7 +390,7 @@
     // Note: use "allowLossyConversion:YES" to prevent 0 length page content.
     //       If use UTF8 encoding, the result is wrong with Unicode random characters
     pageContent = (NSMutableData*)[result dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
-    //printData(pageContent);
+    printData(pageContent);
 }
 
 - (void)redraw {

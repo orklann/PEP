@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) GPage *page;
 @property (readwrite) NSFont *font;
 @property (readwrite) CGGlyph glyph;
-@property (readwrite) int delta;
+@property (readwrite) CGFloat delta;
 @property (readwrite) CGFloat wordSpace;
 @property (readwrite) CGFloat characterSpace;
 @property (readwrite) CGFloat rise;

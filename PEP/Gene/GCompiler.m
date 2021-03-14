@@ -38,8 +38,11 @@
     int i = 1;
     for (i = 1; i < [glyphs count]; ++i) {
         GGlyph *nextGlyph = [glyphs objectAtIndex:i];
-        if ([self glyph:prevGlyph inSameLineWithGlyph:nextGlyph] && currentWordSpace == [nextGlyph wordSpace]
-            && currentCharSpace == [nextGlyph characterSpace]) {
+        if ([self glyph:prevGlyph inSameLineWithGlyph:nextGlyph]) {
+            // Calculate next glyph delta from prev glyph and update it
+            CGFloat delta = [self getDeltaFromGlyph:nextGlyph toGlyph:prevGlyph];
+            delta *= -1;
+            [nextGlyph setDelta:delta];
             if ([nextGlyph delta] == 0) {
                 [currentTJ appendString:[nextGlyph literalString]];
             } else {
@@ -52,6 +55,7 @@
             currentWordSpace = [nextGlyph wordSpace];
             currentCharSpace = [nextGlyph characterSpace];
             currentTJ = [NSMutableString string];
+            [nextGlyph setDelta:0.0];
             [currentTJ appendString:[self startTJWithGlyph:nextGlyph]];
         }
         prevGlyph = nextGlyph;
@@ -130,8 +134,27 @@
 
 - (NSString*)startStringWithGlyph:(GGlyph*)g {
     if ([g delta] != 0) {
-        return [NSString stringWithFormat:@" %d (%@", [g delta], [g literalString]];
+        return [NSString stringWithFormat:@" %f (%@", [g delta], [g literalString]];
     }
     return [NSString stringWithFormat:@"(%@", [g literalString]];
+}
+
+- (CGFloat)getDeltaFromGlyph:(GGlyph*)nextGlyph toGlyph:(GGlyph*)prevGlyph {
+    CGFloat delta = 0;
+    CGAffineTransform tm1 = [prevGlyph textMatrix];
+    tm1.tx += [prevGlyph width];
+    CGAffineTransform tm2 = [nextGlyph textMatrix];
+    tm1 = CGAffineTransformInvert(tm1);
+    CGAffineTransform deltaTM = CGAffineTransformConcat(tm1, tm2);
+    CGFloat glyphDistance = deltaTM.tx;
+    
+    // From text space distance to delta
+    CGFloat h = 1.0; // we hardcode here, we need this in graphics state
+    CGFloat cs = [prevGlyph characterSpace];
+    CGFloat wc = [prevGlyph wordSpace];
+    CGFloat fs = [prevGlyph fs];
+    // Reverse from GInterpeter layoutStrings method
+    delta = (glyphDistance / h - wc - cs) / fs * 1000.0;
+    return delta;
 }
 @end

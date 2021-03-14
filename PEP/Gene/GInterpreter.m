@@ -125,7 +125,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }
 
 // Return new created glyphs
-- (NSMutableArray*)layoutStrings:(NSString*)s context:(CGContextRef)context  tj:(CGFloat)tjDelta prevTj:(int)prevTj{
+- (NSMutableArray*)layoutStrings:(NSString*)s context:(CGContextRef)context  tj:(CGFloat)tjDelta prevTj:(CGFloat)prevTj{
     NSMutableArray *newCreatedGlyphs = [NSMutableArray array];
     NSMutableArray *glyphs = [[page textParser] glyphs];
     
@@ -507,7 +507,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     GTJText *text = [GTJText create];
     int i;
     CGFloat tjDelta = 0.0;
-    int prevTj = 0;
+    CGFloat prevTj = 0.0;
     for (i = 0; i < [[array value] count]; i++) {
         id a = [[array value] objectAtIndex:i];
         if ([(GObject*)a type] == kLiteralStringsObject ||
@@ -522,7 +522,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             if (i - 1 >= 0) {
                 id prevObject = [[array value] objectAtIndex:i - 1];
                 if ([(GObject*)prevObject type] == kNumberObject) { // Prev object is offset
-                    prevTj = (int)[(GNumberObject*)prevObject getRealValue];
+                    prevTj = [(GNumberObject*)prevObject getRealValue];
                 } else {
                     prevTj = 0;
                 }
