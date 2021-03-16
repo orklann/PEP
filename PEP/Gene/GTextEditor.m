@@ -849,8 +849,6 @@
             // Add glyph distance
             /*
              * Calculate glyph distance in text space.
-             * Note: CGAffineTransform deltaTM = CGAffineTransformConcat(tm1, tm2);
-             *       the order of tm1, tm2 here matters
              */
             CGAffineTransform tm1 = prevTextMatrix;
             tm1.tx += [prevGlyph width];
