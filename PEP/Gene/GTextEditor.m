@@ -855,9 +855,7 @@
             CGAffineTransform tm1 = prevTextMatrix;
             tm1.tx += [prevGlyph width];
             CGAffineTransform tm2 = [glyph textMatrix];
-            tm1 = CGAffineTransformInvert(tm1);
-            CGAffineTransform deltaTM = CGAffineTransformConcat(tm1, tm2);
-            CGFloat glyphDistance = deltaTM.tx;
+            CGFloat glyphDistance = tm2.tx - tm1.tx;
             textMatrix.tx += glyphDistance;
             
             // Saved current text matrix as prevTextMatrix and set text matrix

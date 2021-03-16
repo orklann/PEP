@@ -9,6 +9,7 @@
 #import "GCompiler.h"
 #import "GGlyph.h"
 #import "GPage.h"
+#import "GMisc.h"
 
 #define kEndString @")"
 #define kEndTJ @") ] TJ\nET\n"
@@ -141,18 +142,29 @@
 
 - (CGFloat)getDeltaFromGlyph:(GGlyph*)nextGlyph toGlyph:(GGlyph*)prevGlyph {
     CGFloat delta = 0;
-    CGAffineTransform tm1 = [prevGlyph textMatrix];
-    tm1.tx += [prevGlyph width];
-    CGAffineTransform tm2 = [nextGlyph textMatrix];
-    tm1 = CGAffineTransformInvert(tm1);
-    CGAffineTransform deltaTM = CGAffineTransformConcat(tm1, tm2);
-    CGFloat glyphDistance = deltaTM.tx;
     
     // From text space distance to delta
     CGFloat h = 1.0; // we hardcode here, we need this in graphics state
     CGFloat cs = [prevGlyph characterSpace];
     CGFloat wc = [prevGlyph wordSpace];
     CGFloat fs = [prevGlyph fs];
+    
+    CGAffineTransform tm1 = [prevGlyph textMatrix];
+    tm1.tx += [prevGlyph width];
+    
+    CGAffineTransform tm2 = [nextGlyph textMatrix];
+    
+    // Scale down distance by tm2.a (x-scale) if fs is 1.0.
+    // fs is 1.0 means: we must take acount of font size in tm2.a,
+    // other wise, fs will be tack acount in
+    // delta = (glyphDistance / h - wc - cs) / fs * 1000.0;
+    CGFloat glyphDistance;
+    if (fs == 1.0) {
+        glyphDistance = (tm2.tx - tm1.tx) / tm2.a;
+    } else {
+        glyphDistance = (tm2.tx - tm1.tx);
+    }
+    
     // Reverse from GInterpeter layoutStrings method
     // See "9.4.4 Text space details"
     delta = (glyphDistance / h - wc - cs) / fs * 1000.0;
