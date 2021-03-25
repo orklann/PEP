@@ -247,10 +247,7 @@
 - (NSFont*)getCurrentFont:(NSString*)s {
     NSFont *f;
     NSString *fontName = [[self textState] fontName];
-    // [[self textState] fontSize] used in text matrix,
-    // So we only need font size to be 1.0 for actuall NSFont;
-    CGFloat fontSize = 1.0f; //[[self textState] fontSize];
-    NSString *fontKey = [NSString stringWithFormat:@"%@-%f", fontName, fontSize];
+    NSString *fontKey = [self fontTagToFontKey:fontName];
     f = [self.addedFonts objectForKey:fontKey];
     if (f) {
         return f;
@@ -269,8 +266,7 @@
 }
 
 - (NSFont*)getCachedFontByFontTag:(NSString*)fontTag {
-    CGFloat fontSize = 1.0f;
-    NSString *fontKey = [NSString stringWithFormat:@"%@-%f", fontTag, fontSize];
+    NSString *fontKey = [self fontTagToFontKey:fontTag];
     return [self getCachedFontForKey:fontKey];
 }
 
@@ -627,7 +623,8 @@
 }
 
 - (void)setCachedFont:(NSString*)fontName fontSize:(CGFloat)fontSize {
-    NSString *fontKey = [NSString stringWithFormat:@"%@-%f", fontName, fontSize];
+    //NSString *fontKey = [NSString stringWithFormat:@"%@-%f", fontName, fontSize];
+    NSString *fontKey = [self fontTagToFontKey:fontName];
     NSFont *existFont = [[self cachedFonts] objectForKey:fontKey];
     if (existFont) return ;
     GFont *font = [GFont fontWithName:fontName page:self];
@@ -669,8 +666,7 @@
 }
 
 - (void)addNewFont:(NSFont*)font withPDFFontTag:(NSString*)fontTag {
-    CGFloat fontSize = 1.0f;
-    NSString *fontKey = [NSString stringWithFormat:@"%@-%f", fontTag, fontSize];
+    NSString *fontKey = [self fontTagToFontKey:fontTag];
     [self.addedFonts setObject:font forKey:fontKey];
 }
 
@@ -760,7 +756,8 @@
         [fontEncoding parseDifference:differencesArray];
         
         if ([doc.fontEncodings objectForKey:fontTagKey] == nil) {
-            [doc.fontEncodings setValue:fontEncoding forKey:fontTagKey];
+            NSString *fontKey = [self fontTagToFontKey:fontTagKey];
+            [doc.fontEncodings setValue:fontEncoding forKey:fontKey];
         }
     }
     
@@ -807,7 +804,8 @@
         }
         
         if ([doc.fontInfos objectForKey:fontTagKey] == nil) {
-            [doc.fontInfos setValue:fontInfo forKey:fontTagKey];
+            NSString *fontKey = [self fontTagToFontKey:fontTagKey];
+            [doc.fontInfos setValue:fontInfo forKey:fontKey];
         }
     }
 }
