@@ -812,6 +812,17 @@
     }
 }
 
+- (NSString*)fontTagToFontKey:(NSString*)tag {
+    id fonts = [[resources value] objectForKey:@"Font"];
+    if ([(GObject*)fonts type] == kRefObject) {
+        fonts = [parser getObjectByRef:[fonts getRefString]];
+    }
+    
+    GDictionaryObject *fontsDictionary = (GDictionaryObject*)fonts;
+    GRefObject *fontRef = [[fontsDictionary value] objectForKey:tag];
+    return [fontRef getRefString];
+}
+
 #pragma Debug
 - (void)logPageContent {
     printData(pageContent);
