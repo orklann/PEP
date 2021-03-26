@@ -106,7 +106,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     // if width from CGGlyph is zero, we need to lookup it in fontInfos dictionary in GDocument
     if (width == 0.0) {
         NSString *fontTag = [[page textState] fontName];
-        GFontInfo *fontInfo = [page.doc.fontInfos objectForKey:fontTag];
+        NSString *fontKey = [page fontTagToFontKey:fontTag];
+        GFontInfo *fontInfo = [page.doc.fontInfos objectForKey:fontKey];
         width = [fontInfo getCharWidth:charCode];
     }
     //Debug:
@@ -376,7 +377,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [[page textState] setFontSize:fontSize];
     
     GDocument *doc = (GDocument*)[page doc];
-    GFontEncoding *fontEncoding = [[doc fontEncodings] objectForKey:fontName];
+    NSString *fontKey = [page fontTagToFontKey:fontName];
+    GFontEncoding *fontEncoding = [[doc fontEncodings] objectForKey:fontKey];
     NSString *encoding = [fontEncoding encoding];
     
     char **encodingPointer = NULL;

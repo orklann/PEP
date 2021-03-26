@@ -119,6 +119,8 @@ NS_ASSUME_NONNULL_BEGIN
 // Build font infos in page
 - (void)buildFontInfos;
 
+- (NSString*)fontTagToFontKey:(NSString*)tag;
+
 // Debug
 - (void)logPageContent;
 
