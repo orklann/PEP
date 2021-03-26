@@ -437,7 +437,7 @@
     [stream appendData:[end dataUsingEncoding:NSASCIIStringEncoding]];
 
     // Create a instance of GBinaryData
-    NSString *fontFileRef = [doc generateNewRef];
+    NSString *fontFileRef = [[fontKey componentsSeparatedByString:@"-"] lastObject];
     int fontFileObjectNumber = getObjectNumber(fontFileRef);
     int fontFileGenerationNumber = getGenerationNumber(fontFileRef);
     
@@ -527,7 +527,7 @@
     for (NSString *pdfFontKey in self.addedFonts) {
         NSFont *font = [self.addedFonts objectForKey:pdfFontKey];
         NSString *realFontKey = [[pdfFontKey componentsSeparatedByString:@"-"] firstObject];
-        NSString *fontRef = [self addFont:font withPDFFontName:realFontKey];
+        NSString *fontRef = [self addFont:font withPDFFontName:pdfFontKey];
         int objectNumber = getObjectNumber(fontRef);
         int generationNumber = getGenerationNumber(fontRef);
         [fontArrayString appendFormat:@"/%@ %d %d R ", realFontKey, objectNumber, generationNumber];
@@ -666,7 +666,8 @@
 }
 
 - (void)addNewFont:(NSFont*)font withPDFFontTag:(NSString*)fontTag {
-    NSString *fontKey = [self fontTagToFontKey:fontTag];
+    NSString *refString = [doc generateNewRef];
+    NSString *fontKey = [NSString stringWithFormat:@"%@-%@", fontTag, refString];
     [self.addedFonts setObject:font forKey:fontKey];
 }
 

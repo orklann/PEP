@@ -219,9 +219,9 @@ NSMutableArray* quicksortGTJTexts(NSMutableArray *array) {
                 [greater addObject:t];
             }
         }
-        [result addObjectsFromArray:quicksortGlyphs(less)];
+        [result addObjectsFromArray:quicksortGTJTexts(less)];
         [result addObject:pivot];
-        [result addObjectsFromArray:quicksortGlyphs(greater)];
+        [result addObjectsFromArray:quicksortGTJTexts(greater)];
         return result;
     } else {
         return array;

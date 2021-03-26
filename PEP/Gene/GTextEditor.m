@@ -986,10 +986,10 @@
     if (prevGlyph){
         // Debug purpose
         // NSLog(@"[Debug] Added fonts: %@, font tag: %@", self.page.addedFonts, [prevGlyph fontName]);
-        for (NSString *fontTag in [self.page.addedFonts allKeys]) {
-            NSString *fontKey = [NSString stringWithFormat:@"%@-%f", [prevGlyph fontName], 1.0];
-            if ([fontTag isEqualToString:fontKey]) {
-                fontName = [[self.page.addedFonts objectForKey:fontTag] fontName];
+        for (NSString *fontKey in [self.page.addedFonts allKeys]) {
+            NSString *fontName = [[fontKey componentsSeparatedByString:@"-"] firstObject];
+            if ([fontName isEqualToString:[prevGlyph fontName]]) {
+                fontName = [[self.page.addedFonts objectForKey:fontKey] fontName];
                 return fontName;
             }
         }
