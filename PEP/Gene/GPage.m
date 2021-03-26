@@ -437,7 +437,7 @@
     [stream appendData:[end dataUsingEncoding:NSASCIIStringEncoding]];
 
     // Create a instance of GBinaryData
-    NSString *fontFileRef = [[fontKey componentsSeparatedByString:@"-"] lastObject];
+    NSString *fontFileRef = [[fontKey componentsSeparatedByString:@"~"] lastObject];
     int fontFileObjectNumber = getObjectNumber(fontFileRef);
     int fontFileGenerationNumber = getGenerationNumber(fontFileRef);
     
@@ -526,7 +526,7 @@
     // Append new created font and ref to fontArrayString
     for (NSString *pdfFontKey in self.addedFonts) {
         NSFont *font = [self.addedFonts objectForKey:pdfFontKey];
-        NSString *realFontKey = [[pdfFontKey componentsSeparatedByString:@"-"] firstObject];
+        NSString *realFontKey = [[pdfFontKey componentsSeparatedByString:@"~"] firstObject];
         NSString *fontRef = [self addFont:font withPDFFontName:pdfFontKey];
         int objectNumber = getObjectNumber(fontRef);
         int generationNumber = getGenerationNumber(fontRef);
@@ -667,7 +667,7 @@
 
 - (void)addNewFont:(NSFont*)font withPDFFontTag:(NSString*)fontTag {
     NSString *refString = [doc generateNewRef];
-    NSString *fontKey = [NSString stringWithFormat:@"%@-%@", fontTag, refString];
+    NSString *fontKey = [NSString stringWithFormat:@"%@~%@", fontTag, refString];
     [self.addedFonts setObject:font forKey:fontKey];
 }
 
@@ -693,7 +693,7 @@
     NSArray *newAddedTags = [self.addedFonts allKeys];
     NSMutableArray *result = [NSMutableArray array];
     for (NSString *key in newAddedTags) {
-        NSString *tag = [[key componentsSeparatedByString:@"-"] firstObject];
+        NSString *tag = [[key componentsSeparatedByString:@"~"] firstObject];
         [result addObject:tag];
     }
     return result;
@@ -713,7 +713,7 @@
 
 - (BOOL)isFontTagInAddedFonts:(NSString*)fontTag {
     for (NSString *key in self.addedFonts) {
-        NSString *tag = [[key componentsSeparatedByString:@"-"] firstObject];
+        NSString *tag = [[key componentsSeparatedByString:@"~"] firstObject];
         if ([fontTag isEqualToString:tag]) {
             return YES;
         }
@@ -819,7 +819,7 @@
     
     GDictionaryObject *fontsDictionary = (GDictionaryObject*)fonts;
     GRefObject *fontRef = [[fontsDictionary value] objectForKey:tag];
-    NSString *fontKey = [NSString stringWithFormat:@"%@-%@", tag, [fontRef getRefString]];
+    NSString *fontKey = [NSString stringWithFormat:@"%@~%@", tag, [fontRef getRefString]];
     return fontKey;
 }
 

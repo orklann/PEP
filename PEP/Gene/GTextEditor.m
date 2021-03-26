@@ -987,7 +987,8 @@
         // Debug purpose
         // NSLog(@"[Debug] Added fonts: %@, font tag: %@", self.page.addedFonts, [prevGlyph fontName]);
         for (NSString *fontKey in [self.page.addedFonts allKeys]) {
-            NSString *fontName = [[fontKey componentsSeparatedByString:@"-"] firstObject];
+            NSLog(@"font key: %@ font name in prevGlyph: %@", fontKey, [prevGlyph fontName]);
+            NSString *fontName = [[fontKey componentsSeparatedByString:@"~"] firstObject];
             if ([fontName isEqualToString:[prevGlyph fontName]]) {
                 fontName = [[self.page.addedFonts objectForKey:fontKey] fontName];
                 return fontName;
