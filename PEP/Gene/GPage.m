@@ -755,8 +755,8 @@
         [fontEncoding setEncoding:encodingString];
         [fontEncoding parseDifference:differencesArray];
         
-        if ([doc.fontEncodings objectForKey:fontTagKey] == nil) {
-            NSString *fontKey = [self fontTagToFontKey:fontTagKey];
+        NSString *fontKey = [self fontTagToFontKey:fontTagKey];
+        if ([doc.fontEncodings objectForKey:fontKey] == nil) {
             [doc.fontEncodings setValue:fontEncoding forKey:fontKey];
         }
     }
@@ -803,8 +803,8 @@
             [fontInfo setMissingWidth:(int)[missingWidth getRealValue]];
         }
         
-        if ([doc.fontInfos objectForKey:fontTagKey] == nil) {
-            NSString *fontKey = [self fontTagToFontKey:fontTagKey];
+        NSString *fontKey = [self fontTagToFontKey:fontTagKey];
+        if ([doc.fontInfos objectForKey:fontKey] == nil) {
             [doc.fontInfos setValue:fontInfo forKey:fontKey];
         }
     }
@@ -818,7 +818,8 @@
     
     GDictionaryObject *fontsDictionary = (GDictionaryObject*)fonts;
     GRefObject *fontRef = [[fontsDictionary value] objectForKey:tag];
-    return [fontRef getRefString];
+    NSString *fontKey = [NSString stringWithFormat:@"%@-%@", tag, [fontRef getRefString]];
+    return fontKey;
 }
 
 #pragma Debug
