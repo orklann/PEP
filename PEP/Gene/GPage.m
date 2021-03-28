@@ -656,7 +656,7 @@
     for (NSString *fontName in [[fontDictionary value] allKeys]) {
         // [[self textState] fontSize] (set by Tj operator) used in text matrix,
         // So we only need font size to be 1.0 for actuall NSFont;
-        CGFloat fontSize = 1.0f; //[[[cmdObj args] objectAtIndex:1] getRealValue];
+        CGFloat fontSize = 1.0f; 
         
         GRefObject *fontRef = [[fontDictionary value] objectForKey:fontName];
         NSString *fontKey = [NSString stringWithFormat:@"%@~%@", fontName, [fontRef getRefString]];
