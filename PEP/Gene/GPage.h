@@ -39,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSRect highlightBlockFrame;
 }
 
+/* font tag is only unique for a page, so we put font key dict in page scope */
 @property (readwrite) NSMutableDictionary *fontKeysDict;
 @property (readwrite) GRefObject *pageRef;
 @property (readwrite) CGFloat pageYOffsetInDoc;
