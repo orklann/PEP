@@ -660,7 +660,6 @@
         
         GRefObject *fontRef = [[fontDictionary value] objectForKey:fontName];
         NSString *fontKey = [NSString stringWithFormat:@"%@~%@", fontName, [fontRef getRefString]];
-        NSLog(@"Font key: %@", fontKey);
         [self.fontKeysDict setObject:fontKey forKey:fontName];
         [self setCachedFont:fontName fontSize:fontSize];
     }
