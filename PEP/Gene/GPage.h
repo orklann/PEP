@@ -39,6 +39,7 @@ NS_ASSUME_NONNULL_BEGIN
     NSRect highlightBlockFrame;
 }
 
+@property (readwrite) NSMutableDictionary *fontKeysDict;
 @property (readwrite) GRefObject *pageRef;
 @property (readwrite) CGFloat pageYOffsetInDoc;
 @property (readwrite) BOOL isRendering;
