@@ -183,6 +183,10 @@
     
         // Initially update visible pages
         [self updateVisiblePage];
+        
+        // Prewarm nearby pages around visible pages
+        [self prewarmRenderNearbyPages];
+        
         [self setNeedsDisplayInRect:[self visibleRect]];
     }];
     
