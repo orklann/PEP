@@ -135,7 +135,6 @@
 }
 
 - (void)awakeFromNib {
-    self.forceDrawAllPage = NO;
     self.dataToUpdate = [NSMutableArray array];
 
     NSLog(@"View: %@", NSStringFromRect(self.bounds));
@@ -298,19 +297,6 @@
 - (void)drawRect:(NSRect)dirtyRect {
     CGContextRef context = [[NSGraphicsContext currentContext] CGContext];
     
-    if (self.forceDrawAllPage) {
-        NSLog(@"Draw all page");
-        [super drawRect:dirtyRect];
-        NSColor *bgColor = [NSColor colorWithRed:0.93 green:0.93 blue:0.93 alpha:1.0];
-        [bgColor set];
-        NSRectFill([self bounds]);
-        
-        for (GPage *page in pages) {
-            [page render:context];
-        }
-        return ;
-    }
-    
     // Test: draw GDocument border with 2pt black color
     //[self drawBorder];
     
@@ -354,7 +340,6 @@
 }
 
 - (void)mouseMoved:(NSEvent *)event {
-    self.forceDrawAllPage = NO;
     for (GPage *page in visiblePages) {
         NSPoint location = [event locationInWindow];
         NSPoint point = [self convertPoint:location fromView:nil];
@@ -366,7 +351,6 @@
 }
 
 - (void)mouseDown:(NSEvent *)event {
-    self.forceDrawAllPage = NO;
     for (GPage *page in visiblePages) {
         [page mouseDown:event];
     }

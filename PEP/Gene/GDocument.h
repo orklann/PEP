@@ -27,7 +27,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) NSMutableDictionary *fontEncodings;
 @property (readwrite) NSMutableDictionary *fontInfos;
 @property (readwrite) NSString *file;
-@property (readwrite) BOOL forceDrawAllPage;
 @property (readwrite) NSMutableArray *addedRefkeys;
 @property (readwrite) GTextEditor * _Nullable textEditor;
 @property (readwrite) NSMutableArray *dataToUpdate;
