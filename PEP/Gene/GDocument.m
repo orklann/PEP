@@ -188,7 +188,6 @@
     
     // Make all mouse events work
     [self updateTrackingAreas];
-    
 }
 
 - (void)resizeToFitAllPages {
@@ -441,6 +440,8 @@
         }
         self.preparedContentRect = rect;
         [self setNeedsDisplayInRect:rect];
+    } else {
+        [self prewarmRenderNearbyPages];
     }
 }
 
@@ -477,5 +478,37 @@
 // not only the visible rect
 - (void)prepareContentInRect:(NSRect)rect {
     [super prepareContentInRect:self.preparedContentRect];
+}
+
+- (void)prewarmRenderNearbyPages {
+    GPage *firstPage = [visiblePages firstObject];
+    GPage *lastPage = [visiblePages lastObject];
+    int firstIndex = (int)[pages indexOfObject:firstPage];
+    int lastIndex = (int)[pages indexOfObject:lastPage];
+    int index;
+    
+    index = firstIndex - 2;
+    if (index >= 0) {
+        GPage *page = [pages objectAtIndex:index];
+        [page performSelectorInBackground:@selector(prewarmRender) withObject:nil];
+    }
+    
+    index = firstIndex - 1;
+    if (index >= 0) {
+        GPage *page = [pages objectAtIndex:index];
+        [page performSelectorInBackground:@selector(prewarmRender) withObject:nil];
+    }
+    
+    index = lastIndex + 2;
+    if (index <= [pages count] - 1) {
+        GPage *page = [pages objectAtIndex:index];
+        [page performSelectorInBackground:@selector(prewarmRender) withObject:nil];
+    }
+    
+    index = lastIndex + 1;
+    if (index <= [pages count] - 1) {
+        GPage *page = [pages objectAtIndex:index];
+        [page performSelectorInBackground:@selector(prewarmRender) withObject:nil];
+    }
 }
 @end

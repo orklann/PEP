@@ -124,6 +124,12 @@
 - (void)prewarmRender {
     if (self.needUpdate) {
         [self initGlyphsForFontDict];
+    } else {
+        return ;
+    }
+    
+    if (self.prewarm) {
+        return ;
     }
     
     self.prewarm = YES;
@@ -156,6 +162,11 @@
     if (self.isRendering) {
         return ;
     }
+    
+    if (self.prewarm) {
+        return ;
+    }
+    
     self.isRendering = YES;
     if (self.needUpdate) {
         [self initGlyphsForFontDict];
