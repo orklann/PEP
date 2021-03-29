@@ -136,6 +136,9 @@
         textParser = [GTextParser create];
     }
     
+    /*
+     * Faked context, we don't draw anthing onto this context
+     */
     CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
     _interpreter = [GInterpreter create];
     [_interpreter setPage:self];
