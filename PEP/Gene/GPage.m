@@ -121,6 +121,9 @@
     CGContextTranslateCTM(context, o.x, o.y);
 }
 
+/*
+ * Prewarm to create all data needed to render later without drawing anything
+ */
 - (void)prewarmRender {
     if (self.needUpdate) {
         [self initGlyphsForFontDict];
