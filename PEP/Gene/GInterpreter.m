@@ -97,8 +97,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGPoint p[1];
     g[0] = a;
     p[0] = NSZeroPoint;
-    CGContextSetFillColorWithColor(context, [[NSColor blackColor] CGColor]);
-    CTFontDrawGlyphs(coreFont, g, p, 1, context);
+    if (![page prewarm]) {
+        CGContextSetFillColorWithColor(context, [[NSColor blackColor] CGColor]);
+        CTFontDrawGlyphs(coreFont, g, p, 1, context);
+    }
     
     // Get glyph width
     width = CTFontGetAdvancesForGlyphs(coreFont, kCTFontOrientationHorizontal, g, NULL, 1);
@@ -157,7 +159,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         // Add glyph chars for font in GPage
         [page addGlyph:ch font:[[page textState] fontName]];
         
-        CGContextSetTextMatrix(context, rm);
+        if (![page prewarm]) {
+            CGContextSetTextMatrix(context, rm);
+        }
         CGFloat hAdvance = [self drawString:ch font:font context:context];
         
         
@@ -165,10 +169,12 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             //
             // Make glyphs for GTextParser
             //
-            
-            NSPoint p = CGContextGetTextPosition(context);
-            // Apply current context matrix to get the right point for glyph
-            p = CGPointApplyAffineTransform(p, [[page graphicsState] ctm]);
+            NSPoint p = NSZeroPoint;
+            if (![page prewarm]) {
+                p = CGContextGetTextPosition(context);
+                // Apply current context matrix to get the right point for glyph
+                p = CGPointApplyAffineTransform(p, [[page graphicsState] ctm]);
+            }
             
             GGlyph *glyph = [GGlyph create];
             
@@ -332,12 +338,16 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }
 
 - (void)eval_q_Command:(CGContextRef)context {
-    CGContextSaveGState(context);
+    if (![page prewarm]) {
+        CGContextSaveGState(context);
+    }
     [page saveGraphicsState];
 }
 
 - (void)eval_Q_Command:(CGContextRef)context {
-    CGContextRestoreGState(context);
+    if (![page prewarm]) {
+        CGContextRestoreGState(context);
+    }
     [page restoreGraphicsState];
 }
 
@@ -353,7 +363,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGAffineTransform currentCTM = [[page graphicsState] ctm];
     CGAffineTransform newCTM = CGAffineTransformConcat(currentCTM, ctm);
     [[page graphicsState] setCTM:newCTM];
-    CGContextConcatCTM(context, ctm);
+    if (![page prewarm]) {
+        CGContextConcatCTM(context, ctm);
+    }
 }
 
 - (void)eval_Tm_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -367,7 +379,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGAffineTransform tm = CGAffineTransformMake(a, b, c, d, e, f);
     [[page textState] setTextMatrix:tm];
     [[page textState] setLineMatrix:tm];
-    CGContextSetTextMatrix(context, tm);
+    if (![page prewarm]) {
+        CGContextSetTextMatrix(context, tm);
+    }
 }
 
 - (void)eval_Tf_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {

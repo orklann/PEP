@@ -33,6 +33,7 @@
     p.pageYOffsetInDoc = 0.0;
     p.dirty = NO;
     p.fontKeysDict = [NSMutableDictionary dictionary];
+    p.prewarm = NO;
     return p;
 }
 
@@ -119,6 +120,34 @@
     NSPoint o = NSMakePoint(offsetX, offsetY);
     CGContextTranslateCTM(context, o.x, o.y);
 }
+
+- (void)prewarmRender {
+    if (self.needUpdate) {
+        [self initGlyphsForFontDict];
+    }
+    
+    self.prewarm = YES;
+    
+    textState = [GTextState create];
+    graphicsState = [GGraphicsState create];
+    graphicsStateStack = [NSMutableArray array];
+    
+    if (self.needUpdate) {
+        textParser = [GTextParser create];
+    }
+    
+    CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+    _interpreter = [GInterpreter create];
+    [_interpreter setPage:self];
+    [_interpreter setParser:parser];
+    [_interpreter setInput:pageContent];
+    
+    [_interpreter eval:context];
+    
+    [self setNeedUpdate:NO];
+    [self setPrewarm:NO];
+}
+
 
 - (void)render:(CGContextRef)context {
     if (self.isRendering) {
@@ -656,7 +685,7 @@
     for (NSString *fontName in [[fontDictionary value] allKeys]) {
         // [[self textState] fontSize] (set by Tj operator) used in text matrix,
         // So we only need font size to be 1.0 for actuall NSFont;
-        CGFloat fontSize = 1.0f; 
+        CGFloat fontSize = 1.0f;
         
         GRefObject *fontRef = [[fontDictionary value] objectForKey:fontName];
         NSString *fontKey = [NSString stringWithFormat:@"%@~%@", fontName, [fontRef getRefString]];

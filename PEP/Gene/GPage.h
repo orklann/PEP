@@ -50,6 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) BOOL needUpdate;
 @property (readwrite) BOOL dirty;
 @property (readwrite) GInterpreter *interpreter;
+@property (readwrite) BOOL prewarm;
 
 + (id)create;
 - (void)setPageDictionary:(GDictionaryObject*)d;
@@ -63,6 +64,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)parseResources;
 - (GDictionaryObject*)resources;
 - (void)render:(CGContextRef)context;
+- (void)prewarmRender;
 - (NSRect)calculatePageMediaBox;
 - (GFont*)getFontByName:(NSString*)name;
 - (NSFont*)getFontByName:(NSString*)name size:(CGFloat)size;
