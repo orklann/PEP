@@ -1,0 +1,358 @@
+All toUnicode CMaps streams in raft.pdf
+
+Start===================
+40-0 R
+
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CMapType 2 def
+/CMapName/R154 def
+1 begincodespacerange
+<00><ff>
+endcodespacerange
+2 beginbfrange
+<0f><0f><2022>
+<1c><1c><226a>
+endbfrange
+endcmap
+CMapName currentdict /CMap defineresource pop
+end end
+
+
+---------------------
+
+53-0 R
+
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CMapType 2 def
+/CMapName/R153 def
+1 begincodespacerange
+<00><ff>
+endcodespacerange
+61 beginbfrange
+<01><01><0049>
+<02><02><006e>
+<03><03><0076>
+<04><04><006f>
+<05><05><006b>
+<06><06><0065>
+<07><07><0064>
+<08><08><0062>
+<09><09><0079>
+<0a><0a><0063>
+<0b><0b><0061>
+<0c><0c><0069>
+<0d><0d><0074>
+<0e><0e><0073>
+<0f><10><0067>
+<11><11><0072>
+<12><12><0028>
+<13><13><00a7>
+<14><14><0035>
+<15><15><002e>
+<16><16><0032>
+<17><17><0029>
+<18><18><2019>
+<19><19><006d>
+<1a><1a><0071>
+<1b><1b><0075>
+<1c><1c><0078>
+<1d><1d><0066>
+<1e><1e><006c>
+<1f><1f><0034>
+<20><20><0054>
+<21><21><002c>
+<22><22><0070>
+<23><23><0031>
+<24><24><0052>
+<25><25><003c>
+<26><26><0046>
+<27><27><002d>
+<28><28><0033>
+<29><29><003b>
+<2a><2a><0077>
+<2b><2b><004c>
+<2c><2c><0041>
+<2d><2d><0043>
+<2e><2e><003e>
+<2f><2f><003d>
+<30><30><0055>
+<31><31><0050>
+<32><32><007a>
+<33><33><0030>
+<34><34><002b>
+<35><35><003a>
+<36><36><005b>
+<37><37><005d>
+<38><38><0045>
+<39><39><004f>
+<3a><3a><0056>
+<3b><3b><0053>
+<3c><3c><006a>
+<3d><3d><2265>
+<3e><3e><004e>
+endbfrange
+endcmap
+CMapName currentdict /CMap defineresource pop
+end end
+
+
+---------------------
+
+57-0 R
+
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CMapType 2 def
+/CMapName/R156 def
+1 begincodespacerange
+<00><ff>
+endcodespacerange
+35 beginbfrange
+<01><01><0041>
+<02><02><0072>
+<03><03><0067>
+<04><04><0075>
+<05><05><006d>
+<06><06><0065>
+<07><07><006e>
+<08><08><0074>
+<09><09><0073>
+<0a><0a><003a>
+<0b><0b><0052>
+<0c><0c><006c>
+<0d><0d><0063>
+<0e><0e><0069>
+<0f><0f><0076>
+<10><10><0070>
+<11><11><0061>
+<12><12><006f>
+<13><13><0071>
+<14><14><0056>
+<15><15><0050>
+<16><16><0043>
+<17><17><0064>
+<18><18><0045>
+<19><19><0053>
+<1a><1a><0046>
+<1b><1b><0077>
+<1c><1c><0028>
+<1d><1d><00a7>
+<1e><1e><0035>
+<1f><1f><002e>
+<20><20><0032>
+<21><21><0029>
+<22><22><004c>
+<23><23><0066>
+endbfrange
+endcmap
+CMapName currentdict /CMap defineresource pop
+end end
+
+
+---------------------
+
+61-0 R
+
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CMapType 2 def
+/CMapName/R157 def
+1 begincodespacerange
+<00><ff>
+endcodespacerange
+27 beginbfrange
+<01><01><0074>
+<02><02><0065>
+<03><03><0072>
+<04><04><006d>
+<05><05><0063>
+<06><06><0061>
+<07><07><006e>
+<08><08><0064>
+<09><09><0069>
+<0a><0a><0049>
+<0b><0b><006c>
+<0c><0c><0073>
+<0d><0d><004c>
+<0e><0e><006f>
+<0f><0f><0067>
+<10><10><0078>
+<11><11><0054>
+<12><12><0076>
+<13><13><0047>
+<14><14><0070>
+<15><15><005b>
+<16><16><005d>
+<17><17><0043>
+<18><18><0075>
+<19><19><0046>
+<1a><1a><0041>
+<1b><1b><0068>
+endbfrange
+endcmap
+CMapName currentdict /CMap defineresource pop
+end end
+
+
+---------------------
+
+65-0 R
+
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CMapType 2 def
+/CMapName/R159 def
+1 begincodespacerange
+<00><ff>
+endcodespacerange
+1 beginbfrange
+<01><01><2022>
+endbfrange
+endcmap
+CMapName currentdict /CMap defineresource pop
+end end
+
+
+---------------------
+
+100-0 R
+
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CMapType 2 def
+/CMapName/R149 def
+1 begincodespacerange
+<00><ff>
+endcodespacerange
+44 beginbfrange
+<01><01><0049>
+<02><02><006e>
+<03><03><0076>
+<04><04><006f>
+<05><05><006b>
+<06><06><0065>
+<07><07><0064>
+<08><08><0062>
+<09><09><0079>
+<0a><0a><006c>
+<0b><0b><0061>
+<0c><0c><0072>
+<0d><0d><0074>
+<0e><0e><0073>
+<0f><0f><0063>
+<10><10><0068>
+<11><11><0075>
+<12><12><0066>
+<13><13><0070>
+<14><14><0077>
+<15><15><002e>
+<16><16><004c>
+<17><17><0069>
+<18><18><2019>
+<19><19><006d>
+<1a><1a><0067>
+<1b><1b><0078>
+<1c><1c><002c>
+<1d><1d><0054>
+<1e><1e><0031>
+<1f><1f><0052>
+<20><20><003c>
+<21><21><0032>
+<22><22><0043>
+<23><23><0028>
+<24><24><0030>
+<25><25><0029>
+<26><26><0033>
+<27><27><0057>
+<28><29><0034>
+<2a><2a><0053>
+<2b><2c><0036>
+<2d><2d><0044>
+<2e><2e><0038>
+endbfrange
+endcmap
+CMapName currentdict /CMap defineresource pop
+end end
+
+
+---------------------
+
+104-0 R
+
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CMapType 2 def
+/CMapName/R151 def
+1 begincodespacerange
+<00><ff>
+endcodespacerange
+18 beginbfrange
+<01><01><0074>
+<02><02><0065>
+<03><03><0072>
+<04><04><006d>
+<05><05><006c>
+<06><06><0061>
+<07><07><0064>
+<08><08><0049>
+<09><09><0073>
+<0a><0a><006e>
+<0b><0b><0063>
+<0c><0c><0075>
+<0d><0d><0078>
+<0e><0e><0054>
+<0f><0f><006f>
+<10><10><0066>
+<11><11><005b>
+<12><12><005d>
+endbfrange
+endcmap
+CMapName currentdict /CMap defineresource pop
+end end
+
+
+---------------------
+
+108-0 R
+
+/CIDInit /ProcSet findresource begin
+12 dict begin
+begincmap
+/CMapType 2 def
+/CMapName/R150 def
+1 begincodespacerange
+<00><ff>
+endcodespacerange
+13 beginbfrange
+<07><07><006e>
+<08><08><0074>
+<09><09><0073>
+<0b><0b><0052>
+<0c><0c><006c>
+<10><10><0070>
+<11><11><0061>
+<12><12><006f>
+<13><13><0049>
+<14><14><0053>
+<15><15><0068>
+<16><16><0050>
+<17><17><0043>
+endbfrange
+endcmap
+CMapName currentdict /CMap defineresource pop
+end end
+
+
+---------------------
+
+
+End===================
