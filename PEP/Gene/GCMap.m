@@ -12,12 +12,7 @@
 @implementation GCMap
 + (id)create {
     GCMap *cmap = [[GCMap alloc] init];
-    [cmap initThings];
     return cmap;
-}
-
-- (void)initThings {
-    
 }
 
 - (void)eval {

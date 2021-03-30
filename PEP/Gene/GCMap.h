@@ -17,7 +17,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) GStreamObject *stream;
 
 + (id)create;
-- (void)initThings;
 - (void)eval;
 @end
 
