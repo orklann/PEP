@@ -11,13 +11,14 @@
 NS_ASSUME_NONNULL_BEGIN
 @class GStreamObject;
 @interface GCMap : NSObject {
-    
+    NSMutableDictionary *unicodeMaps;
 }
 
 @property (readwrite) GStreamObject *stream;
 
 + (id)create;
 - (void)initThings;
+- (void)eval;
 @end
 
 NS_ASSUME_NONNULL_END

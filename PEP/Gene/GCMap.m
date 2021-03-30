@@ -19,4 +19,9 @@
 - (void)initThings {
     
 }
+
+- (void)eval {
+    unicodeMaps = [NSMutableDictionary dictionary];
+    // TODO: Do eval
+}
 @end
