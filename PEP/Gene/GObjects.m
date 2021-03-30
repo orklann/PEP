@@ -365,6 +365,9 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
     unsigned char *bytes = (unsigned char*)[data bytes];
     NSMutableData *tmpData = [NSMutableData data];
     for (int i = 0 ; i < [data length]; i++) {
+        // We have <D801DC37> in GHexStringsObject, but in order to be encoded as UTF16BE
+        // (NSUTF16BigEndianStringEncoding), we need to reverse those bytes, if it starts
+        // with 'D8', but we don't need to reverse if it does not start with 'D8'.
         if (*(bytes+i) == 0xD8) {
             [tmpData appendBytes:(bytes + i) length:1];
             [tmpData appendBytes:(bytes + i + 1) length:1];
