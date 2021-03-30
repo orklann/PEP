@@ -349,6 +349,9 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
     return ret;
 }
     
+- (NSString*)rawString {
+    return [[NSString alloc] initWithData:rawContent encoding:NSASCIIStringEncoding];
+}
 @end
 
 @implementation GNameObject

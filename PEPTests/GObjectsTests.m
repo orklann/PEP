@@ -76,6 +76,20 @@
     NSMutableArray *objs = [p objects];
     GHexStringsObject *first = [objs firstObject];
     XCTAssertEqualObjects([first toString], test);
+    
+    // Test rawString
+    p = [GParser parser];
+    char *b2 = "<3A51> <D840DC3E>";
+    NSString *test1 = @"3A51";
+    NSString *test2 = @"D840DC3E";
+    d = [NSData dataWithBytes:b2 length:strlen(b2) + 1];
+    [p setStream:d];
+    [p parse];
+    objs = [p objects];
+    first = [objs firstObject];
+    XCTAssertEqualObjects([first rawString], test1);
+    GHexStringsObject *last = [objs lastObject];
+    XCTAssertEqualObjects([last rawString], test2);
 }
 
 - (void)testGNameObjectToString {
