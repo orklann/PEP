@@ -352,6 +352,12 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
 - (NSString*)rawString {
     return [[NSString alloc] initWithData:rawContent encoding:NSASCIIStringEncoding];
 }
+
+- (long)integerValue {
+    NSString *s = [self rawString];
+    long result = strtol([s UTF8String], NULL, 16);
+    return result;
+}
 @end
 
 @implementation GNameObject

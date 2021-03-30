@@ -90,6 +90,10 @@
     XCTAssertEqualObjects([first rawString], test1);
     GHexStringsObject *last = [objs lastObject];
     XCTAssertEqualObjects([last rawString], test2);
+    
+    // Test intValue
+    XCTAssertEqual([first integerValue], 0x3A51);
+    XCTAssertEqual([last integerValue], 0xD840DC3E);
 }
 
 - (void)testGNameObjectToString {
