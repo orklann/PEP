@@ -337,6 +337,11 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
     value = (NSData*)d;
 }
 
+/*
+ * TODO: Verify if this method always return a valid NSString, that's not 0 length.
+ * Let's think about it: If there are a NULL character in the middle of 'value', will
+ * We get the right NSString too?
+ */
 - (NSString*)stringValue {
     return [[NSString alloc] initWithData:value encoding:NSASCIIStringEncoding];
 }
