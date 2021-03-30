@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C956CDF26131A98005C7D2C /* GCMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C956CDE26131A98005C7D2C /* GCMap.m */; };
 		9301BEFB25554A05000C6F4E /* A Sample PDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9301BEFA25554A05000C6F4E /* A Sample PDF.pdf */; };
 		9301BEFD25554A11000C6F4E /* A Sample PDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9301BEFC25554A10000C6F4E /* A Sample PDF.pdf */; };
 		9307B2AA255A6996000468A9 /* GCompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9307B2A9255A6996000468A9 /* GCompiler.m */; };
@@ -94,6 +95,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C956CDD26131A98005C7D2C /* GCMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCMap.h; sourceTree = "<group>"; };
+		1C956CDE26131A98005C7D2C /* GCMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCMap.m; sourceTree = "<group>"; };
 		9301BEFA25554A05000C6F4E /* A Sample PDF.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "A Sample PDF.pdf"; sourceTree = "<group>"; };
 		9301BEFC25554A10000C6F4E /* A Sample PDF.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "A Sample PDF.pdf"; path = "PEPTests/pdf/A Sample PDF.pdf"; sourceTree = SOURCE_ROOT; };
 		9307B2A8255A6996000468A9 /* GCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCompiler.h; sourceTree = "<group>"; };
@@ -416,6 +419,8 @@
 				93E73A75256794430060EEBC /* GTextEditorDelegate.h */,
 				93FEFCD725CBC1D30095E19D /* GEncodings.h */,
 				93CA1E6725DCACB900DF7949 /* GEncodings.m */,
+				1C956CDD26131A98005C7D2C /* GCMap.h */,
+				1C956CDE26131A98005C7D2C /* GCMap.m */,
 			);
 			path = Gene;
 			sourceTree = "<group>";
@@ -562,6 +567,7 @@
 				93DC04C924F7B6EB003AC9B0 /* GObjects.m in Sources */,
 				93C0E62C2561412F00D4E508 /* PEPToolbarView.m in Sources */,
 				931221CF24F0139300929C01 /* main.m in Sources */,
+				1C956CDF26131A98005C7D2C /* GCMap.m in Sources */,
 				931ECFB12518911A00E26EFA /* GInterpreter.m in Sources */,
 				93DEC33D25401C3D00E280B0 /* GEncoders.m in Sources */,
 				932FF6EC2563D79800808652 /* PEPSideView.m in Sources */,
