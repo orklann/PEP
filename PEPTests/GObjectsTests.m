@@ -66,6 +66,7 @@
     XCTAssertEqualObjects([first toString], @"(I am a literal string)");
 }
 
+/* TODO: Further verify this test case for toUnicode CMap */
 - (void)testGHexStringsObjectToString {
     GParser *p = [GParser parser];
     char *b = "<4920616d20612068657820737472696e67>";
@@ -97,20 +98,24 @@
     
     // Test UTF-16BE encoding
     p = [GParser parser];
-    char *b3 = "<00660066> <00660069> <00660066006C>";
+    char *b3 = "<00660066> <00660069> <00660066006C> <D801DC37>";
     NSString *test3 = @"ff";
     NSString *test4 = @"fi";
     NSString *test5 = @"ffl";
+    NSString *test6 = @"𐐷";
     d = [NSData dataWithBytes:b3 length:strlen(b3) + 1];
     [p setStream:d];
     [p parse];
     objs = [p objects];
     first = [objs firstObject];
+    first = [objs firstObject];
     GHexStringsObject *second = [objs objectAtIndex:1];
-    last = [objs lastObject];
+    GHexStringsObject *third = [objs objectAtIndex:2];
+    last = [objs objectAtIndex:3];
     XCTAssertEqualObjects([first utf16BEString], test3);
     XCTAssertEqualObjects([second utf16BEString], test4);
-    XCTAssertEqualObjects([last utf16BEString], test5);
+    XCTAssertEqualObjects([third utf16BEString], test5);
+    XCTAssertEqualObjects([last utf16BEString], test6);
 }
 
 - (void)testGNameObjectToString {

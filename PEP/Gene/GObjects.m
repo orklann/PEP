@@ -360,8 +360,22 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
 }
 
 - (NSString*)utf16BEString {
-    NSData *data = [[self stringValue] dataUsingEncoding:NSASCIIStringEncoding];
-    NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF16BigEndianStringEncoding];
+    NSString *result;
+    NSData *data = value;
+    unsigned char *bytes = (unsigned char*)[data bytes];
+    NSMutableData *tmpData = [NSMutableData data];
+    for (int i = 0 ; i < [data length]; i++) {
+        if (*(bytes+i) == 0xD8) {
+            [tmpData appendBytes:(bytes + i) length:1];
+            [tmpData appendBytes:(bytes + i + 1) length:1];
+            [tmpData appendBytes:(bytes + i + 2) length:1];
+            [tmpData appendBytes:(bytes + i + 3) length:1];
+            i += 4;
+        } else {
+            [tmpData appendBytes:(bytes + i) length:1];
+        }
+    }
+    result = [[NSString alloc] initWithData:tmpData encoding:NSUTF16BigEndianStringEncoding];
     return result;
 }
 @end
