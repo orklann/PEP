@@ -7,6 +7,7 @@
 //
 
 #import "GCMap.h"
+#import "GObjects.h"
 
 @implementation GCMap
 + (id)create {
