@@ -114,6 +114,7 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
 - (NSString*)toString;
 - (NSString*)rawString;
 - (long)integerValue;
+- (NSString*)utf16BEString;
 @end
 
 @interface GNameObject : GObject {

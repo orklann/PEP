@@ -358,6 +358,12 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
     long result = strtol([s UTF8String], NULL, 16);
     return result;
 }
+
+- (NSString*)utf16BEString {
+    NSData *data = [[self stringValue] dataUsingEncoding:NSASCIIStringEncoding];
+    NSString *result = [[NSString alloc] initWithData:data encoding:NSUTF16BigEndianStringEncoding];
+    return result;
+}
 @end
 
 @implementation GNameObject

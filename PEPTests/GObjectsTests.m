@@ -94,6 +94,23 @@
     // Test intValue
     XCTAssertEqual([first integerValue], 0x3A51);
     XCTAssertEqual([last integerValue], 0xD840DC3E);
+    
+    // Test UTF-16BE encoding
+    p = [GParser parser];
+    char *b3 = "<00660066> <00660069> <00660066006C>";
+    NSString *test3 = @"ff";
+    NSString *test4 = @"fi";
+    NSString *test5 = @"ffl";
+    d = [NSData dataWithBytes:b3 length:strlen(b3) + 1];
+    [p setStream:d];
+    [p parse];
+    objs = [p objects];
+    first = [objs firstObject];
+    GHexStringsObject *second = [objs objectAtIndex:1];
+    last = [objs lastObject];
+    XCTAssertEqualObjects([first utf16BEString], test3);
+    XCTAssertEqualObjects([second utf16BEString], test4);
+    XCTAssertEqualObjects([last utf16BEString], test5);
 }
 
 - (void)testGNameObjectToString {
