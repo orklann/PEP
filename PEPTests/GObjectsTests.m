@@ -108,10 +108,9 @@
     [p parse];
     objs = [p objects];
     first = [objs firstObject];
-    first = [objs firstObject];
     GHexStringsObject *second = [objs objectAtIndex:1];
     GHexStringsObject *third = [objs objectAtIndex:2];
-    last = [objs objectAtIndex:3];
+    last = [objs lastObject];
     XCTAssertEqualObjects([first utf16BEString], test3);
     XCTAssertEqualObjects([second utf16BEString], test4);
     XCTAssertEqualObjects([third utf16BEString], test5);
