@@ -26,3 +26,12 @@ A simple [Roadmap](https://github.com/orklann/PEP/projects/1) is presented on Gi
 
 ## Screenshots
 ![](https://raw.githubusercontent.com/orklann/PEP/master/Screenshots/pep_alpha_focus_ui.png)
+
+
+## How to build
+
+0. Clone this repo: `git clone https://github.com/orklann/PEP.git`
+1. Install the latest Xcode
+2. Open `PEP.xcodeproj` in the `PEP` folder
+3. Build the project
+4. Run it
