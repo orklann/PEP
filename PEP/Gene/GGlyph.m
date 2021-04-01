@@ -216,8 +216,9 @@
     
     // if width from CGGlyph is zero, we need to lookup it in fontInfos dictionary in GDocument
     if (width == 0.0) {
-        NSString *fontTag = [[self.page textState] fontName];
-        GFontInfo *fontInfo = [self.page.doc.fontInfos objectForKey:fontTag];
+        NSString *fontTag = self.fontName;
+        NSString *fontKey = [self.page fontTagToFontKey:fontTag];
+        GFontInfo *fontInfo = [self.page.doc.fontInfos objectForKey:fontKey];
         width = [fontInfo getCharWidth:charCode];
     }
     
