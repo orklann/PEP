@@ -7,6 +7,7 @@
 //
 
 #import "GLexer.h"
+#import "GMisc.h"
 
 BOOL isWhiteSpace(unsigned char ch) {
     switch (ch) {
@@ -256,25 +257,37 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     NSMutableData *d = [NSMutableData dataWithCapacity:100];
     unsigned char next = [self currentChar];
     int unbalanced = 1;
+    BOOL inLiteralString = NO;
     [d appendBytes:(unsigned char*)&next length:1];
     next = [self nextChar];
-    if (next == '[') {
+    
+    if (next == '(') {
+        inLiteralString = YES;
+    }
+    
+    if (next == '[' && !inLiteralString) {
         unbalanced += 1;
-    } else if (next == ']') {
+    } else if (next == ']' && !inLiteralString) {
         unbalanced -= 1;
         [d appendBytes:(unsigned char*)&next length:1];
         [self nextChar];
     }
     while(unbalanced != 0) {
-        if (next == '[') {
+        if (!inLiteralString && next == '(') {
+            inLiteralString = YES;
+        }
+        
+        if (inLiteralString && next == ')') {
+            inLiteralString = NO;
+        }
+        if (next == '[' && !inLiteralString) {
             unbalanced += 1;
-        } else if (next == ']') {
+        } else if (next == ']' && !inLiteralString) {
             unbalanced -= 1;
         }
         [d appendBytes:(unsigned char*)&next length:1];
         next = [self nextChar];
     }
-    
     // return array content without [ and ]
     return [NSData dataWithBytes:[d bytes] + 1  length:[d length] - 2];
 }

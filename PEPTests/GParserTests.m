@@ -342,6 +342,19 @@
     XCTAssertEqual([objs count], 1);
 }
 
+- (void)testGParserParseArrayObject3 {
+    GParser *p = [GParser parser];
+    char *b = "[([13)1(\\0502)]";
+    NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
+    [p setStream:d];
+    [p parse];
+    NSMutableArray *objs = [p objects];
+    GArrayObject *array = [objs firstObject];
+    GObject *second = [[array value] objectAtIndex:1];
+    XCTAssertEqual([second type], kNumberObject);
+}
+
+
 - (void)testParserDictionaryObject2 {
     GParser *p = [GParser parser];
     /*char *b = "<</Type/Catalog/Pages 7 0 R "
