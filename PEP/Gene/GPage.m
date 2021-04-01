@@ -680,17 +680,6 @@
 }
 
 - (void)buildCachedFonts {
-    id res = [[pageDictionary value] objectForKey:@"Resources"];
-    if ([(GObject*)res type] == kRefObject) {
-        GRefObject *ref = (GRefObject*)res;
-        resources = [parser getObjectByRef:[ref getRefString]];
-    } else if ([(GObject*)res type] == kDictionaryObject){
-        // We handle this case below: resources is a dictionary,
-        // not an indrect object
-        NSLog(@"(Handled) resources is a dictionary: %@", [(GDictionaryObject *)res toString]);
-        resources = (GDictionaryObject*)res;
-    }
-    
     GDictionaryObject *fontDictionary;
     GObject *refObject = [[resources value] objectForKey:@"Font"];
     if ([refObject type] == kRefObject) {
