@@ -179,6 +179,11 @@
     // Translate context origin to page media box origin
     [self translateToPageOrigin:context];
     
+    /*
+     * Test: Set clip area for page
+    NSRect clipRect = NSMakeRect(0, 0, 100, 100);
+    CGContextClipToRect(context, clipRect);
+    */
     NSRect pageRect = [self calculatePageMediaBox];
     
     NSRect backgroundRect = NSMakeRect(-1 * pageRect.origin.x, -1 * kPageMargin, [doc bounds].size.width, pageRect.size.height + (kPageMargin*2));
