@@ -288,14 +288,10 @@
 - (NSRect)calculatePageMediaBox {
     GArrayObject *mediaBox = [[pageDictionary value] objectForKey:@"MediaBox"];
     NSRect cropBox = [self getPageCropBox];
-    //GNumberObject *xObj = [[mediaBox value] objectAtIndex:0];
-    //GNumberObject *yObj = [[mediaBox value] objectAtIndex:1];
     GNumberObject *widthObj = [[mediaBox value] objectAtIndex:2];
     GNumberObject *heightObj = [[mediaBox value] objectAtIndex:3];
-//    CGFloat x = [xObj getRealValue];
-//    CGFloat y = [yObj getRealValue];
     
-    // TODO: w, h is not correct, w = x2 -x, h = y2 -y, need to fix later
+    // NOTE: Calculation of w, h is not the same as CropBox, since MediaBox's x, y is alwasy 0.
     CGFloat w = [widthObj getRealValue];
     CGFloat h = [heightObj getRealValue];
     
