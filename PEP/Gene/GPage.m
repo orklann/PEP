@@ -207,6 +207,18 @@
         textParser = [GTextParser create];
     }
         
+    // Apply CropBox origin shifting
+    // Shift left, down by CropBox's width and height, because now the origin is
+    // At origin of CropBox (We made this in calcuatePageMediaBox)
+    NSRect cropBox = [self getPageCropBox];
+    if (!NSEqualRects(cropBox, NSZeroRect)) {
+        CGFloat deltaX = cropBox.origin.x * -1;
+        CGFloat deltaY = cropBox.origin.y * -1;
+        /* #1: Save graphic state to keep later pages CTM correct, restore at #2 below */
+        CGContextSaveGState(context);
+        CGContextTranslateCTM(context, deltaX, deltaY);
+    }
+    
     _interpreter = [GInterpreter create];
     [_interpreter setPage:self];
     [_interpreter setParser:parser];
@@ -241,6 +253,11 @@
     
     [self setNeedUpdate:NO];
     self.isRendering = NO;
+    
+    if (!NSEqualRects(cropBox, NSZeroRect)) {
+        /* #2: Restore for #1 above to keep later pages CTM correct*/
+        CGContextRestoreGState(context);
+    }
     
     /* Test: draw glyph bounding box */
     /*for (GGlyph * g in [textParser glyphs]) {
