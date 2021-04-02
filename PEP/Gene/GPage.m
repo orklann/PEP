@@ -179,11 +179,6 @@
     // Translate context origin to page media box origin
     [self translateToPageOrigin:context];
     
-    /*
-     * Test: Set clip area for page
-    NSRect clipRect = NSMakeRect(0, 0, 100, 100);
-    CGContextClipToRect(context, clipRect);
-    */
     NSRect pageRect = [self calculatePageMediaBox];
     
     NSRect backgroundRect = NSMakeRect(-1 * pageRect.origin.x, -1 * kPageMargin, [doc bounds].size.width, pageRect.size.height + (kPageMargin*2));
@@ -217,6 +212,8 @@
         /* #1: Save graphic state to keep later pages CTM correct, restore at #2 below */
         CGContextSaveGState(context);
         CGContextTranslateCTM(context, deltaX, deltaY);
+        /* Clip by using CropBox */
+        CGContextClipToRect(context, cropBox);
     }
     
     _interpreter = [GInterpreter create];
