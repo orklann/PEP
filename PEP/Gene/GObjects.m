@@ -638,6 +638,8 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
                 decodedData = decodeFlate(decodedData);
             }
         }
+    } else {
+        decodedData = streamContent;
     }
     return decodedData;
 }
