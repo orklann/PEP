@@ -203,7 +203,7 @@
     }
         
     // Apply CropBox origin shifting
-    // Shift left, down by CropBox's width and height, because now the origin is
+    // Shift left, down by CropBox's x and y, because now the origin is
     // At origin of CropBox (We made this in calcuatePageMediaBox)
     NSRect cropBox = [self getPageCropBox];
     if (!NSEqualRects(cropBox, NSZeroRect)) {
@@ -211,7 +211,10 @@
         CGFloat deltaY = cropBox.origin.y * -1;
         /* #1: Save graphic state to keep later pages CTM correct, restore at #2 below */
         CGContextSaveGState(context);
+        
+        /* The shifting happens here */
         CGContextTranslateCTM(context, deltaX, deltaY);
+        
         /* Clip by using CropBox */
         CGContextClipToRect(context, cropBox);
     }
