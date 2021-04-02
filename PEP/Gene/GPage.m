@@ -270,14 +270,24 @@
 // Return rect with origin in bottom left
 - (NSRect)calculatePageMediaBox {
     GArrayObject *mediaBox = [[pageDictionary value] objectForKey:@"MediaBox"];
+    NSRect cropBox = [self getPageCropBox];
     //GNumberObject *xObj = [[mediaBox value] objectAtIndex:0];
     //GNumberObject *yObj = [[mediaBox value] objectAtIndex:1];
     GNumberObject *widthObj = [[mediaBox value] objectAtIndex:2];
     GNumberObject *heightObj = [[mediaBox value] objectAtIndex:3];
 //    CGFloat x = [xObj getRealValue];
 //    CGFloat y = [yObj getRealValue];
+    
+    // TODO: w, h is not correct, w = x2 -x, h = y2 -y, need to fix later
     CGFloat w = [widthObj getRealValue];
     CGFloat h = [heightObj getRealValue];
+    
+    // NSZeroRect returned means no /CropBox key in page
+    if (!NSEqualRects(cropBox, NSZeroRect)) {
+        w = cropBox.size.width;
+        h = cropBox.size.height;
+    }
+    
 //    NSRect mediaBoxRect = NSMakeRect(x, y, w, h);
 //    NSLog(@"Page media box: %@", NSStringFromRect(mediaBoxRect));
     NSRect bounds = [doc bounds];
@@ -285,10 +295,34 @@
     CGFloat pageY = kPageMargin + self.pageYOffsetInDoc;
     CGFloat pageWidth = w;
     CGFloat pageHeight = h;
+    
     NSRect pageRectFlipped = NSMakeRect(pageX, pageY, pageWidth, pageHeight);
     NSRect pageRect = [doc rectFromFlipped:pageRectFlipped];
     //NSLog(@"page rect: %@", NSStringFromRect(pageRect));
     return pageRect;
+}
+
+- (NSRect)getPageCropBox {
+    NSRect cropRect = NSZeroRect;
+    GArrayObject *cropBox = [[pageDictionary value] objectForKey:@"CropBox"];
+    if (cropBox == nil) {
+        return NSZeroRect;
+    }
+    
+    GNumberObject *xObj = [[cropBox value] objectAtIndex:0];
+    GNumberObject *yObj = [[cropBox value] objectAtIndex:1];
+    GNumberObject *widthObj = [[cropBox value] objectAtIndex:2];
+    GNumberObject *heightObj = [[cropBox value] objectAtIndex:3];
+    
+    CGFloat x = [xObj getRealValue];
+    CGFloat y = [yObj getRealValue];
+    CGFloat x2 = [widthObj getRealValue];
+    CGFloat y2 = [heightObj getRealValue];
+    
+    CGFloat w = x2 - x;
+    CGFloat h = y2 - y;
+    cropRect = NSMakeRect(x, y, w, h);
+    return cropRect;
 }
 
 - (GFont*)getFontByName:(NSString*)name {
