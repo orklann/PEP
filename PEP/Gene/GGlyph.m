@@ -35,6 +35,9 @@
     // Apply current context matrix to get the right frame of glyph
     r = CGRectApplyAffineTransform(r, self.ctm);
     frame = r;
+    NSRect cropBox = [_page cropBox];
+    frame.origin.x -= cropBox.origin.x;
+    frame.origin.y -= cropBox.origin.y;
     return frame;
 }
 
@@ -235,7 +238,10 @@
     CGFloat descent = CTFontGetDescent(coreFont);
     CGRect textRect = NSMakeRect(0, 0 - descent, width, descent + ascent);
     textRect = CGRectApplyAffineTransform(textRect, self.textMatrix);
-    self.frame = CGRectApplyAffineTransform(textRect, self.ctm);
+    frame = CGRectApplyAffineTransform(textRect, self.ctm);
+    NSRect cropBox = [_page cropBox];
+    frame.origin.x -= cropBox.origin.x;
+    frame.origin.y -= cropBox.origin.y;
     self.height = self.frame.size.height;
 }
 

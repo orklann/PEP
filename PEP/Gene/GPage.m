@@ -234,6 +234,11 @@
     NSLog(@"Debug: render() executionTime = %f", executionTime);
     */
     
+    if (!NSEqualRects(cropBox, NSZeroRect)) {
+        /* #2: Restore for #1 above to keep later pages CTM correct*/
+        CGContextRestoreGState(context);
+    }
+    
     GTextEditor *textEditor = [self.doc textEditor];
     if (textEditor != nil && [textEditor editorInPage] == self) {
         [textEditor draw:context];
@@ -253,11 +258,6 @@
     
     [self setNeedUpdate:NO];
     self.isRendering = NO;
-    
-    if (!NSEqualRects(cropBox, NSZeroRect)) {
-        /* #2: Restore for #1 above to keep later pages CTM correct*/
-        CGContextRestoreGState(context);
-    }
     
     /* Test: draw glyph bounding box */
     /*for (GGlyph * g in [textParser glyphs]) {
