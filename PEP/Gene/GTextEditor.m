@@ -1033,6 +1033,8 @@
 - (void)dealloc {
     [self.page.textParser setCached:NO];
     [self.page.textParser setUseTJTexts:NO];
+    
+    // TODO: This make exiting text editor laggy
     [self.page.textParser makeTextBlocks];
 }
 @end
