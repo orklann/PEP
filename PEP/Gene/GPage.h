@@ -51,6 +51,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) BOOL dirty;
 @property (readwrite) GInterpreter *interpreter;
 @property (readwrite) BOOL prewarm;
+@property (readwrite) NSRect cropBox;
 
 + (id)create;
 - (void)setPageDictionary:(GDictionaryObject*)d;

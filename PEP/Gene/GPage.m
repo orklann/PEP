@@ -317,15 +317,15 @@
 
 - (NSRect)getPageCropBox {
     NSRect cropRect = NSZeroRect;
-    GArrayObject *cropBox = [[pageDictionary value] objectForKey:@"CropBox"];
-    if (cropBox == nil) {
+    GArrayObject *cropBoxObject = [[pageDictionary value] objectForKey:@"CropBox"];
+    if (cropBoxObject == nil) {
         return NSZeroRect;
     }
     
-    GNumberObject *xObj = [[cropBox value] objectAtIndex:0];
-    GNumberObject *yObj = [[cropBox value] objectAtIndex:1];
-    GNumberObject *widthObj = [[cropBox value] objectAtIndex:2];
-    GNumberObject *heightObj = [[cropBox value] objectAtIndex:3];
+    GNumberObject *xObj = [[cropBoxObject value] objectAtIndex:0];
+    GNumberObject *yObj = [[cropBoxObject value] objectAtIndex:1];
+    GNumberObject *widthObj = [[cropBoxObject value] objectAtIndex:2];
+    GNumberObject *heightObj = [[cropBoxObject value] objectAtIndex:3];
     
     CGFloat x = [xObj getRealValue];
     CGFloat y = [yObj getRealValue];
@@ -335,6 +335,7 @@
     CGFloat w = x2 - x;
     CGFloat h = y2 - y;
     cropRect = NSMakeRect(x, y, w, h);
+    _cropBox = cropRect;
     return cropRect;
 }
 
