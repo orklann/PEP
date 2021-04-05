@@ -394,7 +394,8 @@
         CGFloat fontSize = lastDeletedGlyph.fontSize;
         
         GGlyph *g = [GGlyph create];
-
+        
+        [g setPage:self.page];
         [g setContent:ch];
         [g setCtm:ctm];
         [g setTextMatrix:tm];
@@ -458,6 +459,7 @@
         [g setEncoding:prevGlyph.encoding];
     }
     
+    [g setPage:self.page];
     [g setCtm:ctm];
     [g setTextMatrix:tm];
     [g setFontName:fontName];
