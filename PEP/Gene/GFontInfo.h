@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) unichar firstChar;
 @property (readwrite) CGFloat missingWidth;
 @property (readwrite) NSMutableArray *widths;
+@property (readwrite) NSString *subType;
 
 + (id)create;
 - (CGFloat)getCharWidth:(unichar)charCode;

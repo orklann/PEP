@@ -198,6 +198,11 @@
     CGGlyph a;
     CGFloat width = 0.0;
     unichar charCode = [content characterAtIndex:0];
+    
+    NSString *fontTag = self.fontName;
+    NSString *fontKey = [self.page fontTagToFontKey:fontTag];
+    GFontInfo *fontInfo = [self.page.doc.fontInfos objectForKey:fontKey];
+    
     if (charCode > 255) {
         NSLog(@"Error: char code is greater than 255, it's not a latin character");
     }
@@ -211,17 +216,18 @@
         CTFontGetGlyphsForCharacters(coreFont, &charCode, &a, 1);
     }
     
-    CGGlyph g[1];
-    g[0] = a;
-    
-    // Get glyph width
-    width = CTFontGetAdvancesForGlyphs(coreFont, kCTFontOrientationHorizontal, g, NULL, 1);
+    /* For type1 font program, we first get width from widths array */
+    if ([[fontInfo subType] isEqualToString:@"Type1"]) {
+        width = [fontInfo getCharWidth:charCode];
+    } else {
+        CGGlyph g[1];
+        g[0] = a;
+        // Get glyph width from font program
+        width = CTFontGetAdvancesForGlyphs(coreFont, kCTFontOrientationHorizontal, g, NULL, 1);
+    }
     
     // if width from CGGlyph is zero, we need to lookup it in fontInfos dictionary in GDocument
     if (width == 0.0) {
-        NSString *fontTag = self.fontName;
-        NSString *fontKey = [self.page fontTagToFontKey:fontTag];
-        GFontInfo *fontInfo = [self.page.doc.fontInfos objectForKey:fontKey];
         width = [fontInfo getCharWidth:charCode];
     }
     

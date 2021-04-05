@@ -874,6 +874,10 @@
         GFontInfo *fontInfo = [GFontInfo create];
         GNumberObject *firstChar = [[font value] objectForKey:@"FirstChar"];
         GArrayObject *widthArray = [[font value] objectForKey:@"Widths"];
+        GNameObject *subType = [[font value] objectForKey:@"Subtype"];
+        
+        [fontInfo setSubType:[subType value]];
+        
         if (firstChar != nil) {
             [fontInfo setFirstChar:(int)[firstChar getRealValue]];
         }
