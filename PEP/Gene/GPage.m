@@ -911,6 +911,10 @@
 #pragma Debug
 - (void)logPageContent {
     printData(pageContent);
+    
+    printf("\n==Resource==\n");
+    printData([resources rawContent]);
+    printf("\n============\n");
 }
 
 - (int)pageNumber {
