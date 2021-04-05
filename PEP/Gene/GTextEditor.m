@@ -897,7 +897,7 @@
             f1 = CGRectApplyAffineTransform(f1, ctmInverted);
             f2 = CGRectApplyAffineTransform(f2, ctmInverted);
             deltaY = f2.origin.y - f1.origin.y;
-        } else { // If original lines count is less than 2, we just get the line height as delta y
+        } else { // If there are only one line in original lines, we just get the line height as delta y
             GLine *lastLine = [originalLines lastObject];
             CGRect f = [lastLine frame];
             deltaY = f.size.height * -1;
