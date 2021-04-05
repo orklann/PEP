@@ -338,6 +338,10 @@
     return textBlock;
 }
 
+- (NSMutableArray*)textBlocks {
+    return textBlocks;
+}
+
 - (BOOL)isGlyphBreakWord:(GGlyph*)a{
     // a is current glyph, we also need previous glyph
     GGlyph *prevGlyph = [self peekPrevGlyph];

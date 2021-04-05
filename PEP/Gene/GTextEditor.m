@@ -116,6 +116,7 @@
 - (GTextBlock*)getTextBlock {
     if (self.firstUsed) {
         self.firstUsed = NO;
+        NSLog(@"[*]:%@", [textBlock textBlockString]);
         return textBlock;
     } else {
         // By this, we get glyphs read for GTextParser to get the text block
@@ -124,6 +125,9 @@
         [textParser setUseTJTexts:NO];
         [textParser setGlyphs:glyphs];
         GTextBlock *tb = [textParser mergeLinesToTextblock];
+        NSLog(@"text block index: %d", _textBlockIndex);
+        NSLog(@"%@", [tb textBlockString]);
+        [[[self.page textParser] textBlocks] replaceObjectAtIndex:_textBlockIndex withObject:tb];
         return tb;
     }
 }
@@ -518,7 +522,9 @@
     [self insertChar:ch font:font fontTag:fontName];
     // Do word wrap here, use cached glyphs 
     [self doWordWrap];
-    [[self.page textParser] setCached:NO];
+    
+    // To update text block in text parsers
+    [self getTextBlock];
     self.isEditing = NO;
 }
 
@@ -566,7 +572,6 @@
     [self deleteCharacterInInsertionPoint];
     // Do word wrap
     [self doWordWrap];
-    [[self.page textParser] setCached:NO];
     self.isEditing = NO;
 }
 
@@ -1032,18 +1037,6 @@
 - (void)stopBlinkTimer {
     [blinkTimer invalidate];
     blinkTimer = nil;
-}
-
-/*
- * Because we can not use TJTexts to make read order glyphs, we just broke the TJ text structures
- * by adding new glyphs, so we build and cache text block without using TJTexts.
- */
-- (void)dealloc {
-    [self.page.textParser setCached:NO];
-    [self.page.textParser setUseTJTexts:NO];
-    
-    // TODO: This make exiting text editor laggy
-    [self.page.textParser makeTextBlocks];
 }
 @end
 

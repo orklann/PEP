@@ -56,6 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSMutableArray*)makeLines;
 - (NSMutableArray*)makeTextBlocks;
 - (GTextBlock *)mergeLinesToTextblock;
+- (NSMutableArray*)textBlocks;
 @end
 
 NS_ASSUME_NONNULL_END
