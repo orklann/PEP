@@ -881,7 +881,6 @@
      */
     int lineIndex = (int)[lines count];
     CGAffineTransform startTextMatrix;
-    
     if (lineIndex <= [originalLines count] - 1) { // line index is in the bound of original lines
         GLine *originalLine = [originalLines objectAtIndex:lineIndex];
         startTextMatrix = [originalLine startTextMatrix];
@@ -889,13 +888,20 @@
         startTextMatrix = [[originalLines lastObject] startTextMatrix];
         CGAffineTransform ctm = [[[[originalLines lastObject] glyphs] firstObject] ctm];
         CGAffineTransform ctmInverted = CGAffineTransformInvert(ctm);
-        GLine *l1 = [originalLines objectAtIndex:[originalLines count] - 2];
-        GLine *l2 = [originalLines lastObject];
-        CGRect f1 = [l1 frame];
-        CGRect f2 = [l2 frame];
-        f1 = CGRectApplyAffineTransform(f1, ctmInverted);
-        f2 = CGRectApplyAffineTransform(f2, ctmInverted);
-        CGFloat deltaY = f2.origin.y - f1.origin.y;
+        CGFloat deltaY = 0;
+        if ([originalLines count] >= 2) { // We need last two lines to get the delta y
+            GLine *l1 = [originalLines objectAtIndex:[originalLines count] - 2];
+            GLine *l2 = [originalLines lastObject];
+            CGRect f1 = [l1 frame];
+            CGRect f2 = [l2 frame];
+            f1 = CGRectApplyAffineTransform(f1, ctmInverted);
+            f2 = CGRectApplyAffineTransform(f2, ctmInverted);
+            deltaY = f2.origin.y - f1.origin.y;
+        } else { // If original lines count is less than 2, we just get the line height as delta y
+            GLine *lastLine = [originalLines lastObject];
+            CGRect f = [lastLine frame];
+            deltaY = f.size.height * -1;
+        }
         startTextMatrix.ty += deltaY;
     }
     return startTextMatrix;
