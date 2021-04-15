@@ -7,6 +7,7 @@
 //
 
 #import "GDeviceGrayColorSpace.h"
+#import "GObjects.h"
 
 GDeviceGrayColorSpace *_deviceGrayColorSpace = nil;
 
@@ -18,5 +19,12 @@ GDeviceGrayColorSpace *_deviceGrayColorSpace = nil;
         _deviceGrayColorSpace = [[GDeviceGrayColorSpace alloc] init];
     }
     return _deviceGrayColorSpace;
+}
+
+- (NSColor*)mapColor:(GCommandObject*)cmd {
+    NSArray *args = [cmd args];
+    GNumberObject *grayScaleObject = [args lastObject];
+    CGFloat grayScale = [grayScaleObject getRealValue];
+    return [NSColor colorWithWhite:grayScale alpha:1.0];
 }
 @end
