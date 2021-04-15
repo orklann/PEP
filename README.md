@@ -35,3 +35,8 @@ A simple [Roadmap](https://github.com/orklann/PEP/projects/1) is presented on Gi
 2. Open `PEP.xcodeproj` in the `PEP` folder
 3. Build the project
 4. Run it
+
+## License
+GPLv2.0 
+
+see `LICENSE` file for more details. 
