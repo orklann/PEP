@@ -7,13 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
+#import "GColorSpace.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
 
 @interface GGraphicsState : NSObject {
     CGAffineTransform ctm;
 }
+
+@property (readwrite) GColorSpace *colorSpace;
+@property (readwrite) NSColor *strokeColor;
+@property (readwrite) NSColor *nonStrokeColor;
+
 + (id)create;
+- (void)initState;
 - (void)setCTM:(CGAffineTransform)tf;
 - (CGAffineTransform)ctm;
 - (GGraphicsState*)clone;

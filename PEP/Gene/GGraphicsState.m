@@ -11,8 +11,14 @@
 @implementation GGraphicsState
 + (id)create {
     GGraphicsState *gs = [[GGraphicsState alloc] init];
-    [gs setCTM:CGAffineTransformIdentity];
+    [gs initState];
     return gs;
+}
+
+- (void)initState {
+    [self setCTM:CGAffineTransformIdentity];
+    [self setStrokeColor:[NSColor blackColor]];
+    [self setNonStrokeColor:[NSColor blackColor]];
 }
 
 - (void)setCTM:(CGAffineTransform)tf {
@@ -26,6 +32,9 @@
 - (GGraphicsState*)clone {
     GGraphicsState *newGraphicsState = [GGraphicsState create];
     [newGraphicsState setCTM:ctm];
+    [newGraphicsState setColorSpace:_colorSpace];
+    [newGraphicsState setStrokeColor:_strokeColor];
+    [newGraphicsState setNonStrokeColor:_nonStrokeColor];
     return newGraphicsState;
 }
 @end

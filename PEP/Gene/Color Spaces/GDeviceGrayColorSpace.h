@@ -10,6 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class GColorSpace;
+@class GCommandObject;
+
 @interface GDeviceGrayColorSpace : GColorSpace {
     
 }
