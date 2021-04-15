@@ -16,6 +16,7 @@
 #import "GFontInfo.h"
 #import "GFontEncoding.h"
 #import "GTJText.h"
+#import "GColorSpace.h"
 
 BOOL isCommand(NSString *cmd, NSString *cmd2) {
     return [cmd isEqualToString:cmd2];
@@ -334,6 +335,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             } else if (isCommand(cmd, @"TD")) { // TD
                 NSArray *args = getCommandArgs(commands, 2);
                 [(GCommandObject*)obj setArgs:args];
+            } else if (isCommand(cmd, @"g")) { // TD
+                NSArray *args = getCommandArgs(commands, 1);
+                [(GCommandObject*)obj setArgs:args];
             } else {
                 //NSLog(@"GInterpreter:parseCommands not handle %@ operator", cmd);
             }
@@ -564,6 +568,19 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [[[page textParser] tjTexts] addObject:text];
 }
 
+- (void)eval_g_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    // Set color space in graphic state
+    GColorSpace *cs = [GColorSpace colorSpaceWithName:@"DeviceGray" page:page];
+    [page.graphicsState setColorSpace:cs];
+    
+    // Set nonStrokeColor in graphic state
+    NSColor *nonStrokeColor = [cs mapColor:cmdObj];
+    [page.graphicsState setNonStrokeColor:nonStrokeColor];
+    
+    // Also set fill color (nonStrokeColor) for context
+    CGContextSetRGBFillColor(context, nonStrokeColor.redComponent, nonStrokeColor.greenComponent, nonStrokeColor.blueComponent, 1.0);
+}
+
 - (void)eval:(CGContextRef)context {
     //NSDate *methodStart = [NSDate date];
     if ([page needUpdate]) {
@@ -605,6 +622,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_Tc_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"Tw")) { // eval Tw
                     [self eval_Tw_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"g")) { // eval Tw
+                    NSLog(@"eval g operator");
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }
