@@ -7,6 +7,8 @@
 //
 
 #import "GGraphicsState.h"
+#import "GColorSpace.h"
+#import "GPage.h"
 
 @implementation GGraphicsState
 + (id)create {
@@ -17,6 +19,10 @@
 
 - (void)initState {
     [self setCTM:CGAffineTransformIdentity];
+    
+    // Init DeviceGray color space
+    GColorSpace *cs = [GColorSpace colorSpaceWithName:@"DeviceGray" page:nil];
+    [self setColorSpace:cs];
     [self setStrokeColor:[NSColor blackColor]];
     [self setNonStrokeColor:[NSColor blackColor]];
 }

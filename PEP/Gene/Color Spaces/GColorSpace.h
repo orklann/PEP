@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
     GPage *page;
 }
 
-+ (id)colorSpaceWithName:(NSString*)colorSpaceName page:(GPage*)page;
++ (id)colorSpaceWithName:(NSString*)colorSpaceName page:(nullable GPage*)page;
 
 /*
  * We never call it, it works as a virtual function as like in C++.

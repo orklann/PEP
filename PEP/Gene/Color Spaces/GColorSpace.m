@@ -11,7 +11,7 @@
 
 @implementation GColorSpace
 
-+ (id)colorSpaceWithName:(NSString*)colorSpaceName page:(GPage*)page {
++ (id)colorSpaceWithName:(NSString*)colorSpaceName page:(nullable GPage*)page {
     id cs;
     if ([colorSpaceName isEqualToString:kDeviceGray]) {
         cs = [GDeviceGrayColorSpace colorSpaceWithName:colorSpaceName page:page];

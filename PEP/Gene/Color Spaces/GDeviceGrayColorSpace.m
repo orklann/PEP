@@ -13,7 +13,7 @@ GDeviceGrayColorSpace *_deviceGrayColorSpace = nil;
 
 @implementation GDeviceGrayColorSpace
 
-+ (id)colorSpaceWithName:(NSString *)colorSpaceName page:(GPage *)page {
++ (id)colorSpaceWithName:(NSString *)colorSpaceName page:(nullable GPage *)page {
     // Make GDeviceGrayColorSpace always singleton to save memory
     if (_deviceGrayColorSpace == nil) {
         _deviceGrayColorSpace = [[GDeviceGrayColorSpace alloc] init];

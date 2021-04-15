@@ -16,7 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
     
 }
 
-+ (id)colorSpaceWithName:(NSString *)colorSpaceName page:(GPage *)page;
++ (id)colorSpaceWithName:(NSString *)colorSpaceName page:(nullable GPage *)page;
 - (NSColor*)mapColor:(GCommandObject*)cmd;
 @end
 
