@@ -581,6 +581,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [page.graphicsState setNonStrokeColor:nonStrokeColor];
     
     // Also set fill color (nonStrokeColor) for context
+    nonStrokeColor = [nonStrokeColor colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
     CGContextSetRGBFillColor(context, nonStrokeColor.redComponent, nonStrokeColor.greenComponent, nonStrokeColor.blueComponent, 1.0);
 }
 
@@ -640,7 +641,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                 } else if (isCommand(cmd, @"Tw")) { // eval Tw
                     [self eval_Tw_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"g")) { // eval Tw
-                    NSLog(@"eval g operator");
+                    [self eval_g_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"G")) { // eval Tw
                     [self eval_G_Command:context command:cmdObj];
                 } else {
