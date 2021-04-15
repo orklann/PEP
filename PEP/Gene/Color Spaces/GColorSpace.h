@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (id)colorSpaceWithName:(NSString*)colorSpaceName page:(GPage*)page;
 
 /*
- * No implementation, becuase we never call it, it works as a virtual function as like in C++.
+ * We never call it, it works as a virtual function as like in C++.
  * This method is just to make Xcode compiler happy.
  */
 - (NSColor*)mapColor:(GCommandObject*)cmd;

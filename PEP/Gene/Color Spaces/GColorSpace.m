@@ -18,4 +18,9 @@
     }
     return cs;
 }
+
+/* This method does not matter, because we never call it, just to make compiler happy. */
+- (NSColor*)mapColor:(GCommandObject*)cmd {
+    return [NSColor blackColor];
+}
 @end
