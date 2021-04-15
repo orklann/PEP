@@ -338,6 +338,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             } else if (isCommand(cmd, @"g")) { // TD
                 NSArray *args = getCommandArgs(commands, 1);
                 [(GCommandObject*)obj setArgs:args];
+            } else if (isCommand(cmd, @"G")) { // TD
+                NSArray *args = getCommandArgs(commands, 1);
+                [(GCommandObject*)obj setArgs:args];
             } else {
                 //NSLog(@"GInterpreter:parseCommands not handle %@ operator", cmd);
             }
@@ -581,6 +584,20 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGContextSetRGBFillColor(context, nonStrokeColor.redComponent, nonStrokeColor.greenComponent, nonStrokeColor.blueComponent, 1.0);
 }
 
+- (void)eval_G_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    // Set color space in graphic state
+    GColorSpace *cs = [GColorSpace colorSpaceWithName:@"DeviceGray" page:page];
+    [page.graphicsState setColorSpace:cs];
+    
+    // Set strokeColor in graphic state
+    NSColor *strokeColor = [cs mapColor:cmdObj];
+    [page.graphicsState setStrokeColor:strokeColor];
+    
+    // Also set stroke color (strokeColor) for context
+    strokeColor = [strokeColor colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
+    CGContextSetRGBStrokeColor(context, strokeColor.redComponent, strokeColor.greenComponent, strokeColor.blueComponent, 1.0);
+}
+
 - (void)eval:(CGContextRef)context {
     //NSDate *methodStart = [NSDate date];
     if ([page needUpdate]) {
@@ -624,6 +641,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_Tw_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"g")) { // eval Tw
                     NSLog(@"eval g operator");
+                } else if (isCommand(cmd, @"G")) { // eval Tw
+                    [self eval_G_Command:context command:cmdObj];
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }
