@@ -8,10 +8,15 @@
 
 #import "GDeviceGrayColorSpace.h"
 
+GDeviceGrayColorSpace *_deviceGrayColorSpace = nil;
+
 @implementation GDeviceGrayColorSpace
 
 + (id)colorSpaceWithName:(NSString *)colorSpaceName page:(GPage *)page {
-    GDeviceGrayColorSpace *cs = [[GDeviceGrayColorSpace alloc] init];
-    return cs;
+    // Make GDeviceGrayColorSpace always singleton to save memory
+    if (_deviceGrayColorSpace == nil) {
+        _deviceGrayColorSpace = [[GDeviceGrayColorSpace alloc] init];
+    }
+    return _deviceGrayColorSpace;
 }
 @end
