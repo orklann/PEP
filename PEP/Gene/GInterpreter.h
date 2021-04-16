@@ -20,6 +20,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2);
     GParser *parser;
     NSMutableData *input;
     GPage *page;
+    CGMutablePathRef currentPath;
 }
 
 + (id)create;
