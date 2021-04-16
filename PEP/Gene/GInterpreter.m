@@ -581,8 +581,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [page.graphicsState setNonStrokeColor:nonStrokeColor];
     
     // Also set fill color (nonStrokeColor) for context
-    nonStrokeColor = [nonStrokeColor colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
-    CGContextSetRGBFillColor(context, nonStrokeColor.redComponent, nonStrokeColor.greenComponent, nonStrokeColor.blueComponent, 1.0);
+    CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
 }
 
 - (void)eval_G_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -595,8 +594,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [page.graphicsState setStrokeColor:strokeColor];
     
     // Also set stroke color (strokeColor) for context
-    strokeColor = [strokeColor colorUsingColorSpace:[NSColorSpace deviceRGBColorSpace]];
-    CGContextSetRGBStrokeColor(context, strokeColor.redComponent, strokeColor.greenComponent, strokeColor.blueComponent, 1.0);
+    CGContextSetStrokeColorWithColor(context, [strokeColor CGColor]);
 }
 
 - (void)eval:(CGContextRef)context {
