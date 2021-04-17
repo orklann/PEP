@@ -597,6 +597,17 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGContextSetStrokeColorWithColor(context, [strokeColor CGColor]);
 }
 
+- (void)eval_re_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    NSArray *args = [cmdObj args];
+    CGFloat x = [[args objectAtIndex:0] getRealValue];
+    CGFloat y = [[args objectAtIndex:1] getRealValue];
+    CGFloat w = [[args objectAtIndex:2] getRealValue];
+    CGFloat h = [[args objectAtIndex:3] getRealValue];
+    NSRect rect = NSMakeRect(x, y, w, h);
+    currentPath = CGPathCreateMutable();
+    CGPathAddRect(currentPath, NULL, rect);
+}
+
 - (void)eval:(CGContextRef)context {
     //NSDate *methodStart = [NSDate date];
     if ([page needUpdate]) {
@@ -642,6 +653,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_g_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"G")) { // eval Tw
                     [self eval_G_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"re")) { // eval Tw
+                    [self eval_re_Command:context command:cmdObj];
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }
