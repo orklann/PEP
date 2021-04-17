@@ -309,6 +309,9 @@
     for (GPage *page in pages) {
         if ([visiblePages containsObject:page]) {
             NSLog(@"render page: %d", (int)[pages indexOfObject:page]);
+            // TODO: Remove this line, it's here just for testing graphic operators
+            [page setNeedUpdate:YES];
+            
             [page render:context];
             if (!renderedVisiblePage) {
                 renderedVisiblePage = YES;
