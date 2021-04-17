@@ -335,10 +335,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             } else if (isCommand(cmd, @"TD")) { // TD
                 NSArray *args = getCommandArgs(commands, 2);
                 [(GCommandObject*)obj setArgs:args];
-            } else if (isCommand(cmd, @"g")) { // TD
+            } else if (isCommand(cmd, @"g")) { // g
                 NSArray *args = getCommandArgs(commands, 1);
                 [(GCommandObject*)obj setArgs:args];
-            } else if (isCommand(cmd, @"G")) { // TD
+            } else if (isCommand(cmd, @"G")) { // G
                 NSArray *args = getCommandArgs(commands, 1);
                 [(GCommandObject*)obj setArgs:args];
             } else {
@@ -649,11 +649,11 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_Tc_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"Tw")) { // eval Tw
                     [self eval_Tw_Command:context command:cmdObj];
-                } else if (isCommand(cmd, @"g")) { // eval Tw
+                } else if (isCommand(cmd, @"g")) { // eval g
                     [self eval_g_Command:context command:cmdObj];
-                } else if (isCommand(cmd, @"G")) { // eval Tw
+                } else if (isCommand(cmd, @"G")) { // eval G
                     [self eval_G_Command:context command:cmdObj];
-                } else if (isCommand(cmd, @"re")) { // eval Tw
+                } else if (isCommand(cmd, @"re")) { // eval re
                     [self eval_re_Command:context command:cmdObj];
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
