@@ -694,7 +694,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                 }  else if (isCommand(cmd, @"W")) { // eval W
                     [self eval_W_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"n")) { // eval n
-                    // We don't need to eval `n` operator, since it usually used by W*, n or W, n
+                    // We don't need to eval `n` operator, since it is usually used in the way of: W*,
+                    // n or W, n
                     // And what n does is what W*, W does
                     // See 8.5.4 Clipping path operators
                 } else {
