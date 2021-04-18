@@ -345,7 +345,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                 // Do nothing, no arguments
             } else if (isCommand(cmd, @"W*")) { // f*
                 // Do nothing, no arguments
-            }  else {
+            } else if (isCommand(cmd, @"n")) { // f*
+                // Do nothing, no arguments
+            } else {
                 //NSLog(@"GInterpreter:parseCommands not handle %@ operator", cmd);
             }
         }
@@ -675,6 +677,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_fStar_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"W*")) { // eval f*
                     [self eval_WStar_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"n")) { // eval f*
+                    // We don't need to eval `n` operator, since it usually used by W*, n or W, n
+                    // And what n does is what W*, W does
+                    // See 8.5.4 Clipping path operators
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }
