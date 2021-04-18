@@ -343,6 +343,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                 // Do nothing, no arguments
             } else if (isCommand(cmd, @"W*")) { // W*
                 // Do nothing, no arguments
+            } else if (isCommand(cmd, @"W")) { // W
+                // Do nothing, no arguments
             } else if (isCommand(cmd, @"n")) { // n
                 // Do nothing, no arguments
             } else {
@@ -630,6 +632,12 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGContextEOClip(context);
 }
 
+- (void)eval_W_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    CGContextBeginPath(context);
+    CGContextAddPath(context, currentPath);
+    CGContextClip(context);
+}
+
 - (void)eval:(CGContextRef)context {
     //NSDate *methodStart = [NSDate date];
     if ([page needUpdate]) {
@@ -683,6 +691,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_f_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"W*")) { // eval W*
                     [self eval_WStar_Command:context command:cmdObj];
+                }  else if (isCommand(cmd, @"W")) { // eval W
+                    [self eval_W_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"n")) { // eval n
                     // We don't need to eval `n` operator, since it usually used by W*, n or W, n
                     // And what n does is what W*, W does
