@@ -343,6 +343,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                 [(GCommandObject*)obj setArgs:args];
             } else if (isCommand(cmd, @"f*")) { // f*
                 // Do nothing, no arguments
+            } else if (isCommand(cmd, @"f")) { // f
+                // Do nothing, no arguments
             } else if (isCommand(cmd, @"W*")) { // f*
                 // Do nothing, no arguments
             } else if (isCommand(cmd, @"n")) { // f*
@@ -620,6 +622,12 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGContextEOFillPath(context);
 }
 
+- (void)eval_f_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    CGContextBeginPath(context);
+    CGContextAddPath(context, currentPath);
+    CGContextFillPath(context);
+}
+
 - (void)eval_WStar_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     CGContextBeginPath(context);
     CGContextAddPath(context, currentPath);
@@ -675,6 +683,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_re_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"f*")) { // eval f*
                     [self eval_fStar_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"f")) { // eval f
+                    [self eval_f_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"W*")) { // eval f*
                     [self eval_WStar_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"n")) { // eval f*
