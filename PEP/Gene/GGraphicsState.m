@@ -22,7 +22,8 @@
     
     // Init DeviceGray color space
     GColorSpace *cs = [GColorSpace colorSpaceWithName:@"DeviceGray" page:nil];
-    [self setColorSpace:cs];
+    [self setStrokeColorSpace:cs];
+    [self setNonStrokeColorSpace:cs];
     [self setStrokeColor:[NSColor blackColor]];
     [self setNonStrokeColor:[NSColor blackColor]];
 }
@@ -38,7 +39,8 @@
 - (GGraphicsState*)clone {
     GGraphicsState *newGraphicsState = [GGraphicsState create];
     [newGraphicsState setCTM:ctm];
-    [newGraphicsState setColorSpace:_colorSpace];
+    [newGraphicsState setStrokeColorSpace:_strokeColorSpace];
+    [newGraphicsState setNonStrokeColorSpace:_nonStrokeColorSpace];
     [newGraphicsState setStrokeColor:_strokeColor];
     [newGraphicsState setNonStrokeColor:_nonStrokeColor];
     return newGraphicsState;

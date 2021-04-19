@@ -17,7 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
     CGAffineTransform ctm;
 }
 
-@property (readwrite) GColorSpace *colorSpace;
+@property (readwrite) GColorSpace *strokeColorSpace;
+@property (readwrite) GColorSpace *nonStrokeColorSpace;
 @property (readwrite) NSColor *strokeColor;
 @property (readwrite) NSColor *nonStrokeColor;
 

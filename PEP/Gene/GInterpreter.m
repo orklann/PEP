@@ -580,7 +580,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 - (void)eval_g_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     // Set color space in graphic state
     GColorSpace *cs = [GColorSpace colorSpaceWithName:@"DeviceGray" page:page];
-    [page.graphicsState setColorSpace:cs];
+    [page.graphicsState setNonStrokeColorSpace:cs];
     
     // Set nonStrokeColor in graphic state
     NSColor *nonStrokeColor = [cs mapColor:cmdObj];
@@ -593,7 +593,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 - (void)eval_G_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     // Set color space in graphic state
     GColorSpace *cs = [GColorSpace colorSpaceWithName:@"DeviceGray" page:page];
-    [page.graphicsState setColorSpace:cs];
+    [page.graphicsState setStrokeColorSpace:cs];
     
     // Set strokeColor in graphic state
     NSColor *strokeColor = [cs mapColor:cmdObj];
