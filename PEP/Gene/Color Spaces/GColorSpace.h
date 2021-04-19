@@ -10,6 +10,7 @@
 #import <Cocoa/Cocoa.h>
 
 #define kDeviceGray @"DeviceGray"
+#define kDeviceRGB @"DeviceRGB"
 
 NS_ASSUME_NONNULL_BEGIN
 

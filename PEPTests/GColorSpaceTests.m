@@ -39,4 +39,19 @@
     GColorSpace *cs2 = [GColorSpace colorSpaceWithName:colorSpaceName page:page];
     XCTAssertEqualObjects(cs1, cs2);
 }
+
+- (void)testGDeviceRGBColorSpace {
+    NSString *colorSpaceName = @"DeviceRGB";
+    GPage *page = [GPage create];
+    GColorSpace *cs = [GColorSpace colorSpaceWithName:colorSpaceName page:page];
+    XCTAssertEqualObjects([cs className], @"GDeviceRGBColorSpace");
+}
+
+- (void)testGDeviceRGBColorSingleton {
+    NSString *colorSpaceName = @"DeviceRGB";
+    GPage *page = [GPage create];
+    GColorSpace *cs1 = [GColorSpace colorSpaceWithName:colorSpaceName page:page];
+    GColorSpace *cs2 = [GColorSpace colorSpaceWithName:colorSpaceName page:page];
+    XCTAssertEqualObjects(cs1, cs2);
+}
 @end

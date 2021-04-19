@@ -8,6 +8,7 @@
 
 #import "GColorSpace.h"
 #import "GDeviceGrayColorSpace.h"
+#import "GDeviceRGBColorSpace.h"
 
 @implementation GColorSpace
 
@@ -15,6 +16,8 @@
     id cs;
     if ([colorSpaceName isEqualToString:kDeviceGray]) {
         cs = [GDeviceGrayColorSpace colorSpaceWithName:colorSpaceName page:page];
+    } else if ([colorSpaceName isEqualToString:kDeviceRGB]) {
+        cs = [GDeviceRGBColorSpace colorSpaceWithName:colorSpaceName page:page];
     }
     return cs;
 }
