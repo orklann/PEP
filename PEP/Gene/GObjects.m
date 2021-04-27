@@ -643,6 +643,16 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
     }
     return decodedData;
 }
+
+- (NSData*)getAllContent {
+    NSMutableData *m = [NSMutableData data];
+    NSString *dictString = [dictionary getRawContentString];
+    [m appendData:[dictString dataUsingEncoding:NSASCIIStringEncoding]];
+    [m appendBytes:"stream\n" length:7];
+    [m appendData:streamContent];
+    [m appendBytes:"\nendstream" length:10];
+    return (NSData*)m;
+}
 @end
 
 @implementation GIndirectObject

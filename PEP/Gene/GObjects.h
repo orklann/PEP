@@ -169,6 +169,7 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
 - (NSData*)streamContent;
 - (void)parse;
 - (NSData*)getDecodedStreamContent;
+- (NSData*)getAllContent;
 @end
 
 @interface GIndirectObject : GObject {
