@@ -11,6 +11,7 @@
 		1C6A762726270D8A00781727 /* GDeviceGrayColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6A762626270D8A00781727 /* GDeviceGrayColorSpace.m */; };
 		1C6A762B2627103A00781727 /* GColorSpaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6A762A2627103A00781727 /* GColorSpaceTests.m */; };
 		1C6EB724262D5BCA00C08B77 /* GDeviceRGBColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6EB723262D5BCA00C08B77 /* GDeviceRGBColorSpace.m */; };
+		1C73D87E2637D70600F7C315 /* GICCBasedColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C73D87D2637D70600F7C315 /* GICCBasedColorSpace.m */; };
 		1C956CDF26131A98005C7D2C /* GCMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C956CDE26131A98005C7D2C /* GCMap.m */; };
 		1C9CEF4626141A59006536F9 /* GCMapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9CEF4526141A59006536F9 /* GCMapTests.m */; };
 		9301BEFB25554A05000C6F4E /* A Sample PDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9301BEFA25554A05000C6F4E /* A Sample PDF.pdf */; };
@@ -107,6 +108,8 @@
 		1C6A762A2627103A00781727 /* GColorSpaceTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GColorSpaceTests.m; sourceTree = "<group>"; };
 		1C6EB722262D5BCA00C08B77 /* GDeviceRGBColorSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDeviceRGBColorSpace.h; sourceTree = "<group>"; };
 		1C6EB723262D5BCA00C08B77 /* GDeviceRGBColorSpace.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDeviceRGBColorSpace.m; sourceTree = "<group>"; };
+		1C73D87C2637D70600F7C315 /* GICCBasedColorSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GICCBasedColorSpace.h; sourceTree = "<group>"; };
+		1C73D87D2637D70600F7C315 /* GICCBasedColorSpace.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GICCBasedColorSpace.m; sourceTree = "<group>"; };
 		1C956CDD26131A98005C7D2C /* GCMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCMap.h; sourceTree = "<group>"; };
 		1C956CDE26131A98005C7D2C /* GCMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCMap.m; sourceTree = "<group>"; };
 		1C9CEF4526141A59006536F9 /* GCMapTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCMapTests.m; sourceTree = "<group>"; };
@@ -257,6 +260,8 @@
 				1C6A762626270D8A00781727 /* GDeviceGrayColorSpace.m */,
 				1C6EB722262D5BCA00C08B77 /* GDeviceRGBColorSpace.h */,
 				1C6EB723262D5BCA00C08B77 /* GDeviceRGBColorSpace.m */,
+				1C73D87C2637D70600F7C315 /* GICCBasedColorSpace.h */,
+				1C73D87D2637D70600F7C315 /* GICCBasedColorSpace.m */,
 			);
 			path = "Color Spaces";
 			sourceTree = "<group>";
@@ -602,6 +607,7 @@
 				931ECFB12518911A00E26EFA /* GInterpreter.m in Sources */,
 				93DEC33D25401C3D00E280B0 /* GEncoders.m in Sources */,
 				932FF6EC2563D79800808652 /* PEPSideView.m in Sources */,
+				1C73D87E2637D70600F7C315 /* GICCBasedColorSpace.m in Sources */,
 				93576008255FC83900102C92 /* PEPContentView.m in Sources */,
 				9397A56A25652DB5003969B8 /* PEPMisc.m in Sources */,
 				93E336FD24F1265300F91F74 /* GLexer.m in Sources */,
