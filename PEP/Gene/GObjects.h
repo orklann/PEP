@@ -169,6 +169,10 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
 - (NSData*)streamContent;
 - (void)parse;
 - (NSData*)getDecodedStreamContent;
+/*
+ * Return all raw content of the stream object including dictionary header,
+ * and stream content
+ */
 - (NSData*)getAllContent;
 @end
 
