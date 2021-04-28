@@ -10,6 +10,8 @@
 
 NS_ASSUME_NONNULL_BEGIN
 @class GStreamObject;
+
+/* Type0 function a.k.a sampled function */
 @interface GSampledFunction : GFunction {
     GStreamObject *streamObj;
 }
