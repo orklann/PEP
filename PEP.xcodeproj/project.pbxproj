@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C1999D22639297E002DD9B3 /* GFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1999D12639297E002DD9B3 /* GFunction.m */; };
+		1C1999D726392A55002DD9B3 /* GSampledFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1999D626392A55002DD9B3 /* GSampledFunction.m */; };
+		1C1999DB26392BB6002DD9B3 /* GFunctionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1999DA26392BB6002DD9B3 /* GFunctionsTests.m */; };
 		1C6A762226270D5800781727 /* GColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6A762126270D5800781727 /* GColorSpace.m */; };
 		1C6A762726270D8A00781727 /* GDeviceGrayColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6A762626270D8A00781727 /* GDeviceGrayColorSpace.m */; };
 		1C6A762B2627103A00781727 /* GColorSpaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6A762A2627103A00781727 /* GColorSpaceTests.m */; };
@@ -102,6 +105,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C1999D02639297E002DD9B3 /* GFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GFunction.h; sourceTree = "<group>"; };
+		1C1999D12639297E002DD9B3 /* GFunction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GFunction.m; sourceTree = "<group>"; };
+		1C1999D526392A55002DD9B3 /* GSampledFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GSampledFunction.h; sourceTree = "<group>"; };
+		1C1999D626392A55002DD9B3 /* GSampledFunction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GSampledFunction.m; sourceTree = "<group>"; };
+		1C1999DA26392BB6002DD9B3 /* GFunctionsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GFunctionsTests.m; sourceTree = "<group>"; };
 		1C6A762026270D5800781727 /* GColorSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GColorSpace.h; sourceTree = "<group>"; };
 		1C6A762126270D5800781727 /* GColorSpace.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GColorSpace.m; sourceTree = "<group>"; };
 		1C6A762526270D8A00781727 /* GDeviceGrayColorSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDeviceGrayColorSpace.h; sourceTree = "<group>"; };
@@ -253,6 +261,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1C1999CF26392938002DD9B3 /* GFunctions */ = {
+			isa = PBXGroup;
+			children = (
+				1C1999D02639297E002DD9B3 /* GFunction.h */,
+				1C1999D12639297E002DD9B3 /* GFunction.m */,
+				1C1999D526392A55002DD9B3 /* GSampledFunction.h */,
+				1C1999D626392A55002DD9B3 /* GSampledFunction.m */,
+			);
+			path = GFunctions;
+			sourceTree = "<group>";
+		};
 		1C6A761D26270CE100781727 /* Color Spaces */ = {
 			isa = PBXGroup;
 			children = (
@@ -320,6 +339,7 @@
 				1C6A762A2627103A00781727 /* GColorSpaceTests.m */,
 				1C9CEF4526141A59006536F9 /* GCMapTests.m */,
 				933F589D25E77DCE00D28996 /* GFontEncodingTests.m */,
+				1C1999DA26392BB6002DD9B3 /* GFunctionsTests.m */,
 				9397A56E25653D48003969B8 /* PEPMiscTests.m */,
 				931221DB24F0139700929C01 /* Info.plist */,
 			);
@@ -405,6 +425,7 @@
 		93E336ED24F11C2500F91F74 /* Gene */ = {
 			isa = PBXGroup;
 			children = (
+				1C1999CF26392938002DD9B3 /* GFunctions */,
 				1C6A761D26270CE100781727 /* Color Spaces */,
 				93E336FC24F1256000F91F74 /* GLexer.h */,
 				93E336F824F1254300F91F74 /* GLexer.m */,
@@ -592,6 +613,7 @@
 				9392912F25624202003F062A /* PEPTool.m in Sources */,
 				93CA1E6825DCACB900DF7949 /* GEncodings.m in Sources */,
 				93427469252082CA00CA3DBE /* GGraphicsState.m in Sources */,
+				1C1999D22639297E002DD9B3 /* GFunction.m in Sources */,
 				93159E62252B09F400F87451 /* GTextParser.m in Sources */,
 				93D48C1E2536CAAA002DD41B /* GTextEditor.m in Sources */,
 				93159E5F252AEB5E00F87451 /* GGlyph.m in Sources */,
@@ -612,6 +634,7 @@
 				93DEC33D25401C3D00E280B0 /* GEncoders.m in Sources */,
 				932FF6EC2563D79800808652 /* PEPSideView.m in Sources */,
 				1C73D87E2637D70600F7C315 /* GICCBasedColorSpace.m in Sources */,
+				1C1999D726392A55002DD9B3 /* GSampledFunction.m in Sources */,
 				93576008255FC83900102C92 /* PEPContentView.m in Sources */,
 				9397A56A25652DB5003969B8 /* PEPMisc.m in Sources */,
 				93E336FD24F1265300F91F74 /* GLexer.m in Sources */,
@@ -634,6 +657,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C1999DB26392BB6002DD9B3 /* GFunctionsTests.m in Sources */,
 				93FEFCDB25CBC33F0095E19D /* GEncodingsTests.m in Sources */,
 				9320C01A2519C7F8008F20B0 /* GInterpreterTests.m in Sources */,
 				9355AEB924F12DCC00764E36 /* GLexerTests.m in Sources */,
