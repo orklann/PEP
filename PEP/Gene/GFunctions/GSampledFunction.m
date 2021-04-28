@@ -22,6 +22,10 @@
     streamObj = so;
 }
 
+/*
+ * Refer pdf.js code:
+ * https://github.com/mozilla/pdf.js/blob/master/src/core/function.js#L237
+ */
 - (void)parse {
     GDictionaryObject *dict = [streamObj dictionaryObject];
     
