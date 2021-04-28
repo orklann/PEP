@@ -8,6 +8,7 @@
 
 #import <XCTest/XCTest.h>
 #import "GFunction.h"
+#import "GSampledFunction.h"
 #import "GParser.h"
 
 @interface GFunctionsTests : XCTestCase
@@ -41,6 +42,61 @@
     
     GFunction *function = [GFunction functionWithStreamObject:streamObj];
     XCTAssertEqualObjects([function className], @"GSampledFunction");
+    
+    // Input size
+    GSampledFunction *sampled = (GSampledFunction*)function;
+    int inputSize = [sampled inputSize];
+    XCTAssertEqual(inputSize, 1);
+    
+    // Domain
+    NSArray *array = [[sampled domain] firstObject];
+    XCTAssertEqual([[array firstObject] intValue], 0);
+    XCTAssertEqual([[array lastObject] intValue], 1);
+    
+    // Output size
+    int outputSize = [sampled outputSize];
+    XCTAssertEqual(outputSize, 3);
+    
+    // Range
+    NSArray *a1 = [[sampled range] firstObject];
+    XCTAssertEqual([[a1 firstObject] intValue], 0);
+    XCTAssertEqual([[a1 lastObject] intValue], 1);
+    
+    NSArray *a2 = [[sampled range] objectAtIndex:1];
+    XCTAssertEqual([[a2 firstObject] intValue], 0);
+    XCTAssertEqual([[a2 lastObject] intValue], 1);
+    
+    NSArray *a3 = [[sampled range] objectAtIndex:2];
+    XCTAssertEqual([[a3 firstObject] intValue], 0);
+    XCTAssertEqual([[a3 lastObject] intValue], 1);
+    
+    // Size
+    NSArray *size = [sampled size];
+    XCTAssertEqual([[size firstObject] intValue], 255);
+    
+    // bps
+    int bps = [sampled bps];
+    XCTAssertEqual(bps, 8);
+    
+    // Encode
+    NSArray *encode = [sampled encode];
+    NSArray *a4 = [encode firstObject];
+    XCTAssertEqual([[a4 firstObject] intValue], 0);
+    XCTAssertEqual([[a4 lastObject] intValue], 254);
+    
+    // Decode
+    NSArray *decode = [sampled decode];
+    NSArray *a5 = [decode firstObject];
+    XCTAssertEqual([[a5 firstObject] intValue], 0);
+    XCTAssertEqual([[a5 lastObject] intValue], 1);
+    
+    NSArray *a6 = [decode objectAtIndex:1];
+    XCTAssertEqual([[a6 firstObject] intValue], 0);
+    XCTAssertEqual([[a6 lastObject] intValue], 1);
+    
+    NSArray *a7 = [decode objectAtIndex:2];
+    XCTAssertEqual([[a7 firstObject] intValue], 0);
+    XCTAssertEqual([[a7 lastObject] intValue], 1);
 }
 
 @end

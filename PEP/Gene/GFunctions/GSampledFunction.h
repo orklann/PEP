@@ -14,6 +14,15 @@ NS_ASSUME_NONNULL_BEGIN
     GStreamObject *streamObj;
 }
 
+@property (readwrite) int inputSize;
+@property (readwrite) NSArray *domain;
+@property (readwrite) int outputSize;
+@property (readwrite) NSArray *range;
+@property (readwrite) NSArray *size;
+@property (readwrite) int bps;
+@property (readwrite) NSArray *encode;
+@property (readwrite) NSArray *decode;
+
 + (id)functionWithStreamObject:(GStreamObject*)streamObj;
 - (void)setStreamObject:(GStreamObject*)so;
 @end
