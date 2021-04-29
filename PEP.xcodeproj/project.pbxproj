@@ -261,7 +261,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1C1999CF26392938002DD9B3 /* GFunctions */ = {
+		1C1999CF26392938002DD9B3 /* Functions */ = {
 			isa = PBXGroup;
 			children = (
 				1C1999D02639297E002DD9B3 /* GFunction.h */,
@@ -269,7 +269,7 @@
 				1C1999D526392A55002DD9B3 /* GSampledFunction.h */,
 				1C1999D626392A55002DD9B3 /* GSampledFunction.m */,
 			);
-			path = GFunctions;
+			path = Functions;
 			sourceTree = "<group>";
 		};
 		1C6A761D26270CE100781727 /* Color Spaces */ = {
@@ -425,7 +425,7 @@
 		93E336ED24F11C2500F91F74 /* Gene */ = {
 			isa = PBXGroup;
 			children = (
-				1C1999CF26392938002DD9B3 /* GFunctions */,
+				1C1999CF26392938002DD9B3 /* Functions */,
 				1C6A761D26270CE100781727 /* Color Spaces */,
 				93E336FC24F1256000F91F74 /* GLexer.h */,
 				93E336F824F1254300F91F74 /* GLexer.m */,
