@@ -10,6 +10,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/*
+ * See 7.10.1, PDF specification
+ */
 float interpolate(float x, float xmin, float xmax, float ymin, float ymax);
 
 @class GStreamObject;
