@@ -104,7 +104,7 @@
     //NSLog(@"%@", samples);
     
     // Test eval
-    NSNumber *n = [NSNumber numberWithInt:1];
+    NSNumber *n = [NSNumber numberWithInt:0];
     NSArray *inputs = [NSArray arrayWithObjects:n, nil];
     NSArray *outputs = [sampled eval:inputs];
     NSLog(@"%ld outputs count", [outputs count]);
