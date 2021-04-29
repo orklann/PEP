@@ -101,7 +101,7 @@
     // Samples
     NSArray *samples = [sampled samples];
     XCTAssertEqual([samples count], 255 * 3);
-    NSLog(@"%@", samples);
+    //NSLog(@"%@", samples);
 }
 
 @end
