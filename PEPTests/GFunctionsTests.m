@@ -97,6 +97,11 @@
     NSArray *a7 = [decode objectAtIndex:2];
     XCTAssertEqual([[a7 firstObject] intValue], 0);
     XCTAssertEqual([[a7 lastObject] intValue], 1);
+    
+    // Samples
+    NSArray *samples = [sampled samples];
+    XCTAssertEqual([samples count], 255 * 3);
+    NSLog(@"%@", samples);
 }
 
 @end

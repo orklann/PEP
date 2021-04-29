@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) int bps;
 @property (readwrite) NSArray *encode;
 @property (readwrite) NSArray *decode;
+@property (readwrite) NSArray *samples;
 
 + (id)functionWithStreamObject:(GStreamObject*)streamObj;
 - (void)setStreamObject:(GStreamObject*)so;

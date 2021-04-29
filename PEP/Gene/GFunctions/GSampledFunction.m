@@ -23,6 +23,45 @@
 }
 
 /*
+ * Refer pdf.js:
+ * https://github.com/mozilla/pdf.js/blob/master/src/core/function.js#L142
+ */
+- (NSArray*)getSamples {
+    NSMutableArray *result = [NSMutableArray array];
+    int i, ii;
+    int length = 1;
+    for (i = 0, ii = (int)[_size count]; i < ii; i++) {
+        int a = [[_size objectAtIndex:i] intValue];
+        length *= a;
+    }
+    
+    length *= _outputSize;
+    
+    int codeSize = 0;
+    int codeBuf = 0;
+    // 32 is a valid bps so shifting won't work
+    float sampleMul = 1.0 / (pow(2.0, _bps) - 1);
+    
+    NSData *stream = [streamObj getDecodedStreamContent];
+    unsigned char *strBytes = (unsigned char*)[stream bytes];
+    int strIdx = 0;
+    for (int i = 0; i < length; i++) {
+        while (codeSize < _bps) {
+            codeBuf <<= 8;
+            codeBuf |= (unsigned char)(*(strBytes + strIdx));
+            strIdx += 1;
+            codeSize += 8;
+        }
+        codeSize -= _bps;
+        float a = (codeBuf >> codeSize) * sampleMul;
+        NSNumber *n = [NSNumber numberWithFloat:a];
+        [result addObject:n];
+        codeBuf &= (1 << codeSize) - 1;
+    }
+    return [NSArray arrayWithArray:result];
+}
+
+/*
  * Refer pdf.js code:
  * https://github.com/mozilla/pdf.js/blob/master/src/core/function.js#L237
  */
@@ -73,7 +112,8 @@
         _decode = [self toMultiArray:[decodeArray value]];
     }
     
-    // TODO: Get samples
+    // Samples
+    _samples = [self getSamples];
 }
 
 - (NSArray*)toMultiArray:(NSArray *)array {
