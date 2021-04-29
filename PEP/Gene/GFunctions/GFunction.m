@@ -22,4 +22,12 @@
     }
     return obj;
 }
+
+- (NSArray*)eval:(NSArray*)inputs {
+    return [NSArray array];
+}
 @end
+
+float interpolate(float x, float xmin, float xmax, float ymin, float ymax) {
+    return ymin + (x - xmin) * ((ymax - ymin) / (xmax - xmin));
+}

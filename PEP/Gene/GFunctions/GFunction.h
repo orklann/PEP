@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
+
+float interpolate(float x, float xmin, float xmax, float ymin, float ymax);
+
 @class GStreamObject;
 
 @interface GFunction : NSObject {
@@ -16,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 + (id)functionWithStreamObject:(GStreamObject*)streamObj;
+- (NSArray*)eval:(NSArray*)inputs;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -102,6 +102,13 @@
     NSArray *samples = [sampled samples];
     XCTAssertEqual([samples count], 255 * 3);
     //NSLog(@"%@", samples);
+    
+    // Test eval
+    NSNumber *n = [NSNumber numberWithInt:1];
+    NSArray *inputs = [NSArray arrayWithObjects:n, nil];
+    NSArray *outputs = [sampled eval:inputs];
+    NSLog(@"%ld outputs count", [outputs count]);
+    NSLog(@"%@", outputs);
 }
 
 @end
