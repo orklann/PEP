@@ -10,6 +10,7 @@
 		1C1999D22639297E002DD9B3 /* GFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1999D12639297E002DD9B3 /* GFunction.m */; };
 		1C1999D726392A55002DD9B3 /* GSampledFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1999D626392A55002DD9B3 /* GSampledFunction.m */; };
 		1C1999DB26392BB6002DD9B3 /* GFunctionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1999DA26392BB6002DD9B3 /* GFunctionsTests.m */; };
+		1C1AC143263BF1B20065F2D2 /* GAlternateColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1AC142263BF1B20065F2D2 /* GAlternateColorSpace.m */; };
 		1C6A762226270D5800781727 /* GColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6A762126270D5800781727 /* GColorSpace.m */; };
 		1C6A762726270D8A00781727 /* GDeviceGrayColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6A762626270D8A00781727 /* GDeviceGrayColorSpace.m */; };
 		1C6A762B2627103A00781727 /* GColorSpaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6A762A2627103A00781727 /* GColorSpaceTests.m */; };
@@ -110,6 +111,8 @@
 		1C1999D526392A55002DD9B3 /* GSampledFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GSampledFunction.h; sourceTree = "<group>"; };
 		1C1999D626392A55002DD9B3 /* GSampledFunction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GSampledFunction.m; sourceTree = "<group>"; };
 		1C1999DA26392BB6002DD9B3 /* GFunctionsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GFunctionsTests.m; sourceTree = "<group>"; };
+		1C1AC141263BF1B20065F2D2 /* GAlternateColorSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAlternateColorSpace.h; sourceTree = "<group>"; };
+		1C1AC142263BF1B20065F2D2 /* GAlternateColorSpace.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GAlternateColorSpace.m; sourceTree = "<group>"; };
 		1C6A762026270D5800781727 /* GColorSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GColorSpace.h; sourceTree = "<group>"; };
 		1C6A762126270D5800781727 /* GColorSpace.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GColorSpace.m; sourceTree = "<group>"; };
 		1C6A762526270D8A00781727 /* GDeviceGrayColorSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDeviceGrayColorSpace.h; sourceTree = "<group>"; };
@@ -283,6 +286,8 @@
 				1C6EB723262D5BCA00C08B77 /* GDeviceRGBColorSpace.m */,
 				1C73D87C2637D70600F7C315 /* GICCBasedColorSpace.h */,
 				1C73D87D2637D70600F7C315 /* GICCBasedColorSpace.m */,
+				1C1AC141263BF1B20065F2D2 /* GAlternateColorSpace.h */,
+				1C1AC142263BF1B20065F2D2 /* GAlternateColorSpace.m */,
 			);
 			path = "Color Spaces";
 			sourceTree = "<group>";
@@ -611,6 +616,7 @@
 				933F589825E77C7900D28996 /* GFontEncoding.m in Sources */,
 				9373EEF6251C84A80066AD2A /* GFont.m in Sources */,
 				9392912F25624202003F062A /* PEPTool.m in Sources */,
+				1C1AC143263BF1B20065F2D2 /* GAlternateColorSpace.m in Sources */,
 				93CA1E6825DCACB900DF7949 /* GEncodings.m in Sources */,
 				93427469252082CA00CA3DBE /* GGraphicsState.m in Sources */,
 				1C1999D22639297E002DD9B3 /* GFunction.m in Sources */,
