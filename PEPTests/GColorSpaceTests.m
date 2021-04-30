@@ -60,8 +60,7 @@
 - (void)testGAlternateColorSpace {
     GParser *p = [GParser parser];
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    // Even test_xref.pdf is in the `pdf` folder, we still only need to provide
-    // file name in the path, no need to provide folder name
+
     NSString *path = [bundle pathForResource:@"type0_function" ofType:@"bin"];
     NSData *d = [NSData dataWithContentsOfFile:path];
     NSMutableData *m = [NSMutableData data];
@@ -79,7 +78,7 @@
     
     GAlternateColorSpace *alt = [GAlternateColorSpace colorSpace:cs function:function];
     
-    // Turns array of NSNumber into GNumberObject
+    // Construct GCommandObject to pass to mapColor:
     NSString *s = @"0 cs";
     GParser *p2 = [GParser parser];
     [p2 setStream:[s dataUsingEncoding:NSASCIIStringEncoding]];
@@ -91,6 +90,7 @@
     NSArray *args = [NSArray arrayWithObjects:n, nil];
     [cmd setArgs:args];
     
+    // Map color by using alternate color space
     NSColor *color = [alt mapColor:cmd];
     
     // Test
