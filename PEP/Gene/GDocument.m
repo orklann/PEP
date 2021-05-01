@@ -509,7 +509,12 @@
     }
 }
 
-#pragma Integration Testing
+#pragma mark Integration Testing
+
+/*
+ * Test with GSeparationColorSpace with PDF: coders-at-work.pdf
+ * Since it's not easy to make it as a unit test
+ */
 - (void)testGSeparationColorSpace {
     GPage *firstPage = [pages firstObject];
     GColorSpace *cs = [GColorSpace colorSpaceWithName:@"Cs8" page:firstPage];
