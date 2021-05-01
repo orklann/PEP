@@ -19,6 +19,7 @@
 		1C73D8822637E5EA00F7C315 /* type0_function.bin in Resources */ = {isa = PBXBuildFile; fileRef = 1C73D8812637E5E900F7C315 /* type0_function.bin */; };
 		1C956CDF26131A98005C7D2C /* GCMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C956CDE26131A98005C7D2C /* GCMap.m */; };
 		1C9CEF4626141A59006536F9 /* GCMapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9CEF4526141A59006536F9 /* GCMapTests.m */; };
+		1CFD4F28263D3E34004E4808 /* GSeparationColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CFD4F27263D3E34004E4808 /* GSeparationColorSpace.m */; };
 		9301BEFB25554A05000C6F4E /* A Sample PDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9301BEFA25554A05000C6F4E /* A Sample PDF.pdf */; };
 		9301BEFD25554A11000C6F4E /* A Sample PDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9301BEFC25554A10000C6F4E /* A Sample PDF.pdf */; };
 		9307B2AA255A6996000468A9 /* GCompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9307B2A9255A6996000468A9 /* GCompiler.m */; };
@@ -126,6 +127,8 @@
 		1C956CDD26131A98005C7D2C /* GCMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCMap.h; sourceTree = "<group>"; };
 		1C956CDE26131A98005C7D2C /* GCMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCMap.m; sourceTree = "<group>"; };
 		1C9CEF4526141A59006536F9 /* GCMapTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCMapTests.m; sourceTree = "<group>"; };
+		1CFD4F26263D3E33004E4808 /* GSeparationColorSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GSeparationColorSpace.h; sourceTree = "<group>"; };
+		1CFD4F27263D3E34004E4808 /* GSeparationColorSpace.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GSeparationColorSpace.m; sourceTree = "<group>"; };
 		9301BEFA25554A05000C6F4E /* A Sample PDF.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "A Sample PDF.pdf"; sourceTree = "<group>"; };
 		9301BEFC25554A10000C6F4E /* A Sample PDF.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "A Sample PDF.pdf"; path = "PEPTests/pdf/A Sample PDF.pdf"; sourceTree = SOURCE_ROOT; };
 		9307B2A8255A6996000468A9 /* GCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCompiler.h; sourceTree = "<group>"; };
@@ -288,6 +291,8 @@
 				1C73D87D2637D70600F7C315 /* GICCBasedColorSpace.m */,
 				1C1AC141263BF1B20065F2D2 /* GAlternateColorSpace.h */,
 				1C1AC142263BF1B20065F2D2 /* GAlternateColorSpace.m */,
+				1CFD4F26263D3E33004E4808 /* GSeparationColorSpace.h */,
+				1CFD4F27263D3E34004E4808 /* GSeparationColorSpace.m */,
 			);
 			path = "Color Spaces";
 			sourceTree = "<group>";
@@ -615,6 +620,7 @@
 			files = (
 				933F589825E77C7900D28996 /* GFontEncoding.m in Sources */,
 				9373EEF6251C84A80066AD2A /* GFont.m in Sources */,
+				1CFD4F28263D3E34004E4808 /* GSeparationColorSpace.m in Sources */,
 				9392912F25624202003F062A /* PEPTool.m in Sources */,
 				1C1AC143263BF1B20065F2D2 /* GAlternateColorSpace.m in Sources */,
 				93CA1E6825DCACB900DF7949 /* GEncodings.m in Sources */,
