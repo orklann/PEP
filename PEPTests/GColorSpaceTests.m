@@ -12,6 +12,7 @@
 #import "GAlternateColorSpace.h"
 #import "GPage.h"
 #import "GObjects.h"
+#import "GDocument.h"
 
 @interface GColorSpaceTests : XCTestCase
 
@@ -94,6 +95,43 @@
     NSColor *color = [alt mapColor:cmd];
     
     // Test
+    NSColor *c = [NSColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+    XCTAssertEqualObjects(color, c);
+}
+
+- (void)testGSeparationColorSpace {
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+
+    NSString *path = [bundle pathForResource:@"coders-at-work" ofType:@"pdf"];
+    GDocument *doc = [[GDocument alloc] initWithFrame:NSZeroRect];
+    
+    [doc setFile:path];
+    
+    // Parse all pages
+    [doc parsePages];
+    
+    GPage *firstPage = [[doc pages] firstObject];
+    
+    // Parse page content, plus resources dictionary, which is needed in this test
+    [firstPage parsePageContent];
+    
+    GColorSpace *cs = [GColorSpace colorSpaceWithName:@"Cs8" page:firstPage];
+
+    // Construct GCommandObject to pass to mapColor:
+    NSString *s = @"0 cs";
+    GParser *p2 = [GParser parser];
+    [p2 setStream:[s dataUsingEncoding:NSASCIIStringEncoding]];
+    [p2 parse];
+    NSArray *result = [p2 objects];
+    GNumberObject *n = [result firstObject];
+    GCommandObject *cmd = [result lastObject];
+    
+    NSArray *args = [NSArray arrayWithObjects:n, nil];
+    [cmd setArgs:args];
+    
+    // Map color by using alternate color space
+    NSColor *color = [cs mapColor:cmd];
+    
     NSColor *c = [NSColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
     XCTAssertEqualObjects(color, c);
 }

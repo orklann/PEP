@@ -20,6 +20,7 @@
 		1C956CDF26131A98005C7D2C /* GCMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C956CDE26131A98005C7D2C /* GCMap.m */; };
 		1C9CEF4626141A59006536F9 /* GCMapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9CEF4526141A59006536F9 /* GCMapTests.m */; };
 		1CFD4F28263D3E34004E4808 /* GSeparationColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CFD4F27263D3E34004E4808 /* GSeparationColorSpace.m */; };
+		1CFD4F2C263D4AFC004E4808 /* coders-at-work.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 1CFD4F2B263D4AFC004E4808 /* coders-at-work.pdf */; };
 		9301BEFB25554A05000C6F4E /* A Sample PDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9301BEFA25554A05000C6F4E /* A Sample PDF.pdf */; };
 		9301BEFD25554A11000C6F4E /* A Sample PDF.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9301BEFC25554A10000C6F4E /* A Sample PDF.pdf */; };
 		9307B2AA255A6996000468A9 /* GCompiler.m in Sources */ = {isa = PBXBuildFile; fileRef = 9307B2A9255A6996000468A9 /* GCompiler.m */; };
@@ -129,6 +130,7 @@
 		1C9CEF4526141A59006536F9 /* GCMapTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCMapTests.m; sourceTree = "<group>"; };
 		1CFD4F26263D3E33004E4808 /* GSeparationColorSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GSeparationColorSpace.h; sourceTree = "<group>"; };
 		1CFD4F27263D3E34004E4808 /* GSeparationColorSpace.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GSeparationColorSpace.m; sourceTree = "<group>"; };
+		1CFD4F2B263D4AFC004E4808 /* coders-at-work.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "coders-at-work.pdf"; sourceTree = "<group>"; };
 		9301BEFA25554A05000C6F4E /* A Sample PDF.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "A Sample PDF.pdf"; sourceTree = "<group>"; };
 		9301BEFC25554A10000C6F4E /* A Sample PDF.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "A Sample PDF.pdf"; path = "PEPTests/pdf/A Sample PDF.pdf"; sourceTree = SOURCE_ROOT; };
 		9307B2A8255A6996000468A9 /* GCompiler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCompiler.h; sourceTree = "<group>"; };
@@ -406,6 +408,7 @@
 		936C4303250363AD00FFE547 /* pdf */ = {
 			isa = PBXGroup;
 			children = (
+				1CFD4F2B263D4AFC004E4808 /* coders-at-work.pdf */,
 				1C73D8812637E5E900F7C315 /* type0_function.bin */,
 				93386D372568E6D400B63E8E /* Super Mario World.pdf */,
 				93DB0FBF255CCD350030F33A /* Sample_001.pdf */,
@@ -605,6 +608,7 @@
 				93B707AC255D129200F326EB /* bug_hex_string.pdf in Resources */,
 				938EB9752545A0D80045F463 /* tab.pdf in Resources */,
 				9359739E2543B36800BB217D /* PEP_GillSans.pdf in Resources */,
+				1CFD4F2C263D4AFC004E4808 /* coders-at-work.pdf in Resources */,
 				93899B0225594EF2001D79A8 /* A Sample PDF(Updated).pdf in Resources */,
 				936C4305250363E800FFE547 /* test_xref.pdf in Resources */,
 				9301BEFB25554A05000C6F4E /* A Sample PDF.pdf in Resources */,
