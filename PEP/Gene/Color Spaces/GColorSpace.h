@@ -12,6 +12,7 @@
 #define kDeviceGray @"DeviceGray"
 #define kDeviceRGB @"DeviceRGB"
 #define kICCBased @"ICCBased"
+#define kSeparation @"Separation"
 
 NS_ASSUME_NONNULL_BEGIN
 

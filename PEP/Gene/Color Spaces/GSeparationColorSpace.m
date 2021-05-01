@@ -37,11 +37,12 @@
     }
     
     // Construct funtion object
-    if ([functionObject type] == kStreamObject) {
-        GStreamObject *stream = (GStreamObject*)functionObject;
+    if ([functionObject type] == kRefObject) {
+        GRefObject *ref = (GRefObject*)functionObject;
+        GStreamObject *stream = [[page parser] getObjectByRef:[ref getRefString]];
         function = [GFunction functionWithStreamObject:stream];
     } else {
-        NSLog(@"Error: function object in Saparation color space array is not a stream object");
+        NSLog(@"Error: function object in Saparation color space array is not a ref object");
     }
     
     cs = [GAlternateColorSpace colorSpace:baseColorSpace function:function];

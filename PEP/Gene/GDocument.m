@@ -18,6 +18,9 @@
 #import "GMisc.h"
 #import "AppDelegate.h"
 
+// TODO: TEST, REMOVE BELOW
+#import "GColorSpace.h"
+
 @implementation GDocument
 
 - (IBAction)saveDocumentAs:(id)sender {
@@ -191,6 +194,9 @@
     
     // Make all mouse events work
     [self updateTrackingAreas];
+    
+    // NOTE: Integration Test for GSepartionColorSpace with PDF: coders-at-work.pdf
+    // [self testGSeparationColorSpace];
 }
 
 - (void)resizeToFitAllPages {
@@ -500,6 +506,36 @@
     if (index <= [pages count] - 1) {
         GPage *page = [pages objectAtIndex:index];
         [page performSelectorInBackground:@selector(prewarmRender) withObject:nil];
+    }
+}
+
+#pragma Integration Testing
+- (void)testGSeparationColorSpace {
+    GPage *firstPage = [pages firstObject];
+    GColorSpace *cs = [GColorSpace colorSpaceWithName:@"Cs8" page:firstPage];
+    
+    // Construct GCommandObject to pass to mapColor:
+    NSString *s = @"0 cs";
+    GParser *p2 = [GParser parser];
+    [p2 setStream:[s dataUsingEncoding:NSASCIIStringEncoding]];
+    [p2 parse];
+    NSArray *result = [p2 objects];
+    GNumberObject *n = [result firstObject];
+    GCommandObject *cmd = [result lastObject];
+    
+    NSArray *args = [NSArray arrayWithObjects:n, nil];
+    [cmd setArgs:args];
+    
+    // Map color by using alternate color space
+    NSColor *color = [cs mapColor:cmd];
+    
+    // Test: It should output `1 1 1 1`
+    NSLog(@"TEST: mapped color: %@", color);
+    NSColor *c1 = [NSColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+    if (CGColorEqualToColor([c1 CGColor], [color CGColor])){
+        NSLog(@"TEST: testGSeparationColorSpace pass");
+    } else {
+        NSLog(@"TEST: testGSeparationColorSpace failed");
     }
 }
 @end
