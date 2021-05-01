@@ -9,6 +9,9 @@
 #import "GColorSpace.h"
 #import "GDeviceGrayColorSpace.h"
 #import "GDeviceRGBColorSpace.h"
+#import "GICCBasedColorSpace.h"
+#import "GObjects.h"
+#import "GPage.h"
 
 @implementation GColorSpace
 
@@ -18,6 +21,30 @@
         cs = [GDeviceGrayColorSpace colorSpaceWithName:colorSpaceName page:page];
     } else if ([colorSpaceName isEqualToString:kDeviceRGB]) {
         cs = [GDeviceRGBColorSpace colorSpaceWithName:colorSpaceName page:page];
+    } else {
+        GDictionaryObject *resource = [page resources];
+        GDictionaryObject *colorSpaceDictionary = [[resource value] objectForKey:@"ColorSpace"];
+        GObject *colorSpaceObject = [[colorSpaceDictionary value] objectForKey:colorSpaceName];
+        if ([colorSpaceObject type] == kArrayObject) {
+            cs = [self colorSpaceWithArray:(GArrayObject*)colorSpaceObject page:page];
+        } else if ([colorSpaceObject type] == kRefObject) {
+            GRefObject *ref = (GRefObject*)colorSpaceObject;
+            GArrayObject *arrayObject = [[page parser] getObjectByRef:[ref
+                                                                    getRefString]];
+            cs = [self colorSpaceWithArray:arrayObject page:page];
+        }
+    }
+    return cs;
+}
+
++ (id)colorSpaceWithArray:(GArrayObject*)arrayObject page:(nullable GPage*)page {
+    GNameObject *csNameObject = [[arrayObject value] firstObject];
+    NSString *csName = [csNameObject value];
+    id cs;
+    if ([csName isEqualToString:kICCBased]) {
+        GRefObject *ref = [[arrayObject value] objectAtIndex:1];
+        GStreamObject *stream = [[page parser] getObjectByRef:[ref getRefString]];
+        cs = [GICCBasedColorSpace colorSpace:stream page:page];
     }
     return cs;
 }
