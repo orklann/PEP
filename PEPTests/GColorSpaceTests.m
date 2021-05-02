@@ -135,4 +135,37 @@
     NSColor *c = [NSColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
     XCTAssertEqualObjects(color, c);
 }
+
+- (void)testColorSpaceNumComps {
+    NSString *colorSpaceName = @"DeviceRGB";
+    GPage *page = [GPage create];
+    GColorSpace *rgb = [GColorSpace colorSpaceWithName:colorSpaceName page:page];
+    XCTAssertEqual([rgb numComps], 3);
+    
+    colorSpaceName = @"DeviceGray";
+    GColorSpace *gray = [GColorSpace colorSpaceWithName:colorSpaceName page:page];
+    XCTAssertEqual([gray numComps], 1);
+    
+    /* GAlternateColorSpace */
+    GParser *p = [GParser parser];
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+
+    NSString *path = [bundle pathForResource:@"type0_function" ofType:@"bin"];
+    NSData *d = [NSData dataWithContentsOfFile:path];
+    NSMutableData *m = [NSMutableData data];
+    [m appendData:d];
+    [m appendBytes:"\0" length:1];
+    [p setStream:d];
+    [p parse];
+    
+    GStreamObject *streamObj = [[p objects] firstObject];
+    
+    GFunction *function = [GFunction functionWithStreamObject:streamObj];
+    
+    GColorSpace *cs = [GColorSpace colorSpaceWithName:@"DeviceRGB" page:page];
+    
+    GAlternateColorSpace *alt = [GAlternateColorSpace colorSpace:cs function:function];
+    
+    XCTAssertEqual([alt numComps], 3);
+}
 @end

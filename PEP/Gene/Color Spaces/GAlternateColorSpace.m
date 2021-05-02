@@ -16,6 +16,7 @@
     GAlternateColorSpace *cs = [[GAlternateColorSpace alloc] init];
     [cs setBaseColorSpace:base];
     [cs setFunction:fn];
+    [cs setNumComps:[base numComps]];
     return cs;
 }
 

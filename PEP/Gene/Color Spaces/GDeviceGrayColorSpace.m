@@ -17,6 +17,7 @@ GDeviceGrayColorSpace *_deviceGrayColorSpace = nil;
     // Make GDeviceGrayColorSpace always singleton to save memory
     if (_deviceGrayColorSpace == nil) {
         _deviceGrayColorSpace = [[GDeviceGrayColorSpace alloc] init];
+        [_deviceGrayColorSpace setNumComps:1];
     }
     return _deviceGrayColorSpace;
 }

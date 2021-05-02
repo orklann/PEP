@@ -17,6 +17,7 @@ GDeviceRGBColorSpace *_deviceRGBColorSpace = nil;
     // Make GDeviceRGBColorSpace always singleton to save memory
     if (_deviceRGBColorSpace == nil) {
         _deviceRGBColorSpace = [[GDeviceRGBColorSpace alloc] init];
+        [_deviceRGBColorSpace setNumComps:3];
     }
     return _deviceRGBColorSpace;
 }

@@ -24,6 +24,13 @@ NS_ASSUME_NONNULL_BEGIN
     GPage *page;
 }
 
+/*
+ * Number of components in color space
+ * For example, for DeviceGray, numComps is 1.
+ * For DeviceRGB, numComps is 3, etc
+ */
+@property (readwrite) int numComps;
+
 + (id)colorSpaceWithName:(NSString*)colorSpaceName page:(nullable GPage*)page;
 + (id)colorSpaceWithArray:(GArrayObject*)arrayObject page:(nullable GPage*)page;
 

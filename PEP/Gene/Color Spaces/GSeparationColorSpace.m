@@ -46,6 +46,7 @@
     }
     
     cs = [GAlternateColorSpace colorSpace:baseColorSpace function:function];
+    
     return cs;
 }
 
