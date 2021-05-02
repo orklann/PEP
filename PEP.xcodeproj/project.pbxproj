@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C047942263E8F33006A7D1F /* GIndexedColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C047941263E8F33006A7D1F /* GIndexedColorSpace.m */; };
 		1C1999D22639297E002DD9B3 /* GFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1999D12639297E002DD9B3 /* GFunction.m */; };
 		1C1999D726392A55002DD9B3 /* GSampledFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1999D626392A55002DD9B3 /* GSampledFunction.m */; };
 		1C1999DB26392BB6002DD9B3 /* GFunctionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1999DA26392BB6002DD9B3 /* GFunctionsTests.m */; };
@@ -108,6 +109,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1C047940263E8F33006A7D1F /* GIndexedColorSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GIndexedColorSpace.h; sourceTree = "<group>"; };
+		1C047941263E8F33006A7D1F /* GIndexedColorSpace.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GIndexedColorSpace.m; sourceTree = "<group>"; };
 		1C1999D02639297E002DD9B3 /* GFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GFunction.h; sourceTree = "<group>"; };
 		1C1999D12639297E002DD9B3 /* GFunction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GFunction.m; sourceTree = "<group>"; };
 		1C1999D526392A55002DD9B3 /* GSampledFunction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GSampledFunction.h; sourceTree = "<group>"; };
@@ -295,6 +298,8 @@
 				1C1AC142263BF1B20065F2D2 /* GAlternateColorSpace.m */,
 				1CFD4F26263D3E33004E4808 /* GSeparationColorSpace.h */,
 				1CFD4F27263D3E34004E4808 /* GSeparationColorSpace.m */,
+				1C047940263E8F33006A7D1F /* GIndexedColorSpace.h */,
+				1C047941263E8F33006A7D1F /* GIndexedColorSpace.m */,
 			);
 			path = "Color Spaces";
 			sourceTree = "<group>";
@@ -635,6 +640,7 @@
 				93159E5F252AEB5E00F87451 /* GGlyph.m in Sources */,
 				9307B2AA255A6996000468A9 /* GCompiler.m in Sources */,
 				93C0E62425611E9100D4E508 /* PEPTab.m in Sources */,
+				1C047942263E8F33006A7D1F /* GIndexedColorSpace.m in Sources */,
 				9363D94A250895610075FEF0 /* GDocument.m in Sources */,
 				935BCC3A252C61B900868C01 /* GWord.m in Sources */,
 				93DC04C424F7B335003AC9B0 /* GParser.m in Sources */,

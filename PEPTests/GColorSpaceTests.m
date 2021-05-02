@@ -9,6 +9,7 @@
 #import <XCTest/XCTest.h>
 
 #import "GColorSpace.h"
+#import "GIndexedColorSpace.h"
 #import "GAlternateColorSpace.h"
 #import "GPage.h"
 #import "GObjects.h"
@@ -168,4 +169,49 @@
     
     XCTAssertEqual([alt numComps], 3);
 }
+
+- (void)testGIndexedColorSpace {
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+
+    NSString *path = [bundle pathForResource:@"coders-at-work" ofType:@"pdf"];
+    GDocument *doc = [[GDocument alloc] initWithFrame:NSZeroRect];
+    
+    [doc setFile:path];
+    
+    // Parse all pages
+    [doc parsePages];
+    
+    GPage *firstPage = [[doc pages] firstObject];
+    
+    // Parse page content, plus resources dictionary, which is needed in this test
+    [firstPage parsePageContent];
+    
+    GColorSpace *cs = [GColorSpace colorSpaceWithName:@"Cs11" page:firstPage];
+
+    NSData *lookupTable = [(GIndexedColorSpace*)cs lookupTable];
+    int numComps = [(GIndexedColorSpace*)cs numComps];
+    int hival = [(GIndexedColorSpace*)cs hival];
+    int length = numComps * (hival + 1);
+    XCTAssertEqual([lookupTable length], length);
+    
+    // Test color
+    // Construct GCommandObject to pass to mapColor:
+    NSString *s = @"0 cs";
+    GParser *p2 = [GParser parser];
+    [p2 setStream:[s dataUsingEncoding:NSASCIIStringEncoding]];
+    [p2 parse];
+    NSArray *result = [p2 objects];
+    GNumberObject *n = [result firstObject];
+    GCommandObject *cmd = [result lastObject];
+    
+    NSArray *args = [NSArray arrayWithObjects:n, nil];
+    [cmd setArgs:args];
+    
+    // Map color by using GIndexed color space
+    NSColor *color = [cs mapColor:cmd];
+    
+    NSColor *c = [NSColor colorWithRed:0.317647 green:0.317647 blue:0.317647 alpha:1.0];
+    XCTAssertEqualObjects(color, c);
+}
+
 @end

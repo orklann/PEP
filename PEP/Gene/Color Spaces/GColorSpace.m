@@ -10,6 +10,7 @@
 #import "GDeviceGrayColorSpace.h"
 #import "GDeviceRGBColorSpace.h"
 #import "GICCBasedColorSpace.h"
+#import "GIndexedColorSpace.h"
 #import "GSeparationColorSpace.h"
 #import "GObjects.h"
 #import "GPage.h"
@@ -49,6 +50,8 @@
         cs = [GICCBasedColorSpace colorSpace:stream page:page];
     } else if ([csName isEqualToString:kSeparation]) {
         cs = [GSeparationColorSpace colorSpaceWithArray:arrayObject page:page];
+    } else if ([csName isEqualToString:kIndexed]) {
+        cs = [GIndexedColorSpace colorSpaceWithArray:arrayObject page:page];
     }
     return cs;
 }
