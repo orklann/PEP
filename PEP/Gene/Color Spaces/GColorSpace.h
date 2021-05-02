@@ -11,6 +11,7 @@
 
 #define kDeviceGray @"DeviceGray"
 #define kDeviceRGB @"DeviceRGB"
+#define kDeviceCMYK @"DeviceCMYK"
 #define kICCBased @"ICCBased"
 #define kSeparation @"Separation"
 #define kIndexed @"Indexed"

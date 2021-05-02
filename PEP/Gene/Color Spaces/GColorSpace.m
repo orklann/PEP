@@ -24,6 +24,8 @@
         cs = [GDeviceGrayColorSpace colorSpaceWithName:colorSpaceName page:page];
     } else if ([colorSpaceName isEqualToString:kDeviceRGB]) {
         cs = [GDeviceRGBColorSpace colorSpaceWithName:colorSpaceName page:page];
+    } else if ([colorSpaceName isEqualToString:kDeviceCMYK]) {
+        NSLog(@"Error: Not handle DeviceCMYK color space.");
     } else {
         GDictionaryObject *resource = [page resources];
         GDictionaryObject *colorSpaceDictionary = [[resource value] objectForKey:@"ColorSpace"];
