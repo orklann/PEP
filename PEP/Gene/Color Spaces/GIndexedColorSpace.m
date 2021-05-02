@@ -77,6 +77,8 @@
     
     if (numComps == 1) {
         unsigned char val = (unsigned char)(*(bytes + start));
+        // NOTE: We scaled to range 0.0 to 1.0.
+        //       Maybe handle flexible scale range by base color space later
         float divided = (float)(val / 255.0);
         NSString *s = [NSString stringWithFormat:@"%f", divided];
         
@@ -87,6 +89,8 @@
         [cmd setArgs:result];
         color = [_baseColorSpace mapColor:cmd];
     } else if (numComps == 3) {
+        // NOTE: We scaled to range 0.0 to 1.0.
+        //       Maybe handle flexible scale range by base color space later
         unsigned char v1 = (unsigned char)(*(bytes + start));
         float divided1 = (float)(v1 / 255.0);
         
