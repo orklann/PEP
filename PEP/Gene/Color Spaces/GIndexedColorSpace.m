@@ -66,7 +66,7 @@
 - (NSColor*)mapColor:(GCommandObject*)cmd {
     NSArray *args = [cmd args];
     GNumberObject *indexObject = [args firstObject];
-    int index = (int)[indexObject intValue];
+    int index = (int)round([indexObject getRealValue]);
     
     int numComps = [self numComps];
     int start = index * numComps;
