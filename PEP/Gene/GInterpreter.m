@@ -615,6 +615,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGFloat w = [[args objectAtIndex:2] getRealValue];
     CGFloat h = [[args objectAtIndex:3] getRealValue];
     NSRect rect = NSMakeRect(x, y, w, h);
+    
+    // Turn negative size of rect into positive size
+    rect = CGRectStandardize(rect);
     currentPath = CGPathCreateMutable();
     CGPathAddRect(currentPath, NULL, rect);
 }
