@@ -290,7 +290,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             } else if (isCommand(cmd, @"l")) { // l
                 NSArray *args = getCommandArgs(commands, 2);
                 [(GCommandObject*)obj setArgs:args];
-            } else if (isCommand(cmd, @"h") || isCommand(cmd, @"f")) { // h, f
+            } else if (isCommand(cmd, @"h")) { // h
                 // Do nothing: No arguments
             } else if (isCommand(cmd, @"cm")) { // cm
                 NSArray *args = getCommandArgs(commands, 6);
@@ -682,6 +682,11 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGContextStrokePath(context);
 }
 
+- (void)eval_h_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    if (currentPath) {
+        CGPathCloseSubpath(currentPath);
+    }
+}
 
 - (void)eval:(CGContextRef)context {
     //NSDate *methodStart = [NSDate date];
@@ -751,6 +756,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_m_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"S")) { // eval S
                     [self eval_S_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"h")) { // eval h
+                    [self eval_h_Command:context command:cmdObj];
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }
