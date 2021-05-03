@@ -638,6 +638,15 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGContextClip(context);
 }
 
+- (void)eval_cs_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    NSArray *args = [cmdObj args];
+    NSString *csName = [(GNameObject*)[args firstObject] value];
+
+    // Set color space in graphic state for non stroke color space
+    GColorSpace *cs = [GColorSpace colorSpaceWithName:csName page:page];
+    [page.graphicsState setNonStrokeColorSpace:cs];
+}
+
 - (void)eval:(CGContextRef)context {
     //NSDate *methodStart = [NSDate date];
     if ([page needUpdate]) {
@@ -698,6 +707,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     // n or W, n
                     // And what n does is what W*, W does
                     // See 8.5.4 Clipping path operators
+                } else if (isCommand(cmd, @"cs")) { // eval cs
+                    [self eval_cs_Command:context command:cmdObj];
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }
