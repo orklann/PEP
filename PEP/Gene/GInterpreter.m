@@ -650,7 +650,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [page.graphicsState setNonStrokeColorSpace:cs];
 }
 
-- (void)eval_scn_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {    
+- (void)eval_scn_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     GColorSpace *cs = [page.graphicsState nonStrokeColorSpace];
     
     // Set nonStrokeColor in graphic state
@@ -659,6 +659,16 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     
     // Also set fill color (nonStrokeColor) for context
     CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
+}
+
+- (void)eval_m_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    NSArray *args = [cmdObj args];
+    CGFloat x = [[args objectAtIndex:0] getRealValue];
+    CGFloat y = [[args objectAtIndex:1] getRealValue];
+    if (currentPath == NULL) {
+        currentPath = CGPathCreateMutable();
+    }
+    CGPathMoveToPoint(currentPath, NULL, x, y);
 }
 
 - (void)eval:(CGContextRef)context {
@@ -725,6 +735,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_cs_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"scn")) { // eval scn
                     [self eval_scn_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"m")) { // eval m
+                    [self eval_m_Command:context command:cmdObj];
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }
