@@ -9,6 +9,8 @@
 #import "GAlternateColorSpace.h"
 #import "GObjects.h"
 #import "GParser.h"
+#import "GFunction.h"
+#import "GSampledFunction.h"
 
 @implementation GAlternateColorSpace
 
@@ -16,7 +18,11 @@
     GAlternateColorSpace *cs = [[GAlternateColorSpace alloc] init];
     [cs setBaseColorSpace:base];
     [cs setFunction:fn];
-    [cs setNumComps:[base numComps]];
+    int numComps = 0;
+    if ([[fn className] isEqualToString:@"GSampledFunction"]) {
+        numComps = [(GSampledFunction*)fn inputSize];
+    }
+    [cs setNumComps:numComps];
     return cs;
 }
 

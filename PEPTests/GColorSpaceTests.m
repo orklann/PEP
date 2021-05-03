@@ -167,7 +167,7 @@
     
     GAlternateColorSpace *alt = [GAlternateColorSpace colorSpace:cs function:function];
     
-    XCTAssertEqual([alt numComps], 3);
+    XCTAssertEqual([alt numComps], 1);
 }
 
 - (void)testGIndexedColorSpace {
