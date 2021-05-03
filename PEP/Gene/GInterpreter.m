@@ -347,6 +347,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                 // Do nothing, no arguments
             } else if (isCommand(cmd, @"n")) { // n
                 // Do nothing, no arguments
+            } else if (isCommand(cmd, @"scn")) { // scn
+                NSArray *args = getDynamicCommandArgs(commands);
+                [(GCommandObject*)obj setArgs:args];
             } else {
                 //NSLog(@"GInterpreter:parseCommands not handle %@ operator", cmd);
             }
@@ -647,6 +650,17 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [page.graphicsState setNonStrokeColorSpace:cs];
 }
 
+- (void)eval_scn_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {    
+    GColorSpace *cs = [page.graphicsState nonStrokeColorSpace];
+    
+    // Set nonStrokeColor in graphic state
+    NSColor *nonStrokeColor = [cs mapColor:cmdObj];
+    [page.graphicsState setNonStrokeColor:nonStrokeColor];
+    
+    // Also set fill color (nonStrokeColor) for context
+    CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
+}
+
 - (void)eval:(CGContextRef)context {
     //NSDate *methodStart = [NSDate date];
     if ([page needUpdate]) {
@@ -709,6 +723,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     // See 8.5.4 Clipping path operators
                 } else if (isCommand(cmd, @"cs")) { // eval cs
                     [self eval_cs_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"scn")) { // eval scn
+                    [self eval_scn_Command:context command:cmdObj];
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }
