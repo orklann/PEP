@@ -350,6 +350,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             } else if (isCommand(cmd, @"scn")) { // scn
                 NSArray *args = getDynamicCommandArgs(commands);
                 [(GCommandObject*)obj setArgs:args];
+            } else if (isCommand(cmd, @"S")) { // S
+                // Do nothing, no arguments
             } else {
                 //NSLog(@"GInterpreter:parseCommands not handle %@ operator", cmd);
             }
@@ -671,6 +673,16 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGPathMoveToPoint(currentPath, NULL, x, y);
 }
 
+- (void)eval_S_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    if (currentPath) {
+        CGPathCloseSubpath(currentPath);
+    }
+    CGContextBeginPath(context);
+    CGContextAddPath(context, currentPath);
+    CGContextStrokePath(context);
+}
+
+
 - (void)eval:(CGContextRef)context {
     //NSDate *methodStart = [NSDate date];
     if ([page needUpdate]) {
@@ -737,6 +749,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_scn_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"m")) { // eval m
                     [self eval_m_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"S")) { // eval S
+                    [self eval_S_Command:context command:cmdObj];
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }
