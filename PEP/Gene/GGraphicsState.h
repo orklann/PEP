@@ -21,6 +21,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) GColorSpace *nonStrokeColorSpace;
 @property (readwrite) NSColor *strokeColor;
 @property (readwrite) NSColor *nonStrokeColor;
+@property (readwrite) BOOL overprintStroking;
+@property (readwrite) BOOL overprintNonstroking;
 
 + (id)create;
 - (void)initState;

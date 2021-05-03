@@ -26,6 +26,8 @@
     [self setNonStrokeColorSpace:cs];
     [self setStrokeColor:[NSColor blackColor]];
     [self setNonStrokeColor:[NSColor blackColor]];
+    [self setOverprintStroking:NO];
+    [self setOverprintNonstroking:NO];
 }
 
 - (void)setCTM:(CGAffineTransform)tf {
@@ -43,6 +45,8 @@
     [newGraphicsState setNonStrokeColorSpace:_nonStrokeColorSpace];
     [newGraphicsState setStrokeColor:_strokeColor];
     [newGraphicsState setNonStrokeColor:_nonStrokeColor];
+    [newGraphicsState setOverprintStroking:_overprintStroking];
+    [newGraphicsState setOverprintNonstroking:_overprintNonstroking];
     return newGraphicsState;
 }
 @end
