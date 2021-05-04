@@ -105,7 +105,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     p[0] = NSZeroPoint;
     
     if (![page prewarm]) {
-        CGContextSetFillColorWithColor(context, [[NSColor blackColor] CGColor]);
+        // Set nonstorking color from graphic state for context
+        NSColor * nonStrokeColor = [page.graphicsState nonStrokeColor];
+        CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
         CTFontDrawGlyphs(coreFont, g, p, 1, context);
     }
     
