@@ -16,6 +16,8 @@
 
 #import <Foundation/Foundation.h>
 
+BOOL isValidCommandCharater(unichar ch);
+
 @class GParser;
 
 NS_ASSUME_NONNULL_BEGIN

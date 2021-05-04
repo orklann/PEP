@@ -623,12 +623,19 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }
 
 - (void)eval_fStar_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    if ([[page graphicsState] overprintNonstroking]) {
+        return ;
+    }
+    
     CGContextBeginPath(context);
     CGContextAddPath(context, currentPath);
     CGContextEOFillPath(context);
 }
 
 - (void)eval_f_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    if ([[page graphicsState] overprintNonstroking]) {
+        return ;
+    }
     CGContextBeginPath(context);
     CGContextAddPath(context, currentPath);
     CGContextFillPath(context);
@@ -689,6 +696,35 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     if (currentPath) {
         CGPathCloseSubpath(currentPath);
     }
+}
+
+- (void)eval_gs_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    NSArray *args = [cmdObj args];
+    GNameObject *gs = [args firstObject];
+    NSString *gsName = [gs value];
+ 
+    GDictionaryObject *extGStageDict = [[page.resources value]
+                                        objectForKey:@"ExtGState"];
+    
+    GDictionaryObject *gsObject = [[extGStageDict value] objectForKey:gsName];
+    
+    if ([gsObject type] == kRefObject) {
+        gsObject = [page.parser getObjectByRef:[(GRefObject*)gsObject getRefString]];
+    }
+    NSLog(@"gs name: %@", gsName);
+    
+    printData([gsObject rawContent]);
+    GBooleanObject *op = [[gsObject value] objectForKey:@"op"];
+    GBooleanObject *OP = [[gsObject value] objectForKey:@"OP"];
+    
+    [[page graphicsState] setOverprintStroking:[OP value]];
+    
+    if (op) {
+        [[page graphicsState] setOverprintNonstroking:[op value]];
+    } else {
+        [[page graphicsState] setOverprintNonstroking:[OP value]];
+    }
+    NSLog(@"overprint nonstroking: %d", [[page graphicsState] overprintNonstroking]);
 }
 
 - (void)eval:(CGContextRef)context {
@@ -761,6 +797,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_S_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"h")) { // eval h
                     [self eval_h_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"gs")) { // eval gs
+                    [self eval_gs_Command:context command:cmdObj];
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }

@@ -10,6 +10,26 @@
 #import "GParser.h"
 #import "GDecoders.h"
 
+BOOL isValidCommandCharater(unichar ch) {
+    if (ch >= 'a' && ch <= 'z') {
+        return YES;
+    }
+    
+    if (ch >= 'A' && ch <= 'Z') {
+        return YES;
+    }
+    
+    if (ch >= '0' && ch <= '9') {
+        return YES;
+    }
+    
+    if (ch == '\'' || ch == '"' || ch == '*') {
+        return YES;
+    }
+    
+    return NO;
+}
+
 NSArray *getCommandArgs(NSArray *objects, unsigned int argsNumber) {
     NSMutableArray *ret = [NSMutableArray array];
     unsigned int start = (unsigned int)[objects count] - argsNumber;
@@ -813,6 +833,13 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
 }
 
 - (void)parse {
-    
+    NSMutableString *result = [NSMutableString string];
+    for (int i = 0; i < [cmd length]; i++) {
+        unichar ch = [cmd characterAtIndex:i];
+        if (isValidCommandCharater(ch)) {
+            [result appendFormat:@"%c", ch];
+        }
+    }
+    cmd = [NSString stringWithString:result];
 }
 @end

@@ -28,6 +28,9 @@ BOOL isNumberChar(unsigned char ch);
 // Test for delima characters
 BOOL isDelimiter(unsigned char ch);
 
+// Test if end of true/false ends
+BOOL isBooleanEnd(unsigned char ch);
+
 // Test for stream content end line markers
 int isEndLineMarker(unsigned char ch1, unsigned char ch2);
 

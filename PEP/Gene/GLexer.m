@@ -65,6 +65,13 @@ BOOL isDelimiter(unsigned char ch) {
     return NO;
 }
 
+BOOL isBooleanEnd(unsigned char ch) {
+    if (isWhiteSpace(ch) || isDelimiter(ch)) {
+        return YES;
+    }
+    return NO;
+}
+
 int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
     if (ch1 == kCARRIAGE_RETURN && ch2 == kLINE_FEED) {
         return kTWO_END_LINE_MARKERS ;
@@ -430,7 +437,7 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
         case 'f': // 'false'
             if ([self nextChar] == 'a' && [self nextChar] == 'l'
                && [self nextChar] == 's'
-               && [self nextChar] == 'e' && isWhiteSpace([self nextChar])){
+               && [self nextChar] == 'e' && isBooleanEnd([self nextChar])){
                 [token setType:kBooleanToken];
                 unsigned char* bytes = (unsigned char*)[stream bytes];
                 NSData *d = [NSData dataWithBytes:bytes + start length:5];
@@ -441,7 +448,7 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
         case 't': // 'true'
             if ([self nextChar] == 'r' && [self nextChar] == 'u'
                 && [self nextChar] == 'e'
-                && isWhiteSpace([self nextChar])) {
+                && isBooleanEnd([self nextChar])) {
                 [token setType:kBooleanToken];
                 unsigned char* bytes = (unsigned char*)[stream bytes];
                 NSData *d = [NSData dataWithBytes:bytes + start length:4];

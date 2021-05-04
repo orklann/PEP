@@ -26,7 +26,7 @@
 
 - (void)testGBooleanObjectToString {
     GParser *p = [GParser parser];
-    char *b = "false true";
+    char *b = "false true/op";
     NSData *d = [NSData dataWithBytes:b length:strlen(b) + 1];
     [p setStream:d];
     [p parse];
@@ -34,9 +34,14 @@
     
     GBooleanObject *f = [objs firstObject];
     XCTAssertEqualObjects([f toString], @"false");
+    XCTAssertEqual([f value], NO);
     
-    GBooleanObject *t = [objs lastObject];
+    GBooleanObject *t = [objs objectAtIndex:1];
+    XCTAssertEqual([t value], YES);
     XCTAssertEqualObjects([t toString], @"true");
+    
+    GNameObject *op = [objs lastObject];
+    XCTAssertEqualObjects([op value], @"op");
 }
 
 - (void)testGNumberObjectToString {

@@ -216,7 +216,7 @@
         CGContextTranslateCTM(context, deltaX, deltaY);
         
         /* Clip by using CropBox */
-        CGContextClipToRect(context, cropBox);
+        //CGContextClipToRect(context, cropBox);
     }
     
     _interpreter = [GInterpreter create];
