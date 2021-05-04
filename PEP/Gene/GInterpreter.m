@@ -711,9 +711,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     if ([gsObject type] == kRefObject) {
         gsObject = [page.parser getObjectByRef:[(GRefObject*)gsObject getRefString]];
     }
-    NSLog(@"gs name: %@", gsName);
     
-    printData([gsObject rawContent]);
     GBooleanObject *op = [[gsObject value] objectForKey:@"op"];
     GBooleanObject *OP = [[gsObject value] objectForKey:@"OP"];
     
@@ -724,7 +722,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     } else {
         [[page graphicsState] setOverprintNonstroking:[OP value]];
     }
-    NSLog(@"overprint nonstroking: %d", [[page graphicsState] overprintNonstroking]);
 }
 
 - (void)eval:(CGContextRef)context {
