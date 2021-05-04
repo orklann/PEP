@@ -590,7 +590,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     // Set nonStrokeColor in graphic state
     NSColor *nonStrokeColor = [cs mapColor:cmdObj];
     [page.graphicsState setNonStrokeColor:nonStrokeColor];
-    
     // Also set fill color (nonStrokeColor) for context
     CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
 }
@@ -629,6 +628,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     
     CGContextBeginPath(context);
     CGContextAddPath(context, currentPath);
+    NSColor *nonStrokeColor = [page.graphicsState nonStrokeColor];
+    CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
     CGContextEOFillPath(context);
 }
 
@@ -638,6 +639,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     }
     CGContextBeginPath(context);
     CGContextAddPath(context, currentPath);
+    NSColor *nonStrokeColor = [page.graphicsState nonStrokeColor];
+    CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
     CGContextFillPath(context);
 }
 
