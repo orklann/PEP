@@ -592,8 +592,11 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     // Set nonStrokeColor in graphic state
     NSColor *nonStrokeColor = [cs mapColor:cmdObj];
     [page.graphicsState setNonStrokeColor:nonStrokeColor];
+    
     // Also set fill color (nonStrokeColor) for context
-    CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
+    if (![page prewarm]) {
+        CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
+    }
 }
 
 - (void)eval_G_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -606,7 +609,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [page.graphicsState setStrokeColor:strokeColor];
     
     // Also set stroke color (strokeColor) for context
-    CGContextSetStrokeColorWithColor(context, [strokeColor CGColor]);
+    if (![page prewarm]) {
+        CGContextSetStrokeColorWithColor(context, [strokeColor CGColor]);
+    }
 }
 
 - (void)eval_re_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -628,34 +633,43 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         return ;
     }
     
-    CGContextBeginPath(context);
-    CGContextAddPath(context, currentPath);
-    NSColor *nonStrokeColor = [page.graphicsState nonStrokeColor];
-    CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
-    CGContextEOFillPath(context);
+    if (![page prewarm]) {
+        CGContextBeginPath(context);
+        CGContextAddPath(context, currentPath);
+        NSColor *nonStrokeColor = [page.graphicsState nonStrokeColor];
+        CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
+        CGContextEOFillPath(context);
+    }
 }
 
 - (void)eval_f_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     if ([[page graphicsState] overprintNonstroking]) {
         return ;
     }
-    CGContextBeginPath(context);
-    CGContextAddPath(context, currentPath);
-    NSColor *nonStrokeColor = [page.graphicsState nonStrokeColor];
-    CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
-    CGContextFillPath(context);
+    
+    if (![page prewarm]) {
+        CGContextBeginPath(context);
+        CGContextAddPath(context, currentPath);
+        NSColor *nonStrokeColor = [page.graphicsState nonStrokeColor];
+        CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
+        CGContextFillPath(context);
+    }
 }
 
 - (void)eval_WStar_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
-    CGContextBeginPath(context);
-    CGContextAddPath(context, currentPath);
-    CGContextEOClip(context);
+    if (![page prewarm]) {
+        CGContextBeginPath(context);
+        CGContextAddPath(context, currentPath);
+        CGContextEOClip(context);
+    }
 }
 
 - (void)eval_W_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
-    CGContextBeginPath(context);
-    CGContextAddPath(context, currentPath);
-    CGContextClip(context);
+    if (![page prewarm]) {
+        CGContextBeginPath(context);
+        CGContextAddPath(context, currentPath);
+        CGContextClip(context);
+    }
 }
 
 - (void)eval_cs_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -675,7 +689,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [page.graphicsState setNonStrokeColor:nonStrokeColor];
     
     // Also set fill color (nonStrokeColor) for context
-    CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
+    if (![page prewarm]) {
+        CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
+    }
 }
 
 - (void)eval_m_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -692,9 +708,12 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     if (currentPath) {
         CGPathCloseSubpath(currentPath);
     }
-    CGContextBeginPath(context);
-    CGContextAddPath(context, currentPath);
-    CGContextStrokePath(context);
+    
+    if (![page prewarm]) {
+        CGContextBeginPath(context);
+        CGContextAddPath(context, currentPath);
+        CGContextStrokePath(context);
+    }
 }
 
 - (void)eval_h_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
