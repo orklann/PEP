@@ -223,3 +223,19 @@
 }
 
 @end
+
+
+@implementation GcsOperator
+
++ (id)create {
+    GcsOperator *o = [[GcsOperator alloc] init];
+    return o;
+}
+
+- (void)eval:(CGContextRef)context page:(GPage*)page {
+    // Set color space in graphic state for non stroke color space
+    GColorSpace *cs = [GColorSpace colorSpaceWithName:_colorSpaceName page:page];
+    [page.graphicsState setNonStrokeColorSpace:cs];
+}
+
+@end

@@ -123,4 +123,15 @@ NS_ASSUME_NONNULL_BEGIN
 + (id)create;
 - (void)eval:(CGContextRef)context page:(GPage*)page;
 @end
+
+// cs operator
+@interface GcsOperator : NSObject {
+    
+}
+
+@property (readwrite) NSString *colorSpaceName;
+
++ (id)create;
+- (void)eval:(CGContextRef)context page:(GPage*)page;
+@end
 NS_ASSUME_NONNULL_END
