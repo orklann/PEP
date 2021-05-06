@@ -280,3 +280,23 @@
 }
 
 @end
+
+
+@implementation GSOperator
+
++ (id)create {
+    GSOperator *o = [[GSOperator alloc] init];
+    return o;
+}
+
+- (void)eval:(CGContextRef)context page:(GPage*)page {
+    if (page.interpreter.currentPath) {
+        CGPathCloseSubpath(page.interpreter.currentPath);
+    }
+    
+    CGContextBeginPath(context);
+    CGContextAddPath(context, page.interpreter.currentPath);
+    CGContextStrokePath(context);
+}
+
+@end
