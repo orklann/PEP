@@ -260,3 +260,23 @@
 }
 
 @end
+
+
+@implementation GmOperator
+
++ (id)create {
+    GmOperator *o = [[GmOperator alloc] init];
+    return o;
+}
+
+- (void)eval:(CGContextRef)context page:(GPage*)page {
+    NSArray *args = [_cmdObj args];
+    CGFloat x = [[args objectAtIndex:0] getRealValue];
+    CGFloat y = [[args objectAtIndex:1] getRealValue];
+    if (page.interpreter.currentPath == NULL) {
+        [page.interpreter setCurrentPath:CGPathCreateMutable()];
+    }
+    CGPathMoveToPoint(page.interpreter.currentPath, NULL, x, y);
+}
+
+@end
