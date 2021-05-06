@@ -194,3 +194,18 @@
 }
 
 @end
+
+@implementation GWOperator
+
++ (id)create {
+    GWOperator *o = [[GWOperator alloc] init];
+    return o;
+}
+
+- (void)eval:(CGContextRef)context page:(GPage*)page {
+    CGContextBeginPath(context);
+    CGContextAddPath(context, page.interpreter.currentPath);
+    CGContextClip(context);
+}
+
+@end
