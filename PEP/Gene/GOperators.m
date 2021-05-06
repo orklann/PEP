@@ -111,3 +111,26 @@
     CGContextSetStrokeColorWithColor(context, [strokeColor CGColor]);
 }
 @end
+
+@implementation GreOperator
+
++ (id)create {
+    GreOperator *o = [[GreOperator alloc] init];
+    return o;
+}
+
+- (void)eval:(CGContextRef)context page:(GPage*)page {
+    NSArray *args = [_cmdObj args];
+    CGFloat x = [[args objectAtIndex:0] getRealValue];
+    CGFloat y = [[args objectAtIndex:1] getRealValue];
+    CGFloat w = [[args objectAtIndex:2] getRealValue];
+    CGFloat h = [[args objectAtIndex:3] getRealValue];
+    NSRect rect = NSMakeRect(x, y, w, h);
+    
+    // Turn negative size of rect into positive size
+    rect = CGRectStandardize(rect);
+    [page.interpreter setCurrentPath:CGPathCreateMutable()];
+    CGPathAddRect(page.interpreter.currentPath, NULL, rect);
+}
+
+@end

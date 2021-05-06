@@ -624,8 +624,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     
     // Turn negative size of rect into positive size
     rect = CGRectStandardize(rect);
-    currentPath = CGPathCreateMutable();
-    CGPathAddRect(currentPath, NULL, rect);
+    _currentPath = CGPathCreateMutable();
+    CGPathAddRect(_currentPath, NULL, rect);
 }
 
 - (void)eval_fStar_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -635,7 +635,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     
     if (![page prewarm]) {
         CGContextBeginPath(context);
-        CGContextAddPath(context, currentPath);
+        CGContextAddPath(context, _currentPath);
         NSColor *nonStrokeColor = [page.graphicsState nonStrokeColor];
         CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
         CGContextEOFillPath(context);
@@ -649,7 +649,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     
     if (![page prewarm]) {
         CGContextBeginPath(context);
-        CGContextAddPath(context, currentPath);
+        CGContextAddPath(context, _currentPath);
         NSColor *nonStrokeColor = [page.graphicsState nonStrokeColor];
         CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
         CGContextFillPath(context);
@@ -659,7 +659,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 - (void)eval_WStar_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     if (![page prewarm]) {
         CGContextBeginPath(context);
-        CGContextAddPath(context, currentPath);
+        CGContextAddPath(context, _currentPath);
         CGContextEOClip(context);
     }
 }
@@ -667,7 +667,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 - (void)eval_W_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     if (![page prewarm]) {
         CGContextBeginPath(context);
-        CGContextAddPath(context, currentPath);
+        CGContextAddPath(context, _currentPath);
         CGContextClip(context);
     }
 }
@@ -698,27 +698,27 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     NSArray *args = [cmdObj args];
     CGFloat x = [[args objectAtIndex:0] getRealValue];
     CGFloat y = [[args objectAtIndex:1] getRealValue];
-    if (currentPath == NULL) {
-        currentPath = CGPathCreateMutable();
+    if (_currentPath == NULL) {
+        _currentPath = CGPathCreateMutable();
     }
-    CGPathMoveToPoint(currentPath, NULL, x, y);
+    CGPathMoveToPoint(_currentPath, NULL, x, y);
 }
 
 - (void)eval_S_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
-    if (currentPath) {
-        CGPathCloseSubpath(currentPath);
+    if (_currentPath) {
+        CGPathCloseSubpath(_currentPath);
     }
     
     if (![page prewarm]) {
         CGContextBeginPath(context);
-        CGContextAddPath(context, currentPath);
+        CGContextAddPath(context, _currentPath);
         CGContextStrokePath(context);
     }
 }
 
 - (void)eval_h_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
-    if (currentPath) {
-        CGPathCloseSubpath(currentPath);
+    if (_currentPath) {
+        CGPathCloseSubpath(_currentPath);
     }
 }
 

@@ -62,5 +62,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)eval:(CGContextRef)context page:(GPage*)page;
 @end
 
+// re operator
+@interface GreOperator : NSObject {
+    
+}
+
+@property (readwrite) GCommandObject *cmdObj;
+
++ (id)create;
+- (void)eval:(CGContextRef)context page:(GPage*)page;
+@end
 
 NS_ASSUME_NONNULL_END

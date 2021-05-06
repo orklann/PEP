@@ -20,14 +20,14 @@ BOOL isCommand(NSString *cmd, NSString *cmd2);
     GParser *parser;
     NSMutableData *input;
     GPage *page;
-    
-    /*
-     * Current path for graphics path constructions,
-     * current path is not in graphics states.
-     * See "8.5.2 Path construction operators" in PDF specs
-     */
-    CGMutablePathRef currentPath;
 }
+
+/*
+ * Current path for graphics path constructions,
+ * current path is not in graphics states.
+ * See "8.5.2 Path construction operators" in PDF specs
+ */
+@property (readwrite) CGMutablePathRef currentPath;
 
 + (id)create;
 - (void)setPage:(GPage*)p;
