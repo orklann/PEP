@@ -134,4 +134,17 @@ NS_ASSUME_NONNULL_BEGIN
 + (id)create;
 - (void)eval:(CGContextRef)context page:(GPage*)page;
 @end
+
+
+// scn operator
+@interface GscnOperator : NSObject {
+    
+}
+
+@property (readwrite) GCommandObject *cmdObj;
+
++ (id)create;
+- (void)eval:(CGContextRef)context page:(GPage*)page;
+@end
+
 NS_ASSUME_NONNULL_END

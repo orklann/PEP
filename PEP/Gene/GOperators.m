@@ -239,3 +239,24 @@
 }
 
 @end
+
+
+@implementation GscnOperator
+
++ (id)create {
+    GscnOperator *o = [[GscnOperator alloc] init];
+    return o;
+}
+
+- (void)eval:(CGContextRef)context page:(GPage*)page {
+    GColorSpace *cs = [page.graphicsState nonStrokeColorSpace];
+    
+    // Set nonStrokeColor in graphic state
+    NSColor *nonStrokeColor = [cs mapColor:_cmdObj];
+    [page.graphicsState setNonStrokeColor:nonStrokeColor];
+    
+    // Also set fill color (nonStrokeColor) for context
+    CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
+}
+
+@end
