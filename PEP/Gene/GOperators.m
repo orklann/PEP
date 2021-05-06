@@ -53,3 +53,17 @@
     [page saveGraphicsState];
 }
 @end
+
+
+@implementation GQOperator
+
++ (id)create {
+    GQOperator *o = [[GQOperator alloc] init];
+    return o;
+}
+
+- (void)eval:(CGContextRef)context page:(GPage*)page {
+    CGContextRestoreGState(context);
+    [page restoreGraphicsState];
+}
+@end
