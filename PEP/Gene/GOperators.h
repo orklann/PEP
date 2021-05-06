@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @class GPage;
 
+// gs operator
 @interface GgsOperator : NSObject {
     
 }
