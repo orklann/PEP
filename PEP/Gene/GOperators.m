@@ -67,3 +67,25 @@
     [page restoreGraphicsState];
 }
 @end
+
+
+@implementation GgOperator
+
++ (id)create {
+    GgOperator *o = [[GgOperator alloc] init];
+    return o;
+}
+
+- (void)eval:(CGContextRef)context page:(GPage*)page {
+    // Set color space in graphic state
+    GColorSpace *cs = [GColorSpace colorSpaceWithName:@"DeviceGray" page:page];
+    [page.graphicsState setNonStrokeColorSpace:cs];
+    
+    // Set nonStrokeColor in graphic state
+    NSColor *nonStrokeColor = [cs mapColor:_cmdObj];
+    [page.graphicsState setNonStrokeColor:nonStrokeColor];
+    
+    // Also set fill color (nonStrokeColor) for context
+    CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
+}
+@end
