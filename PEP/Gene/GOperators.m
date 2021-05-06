@@ -89,3 +89,25 @@
     CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
 }
 @end
+
+
+@implementation GGOperator
+
++ (id)create {
+    GGOperator *o = [[GGOperator alloc] init];
+    return o;
+}
+
+- (void)eval:(CGContextRef)context page:(GPage*)page {
+    // Set color space in graphic state
+    GColorSpace *cs = [GColorSpace colorSpaceWithName:@"DeviceGray" page:page];
+    [page.graphicsState setStrokeColorSpace:cs];
+    
+    // Set strokeColor in graphic state
+    NSColor *strokeColor = [cs mapColor:_cmdObj];
+    [page.graphicsState setStrokeColor:strokeColor];
+    
+    // Also set stroke color (strokeColor) for context
+    CGContextSetStrokeColorWithColor(context, [strokeColor CGColor]);
+}
+@end
