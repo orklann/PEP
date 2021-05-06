@@ -156,3 +156,25 @@
 }
 
 @end
+
+
+@implementation GfOperator
+
++ (id)create {
+    GfOperator *o = [[GfOperator alloc] init];
+    return o;
+}
+
+- (void)eval:(CGContextRef)context page:(GPage*)page {
+    if ([[page graphicsState] overprintNonstroking]) {
+        return ;
+    }
+    
+    CGContextBeginPath(context);
+    CGContextAddPath(context, page.interpreter.currentPath);
+    NSColor *nonStrokeColor = [page.graphicsState nonStrokeColor];
+    CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
+    CGContextFillPath(context);
+}
+
+@end
