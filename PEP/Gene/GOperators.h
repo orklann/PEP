@@ -94,4 +94,13 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
+// W* operator
+@interface GWStarOperator : NSObject {
+    
+}
+
++ (id)create;
+- (void)eval:(CGContextRef)context page:(GPage*)page;
+@end
+
 NS_ASSUME_NONNULL_END
