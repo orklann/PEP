@@ -209,3 +209,17 @@
 }
 
 @end
+
+
+@implementation GnOperator
+
++ (id)create {
+    GnOperator *o = [[GnOperator alloc] init];
+    return o;
+}
+
+- (void)eval:(CGContextRef)context page:(GPage*)page {
+    // Do nothing for n operator
+}
+
+@end

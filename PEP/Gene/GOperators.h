@@ -112,4 +112,15 @@ NS_ASSUME_NONNULL_BEGIN
 + (id)create;
 - (void)eval:(CGContextRef)context page:(GPage*)page;
 @end
+
+
+
+// n operator
+@interface GnOperator : NSObject {
+    
+}
+
++ (id)create;
+- (void)eval:(CGContextRef)context page:(GPage*)page;
+@end
 NS_ASSUME_NONNULL_END
