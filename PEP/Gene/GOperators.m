@@ -39,3 +39,17 @@
     }
 }
 @end
+
+
+@implementation GqOperator
+
++ (id)create {
+    GqOperator *o = [[GqOperator alloc] init];
+    return o;
+}
+
+- (void)eval:(CGContextRef)context page:(GPage*)page {
+    CGContextSaveGState(context);
+    [page saveGraphicsState];
+}
+@end
