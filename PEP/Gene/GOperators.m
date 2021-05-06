@@ -300,3 +300,19 @@
 }
 
 @end
+
+
+@implementation GhOperator
+
++ (id)create {
+    GhOperator *o = [[GhOperator alloc] init];
+    return o;
+}
+
+- (void)eval:(CGContextRef)context page:(GPage*)page {
+    if (page.interpreter.currentPath) {
+        CGPathCloseSubpath(page.interpreter.currentPath);
+    }
+}
+
+@end
