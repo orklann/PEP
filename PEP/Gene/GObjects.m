@@ -842,4 +842,11 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
     }
     cmd = [NSString stringWithString:result];
 }
+
+- (GCommandObject*)clone {
+    GCommandObject *cloneObject = [GCommandObject create];
+    [cloneObject setCmd:cmd];
+    [cloneObject setArgs:[NSArray arrayWithArray:args]];
+    return cloneObject;
+}
 @end

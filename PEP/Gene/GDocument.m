@@ -313,7 +313,7 @@
         if ([visiblePages containsObject:page]) {
             NSLog(@"render page: %d", (int)[pages indexOfObject:page]);
             // TODO: Remove this line, it's here just for testing graphic operators
-            [page setNeedUpdate:YES];
+            //[page setNeedUpdate:YES];
             
             [page render:context];
             if (!renderedVisiblePage) {
@@ -475,6 +475,7 @@
 }
 
 - (void)prewarmRenderNearbyPages {
+    return ;
     GPage *firstPage = [visiblePages firstObject];
     GPage *lastPage = [visiblePages lastObject];
     int firstIndex = (int)[pages indexOfObject:firstPage];

@@ -203,7 +203,7 @@
         textParser = [GTextParser create];
         _graphicElements = [NSMutableArray array];
     }
-        
+    
     // Apply CropBox origin shifting
     // Shift left, down by CropBox's x and y, because now the origin is
     // At origin of CropBox (We made this in calcuatePageMediaBox)

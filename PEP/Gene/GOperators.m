@@ -169,7 +169,7 @@
     if ([[page graphicsState] overprintNonstroking]) {
         return ;
     }
-    
+
     CGContextBeginPath(context);
     CGContextAddPath(context, page.interpreter.currentPath);
     NSColor *nonStrokeColor = [page.graphicsState nonStrokeColor];
@@ -252,7 +252,9 @@
     GColorSpace *cs = [page.graphicsState nonStrokeColorSpace];
     
     // Set nonStrokeColor in graphic state
-    NSColor *nonStrokeColor = [cs mapColor:_cmdObj];
+    // Why clone? Because mapColor: will modify args in GCommandObject
+    GCommandObject *cloneCmd = [_cmdObj clone];
+    NSColor *nonStrokeColor = [cs mapColor:cloneCmd];
     [page.graphicsState setNonStrokeColor:nonStrokeColor];
     
     // Also set fill color (nonStrokeColor) for context

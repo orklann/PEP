@@ -133,7 +133,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGPoint p[1];
     g[0] = [glyph glyph];
     p[0] = NSZeroPoint;
-    CGContextSetFillColorWithColor(context, [[NSColor blackColor] CGColor]);
+    NSColor *nonStrokeColor = [page.graphicsState nonStrokeColor];
+    CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
     CTFontDrawGlyphs(coreFont, g, p, 1, context);
 }
 
@@ -593,6 +594,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }
 
 - (void)eval_g_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    GgOperator *op = [GgOperator create];
+    [op setCmdObj:[cmdObj clone]];
+    [page.graphicElements addObject:op];
+    
     // Set color space in graphic state
     GColorSpace *cs = [GColorSpace colorSpaceWithName:@"DeviceGray" page:page];
     [page.graphicsState setNonStrokeColorSpace:cs];
@@ -605,13 +610,13 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     if (![page prewarm]) {
         CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
     }
-    
-    GgOperator *op = [GgOperator create];
-    [op setCmdObj:cmdObj];
-    [page.graphicElements addObject:op];
 }
 
 - (void)eval_G_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    GGOperator *op = [GGOperator create];
+    [op setCmdObj:[cmdObj clone]];
+    [page.graphicElements addObject:op];
+    
     // Set color space in graphic state
     GColorSpace *cs = [GColorSpace colorSpaceWithName:@"DeviceGray" page:page];
     [page.graphicsState setStrokeColorSpace:cs];
@@ -624,10 +629,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     if (![page prewarm]) {
         CGContextSetStrokeColorWithColor(context, [strokeColor CGColor]);
     }
-    
-    GGOperator *op = [GGOperator create];
-    [op setCmdObj:cmdObj];
-    [page.graphicElements addObject:op];
 }
 
 - (void)eval_re_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -718,6 +719,11 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }
 
 - (void)eval_scn_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    GscnOperator *op = [GscnOperator create];
+    // Why clone? Because mapColor: will modify args in GCommandObject
+    [op setCmdObj:[cmdObj clone]];
+    [page.graphicElements addObject:op];
+    
     GColorSpace *cs = [page.graphicsState nonStrokeColorSpace];
     
     // Set nonStrokeColor in graphic state
@@ -728,10 +734,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     if (![page prewarm]) {
         CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
     }
-    
-    GscnOperator *op = [GscnOperator create];
-    [op setCmdObj:cmdObj];
-    [page.graphicElements addObject:op];
 }
 
 - (void)eval_m_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -886,7 +888,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             }
         }
     } else {
-        [self drawAllGlyphs:context];
+        [self evalGraphicElements:context];
     }
     
     /* Measure time */
@@ -897,21 +899,26 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 */
 }
 
-- (void)drawAllGlyphs:(CGContextRef)context {
+- (void)evalGraphicElements:(CGContextRef)context {
     CGContextSaveGState(context); // q
-    for (GGlyph * glyph in [[page textParser] glyphs]) {
-        [self drawGlyph:glyph inContext:context];
+    for (id ele in page.graphicElements) {
+        if ([[ele className] isEqualToString:@"GGlyph"]) {
+            GGlyph *glyph = (GGlyph*)ele;
+            [self drawGlyph:glyph inContext:context];
+        } else {
+            [ele eval:context page:page];
+        }
     }
     CGContextRestoreGState(context); // Q
 }
 
 - (void)drawGlyph:(GGlyph*)glyph inContext:(CGContextRef)context {
     
-    if (!CGAffineTransformEqualToTransform(CGContextGetCTM(context), [glyph ctm])) {
-        CGContextRestoreGState(context); // Q
-        CGContextSaveGState(context); // q
+    //if (!CGAffineTransformEqualToTransform(CGContextGetCTM(context), [glyph ctm])) {
+    //    CGContextRestoreGState(context); // Q
+    //    CGContextSaveGState(context); // q
         CGContextConcatCTM(context, [glyph ctm]);
-    }
+    //}
     
     CGContextSetTextMatrix(context, [glyph textMatrix]);
     [self drawGlyph:glyph context:context];

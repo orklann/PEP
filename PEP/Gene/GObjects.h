@@ -251,5 +251,6 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
 - (void)setArgs:(NSArray *)a;
 - (NSArray*)args;
 - (void)parse;
+- (GCommandObject*)clone;
 @end
 NS_ASSUME_NONNULL_END
