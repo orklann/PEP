@@ -17,6 +17,7 @@
 #import "GFontEncoding.h"
 #import "GTJText.h"
 #import "GColorSpace.h"
+#import "GOperators.h"
 
 BOOL isCommand(NSString *cmd, NSString *cmd2) {
     return [cmd isEqualToString:cmd2];
@@ -231,7 +232,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             if (i == 0) {
                 [glyph setDelta:prevTj];
             }
+            
             [glyphs addObject:glyph];
+            [page.graphicElements addObject:glyph];
             [newCreatedGlyphs addObject:glyph];
         }
         
@@ -368,6 +371,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         CGContextSaveGState(context);
     }
     [page saveGraphicsState];
+    
+    GqOperator *op = [GqOperator create];
+    [page.graphicElements addObject:op];
 }
 
 - (void)eval_Q_Command:(CGContextRef)context {
@@ -375,6 +381,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         CGContextRestoreGState(context);
     }
     [page restoreGraphicsState];
+    GQOperator *op = [GQOperator create];
+    [page.graphicElements addObject:op];
 }
 
 - (void)eval_cm_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -597,6 +605,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     if (![page prewarm]) {
         CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
     }
+    
+    GgOperator *op = [GgOperator create];
+    [op setCmdObj:cmdObj];
+    [page.graphicElements addObject:op];
 }
 
 - (void)eval_G_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -612,6 +624,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     if (![page prewarm]) {
         CGContextSetStrokeColorWithColor(context, [strokeColor CGColor]);
     }
+    
+    GGOperator *op = [GGOperator create];
+    [op setCmdObj:cmdObj];
+    [page.graphicElements addObject:op];
 }
 
 - (void)eval_re_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -626,6 +642,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     rect = CGRectStandardize(rect);
     _currentPath = CGPathCreateMutable();
     CGPathAddRect(_currentPath, NULL, rect);
+    
+    GreOperator *op = [GreOperator create];
+    [op setCmdObj:cmdObj];
+    [page.graphicElements addObject:op];
 }
 
 - (void)eval_fStar_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -640,6 +660,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
         CGContextEOFillPath(context);
     }
+    
+    GfStarOperator *op = [GfStarOperator create];
+    [page.graphicElements addObject:op];
 }
 
 - (void)eval_f_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -654,6 +677,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
         CGContextFillPath(context);
     }
+    
+    GfOperator *op = [GfOperator create];
+    [page.graphicElements addObject:op];
 }
 
 - (void)eval_WStar_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -662,6 +688,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         CGContextAddPath(context, _currentPath);
         CGContextEOClip(context);
     }
+    
+    GWStarOperator *op = [GWStarOperator create];
+    [page.graphicElements addObject:op];
 }
 
 - (void)eval_W_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -670,6 +699,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         CGContextAddPath(context, _currentPath);
         CGContextClip(context);
     }
+    
+    GWOperator *op = [GWOperator create];
+    [page.graphicElements addObject:op];
 }
 
 - (void)eval_cs_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -679,6 +711,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     // Set color space in graphic state for non stroke color space
     GColorSpace *cs = [GColorSpace colorSpaceWithName:csName page:page];
     [page.graphicsState setNonStrokeColorSpace:cs];
+    
+    GcsOperator *op = [GcsOperator create];
+    [op setColorSpaceName:csName];
+    [page.graphicElements addObject:op];
 }
 
 - (void)eval_scn_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -692,6 +728,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     if (![page prewarm]) {
         CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
     }
+    
+    GscnOperator *op = [GscnOperator create];
+    [op setCmdObj:cmdObj];
+    [page.graphicElements addObject:op];
 }
 
 - (void)eval_m_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -702,6 +742,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         _currentPath = CGPathCreateMutable();
     }
     CGPathMoveToPoint(_currentPath, NULL, x, y);
+    
+    GmOperator *op = [GmOperator create];
+    [op setCmdObj:cmdObj];
+    [page.graphicElements addObject:op];
 }
 
 - (void)eval_S_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -714,12 +758,18 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         CGContextAddPath(context, _currentPath);
         CGContextStrokePath(context);
     }
+    
+    GSOperator *op = [GSOperator create];
+    [page.graphicElements addObject:op];
 }
 
 - (void)eval_h_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     if (_currentPath) {
         CGPathCloseSubpath(_currentPath);
     }
+    
+    GhOperator *op = [GhOperator create];
+    [page.graphicElements addObject:op];
 }
 
 - (void)eval_gs_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
@@ -746,6 +796,11 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     } else {
         [[page graphicsState] setOverprintNonstroking:[OP value]];
     }
+    
+    // Add operator to page's graphicElements
+    GgsOperator *opt = [GgsOperator create];
+    [opt setGsName:gsName];
+    [page.graphicElements addObject:opt];
 }
 
 - (void)eval:(CGContextRef)context {
@@ -808,6 +863,11 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     // n or W, n
                     // And what n does is what W*, W does
                     // See 8.5.4 Clipping path operators
+                    /*
+                     * We need to add n operator to graphicElements
+                     */
+                    GnOperator *op = [GnOperator create];
+                    [page.graphicElements addObject:op];
                 } else if (isCommand(cmd, @"cs")) { // eval cs
                     [self eval_cs_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"scn")) { // eval scn
