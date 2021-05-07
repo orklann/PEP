@@ -143,6 +143,7 @@
     
     if (self.needUpdate) {
         textParser = [GTextParser create];
+        _graphicElements = [NSMutableArray array];
     }
     
     /*
@@ -200,6 +201,7 @@
     
     if (self.needUpdate) {
         textParser = [GTextParser create];
+        _graphicElements = [NSMutableArray array];
     }
         
     // Apply CropBox origin shifting

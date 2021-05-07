@@ -53,6 +53,12 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) BOOL prewarm;
 @property (readwrite) NSRect cropBox;
 
+/*
+ * All graphics element contains operators and glyphs
+ */
+@property (readwrite) NSMutableArray *graphicElements;
+
+
 + (id)create;
 - (void)setPageDictionary:(GDictionaryObject*)d;
 - (GDictionaryObject*)pageDictionary;
