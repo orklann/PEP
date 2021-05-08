@@ -475,6 +475,12 @@
 }
 
 - (void)prewarmRenderNearbyPages {
+    /* Currently, because crash while using background thread to prewarm page
+     * content, We don't use it at the momment untile we find a better solution
+     *
+     */
+    return ;
+    /*
     GPage *firstPage = [visiblePages firstObject];
     GPage *lastPage = [visiblePages lastObject];
     int firstIndex = (int)[pages indexOfObject:firstPage];
@@ -504,5 +510,6 @@
         GPage *page = [pages objectAtIndex:index];
         [page performSelectorInBackground:@selector(prewarmRender) withObject:nil];
     }
+    */
 }
 @end

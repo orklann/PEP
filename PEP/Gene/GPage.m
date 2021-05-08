@@ -135,7 +135,6 @@
         return ;
     }
     
-    [self setNeedUpdate:NO];
     self.prewarm = YES;
     
     textState = [GTextState create];
@@ -158,6 +157,7 @@
     
     [_interpreter eval:context];
     [self setPrewarm:NO];
+    [self setNeedUpdate:NO];
 }
 
 
