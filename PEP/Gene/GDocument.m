@@ -475,7 +475,6 @@
 }
 
 - (void)prewarmRenderNearbyPages {
-    return ;
     GPage *firstPage = [visiblePages firstObject];
     GPage *lastPage = [visiblePages lastObject];
     int firstIndex = (int)[pages indexOfObject:firstPage];
