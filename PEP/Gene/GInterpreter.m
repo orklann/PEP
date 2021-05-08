@@ -900,6 +900,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
 }
 
 - (void)evalGraphicElements:(CGContextRef)context {
+    if (page.prewarm) {
+        return ;
+    }
+    
     CGContextSaveGState(context); // q
     for (id ele in page.graphicElements) {
         if ([[ele className] isEqualToString:@"GGlyph"]) {
