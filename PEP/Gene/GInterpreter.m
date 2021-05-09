@@ -779,10 +779,14 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     GNameObject *gs = [args firstObject];
     NSString *gsName = [gs value];
  
-    GDictionaryObject *extGStageDict = [[page.resources value]
+    GDictionaryObject *extGStateDict = [[page.resources value]
                                         objectForKey:@"ExtGState"];
     
-    GDictionaryObject *gsObject = [[extGStageDict value] objectForKey:gsName];
+    if ([extGStateDict type] == kRefObject) {
+        extGStateDict = [page.parser getObjectByRef:[(GRefObject*)extGStateDict getRefString]];
+    }
+    
+    GDictionaryObject *gsObject = [[extGStateDict value] objectForKey:gsName];
     
     if ([gsObject type] == kRefObject) {
         gsObject = [page.parser getObjectByRef:[(GRefObject*)gsObject getRefString]];

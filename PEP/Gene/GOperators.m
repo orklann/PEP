@@ -18,10 +18,14 @@
 }
 
 - (void)eval:(CGContextRef)context page:(GPage*)page {
-    GDictionaryObject *extGStageDict = [[page.resources value]
+    GDictionaryObject *extGStateDict = [[page.resources value]
                                         objectForKey:@"ExtGState"];
     
-    GDictionaryObject *gsObject = [[extGStageDict value] objectForKey:_gsName];
+    if ([extGStateDict type] == kRefObject) {
+        extGStateDict = [page.parser getObjectByRef:[(GRefObject*)extGStateDict getRefString]];
+    }
+    
+    GDictionaryObject *gsObject = [[extGStateDict value] objectForKey:_gsName];
     
     if ([gsObject type] == kRefObject) {
         gsObject = [page.parser getObjectByRef:[(GRefObject*)gsObject getRefString]];
