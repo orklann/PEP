@@ -42,6 +42,10 @@
         [[page graphicsState] setOverprintNonstroking:[OP value]];
     }
 }
+
+- (NSString*)compile {
+    return [NSString stringWithFormat:@"/%@ gs\n", _gsName];
+}
 @end
 
 

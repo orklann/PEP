@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (id)create;
 - (void)eval:(CGContextRef)context page:(GPage*)page;
+- (NSString*)compile;
 @end
 
 // q operator
