@@ -233,6 +233,9 @@
     CGContextEOClip(context);
 }
 
+- (NSString*)compile {
+    return @"W*\n";
+}
 @end
 
 @implementation GWOperator
