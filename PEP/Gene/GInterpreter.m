@@ -133,8 +133,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     CGPoint p[1];
     g[0] = [glyph glyph];
     p[0] = NSZeroPoint;
-    NSColor *nonStrokeColor = [page.graphicsState nonStrokeColor];
-    CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
+    NSColor *textColor = [glyph textColor];
+    CGContextSetFillColorWithColor(context, [textColor CGColor]);
     CTFontDrawGlyphs(coreFont, g, p, 1, context);
 }
 
@@ -220,6 +220,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             
             // Set current font encoding
             [glyph setFontEncoding:[[page textState] fontEncoding]];
+            
+            // Set text color
+            [glyph setTextColor:[page.graphicsState nonStrokeColor]];
             
             // Set CGGlyph for GGGlyph
             CGGlyph g = [self getCGGlyphForGGlyph:glyph];

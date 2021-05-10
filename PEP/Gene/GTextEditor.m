@@ -416,7 +416,7 @@
         [g updateGlyphFrameInGlyphSpace];
         
         [glyphs addObject:g]; // Add this new glyph at the end
-
+        [self.page.graphicElements addObject:g]; // Add this new glyhp to update showing
         
         // Add the new glyph index to text editor's editing glyphs
         [self addGlyphIndexToEditingGlyphs:(int)[glyphs count] - 1];
@@ -433,6 +433,7 @@
     CGAffineTransform ctm;
     CGAffineTransform tm;
     CGFloat fontSize;
+    NSColor *textColor;
     
     GGlyph *g = [GGlyph create];
     [g setContent:ch];
@@ -441,11 +442,13 @@
         ctm = currentGlyph.ctm;
         tm = currentGlyph.textMatrix;
         fontSize = currentGlyph.fontSize;
+        textColor = currentGlyph.textColor;
         
         // These three are needed for updating width below
         [g setTextMatrix:tm];
         [g setEncoding:currentGlyph.encoding];
         [g setFont:font];
+        [g setTextColor:textColor];
         
         // Calculate deltaX
         [g updateGlyphWidth];
@@ -458,6 +461,8 @@
         ctm = prevGlyph.ctm;
         tm = prevGlyph.textMatrix;
         fontSize = prevGlyph.fontSize;
+        textColor = prevGlyph.textColor;
+        
         // Also new glyph ctm need to add previous glyph width
         tm.tx += prevGlyph.width;
         [g setEncoding:prevGlyph.encoding];
@@ -469,6 +474,8 @@
     [g setFontName:fontName];
     [g setFontSize:fontSize];
     [g setFont:font];
+    [g setTextColor:textColor];
+    
     CGGlyph cgGlyph = [self.page.interpreter getCGGlyphForGGlyph:g];
     [g setGlyph:cgGlyph];
     
@@ -478,7 +485,8 @@
     [g updateGlyphFrameInGlyphSpace];
     
     [glyphs addObject:g];
-
+    [self.page.graphicElements addObject:g]; // Add this new glyhp to update showing
+    
     // Add the new glyph index to text editor's editing glyphs
     [self addGlyphIndexToEditingGlyphs:(int)[glyphs count] - 1];
     insertionPointIndex++;
@@ -599,6 +607,8 @@
     // this case
     lastDeletedGlyph = prevGlyph;
     [glyphs removeObject:prevGlyph];
+    [self.page.graphicElements removeObject:prevGlyph]; // Update text showing
+    
     [textBlock removeGlyph:prevGlyph];
     [self saveEditingGlyphs];
     insertionPointIndex--;

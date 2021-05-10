@@ -6,6 +6,8 @@
 //  Copyright © 2020 Aaron Elkins. All rights reserved.
 //
 
+#import <Cocoa/Cocoa.h>
+
 #import "GGlyph.h"
 #import "GObjects.h"
 #import "GMisc.h"
@@ -20,6 +22,7 @@
     [g setWordSpace:0];
     [g setCharacterSpace:0];
     [g setRise:0];
+    [g setTextColor:[NSColor blackColor]];
     return g;
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -39,6 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) int lineIndex;
 @property (readwrite) char * _Nonnull * _Nonnull encoding;
 @property (readwrite) GFontEncoding* fontEncoding;
+@property (readwrite) NSColor *textColor;
 
 + (id)create;
 - (void)setFrame:(NSRect)f;
