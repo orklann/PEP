@@ -288,7 +288,7 @@
 }
 
 - (NSString*)compile {
-    return [NSString stringWithFormat:@"/%@ cs", _colorSpaceName];
+    return [NSString stringWithFormat:@"/%@ cs\n", _colorSpaceName];
 }
 @end
 
@@ -392,4 +392,7 @@
     }
 }
 
+- (NSString*)compile {
+    return @"h\n";
+}
 @end
