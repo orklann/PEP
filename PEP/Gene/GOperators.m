@@ -159,6 +159,14 @@
     CGPathAddRect(page.interpreter.currentPath, NULL, rect);
 }
 
+- (NSString*)compile {
+    NSArray *args = [_cmdObj args];
+    CGFloat x = [[args objectAtIndex:0] getRealValue];
+    CGFloat y = [[args objectAtIndex:1] getRealValue];
+    CGFloat w = [[args objectAtIndex:2] getRealValue];
+    CGFloat h = [[args objectAtIndex:3] getRealValue];
+    return [NSString stringWithFormat:@"%f %f %f %f re", x, y, w, h];
+}
 @end
 
 
