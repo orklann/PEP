@@ -268,6 +268,9 @@
     // Do nothing for n operator
 }
 
+- (NSString*)compile {
+    return @"n\n";
+}
 @end
 
 
