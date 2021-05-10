@@ -131,6 +131,11 @@
     // Also set stroke color (strokeColor) for context
     CGContextSetStrokeColorWithColor(context, [strokeColor CGColor]);
 }
+
+- (NSString*)compile {
+    NSArray *args = [_cmdObj args];
+    return [NSString stringWithFormat:@"%f G", [[args firstObject] getRealValue]];
+}
 @end
 
 @implementation GreOperator
