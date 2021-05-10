@@ -214,6 +214,9 @@
     CGContextFillPath(context);
 }
 
+- (NSString*)compile {
+    return @"f\n";
+}
 @end
 
 
