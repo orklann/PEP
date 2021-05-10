@@ -107,7 +107,7 @@
 
 - (NSString*)compile {
     NSArray *args = [_cmdObj args];
-    return [NSString stringWithFormat:@"%f g", [[args firstObject] getRealValue]];
+    return [NSString stringWithFormat:@"%f g\n", [[args firstObject] getRealValue]];
 }
 @end
 
@@ -134,7 +134,7 @@
 
 - (NSString*)compile {
     NSArray *args = [_cmdObj args];
-    return [NSString stringWithFormat:@"%f G", [[args firstObject] getRealValue]];
+    return [NSString stringWithFormat:@"%f G\n", [[args firstObject] getRealValue]];
 }
 @end
 
@@ -165,7 +165,7 @@
     CGFloat y = [[args objectAtIndex:1] getRealValue];
     CGFloat w = [[args objectAtIndex:2] getRealValue];
     CGFloat h = [[args objectAtIndex:3] getRealValue];
-    return [NSString stringWithFormat:@"%f %f %f %f re", x, y, w, h];
+    return [NSString stringWithFormat:@"%f %f %f %f re\n", x, y, w, h];
 }
 @end
 
@@ -189,6 +189,9 @@
     CGContextEOFillPath(context);
 }
 
+- (NSString*)compile {
+    return @"f*\n";
+}
 @end
 
 
