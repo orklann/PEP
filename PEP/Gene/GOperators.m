@@ -313,6 +313,19 @@
     CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
 }
 
+- (NSString*)compile {
+    NSArray *args = [_cmdObj args];
+    NSMutableString *ms = [NSMutableString string];
+    for (GObject *o in args) {
+        if ([o type] == kNumberObject) {
+            [ms appendFormat:@"%f ", [(GNumberObject*)o getRealValue]];
+        } else if ([o type] == kNameObject) {
+            [ms appendFormat:@"/%@ ", [(GNameObject*)o value]];
+        }
+    }
+    [ms appendFormat:@"scn\n"];
+    return ms;
+}
 @end
 
 
