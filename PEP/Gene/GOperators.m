@@ -373,6 +373,9 @@
     CGContextStrokePath(context);
 }
 
+- (NSString*)compile {
+    return @"S\n";
+}
 @end
 
 
