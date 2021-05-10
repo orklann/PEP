@@ -346,6 +346,13 @@
     CGPathMoveToPoint(page.interpreter.currentPath, NULL, x, y);
 }
 
+- (NSString*)compile {
+    NSArray *args = [_cmdObj args];
+    CGFloat x = [[args objectAtIndex:0] getRealValue];
+    CGFloat y = [[args objectAtIndex:1] getRealValue];
+    
+    return [NSString stringWithFormat:@"%f %f m\n", x, y];
+}
 @end
 
 
