@@ -104,6 +104,11 @@
     // Also set fill color (nonStrokeColor) for context
     CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
 }
+
+- (NSString*)compile {
+    NSArray *args = [_cmdObj args];
+    return [NSString stringWithFormat:@"%f g", [[args firstObject] getRealValue]];
+}
 @end
 
 
