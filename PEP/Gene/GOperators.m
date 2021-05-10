@@ -251,6 +251,9 @@
     CGContextClip(context);
 }
 
+- (NSString*)compile {
+    return @"W\n";
+}
 @end
 
 
