@@ -287,6 +287,9 @@
     [page.graphicsState setNonStrokeColorSpace:cs];
 }
 
+- (NSString*)compile {
+    return [NSString stringWithFormat:@"/%@ cs", _colorSpaceName];
+}
 @end
 
 
