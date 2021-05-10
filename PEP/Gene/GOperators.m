@@ -60,6 +60,10 @@
     CGContextSaveGState(context);
     [page saveGraphicsState];
 }
+
+- (NSString*)compile {
+    return @"q\n";
+}
 @end
 
 
@@ -73,6 +77,10 @@
 - (void)eval:(CGContextRef)context page:(GPage*)page {
     CGContextRestoreGState(context);
     [page restoreGraphicsState];
+}
+
+- (NSString*)compile {
+    return @"Q\n";
 }
 @end
 
