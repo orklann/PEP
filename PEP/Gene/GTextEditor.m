@@ -86,7 +86,7 @@
     }
 }
 
-- (GTextBlock*)getTextBlock {
+- (GTextBlock*)updateTextBlockInTextParser {
     [[[self.page textParser] textBlocks] replaceObjectAtIndex:_textBlockIndex withObject:textBlock];
     return textBlock;
 }
@@ -117,8 +117,6 @@
 }
 
 - (void)draw:(CGContextRef)context {
-    textBlock = [self getTextBlock];
-    
     // Draw text editor border with 1 pixel width;
     NSRect frame = [self enlargedFrame];
     
@@ -476,7 +474,7 @@
     [self doWordWrap];
     
     // To update text block in text parsers
-    textBlock = [self getTextBlock];
+    textBlock = [self updateTextBlockInTextParser];
     self.isEditing = NO;
 }
 
@@ -525,7 +523,7 @@
     // Do word wrap
     [self doWordWrap];
     // Update text block in text parser
-    textBlock = [self getTextBlock];
+    textBlock = [self updateTextBlockInTextParser];
     self.isEditing = NO;
 }
 
