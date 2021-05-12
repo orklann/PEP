@@ -208,4 +208,14 @@
     GTextBlock *tb = [textParser mergeLinesToTextblock];
     return tb;
 }
+
+- (GTextBlock*)textBlockByRemovingGlyph:(GGlyph*)glyph {
+    NSMutableArray *glyphs = [self glyphs];
+    [glyphs removeObject:glyph];
+    GTextParser *textParser = [GTextParser create];
+    [textParser setUseTJTexts:NO];
+    [textParser setGlyphs:glyphs];
+    GTextBlock *tb = [textParser mergeLinesToTextblock];
+    return tb;
+}
 @end

@@ -476,7 +476,7 @@
     [self doWordWrap];
     
     // To update text block in text parsers
-    [self getTextBlock];
+    textBlock = [self getTextBlock];
     self.isEditing = NO;
 }
 
@@ -524,6 +524,8 @@
     [self deleteCharacterInInsertionPoint];
     // Do word wrap
     [self doWordWrap];
+    // Update text block in text parser
+    textBlock = [self getTextBlock];
     self.isEditing = NO;
 }
 
@@ -555,7 +557,7 @@
     }
     
     // Remove prev glyph in text block
-    [textBlock removeGlyph:prevGlyph];
+    textBlock = [textBlock textBlockByRemovingGlyph:prevGlyph];
 }
 
 - (void)updateFontNameAndFontSize {
