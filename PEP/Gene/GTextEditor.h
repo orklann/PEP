@@ -20,8 +20,6 @@ NS_ASSUME_NONNULL_BEGIN
     int insertionPointIndex;
     GTextBlock *textBlock;
     NSTimer *blinkTimer;
-    NSMutableArray *glyphs;
-    NSMutableArray *cachedGlyphs;
     NSRect firstGlyphFrame;
     GGlyph *lastDeletedGlyph;
     CGFloat editorWidth;
@@ -36,7 +34,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) BOOL commandsUpdated;
 @property (readwrite) NSString *pdfFontName;
 @property (readwrite) CGFloat fontSize;
-@property (readwrite) BOOL firstUsed;
 @property (readwrite) NSMutableArray *editingGlyphs;
 @property (readwrite) unsigned int textBlockIndex;
 @property (readwrite) BOOL drawInsertionPoint;

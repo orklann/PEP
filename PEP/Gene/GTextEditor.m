@@ -45,7 +45,6 @@
     [self updateFontNameAndFontSize];
     self.drawInsertionPoint = YES;
     self.isEditing = NO;
-    self.firstUsed = YES;
     self.commandsUpdated = NO;
     self.editingGlyphs = [NSMutableArray array];
     editorWidth = [textBlock frame].size.width;
@@ -56,10 +55,6 @@
     ctm = [firstGlyph ctm];
     textMatrix = [firstGlyph textMatrix];
     
-    // First time draw the text, we must ensure to save editing glyphs
-    // Other time to save it is after editing text.
-    // Call [self insertChar:font:] etc.
-    [self saveEditingGlyphs];
     blinkTimer = [NSTimer scheduledTimerWithTimeInterval:0.4 repeats:YES block:^(NSTimer * _Nonnull timer) {
         if (self.drawInsertionPoint) {
             self.drawInsertionPoint = NO;
@@ -91,53 +86,9 @@
     }
 }
 
-- (void)saveEditingGlyphs {
-    self.editingGlyphs = [NSMutableArray array];
-    NSArray *localGlyphs = [textBlock glyphs];
-    /* Original glyphs in page */
-    NSArray *pageGlyphs = [[self.page textParser] glyphs];
-    for (GGlyph *g in localGlyphs) {
-        int index = (int)[pageGlyphs indexOfObject:g];
-        [self addGlyphIndexToEditingGlyphs:index];
-    }
-}
-
-- (void)restoreEditingGlyphsToGlyphs {
-    glyphs = [NSMutableArray array];
-    /* Original glyphs in page */
-    NSArray *pageGlyphs = [[self.page textParser] glyphs];
-    for (NSNumber *n in self.editingGlyphs) {
-        int index = [n intValue];
-        GGlyph *g = [pageGlyphs objectAtIndex:index];
-        [glyphs addObject:g];
-    }
-}
-
 - (GTextBlock*)getTextBlock {
-    if (self.firstUsed) {
-        self.firstUsed = NO;
-        NSLog(@"[*]:%@", [textBlock textBlockString]);
-        return textBlock;
-    } else {
-        // By this, we get glyphs read for GTextParser to get the text block
-        [self restoreEditingGlyphsToGlyphs];
-        GTextParser *textParser = [GTextParser create];
-        [textParser setUseTJTexts:NO];
-        [textParser setGlyphs:glyphs];
-        GTextBlock *tb = [textParser mergeLinesToTextblock];
-        NSLog(@"text block index: %d", _textBlockIndex);
-        NSLog(@"%@", [tb textBlockString]);
-        [[[self.page textParser] textBlocks] replaceObjectAtIndex:_textBlockIndex withObject:tb];
-        return tb;
-    }
-}
-
-- (GTextBlock*)getTextBlockByCachedGlyphs {
-    GTextParser *textParser = [GTextParser create];
-    [textParser setUseTJTexts:NO];
-    [textParser setGlyphs:cachedGlyphs];
-    GTextBlock *tb = [textParser mergeLinesToTextblock];
-    return tb;
+    [[[self.page textParser] textBlocks] replaceObjectAtIndex:_textBlockIndex withObject:textBlock];
+    return textBlock;
 }
 
 - (void)redraw {
@@ -417,13 +368,9 @@
         
         [glyphs addObject:g]; // Add this new glyph at the end
         [self.page.graphicElements addObject:g]; // Add this new glyhp to update showing
-        
-        // Add the new glyph index to text editor's editing glyphs
-        [self addGlyphIndexToEditingGlyphs:(int)[glyphs count] - 1];
         insertionPointIndex++;
         
-        // Update cached glyphs for word wrap use
-        [self updateCachedGlyphs:[textBlock glyphs] newGlyph:g];
+        textBlock = [textBlock textBlockByAppendingGlyph:g];
         return ;
     }
     
@@ -487,16 +434,13 @@
     [glyphs addObject:g];
     [self.page.graphicElements addObject:g]; // Add this new glyhp to update showing
     
-    // Add the new glyph index to text editor's editing glyphs
-    [self addGlyphIndexToEditingGlyphs:(int)[glyphs count] - 1];
     insertionPointIndex++;
     
-    // Update text block immediately to prevent only update text block while redrawing,
-    // which will sometimes cause glyph index out of bounds for [GTextEditor getCurrentGlyph] etc
-    textBlock = [self getTextBlock];
-    
-    // Update cached glyphs for word wrap use
-    [self updateCachedGlyphs:[textBlock glyphs] newGlyph:g];
+    // 1. Update text block by appending new glyph
+    // 2. Update text block immediately to prevent only update text block while
+    // redrawing, which will sometimes cause glyph index out of bounds for [GTextEditor
+    // getCurrentGlyph] etc
+    textBlock = [textBlock textBlockByAppendingGlyph:g];
 }
 
 - (void)insertChar:(NSString *)ch {
@@ -586,8 +530,6 @@
 - (void)deleteCharacterInInsertionPoint {
     // No text in text editor
     if (textBlock == nil) {
-        // Update cached glyphs for word wrap use
-        cachedGlyphs = [NSMutableArray arrayWithArray:[textBlock glyphs]];
         return ;
     }
     
@@ -598,26 +540,22 @@
         CGFloat deltaX = prevGlyph.width * -1;
         [self moveGlyphsAfter:prevGlyph byDeltaX:deltaX];
     } else {
-        // Update cached glyphs for word wrap use
-        cachedGlyphs = [NSMutableArray arrayWithArray:[textBlock glyphs]];
         return ;
     }
     
-    // Remove glyph index in front of insertion point this is prevIndex in
-    // this case
     lastDeletedGlyph = prevGlyph;
     [glyphs removeObject:prevGlyph];
     [self.page.graphicElements removeObject:prevGlyph]; // Update text showing
     
     [textBlock removeGlyph:prevGlyph];
-    [self saveEditingGlyphs];
+    
     insertionPointIndex--;
     if (insertionPointIndex < 0) {
         insertionPointIndex = 0;
     }
     
-    // Update cached glyphs for word wrap use
-    [self updateCachedGlyphs:[textBlock glyphs] removeGlyph:prevGlyph];
+    // Remove prev glyph in text block
+    [textBlock removeGlyph:prevGlyph];
 }
 
 - (void)updateFontNameAndFontSize {
@@ -775,7 +713,6 @@
  * centerAlignLines, leftRightAlignLines.
  */
 - (NSMutableArray*)wordWrapToLines {
-    textBlock = [self getTextBlockByCachedGlyphs];
     NSArray *words = [textBlock words];
     NSArray *originalLines = [textBlock lines];
     
@@ -922,18 +859,9 @@
     return startTextMatrix;
 }
 
-- (void)updateCachedGlyphs:(NSArray*)glyphs newGlyph:(GGlyph*)newGlyph {
-    cachedGlyphs = [NSMutableArray arrayWithArray:glyphs];
-    [cachedGlyphs addObject:newGlyph];
-}
-
-- (void)updateCachedGlyphs:(NSArray*)glyphs removeGlyph:(GGlyph*)glyphToRemove {
-    cachedGlyphs = [NSMutableArray arrayWithArray:glyphs];
-    [cachedGlyphs removeObject:glyphToRemove];
-}
-
 #pragma Insertion point manage
 - (void)moveInsertionPointDown {
+    NSArray *glyphs = [textBlock glyphs];
     int currentLineIndex = [textBlock getLineIndex:insertionPointIndex];
     if (currentLineIndex != -1) { // No errors
         if (currentLineIndex + 1 <= [[textBlock lines] count] - 1) {
@@ -957,6 +885,7 @@
 }
 
 - (void)moveInsertionPointUp {
+    NSArray *glyphs = [textBlock glyphs];
     int currentLineIndex = [textBlock getLineIndex:insertionPointIndex];
     // Curernt line is valid, and insertion point is not at the end of text block
     if (currentLineIndex != -1 && insertionPointIndex != [glyphs count]) {
