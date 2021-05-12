@@ -474,7 +474,7 @@
     [self doWordWrap];
     
     // To update text block in text parsers
-    textBlock = [self updateTextBlockInTextParser];
+    [self updateTextBlockInTextParser];
     self.isEditing = NO;
 }
 
@@ -523,7 +523,7 @@
     // Do word wrap
     [self doWordWrap];
     // Update text block in text parser
-    textBlock = [self updateTextBlockInTextParser];
+    [self updateTextBlockInTextParser];
     self.isEditing = NO;
 }
 
