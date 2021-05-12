@@ -473,7 +473,11 @@
     // Do word wrap here, use cached glyphs 
     [self doWordWrap];
     
-    // To update text block in text parsers
+    /*
+     * Update text block in text parser,
+     * Becasuse textblock is a new object,
+     * which is different to the old one in text parser
+     */
     [self updateTextBlockInTextParser];
     self.isEditing = NO;
 }
@@ -522,7 +526,11 @@
     [self deleteCharacterInInsertionPoint];
     // Do word wrap
     [self doWordWrap];
-    // Update text block in text parser
+    /*
+     * Update text block in text parser,
+     * Becasuse textblock is a new object,
+     * which is different to the old one in text parser
+     */
     [self updateTextBlockInTextParser];
     self.isEditing = NO;
 }
