@@ -10,6 +10,7 @@
 #import "GLine.h"
 #import "GWord.h"
 #import "GGlyph.h"
+#import "GTextParser.h"
 
 @implementation GTextBlock
 + (id)create {
@@ -196,5 +197,15 @@
         }
     }
     return -1;
+}
+
+- (GTextBlock*)textBlockByAppendingGlyph:(GGlyph*)glyph {
+    NSMutableArray *glyphs = [self glyphs];
+    [glyphs addObject:glyph];
+    GTextParser *textParser = [GTextParser create];
+    [textParser setUseTJTexts:NO];
+    [textParser setGlyphs:glyphs];
+    GTextBlock *tb = [textParser mergeLinesToTextblock];
+    return tb;
 }
 @end

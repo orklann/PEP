@@ -33,6 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (int)getLineIndex:(int)index;
 - (int)getGlyphIndexInLine:(int)index;
 - (GLine*)getLineByGlyph:(GGlyph*)g;
+- (GTextBlock*)textBlockByAppendingGlyph:(GGlyph*)glyph;
 @end
 
 NS_ASSUME_NONNULL_END
