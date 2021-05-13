@@ -75,7 +75,9 @@
     
     if (p1.y == p2.y && // 1: The same y
         [[g1 fontName] isEqualToString:[g2 fontName]]) { // 2: Same font name
-        
+        /*
+         * TODO: I don't know excatly this code is for, But I think we should look at it
+         *       if we encounter some compiler bugs.
         NSRect f1 = [g1 frame];
         NSRect f2 = [g2 frame];
         CGFloat maxX = NSMaxX(f1);
@@ -85,8 +87,9 @@
         // setting by separately with other operators, like (Td, Tm, etc)
         // To make glyphs position exactly as its before compilation
         if ([g2 delta] == 0 && maxX != minX) {
+            printf("\ndelta = 0\n");
             return NO;
-        }
+        }*/
         return YES;
     }
     return NO;
