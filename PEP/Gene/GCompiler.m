@@ -27,7 +27,8 @@
 
 - (NSString*)compile {
     NSMutableString *result = [NSMutableString string];
-    NSArray *glyphs = [[page textParser] readOrderGlyphs];
+    //NSArray *glyphs = [[page textParser] readOrderGlyphs];
+    NSArray *glyphs = [[page textParser] glyphs];
     GGlyph *prevGlyph = [glyphs firstObject];
     [result appendString:@"q\n"];
     

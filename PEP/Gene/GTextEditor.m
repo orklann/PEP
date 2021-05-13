@@ -340,6 +340,7 @@
     
     //
     // If no text in text editor, we insert based on the last deleted glyph
+    // We did not handle this case carefully, need to be consider more carefully
     //
     if (textBlock == nil) {
         CGAffineTransform ctm = lastDeletedGlyph.ctm;
@@ -379,27 +380,36 @@
     CGAffineTransform tm;
     CGFloat fontSize;
     NSColor *textColor;
+    CGFloat cs;
+    CGFloat wc;
+    CGFloat fs;
+    
     
     GGlyph *g = [GGlyph create];
     [g setContent:ch];
-    
+    int insertIndex = 0;
     if (currentGlyph && ![self isCurrentGlyphLastGlyph]) {
         ctm = currentGlyph.ctm;
         tm = currentGlyph.textMatrix;
         fontSize = currentGlyph.fontSize;
         textColor = currentGlyph.textColor;
+        cs = currentGlyph.characterSpace;
+        wc = currentGlyph.wordSpace;
+        fs = currentGlyph.fs;
         
         // These three are needed for updating width below
         [g setTextMatrix:tm];
         [g setEncoding:currentGlyph.encoding];
         [g setFont:font];
         [g setTextColor:textColor];
+
         
         // Calculate deltaX
         [g updateGlyphWidth];
         CGFloat deltaX = g.width;
         
         [self moveGlyphsIncludeAfter:currentGlyph byDeltaX:deltaX];
+        insertIndex = (int)[glyphs indexOfObject:currentGlyph];
     } else {
         // Current glyph is nil, means we are at the end of text block,
         // we use previous glyph info
@@ -407,10 +417,14 @@
         tm = prevGlyph.textMatrix;
         fontSize = prevGlyph.fontSize;
         textColor = prevGlyph.textColor;
+        cs = prevGlyph.characterSpace;
+        wc = prevGlyph.wordSpace;
+        fs = prevGlyph.fs;
         
         // Also new glyph ctm need to add previous glyph width
         tm.tx += prevGlyph.width;
         [g setEncoding:prevGlyph.encoding];
+        insertIndex = (int)[glyphs indexOfObject:prevGlyph] + 1;
     }
     
     [g setPage:self.page];
@@ -420,6 +434,9 @@
     [g setFontSize:fontSize];
     [g setFont:font];
     [g setTextColor:textColor];
+    [g setCharacterSpace:cs];
+    [g setWordSpace:wc];
+    [g setFs:fs];
     
     CGGlyph cgGlyph = [self.page.interpreter getCGGlyphForGGlyph:g];
     [g setGlyph:cgGlyph];
@@ -429,7 +446,7 @@
     [g updateGlyphFrame];
     [g updateGlyphFrameInGlyphSpace];
     
-    [glyphs addObject:g];
+    [glyphs insertObject:g atIndex:insertIndex];
     [self.page.graphicElements addObject:g]; // Add this new glyhp to update showing
     
     insertionPointIndex++;
