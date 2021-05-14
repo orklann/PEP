@@ -174,4 +174,45 @@
     delta = (glyphDistance / h - wc - cs) / fs * 1000.0;
     return delta;
 }
+
+/*
+ * Build page's graphicElements into array, which contains operators, and array of
+ * glyphs in the same order in graphic elements array
+ * For example:
+ *      1). In graphicElememnts: operator1, operator2, glyph1, glyph2, operator3
+ *      2). After calling this method, it returns an array, which has:
+ *          operator1, operator2, NSArray (glyph1, glyph2), operator3
+ *      3). We compile operator, by calling its compile method
+ *          We compile NSArray of glyphs, by calling complieGlhphs: method of this clsss
+ */
+- (NSArray*)buildGlyphsGroupArray {
+    NSMutableArray *result = [NSMutableArray array];
+    BOOL startGlyphsArray = NO;
+    NSMutableArray *currentGlyphsArray;
+    for (id obj in page.graphicElements) {
+        if ([[obj className] isEqualToString:@"GGlyph"] &&
+            startGlyphsArray == NO) {
+            startGlyphsArray = YES;
+            currentGlyphsArray = [NSMutableArray array];
+        } else {
+            if (startGlyphsArray) {
+                startGlyphsArray = NO;
+                [result addObject:currentGlyphsArray];
+                currentGlyphsArray = [NSMutableArray array];
+            }
+        }
+        
+        if (startGlyphsArray) {
+            [currentGlyphsArray addObject:obj];
+        } else {
+            [result addObject:obj];
+        }
+    }
+    
+    if ([currentGlyphsArray count] > 0) {
+        [result addObject:currentGlyphsArray];
+    }
+    
+    return result;
+}
 @end
