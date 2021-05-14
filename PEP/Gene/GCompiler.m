@@ -27,10 +27,22 @@
 
 - (NSString*)compile {
     NSMutableString *result = [NSMutableString string];
-    //NSArray *glyphs = [[page textParser] readOrderGlyphs];
-    NSArray *glyphs = [[page textParser] glyphs];
+    [result appendString:@"q"];
+    NSArray *source = [self buildGlyphsGroupArray];
+    for (id obj in source) {
+        if ([obj isKindOfClass:[NSMutableArray class]]) {
+            [result appendString:[self compileGlyphsArray:obj]];
+        } else {
+            //[result appendString:[obj compile]];
+        }
+    }
+    [result appendString:@"Q"];
+    return result;
+}
+
+- (NSString*)compileGlyphsArray:(NSArray*)glyphs {
+    NSMutableString *result = [NSMutableString string];
     GGlyph *prevGlyph = [glyphs firstObject];
-    [result appendString:@"q\n"];
     
     currentWordSpace = [prevGlyph wordSpace];
     currentCharSpace = [prevGlyph characterSpace];
@@ -66,7 +78,6 @@
     // End last TJ command
     [currentTJ appendString:[self endTJ]];
     [result appendString:currentTJ];
-    [result appendString:@"Q\n"];
     return result;
 }
 
