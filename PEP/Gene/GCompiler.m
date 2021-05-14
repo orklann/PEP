@@ -27,16 +27,14 @@
 
 - (NSString*)compile {
     NSMutableString *result = [NSMutableString string];
-    [result appendString:@"q"];
     NSArray *source = [self buildGlyphsGroupArray];
     for (id obj in source) {
         if ([obj isKindOfClass:[NSMutableArray class]]) {
             [result appendString:[self compileGlyphsArray:obj]];
         } else {
-            //[result appendString:[obj compile]];
+            [result appendString:[obj compile]];
         }
     }
-    [result appendString:@"Q"];
     return result;
 }
 
@@ -111,7 +109,6 @@
     CGAffineTransform ctm = [g ctm];
     CGAffineTransform textMatrix = [g textMatrix];
     NSMutableString *result = [NSMutableString string];
-    [result appendString:@"\nQ\nq\n"];
     
     // cm operator
     NSString *cm = [NSString stringWithFormat:@"%f %f %f %f %f %f cm\n",

@@ -636,7 +636,11 @@
     
     // TODO: Add /ColorSpace, /ExtGState (No Need if we have below TODO)
     // TODO: Better to reuse original resource which has /ColorSpace, /ExtGState, and other settings
-    NSString *dictionary = [NSString stringWithFormat:@"<< /ProcSet [ /PDF /Text ] /Font << %@ >> >>\n", fontArrayString];
+    GDictionaryObject *colorSpaceDict = [[resources value] objectForKey:@"ColorSpace"];
+    GDictionaryObject *extGState = [[resources value] objectForKey:@"ExtGState"];
+    NSString *dictionary = [NSString stringWithFormat:@"<< /ProcSet [ /PDF /Text ] /Font << %@ >> /ColorSpace %@ /ExtGState %@ >>\n", fontArrayString,
+                            [colorSpaceDict toString],
+                            [extGState toString]];
     
     //  Resources is a dictionary
     if ([(GObject*)res type] == kDictionaryObject){
@@ -659,6 +663,7 @@
     
     // Update resource by parsing it
     [self parseResources];
+    NSLog(@"(*)resource: %@", [resources toString]);
 }
 
 - (void)addPageDictionaryForUpdating {
