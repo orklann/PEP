@@ -768,6 +768,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         CGContextBeginPath(context);
         CGContextAddPath(context, _currentPath);
         CGContextStrokePath(context);
+        _currentPath = CGPathCreateMutable();
     }
     
     GSOperator *op = [GSOperator create];
@@ -816,6 +817,18 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     GgsOperator *opt = [GgsOperator create];
     [opt setGsName:gsName];
     [page.graphicElements addObject:opt];
+}
+
+- (void)eval_l_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    NSArray *args = [cmdObj args];
+    CGFloat x = [[args objectAtIndex:0] getRealValue];
+    CGFloat y = [[args objectAtIndex:1] getRealValue];
+ 
+    CGPathAddLineToPoint(_currentPath, NULL, x, y);
+    
+    GlOperator *op = [GlOperator create];
+    [op setCmdObj:cmdObj];
+    [page.graphicElements addObject:op];
 }
 
 - (void)eval:(CGContextRef)context {
@@ -895,6 +908,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_h_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"gs")) { // eval gs
                     [self eval_gs_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"l")) { // eval l
+                    [self eval_l_Command:context command:cmdObj];
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }

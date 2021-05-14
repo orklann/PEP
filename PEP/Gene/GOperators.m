@@ -373,6 +373,7 @@
     CGContextBeginPath(context);
     CGContextAddPath(context, page.interpreter.currentPath);
     CGContextStrokePath(context);
+    page.interpreter.currentPath = CGPathCreateMutable();
 }
 
 - (NSString*)compile {
@@ -396,5 +397,30 @@
 
 - (NSString*)compile {
     return @"h\n";
+}
+@end
+
+
+@implementation GlOperator
+
++ (id)create {
+    GlOperator *o = [[GlOperator alloc] init];
+    return o;
+}
+
+- (void)eval:(CGContextRef)context page:(GPage*)page {
+    NSArray *args = [_cmdObj args];
+    CGFloat x = [[args objectAtIndex:0] getRealValue];
+    CGFloat y = [[args objectAtIndex:1] getRealValue];
+
+    CGPathAddLineToPoint(page.interpreter.currentPath, NULL, x, y);
+}
+
+- (NSString*)compile {
+    NSArray *args = [_cmdObj args];
+    CGFloat x = [[args objectAtIndex:0] getRealValue];
+    CGFloat y = [[args objectAtIndex:1] getRealValue];
+    
+    return [NSString stringWithFormat:@"%f %f l\n", x, y];
 }
 @end
