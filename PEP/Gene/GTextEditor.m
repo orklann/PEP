@@ -387,7 +387,8 @@
     
     GGlyph *g = [GGlyph create];
     [g setContent:ch];
-    int insertIndex = 0;
+    int insertIndex = 0;  // This index is for text parser's glyphs array
+    int insertIndex2 = 0; // This index is for graphicElements array
     if (currentGlyph && ![self isCurrentGlyphLastGlyph]) {
         ctm = currentGlyph.ctm;
         tm = currentGlyph.textMatrix;
@@ -410,6 +411,7 @@
         
         [self moveGlyphsIncludeAfter:currentGlyph byDeltaX:deltaX];
         insertIndex = (int)[glyphs indexOfObject:currentGlyph];
+        insertIndex2 = (int)[self.page.graphicElements indexOfObject:currentGlyph];
     } else {
         // Current glyph is nil, means we are at the end of text block,
         // we use previous glyph info
@@ -425,6 +427,7 @@
         tm.tx += prevGlyph.width;
         [g setEncoding:prevGlyph.encoding];
         insertIndex = (int)[glyphs indexOfObject:prevGlyph] + 1;
+        insertIndex2 = (int)[self.page.graphicElements indexOfObject:prevGlyph] + 1;
     }
     
     [g setPage:self.page];
@@ -447,7 +450,7 @@
     [g updateGlyphFrameInGlyphSpace];
     
     [glyphs insertObject:g atIndex:insertIndex];
-    [self.page.graphicElements addObject:g]; // Add this new glyhp to update showing
+    [self.page.graphicElements insertObject:g atIndex:insertIndex2];
     
     insertionPointIndex++;
     
