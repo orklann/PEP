@@ -99,6 +99,7 @@
     NSArray *result = [comp buildGlyphsGroupArray:ma];
     
     XCTAssertEqualObjects([[result firstObject] className], @"GcsOperator");
+    XCTAssertEqual([[result objectAtIndex:4] isKindOfClass:[NSMutableArray class]], YES);
     XCTAssertEqual([[result objectAtIndex:4] count], 2);
     XCTAssertEqualObjects([[[result objectAtIndex:4] firstObject] className], @"GGlyph");
     XCTAssertEqualObjects([[result lastObject] className], @"GcsOperator");
