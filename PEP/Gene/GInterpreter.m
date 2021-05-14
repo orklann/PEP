@@ -681,6 +681,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         NSColor *nonStrokeColor = [page.graphicsState nonStrokeColor];
         CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
         CGContextFillPath(context);
+        /*
+         * NOTE: All painting operator should set current path to undefined after painting.
+         *       See 8.5.2.1 General
+         */
         _currentPath = CGPathCreateMutable();
     }
     
