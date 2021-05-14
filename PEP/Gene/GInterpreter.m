@@ -663,6 +663,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         NSColor *nonStrokeColor = [page.graphicsState nonStrokeColor];
         CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
         CGContextEOFillPath(context);
+        _currentPath = CGPathCreateMutable();
     }
     
     GfStarOperator *op = [GfStarOperator create];
@@ -680,6 +681,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         NSColor *nonStrokeColor = [page.graphicsState nonStrokeColor];
         CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
         CGContextFillPath(context);
+        _currentPath = CGPathCreateMutable();
     }
     
     GfOperator *op = [GfOperator create];

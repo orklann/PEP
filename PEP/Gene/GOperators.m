@@ -187,6 +187,7 @@
     NSColor *nonStrokeColor = [page.graphicsState nonStrokeColor];
     CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
     CGContextEOFillPath(context);
+    page.interpreter.currentPath = CGPathCreateMutable();
 }
 
 - (NSString*)compile {
@@ -212,6 +213,7 @@
     NSColor *nonStrokeColor = [page.graphicsState nonStrokeColor];
     CGContextSetFillColorWithColor(context, [nonStrokeColor CGColor]);
     CGContextFillPath(context);
+    page.interpreter.currentPath = CGPathCreateMutable();
 }
 
 - (NSString*)compile {
