@@ -19,6 +19,7 @@
 		1C6EB724262D5BCA00C08B77 /* GDeviceRGBColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6EB723262D5BCA00C08B77 /* GDeviceRGBColorSpace.m */; };
 		1C73D87E2637D70600F7C315 /* GICCBasedColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C73D87D2637D70600F7C315 /* GICCBasedColorSpace.m */; };
 		1C73D8822637E5EA00F7C315 /* type0_function.bin in Resources */ = {isa = PBXBuildFile; fileRef = 1C73D8812637E5E900F7C315 /* type0_function.bin */; };
+		1C9343EC264E4A5E002960DA /* GCompilerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9343EB264E4A5E002960DA /* GCompilerTests.m */; };
 		1C956CDF26131A98005C7D2C /* GCMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C956CDE26131A98005C7D2C /* GCMap.m */; };
 		1C9CEF4626141A59006536F9 /* GCMapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C9CEF4526141A59006536F9 /* GCMapTests.m */; };
 		1CFD4F28263D3E34004E4808 /* GSeparationColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1CFD4F27263D3E34004E4808 /* GSeparationColorSpace.m */; };
@@ -131,6 +132,7 @@
 		1C73D87C2637D70600F7C315 /* GICCBasedColorSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GICCBasedColorSpace.h; sourceTree = "<group>"; };
 		1C73D87D2637D70600F7C315 /* GICCBasedColorSpace.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GICCBasedColorSpace.m; sourceTree = "<group>"; };
 		1C73D8812637E5E900F7C315 /* type0_function.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = type0_function.bin; sourceTree = "<group>"; };
+		1C9343EB264E4A5E002960DA /* GCompilerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCompilerTests.m; sourceTree = "<group>"; };
 		1C956CDD26131A98005C7D2C /* GCMap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCMap.h; sourceTree = "<group>"; };
 		1C956CDE26131A98005C7D2C /* GCMap.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCMap.m; sourceTree = "<group>"; };
 		1C9CEF4526141A59006536F9 /* GCMapTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCMapTests.m; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 				1C9CEF4526141A59006536F9 /* GCMapTests.m */,
 				933F589D25E77DCE00D28996 /* GFontEncodingTests.m */,
 				1C1999DA26392BB6002DD9B3 /* GFunctionsTests.m */,
+				1C9343EB264E4A5E002960DA /* GCompilerTests.m */,
 				9397A56E25653D48003969B8 /* PEPMiscTests.m */,
 				931221DB24F0139700929C01 /* Info.plist */,
 			);
@@ -685,6 +688,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1C9343EC264E4A5E002960DA /* GCompilerTests.m in Sources */,
 				1C1999DB26392BB6002DD9B3 /* GFunctionsTests.m in Sources */,
 				93FEFCDB25CBC33F0095E19D /* GEncodingsTests.m in Sources */,
 				9320C01A2519C7F8008F20B0 /* GInterpreterTests.m in Sources */,

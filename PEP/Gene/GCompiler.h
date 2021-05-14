@@ -20,6 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (id)compilerWithPage:(GPage*)page;
 - (void)setPage:(GPage*)p;
 - (NSString*)compile;
+
+- (NSArray*)buildGlyphsGroupArray;
+- (NSArray*)buildGlyphsGroupArray:(NSArray*)originalArray;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -185,16 +185,21 @@
  *      3). We compile operator, by calling its compile method
  *          We compile NSArray of glyphs, by calling complieGlhphs: method of this clsss
  */
+
 - (NSArray*)buildGlyphsGroupArray {
+    return [self buildGlyphsGroupArray:page.graphicElements];
+}
+
+- (NSArray*)buildGlyphsGroupArray:(NSArray*)originalArray {
     NSMutableArray *result = [NSMutableArray array];
     BOOL startGlyphsArray = NO;
     NSMutableArray *currentGlyphsArray;
-    for (id obj in page.graphicElements) {
+    for (id obj in originalArray) {
         if ([[obj className] isEqualToString:@"GGlyph"] &&
             startGlyphsArray == NO) {
             startGlyphsArray = YES;
             currentGlyphsArray = [NSMutableArray array];
-        } else {
+        } else if (![[obj className] isEqualToString:@"GGlyph"]) {
             if (startGlyphsArray) {
                 startGlyphsArray = NO;
                 [result addObject:currentGlyphsArray];
