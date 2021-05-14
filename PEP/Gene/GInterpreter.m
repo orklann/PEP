@@ -714,6 +714,25 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [page.graphicElements addObject:op];
 }
 
+- (void)eval_n_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    // We don't need to eval `n` operator, since it is usually used in the way of: W*,
+    // n or W, n
+    // And what n does is what W*, W does
+    // See 8.5.4 Clipping path operators
+    /*
+     * We need to add n operator to graphicElements
+     */
+    GnOperator *op = [GnOperator create];
+    [page.graphicElements addObject:op];
+    
+    /*
+     * And finally, as a path-painting operator, we need to set the current
+     * path to undefined.
+     */
+    _currentPath = CGPathCreateMutable();
+}
+
+
 - (void)eval_cs_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
     NSArray *args = [cmdObj args];
     NSString *csName = [(GNameObject*)[args firstObject] value];
@@ -887,15 +906,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                 }  else if (isCommand(cmd, @"W")) { // eval W
                     [self eval_W_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"n")) { // eval n
-                    // We don't need to eval `n` operator, since it is usually used in the way of: W*,
-                    // n or W, n
-                    // And what n does is what W*, W does
-                    // See 8.5.4 Clipping path operators
-                    /*
-                     * We need to add n operator to graphicElements
-                     */
-                    GnOperator *op = [GnOperator create];
-                    [page.graphicElements addObject:op];
+                    [self eval_n_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"cs")) { // eval cs
                     [self eval_cs_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"scn")) { // eval scn
