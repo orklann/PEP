@@ -634,13 +634,21 @@
         [fontArrayString appendFormat:@"/%@ %d %d R ", realFontKey, objectNumber, generationNumber];
     }
     
-    // TODO: Add /ColorSpace, /ExtGState (No Need if we have below TODO)
-    // TODO: Better to reuse original resource which has /ColorSpace, /ExtGState, and other settings
+    // Add /ColorSpace, /ExtGState dictionary from original resoucrces
     GDictionaryObject *colorSpaceDict = [[resources value] objectForKey:@"ColorSpace"];
     GDictionaryObject *extGState = [[resources value] objectForKey:@"ExtGState"];
-    NSString *dictionary = [NSString stringWithFormat:@"<< /ProcSet [ /PDF /Text ] /Font << %@ >> /ColorSpace %@ /ExtGState %@ >>\n", fontArrayString,
-                            [colorSpaceDict toString],
-                            [extGState toString]];
+    NSMutableString *dictionary = [NSMutableString stringWithFormat:@"<< /ProcSet [ /PDF /Text ] /Font << %@ >>", fontArrayString];
+    
+    if (colorSpaceDict) {
+        [dictionary appendFormat:@" /ColorSpace %@ ", [colorSpaceDict toString]];
+    }
+    
+    if (extGState) {
+        [dictionary appendFormat:@" /ExtGState %@ ", [extGState toString]];
+    }
+                            
+    // Finally end dictionary
+    [dictionary appendString:@" >>\n"];
     
     //  Resources is a dictionary
     if ([(GObject*)res type] == kDictionaryObject){
