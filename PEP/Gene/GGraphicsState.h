@@ -23,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) NSColor *nonStrokeColor;
 @property (readwrite) BOOL overprintStroking;
 @property (readwrite) BOOL overprintNonstroking;
+@property (readwrite) CGFloat lineWidth;
 
 + (id)create;
 - (void)initState;

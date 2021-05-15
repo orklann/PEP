@@ -28,6 +28,7 @@
     [self setNonStrokeColor:[NSColor blackColor]];
     [self setOverprintStroking:NO];
     [self setOverprintNonstroking:NO];
+    [self setLineWidth:1.0];
 }
 
 - (void)setCTM:(CGAffineTransform)tf {
@@ -47,6 +48,7 @@
     [newGraphicsState setNonStrokeColor:_nonStrokeColor];
     [newGraphicsState setOverprintStroking:_overprintStroking];
     [newGraphicsState setOverprintNonstroking:_overprintNonstroking];
+    [newGraphicsState setLineWidth:_lineWidth];
     return newGraphicsState;
 }
 @end
