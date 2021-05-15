@@ -361,6 +361,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                 [(GCommandObject*)obj setArgs:args];
             } else if (isCommand(cmd, @"S")) { // S
                 // Do nothing, no arguments
+            } else if (isCommand(cmd, @"w")) { // w
+                NSArray *args = getCommandArgs(commands, 1);
+                [(GCommandObject*)obj setArgs:args];
             } else {
                 //NSLog(@"GInterpreter:parseCommands not handle %@ operator", cmd);
             }
@@ -850,6 +853,18 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [page.graphicElements addObject:op];
 }
 
+- (void)eval_w_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    NSArray *args = [cmdObj args];
+    CGFloat lineWidth = [[args objectAtIndex:0] getRealValue];
+    
+    // Set line width in graphic state
+    [page.graphicsState setLineWidth:lineWidth];
+    
+    GwOperator *op = [GwOperator create];
+    [op setCmdObj:[cmdObj clone]];
+    [page.graphicElements addObject:op];
+}
+
 - (void)eval:(CGContextRef)context {
     //NSDate *methodStart = [NSDate date];
     if ([page needUpdate]) {
@@ -921,6 +936,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_gs_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"l")) { // eval l
                     [self eval_l_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"w")) { // eval w
+                    [self eval_w_Command:context command:cmdObj];
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }

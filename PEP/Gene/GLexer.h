@@ -34,6 +34,9 @@ BOOL isBooleanEnd(unsigned char ch);
 // Test for stream content end line markers
 int isEndLineMarker(unsigned char ch1, unsigned char ch2);
 
+// Test for pritable ascii charater
+BOOL isPrintableChar(unsigned char ch);
+
 typedef enum {
     kUnknownToken,
     kBooleanToken,

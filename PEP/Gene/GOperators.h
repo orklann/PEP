@@ -205,4 +205,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString*)compile;
 @end
 
+
+// w operator
+@interface GwOperator : NSObject {
+    
+}
+
+@property (readwrite) GCommandObject *cmdObj;
+
++ (id)create;
+- (void)eval:(CGContextRef)context page:(GPage*)page;
+- (NSString*)compile;
+@end
 NS_ASSUME_NONNULL_END

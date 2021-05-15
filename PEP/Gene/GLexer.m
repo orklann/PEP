@@ -21,6 +21,17 @@ BOOL isWhiteSpace(unsigned char ch) {
         default:
             break;
     }
+    
+    /*
+     * NOTE: We treat non printable characters as white space
+     *       characters, because we encounter some PDF has /2500.96,
+     *       so that, /250 (ascii:168) is not printable character,
+     *       to make it work, we need to treat it as white space
+     *       to corretly parse in lexer.
+     */
+    if (!isPrintableChar(ch)) {
+        return YES;
+    }
     return NO;
 }
 
@@ -79,6 +90,13 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
         return kONE_END_LINE_MARKER;
     }
     return kNOT_END_LINE_MARKER;
+}
+
+BOOL isPrintableChar(unsigned char ch) {
+    if (ch >= 32 && ch <= 126) {
+        return YES;
+    }
+    return NO;
 }
 
 @implementation GToken

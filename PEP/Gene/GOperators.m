@@ -424,3 +424,26 @@
     return [NSString stringWithFormat:@"%f %f l\n", x, y];
 }
 @end
+
+@implementation GwOperator
+
++ (id)create {
+    GwOperator *o = [[GwOperator alloc] init];
+    return o;
+}
+
+- (void)eval:(CGContextRef)context page:(GPage*)page {
+    NSArray *args = [_cmdObj args];
+    CGFloat lineWidth = [[args objectAtIndex:0] getRealValue];
+
+    // Set line width in graphic state
+    [page.graphicsState setLineWidth:lineWidth];
+}
+
+- (NSString*)compile {
+    NSArray *args = [_cmdObj args];
+    CGFloat lineWidth = [[args objectAtIndex:0] getRealValue];
+
+    return [NSString stringWithFormat:@"%f w\n", lineWidth];
+}
+@end
