@@ -93,6 +93,10 @@ int isEndLineMarker(unsigned char ch1, unsigned char ch2) {
 }
 
 BOOL isPrintableChar(unsigned char ch) {
+    /*
+     * See:
+     * https://theasciicode.com.ar/extended-ascii-code/inverted-question-marks-ascii-code-168.html
+     */
     if (ch >= 32 && ch <= 126) {
         return YES;
     }
