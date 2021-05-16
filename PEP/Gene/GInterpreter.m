@@ -789,6 +789,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     if (![page prewarm]) {
         CGContextBeginPath(context);
         CGContextAddPath(context, _currentPath);
+        CGContextSetLineWidth(context, [page.graphicsState lineWidth]);
         CGContextStrokePath(context);
         _currentPath = CGPathCreateMutable();
     }

@@ -372,6 +372,7 @@
     
     CGContextBeginPath(context);
     CGContextAddPath(context, page.interpreter.currentPath);
+    CGContextSetLineWidth(context, [page.graphicsState lineWidth]);
     CGContextStrokePath(context);
     page.interpreter.currentPath = CGPathCreateMutable();
 }
