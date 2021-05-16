@@ -481,11 +481,10 @@
             [self setPdfFontName:fontName];
             [self.page addNewFont:font withPDFFontTag:fontName];
         } else {
-            // NOTE: We still add new font if selected font is the same as origin font in PDF.
-            // But we need to skip adding original font tag from "Font" array from page resource.
-            // For this, see [GPage addNewAddedFontsForUpdating]
-            font = [NSFont fontWithName:selectedFont size:fontSize];
-            [self.page addNewFont:font withPDFFontTag:fontName];
+            // NOTE: We don't need to add new font if selected font is the same as origin font in PDF.
+            //       But we still need to set font to the font program in PDF,
+            //       because insertChar:fontTag: need it
+            font = [self.page getCachedFontByFontTag:fontName];
         }
     }
     
