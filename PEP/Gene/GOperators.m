@@ -448,3 +448,36 @@
     return [NSString stringWithFormat:@"%f w\n", lineWidth];
 }
 @end
+
+
+@implementation GcOperator
+
++ (id)create {
+    GcOperator *o = [[GcOperator alloc] init];
+    return o;
+}
+
+- (void)eval:(CGContextRef)context page:(GPage*)page {
+    NSArray *args = [_cmdObj args];
+    CGFloat x1 = [[args objectAtIndex:0] getRealValue];
+    CGFloat y1 = [[args objectAtIndex:1] getRealValue];
+    CGFloat x2 = [[args objectAtIndex:2] getRealValue];
+    CGFloat y2 = [[args objectAtIndex:3] getRealValue];
+    CGFloat x3 = [[args objectAtIndex:4] getRealValue];
+    CGFloat y3 = [[args objectAtIndex:5] getRealValue];
+ 
+    CGPathAddCurveToPoint(page.interpreter.currentPath, NULL, x1, y1, x2, y2, x3, y3);
+}
+
+- (NSString*)compile {
+    NSArray *args = [_cmdObj args];
+    CGFloat x1 = [[args objectAtIndex:0] getRealValue];
+    CGFloat y1 = [[args objectAtIndex:1] getRealValue];
+    CGFloat x2 = [[args objectAtIndex:2] getRealValue];
+    CGFloat y2 = [[args objectAtIndex:3] getRealValue];
+    CGFloat x3 = [[args objectAtIndex:4] getRealValue];
+    CGFloat y3 = [[args objectAtIndex:5] getRealValue];
+
+    return [NSString stringWithFormat:@"%f %f %f %f %f %f c\n", x1, y1, x2, y2, x3, y3];
+}
+@end

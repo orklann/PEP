@@ -364,6 +364,9 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
             } else if (isCommand(cmd, @"w")) { // w
                 NSArray *args = getCommandArgs(commands, 1);
                 [(GCommandObject*)obj setArgs:args];
+            } else if (isCommand(cmd, @"c")) { // c
+                NSArray *args = getCommandArgs(commands, 6);
+                [(GCommandObject*)obj setArgs:args];
             } else {
                 //NSLog(@"GInterpreter:parseCommands not handle %@ operator", cmd);
             }
@@ -866,6 +869,24 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     [page.graphicElements addObject:op];
 }
 
+- (void)eval_c_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
+    NSArray *args = [cmdObj args];
+    CGFloat x1 = [[args objectAtIndex:0] getRealValue];
+    CGFloat y1 = [[args objectAtIndex:1] getRealValue];
+    CGFloat x2 = [[args objectAtIndex:2] getRealValue];
+    CGFloat y2 = [[args objectAtIndex:3] getRealValue];
+    CGFloat x3 = [[args objectAtIndex:4] getRealValue];
+    CGFloat y3 = [[args objectAtIndex:5] getRealValue];
+ 
+    CGPathAddCurveToPoint(_currentPath, NULL, x1, y1, x2, y2, x3, y3);
+    
+
+    GcOperator *op = [GcOperator create];
+    [op setCmdObj:cmdObj];
+    [page.graphicElements addObject:op];
+}
+
+
 - (void)eval:(CGContextRef)context {
     //NSDate *methodStart = [NSDate date];
     if ([page needUpdate]) {
@@ -939,6 +960,8 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
                     [self eval_l_Command:context command:cmdObj];
                 } else if (isCommand(cmd, @"w")) { // eval w
                     [self eval_w_Command:context command:cmdObj];
+                } else if (isCommand(cmd, @"c")) { // eval c
+                    [self eval_c_Command:context command:cmdObj];
                 } else {
                     //NSLog(@"Operator %@ not eval.", cmd);
                 }
