@@ -482,3 +482,38 @@
     return [NSString stringWithFormat:@"%f %f %f %f %f %f c\n", x1, y1, x2, y2, x3, y3];
 }
 @end
+
+@implementation GcmOperator
+
++ (id)create {
+    GcmOperator *o = [[GcmOperator alloc] init];
+    return o;
+}
+
+- (void)eval:(CGContextRef)context page:(GPage*)page {
+    NSArray *args = [_cmdObj args];
+    CGFloat a = [[args objectAtIndex:0] getRealValue];
+    CGFloat b = [[args objectAtIndex:1] getRealValue];
+    CGFloat c = [[args objectAtIndex:2] getRealValue];
+    CGFloat d = [[args objectAtIndex:3] getRealValue];
+    CGFloat e = [[args objectAtIndex:4] getRealValue];
+    CGFloat f = [[args objectAtIndex:5] getRealValue];
+    CGAffineTransform ctm = CGAffineTransformMake(a, b, c, d, e, f);
+    CGAffineTransform currentCTM = [[page graphicsState] ctm];
+    CGAffineTransform newCTM = CGAffineTransformConcat(currentCTM, ctm);
+    [[page graphicsState] setCTM:newCTM];
+    CGContextConcatCTM(context, ctm);
+ }
+
+- (NSString*)compile {
+    NSArray *args = [_cmdObj args];
+    CGFloat a = [[args objectAtIndex:0] getRealValue];
+    CGFloat b = [[args objectAtIndex:1] getRealValue];
+    CGFloat c = [[args objectAtIndex:2] getRealValue];
+    CGFloat d = [[args objectAtIndex:3] getRealValue];
+    CGFloat e = [[args objectAtIndex:4] getRealValue];
+    CGFloat f = [[args objectAtIndex:5] getRealValue];
+
+    return [NSString stringWithFormat:@"%f %f %f %f %f %f cm\n", a, b, c, d, e, f];
+}
+@end

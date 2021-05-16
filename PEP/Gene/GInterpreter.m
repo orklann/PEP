@@ -410,6 +410,10 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     if (![page prewarm]) {
         CGContextConcatCTM(context, ctm);
     }
+    
+    GcmOperator *op = [GcmOperator create];
+    [op setCmdObj:cmdObj];
+    [page.graphicElements addObject:op];
 }
 
 - (void)eval_Tm_Command:(CGContextRef)context command:(GCommandObject*)cmdObj {
