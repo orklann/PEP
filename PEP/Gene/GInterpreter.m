@@ -793,6 +793,7 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         CGContextBeginPath(context);
         CGContextAddPath(context, _currentPath);
         CGContextSetLineWidth(context, [page.graphicsState lineWidth]);
+        CGContextSetStrokeColorWithColor(context, [[page.graphicsState strokeColor] CGColor]);
         CGContextStrokePath(context);
         _currentPath = CGPathCreateMutable();
     }

@@ -373,6 +373,7 @@
     CGContextBeginPath(context);
     CGContextAddPath(context, page.interpreter.currentPath);
     CGContextSetLineWidth(context, [page.graphicsState lineWidth]);
+    CGContextSetStrokeColorWithColor(context, [[page.graphicsState strokeColor] CGColor]);
     CGContextStrokePath(context);
     page.interpreter.currentPath = CGPathCreateMutable();
 }
