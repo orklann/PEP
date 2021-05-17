@@ -366,6 +366,10 @@
     return [[self cachedFonts] objectForKey:key];
 }
 
+/*
+ * This method both return the mathing font in cached fonts
+ * and added fonts.
+ */
 - (NSFont*)getCachedFontByFontTag:(NSString*)fontTag {
     NSString *fontKey = [self fontTagToFontKey:fontTag];
     return [self getCachedFontForKey:fontKey];
