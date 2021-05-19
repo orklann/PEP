@@ -361,7 +361,7 @@
         [g setFontName:fontName];
         [g setFontSize:fontSize];
         [g setFont:font];
-        [g setEncoding:MacExpertEncoding];
+        [g setEncoding:MacRomanEncoding];
         CGGlyph cgGlyph = [self.page.interpreter getCGGlyphForGGlyph:g];
         [g setGlyph:cgGlyph];
         
