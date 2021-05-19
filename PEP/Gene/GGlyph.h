@@ -38,7 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) NSString *fontName;
 @property (readwrite) CGFloat fontSize;
 @property (readwrite) int lineIndex;
-@property (readwrite) char * _Nonnull * _Nonnull encoding;
+@property (readwrite) char *_Nullable* _Nullable encoding;
 @property (readwrite) GFontEncoding* fontEncoding;
 @property (readwrite) NSColor *textColor;
 

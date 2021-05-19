@@ -38,7 +38,6 @@ BOOL isCommand(NSString *cmd, NSString *cmd2);
 - (void)eval:(CGContextRef)context;
 
 - (CGGlyph)getCGGlyphForGGlyph:(GGlyph*)glyph;
-- (BOOL)glyph:(NSString*)ch foundInFont:(NSFont*)font;
 @end
 
 NS_ASSUME_NONNULL_END

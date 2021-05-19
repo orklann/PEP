@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSString*)selectedFamily;
 - (NSString*)selectedStyle;
 - (NSString*)getSelectedFontName;
+- (void)resetFamilyAndStyle;    // Reset to default font - Helvetica
 @end
 
 NS_ASSUME_NONNULL_END

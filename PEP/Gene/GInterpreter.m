@@ -53,7 +53,11 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
         NSLog(@"Error: char code is greater than 255, it's not a latin character");
     }
     
-    NSString *glyphName = [fontEncoding getGlyphNameInDifferences:charCode];
+    NSString *glyphName;
+    if (fontEncoding) {
+        glyphName = [fontEncoding getGlyphNameInDifferences:charCode];
+    }
+
     if (glyphName == nil && encoding != NULL) {
         char *glyphNameChars = encoding[charCode];
         glyphName = [NSString stringWithFormat:@"%s", glyphNameChars];
@@ -62,52 +66,16 @@ BOOL isCommand(NSString *cmd, NSString *cmd2) {
     // If glyph is ".notdef", we try to get glyph a from charcode instead.
     CFStringRef glyphName2 = CTFontCopyNameForGlyph(coreFont, ret);
     NSString *glyphNameNSString = (__bridge NSString *)glyphName2;
-    if ([glyphNameNSString isEqualToString:@".notdef"]) {
+    if (glyphNameNSString == nil || [glyphNameNSString isEqualToString:@".notdef"]) {
         CTFontGetGlyphsForCharacters(coreFont, &charCode, &ret, 1);
     }
+    
+    CFStringRef glyphName3 = CTFontCopyNameForGlyph(coreFont, ret);
+    glyphNameNSString = (__bridge NSString *)glyphName3;
 
     return ret;
 }
 
-- (BOOL)glyph:(NSString*)ch foundInFont:(NSFont*)font {
-    CTFontRef coreFont = (__bridge CTFontRef)(font);
-    char **encoding = [[page textState] encoding];
-    GFontEncoding *fontEncoding = [[page textState] fontEncoding];
-    CGGlyph a;
-    unichar charCode = [ch characterAtIndex:0];
-    
-    if (charCode > 255) {
-        NSLog(@"Error: char code is greater than 255, it's not a latin character");
-        // TODO: Handle char code greater than 255 for non latin characters?
-        return NO;
-    }
-    
-    NSString *glyphName = [fontEncoding getGlyphNameInDifferences:charCode];
-    if (glyphName == nil && encoding != NULL) {
-        char *glyphNameChars = encoding[charCode];
-        glyphName = [NSString stringWithFormat:@"%s", glyphNameChars];
-    }
-    
-    a = CTFontGetGlyphWithName(coreFont, (__bridge CFStringRef)glyphName);
-    
-    // If glyph is ".notdef", we try to get glyph from charcode instead.
-    CFStringRef glyphName2 = CTFontCopyNameForGlyph(coreFont, a);
-    NSString *glyphNameNSString = (__bridge NSString *)glyphName2;
-    if ([glyphNameNSString isEqualToString:@".notdef"]) {
-        CTFontGetGlyphsForCharacters(coreFont, &charCode, &a, 1);
-    } else {
-        return YES;
-    }
-
-    CFStringRef glyphName3 = CTFontCopyNameForGlyph(coreFont, a);
-    glyphNameNSString = (__bridge NSString *)glyphName3;
-    
-    if (![glyphNameNSString isEqualToString:@".notdef"]) {
-        return YES;
-    }
-    
-    return NO;
-}
 
 - (CGFloat)drawString:(NSString*)ch font:(NSFont*)font context:(CGContextRef)context {
     CTFontRef coreFont = (__bridge CTFontRef)(font);

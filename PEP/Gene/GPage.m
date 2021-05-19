@@ -780,6 +780,10 @@
     NSString *refString = [doc generateNewRef];
     NSString *fontKey = [NSString stringWithFormat:@"%@~%@", fontTag, refString];
     [self.addedFonts setObject:font forKey:fontKey];
+    
+    // Update new added font key to dict, we call [self fontTagToFontKey:]
+    // based on this
+    [self.fontKeysDict setObject:fontKey forKey:fontTag];
 }
 
 - (void)saveGraphicsState {

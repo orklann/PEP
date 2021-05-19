@@ -266,4 +266,9 @@
     }
     return result;
 }
+
+- (void)resetFamilyAndStyle {
+    [familyList setTitle:@"Helvetica"];
+    [styleList setTitle:@"Regular"];
+}
 @end

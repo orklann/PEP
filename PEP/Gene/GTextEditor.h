@@ -14,6 +14,7 @@
 @class GTextBlock;
 @class GPage;
 @class GLine;
+@class GFontEncoding;
 NS_ASSUME_NONNULL_BEGIN
 
 @interface GTextEditor : NSObject {
@@ -39,6 +40,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readwrite) BOOL drawInsertionPoint;
 @property (readwrite) GPage *page;
 @property (readwrite) BOOL isEditing;
+@property (readwrite) char * _Nonnull * _Nonnull encoding;
+@property (readwrite) GFontEncoding* fontEncoding;
 
 + (id)textEditorWithPage:(GPage *)p textBlock:(GTextBlock *)tb;
 - (GTextEditor*)initWithPage:(GPage *)p textBlock:(GTextBlock*)tb;
@@ -51,7 +54,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSRect)enlargedFrame;
 
 // Insert character in insertion point
-- (void)insertChar:(NSString *)ch font:(NSFont*)font fontTag:(NSString*)fontName;
+- (void)insertChar:(NSString *)ch
+              font:(NSFont*)font
+           fontTag:(NSString*)fontName
+    fontIsExternal:(BOOL)fontIsExternal;
+
 - (void)insertChar:(NSString *)ch;
 
 - (GGlyph*)getCurrentGlyph;
@@ -67,6 +74,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Stop blink timer
 - (void)stopBlinkTimer;
+
+- (BOOL)glyph:(NSString*)ch foundInFont:(NSFont*)font;
 @end
 
 NS_ASSUME_NONNULL_END

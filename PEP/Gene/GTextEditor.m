@@ -22,6 +22,7 @@
 #import "PEPMisc.h"
 #import "GInterpreter.h"
 #import "GEncodings.h"
+#import "GFontEncoding.h"
 
 #define kLeftArrow 123
 #define kRightArrow 124
@@ -42,7 +43,7 @@
     textBlock = tb;
     insertionPointIndex = 0;
     // Update font name, font size
-    [self updateFontNameAndFontSize];
+    [self updateEditorProperties];
     self.drawInsertionPoint = YES;
     self.isEditing = NO;
     self.commandsUpdated = NO;
@@ -213,7 +214,7 @@
         if (insertionPointIndex - 1 >= 0) {
             insertionPointIndex--;
         }
-        [self updateFontNameAndFontSize];
+        [self updateEditorProperties];
         if ([_delegate respondsToSelector:@selector(textStateDidChange:)]) {
             [_delegate textStateDidChange:self];
         }
@@ -221,19 +222,19 @@
         if (insertionPointIndex + 1 <= [glyphs count]) {
             insertionPointIndex++;
         }
-        [self updateFontNameAndFontSize];
+        [self updateEditorProperties];
         if ([_delegate respondsToSelector:@selector(textStateDidChange:)]) {
             [_delegate textStateDidChange:self];
         }
     } else if (keyCode == kUpArrow) {
         [self moveInsertionPointUp];
-        [self updateFontNameAndFontSize];
+        [self updateEditorProperties];
         if ([_delegate respondsToSelector:@selector(textStateDidChange:)]) {
             [_delegate textStateDidChange:self];
         }
     } else if (keyCode == kDownArrow) {
         [self moveInsertionPointDown];
-        [self updateFontNameAndFontSize];
+        [self updateEditorProperties];
         if ([_delegate respondsToSelector:@selector(textStateDidChange:)]) {
             [_delegate textStateDidChange:self];
         }
@@ -253,7 +254,8 @@
                 ch = @" ";  // NOTE: ch is now a Tab character, not a space
             }
             [self insertChar:ch];
-            [self updateFontNameAndFontSize];
+            NSLog(@"(*):%@", [textBlock textBlockString]);
+            [self updateEditorProperties];
         }
         self.page.dirty = YES;
     }
@@ -335,7 +337,10 @@
  *
  */
 
-- (void)insertChar:(NSString *)ch font:(NSFont*)font fontTag:(NSString*)fontName{
+- (void)insertChar:(NSString *)ch
+              font:(NSFont*)font
+           fontTag:(NSString*)fontName
+    fontIsExternal:(BOOL)fontIsExternal {
     NSMutableArray *glyphs = [self.page.textParser glyphs];
     
     //
@@ -400,7 +405,13 @@
         
         // These three are needed for updating width below
         [g setTextMatrix:tm];
-        [g setEncoding:currentGlyph.encoding];
+        
+        // External font must be MacExpertEncoding
+        if (fontIsExternal) {
+            [g setEncoding:MacRomanEncoding];
+        } else {
+            [g setEncoding:currentGlyph.encoding];
+        }
         [g setFont:font];
         [g setTextColor:textColor];
 
@@ -425,7 +436,13 @@
         
         // Also new glyph ctm need to add previous glyph width
         tm.tx += prevGlyph.width;
-        [g setEncoding:prevGlyph.encoding];
+        // External font must be MacExpertEncoding
+        if (fontIsExternal) {
+            [g setEncoding:MacRomanEncoding];
+        } else {
+            [g setEncoding:currentGlyph.encoding];
+        }
+        
         insertIndex = (int)[glyphs indexOfObject:prevGlyph] + 1;
         insertIndex2 = (int)[self.page.graphicElements indexOfObject:prevGlyph] + 1;
     }
@@ -464,6 +481,13 @@
 - (void)insertChar:(NSString *)ch {
     if (self.isEditing) return ;
     self.isEditing = YES;
+    /*
+     * External font means not the embeded PDF font, which sit in macOS,
+     * which has default encoding, not the same as current encoding of
+     * the text editor, we set this encoding in
+     * [self insertChar:font:fontTag:fontIsExternal:];
+     */
+    BOOL fontIsExternal = NO;
     NSString *fontName = [self pdfFontName];
     NSString *newFontTag;
     CGFloat fontSize = [self fontSize];
@@ -480,6 +504,7 @@
             fontName = newFontTag;
             [self setPdfFontName:fontName];
             [self.page addNewFont:font withPDFFontTag:fontName];
+            fontIsExternal = YES;
         } else {
             // NOTE: We don't need to add new font if selected font is the same as origin font in PDF.
             //       But we still need to set font to the font program in PDF,
@@ -488,7 +513,23 @@
         }
     }
     
-    [self insertChar:ch font:font fontTag:fontName];
+    /*
+     * If glyph for new character is not found in font, we just create a
+     * default font (Helvetica) for as a new font
+     */
+    if (![self glyph:ch foundInFont:font]) {
+        font = [NSFont fontWithName:@"Helvetica" size:fontSize];
+        newFontTag = [self.page generateNewPDFFontTag];
+        fontName = newFontTag;
+        [self setPdfFontName:fontName];
+        [self.page addNewFont:font withPDFFontTag:fontName];
+        // Reset font list to `Helvetica Regular`
+        PEPSideView* sideView = [self getSideView];
+        [sideView resetFamilyAndStyle];
+        fontIsExternal = YES;
+    }
+    
+    [self insertChar:ch font:font fontTag:fontName fontIsExternal:fontIsExternal];
     // Do word wrap here, use cached glyphs 
     [self doWordWrap];
     
@@ -585,7 +626,7 @@
     textBlock = [textBlock textBlockByRemovingGlyph:prevGlyph];
 }
 
-- (void)updateFontNameAndFontSize {
+- (void)updateEditorProperties {
     int glyphIndexInLine = [textBlock getGlyphIndexInLine:insertionPointIndex];
     GGlyph *prevGlyph = [self getPrevGlyph];
     
@@ -595,6 +636,8 @@
         // if insertion point is at the beginning of line
         self.pdfFontName = [currentGlyph fontName];
         self.fontSize = [currentGlyph fontSize];
+        self.encoding = [currentGlyph encoding];
+        self.fontEncoding = [currentGlyph fontEncoding];
         return ;
     }
     
@@ -602,11 +645,15 @@
         // Let's update font name, and font size based on previous glyph
         self.pdfFontName = [prevGlyph fontName];
         self.fontSize = [prevGlyph fontSize];
+        self.encoding = [prevGlyph encoding];
+        self.fontEncoding = [prevGlyph fontEncoding];
     } else {
         // If prevGlyph is nil, which means we are at the last glyph
         GGlyph *lastGlyph = [[textBlock glyphs] lastObject];
         self.pdfFontName = [lastGlyph fontName];
         self.fontSize = [lastGlyph fontSize];
+        self.encoding = [lastGlyph encoding];
+        self.fontEncoding = [lastGlyph fontEncoding];
     }
 }
 
@@ -1003,6 +1050,49 @@
 - (void)stopBlinkTimer {
     [blinkTimer invalidate];
     blinkTimer = nil;
+}
+
+- (BOOL)glyph:(NSString*)ch foundInFont:(NSFont*)font {
+    CTFontRef coreFont = (__bridge CTFontRef)(font);
+    char **encoding =  _encoding;
+    GFontEncoding *fontEncoding = _fontEncoding;
+    CGGlyph a;
+    unichar charCode = [ch characterAtIndex:0];
+    
+    if (charCode > 255) {
+        NSLog(@"Error: char code is greater than 255, it's not a latin character");
+        // TODO: Handle char code greater than 255 for non latin characters?
+        return NO;
+    }
+    
+    NSString *glyphName;
+    if (fontEncoding) {
+        glyphName = [fontEncoding getGlyphNameInDifferences:charCode];
+    }
+    
+    if (glyphName == nil && encoding != NULL) {
+        char *glyphNameChars = encoding[charCode];
+        glyphName = [NSString stringWithFormat:@"%s", glyphNameChars];
+    }
+    
+    a = CTFontGetGlyphWithName(coreFont, (__bridge CFStringRef)glyphName);
+    
+    // If glyph is ".notdef", we try to get glyph from charcode instead.
+    CFStringRef glyphName2 = CTFontCopyNameForGlyph(coreFont, a);
+    NSString *glyphNameNSString = (__bridge NSString *)glyphName2;
+    if ([glyphNameNSString isEqualToString:@".notdef"]) {
+        CTFontGetGlyphsForCharacters(coreFont, &charCode, &a, 1);
+    } else {
+        return YES;
+    }
+
+    CFStringRef glyphName3 = CTFontCopyNameForGlyph(coreFont, a);
+    glyphNameNSString = (__bridge NSString *)glyphName3;
+    if (glyphNameNSString && ![glyphNameNSString isEqualToString:@".notdef"]) {
+        return YES;
+    }
+    
+    return NO;
 }
 @end
 
