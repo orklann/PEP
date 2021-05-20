@@ -115,7 +115,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSMutableDictionary*)cachedFonts;
 
 // Add new font with PDF font key
-- (void)addNewFont:(NSFont*)font withPDFFontTag:(NSString*)fontTag;
+- (NSString*)addNewFont:(NSFont*)font withPDFFontTag:(NSString*)fontTag;
 
 // Graphics state stacks operation
 - (void)saveGraphicsState;

@@ -503,7 +503,7 @@
             newFontTag = [self.page generateNewPDFFontTag];
             fontName = newFontTag;
             [self setPdfFontName:fontName];
-            [self.page addNewFont:font withPDFFontTag:fontName];
+            fontName = [self.page addNewFont:font withPDFFontTag:fontName];
             fontIsExternal = YES;
         } else {
             // NOTE: We don't need to add new font if selected font is the same as origin font in PDF.
@@ -522,7 +522,7 @@
         newFontTag = [self.page generateNewPDFFontTag];
         fontName = newFontTag;
         [self setPdfFontName:fontName];
-        [self.page addNewFont:font withPDFFontTag:fontName];
+        fontName = [self.page addNewFont:font withPDFFontTag:fontName];
         // Reset font list to `Helvetica Regular`
         PEPSideView* sideView = [self getSideView];
         [sideView resetFamilyAndStyle];

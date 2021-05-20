@@ -776,7 +776,19 @@
     return doc.cachedFonts;
 }
 
-- (void)addNewFont:(NSFont*)font withPDFFontTag:(NSString*)fontTag {
+- (NSString*)addNewFont:(NSFont*)font withPDFFontTag:(NSString*)fontTag {
+    /*
+     * If new font is in self.addedFonts, we just return that with it's fontTag
+     */
+    NSString *fontName = [font fontName];
+    for (NSString *k in [self.addedFonts allKeys]) {
+        NSFont *f = [self.addedFonts objectForKey:k];
+        if ([[f fontName] isEqualToString:fontName]) {
+            NSArray *comps = [k componentsSeparatedByString:@"~"];
+            return [comps firstObject];
+        }
+    }
+    
     NSString *refString = [doc generateNewRef];
     NSString *fontKey = [NSString stringWithFormat:@"%@~%@", fontTag, refString];
     [self.addedFonts setObject:font forKey:fontKey];
@@ -784,6 +796,9 @@
     // Update new added font key to dict, we call [self fontTagToFontKey:]
     // based on this
     [self.fontKeysDict setObject:fontKey forKey:fontTag];
+    
+    // Return incoming fontTag
+    return fontTag;
 }
 
 - (void)saveGraphicsState {
