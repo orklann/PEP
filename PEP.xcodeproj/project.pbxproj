@@ -13,6 +13,7 @@
 		1C1999DB26392BB6002DD9B3 /* GFunctionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1999DA26392BB6002DD9B3 /* GFunctionsTests.m */; };
 		1C19EAA62643C0D100DBF8F2 /* GOperators.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C19EAA52643C0D100DBF8F2 /* GOperators.m */; };
 		1C1AC143263BF1B20065F2D2 /* GAlternateColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C1AC142263BF1B20065F2D2 /* GAlternateColorSpace.m */; };
+		1C6795B72658E7D20097E130 /* xref_stream_example.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1C6795B62658E7D20097E130 /* xref_stream_example.txt */; };
 		1C6A762226270D5800781727 /* GColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6A762126270D5800781727 /* GColorSpace.m */; };
 		1C6A762726270D8A00781727 /* GDeviceGrayColorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6A762626270D8A00781727 /* GDeviceGrayColorSpace.m */; };
 		1C6A762B2627103A00781727 /* GColorSpaceTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1C6A762A2627103A00781727 /* GColorSpaceTests.m */; };
@@ -122,6 +123,7 @@
 		1C19EAA52643C0D100DBF8F2 /* GOperators.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GOperators.m; sourceTree = "<group>"; };
 		1C1AC141263BF1B20065F2D2 /* GAlternateColorSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GAlternateColorSpace.h; sourceTree = "<group>"; };
 		1C1AC142263BF1B20065F2D2 /* GAlternateColorSpace.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GAlternateColorSpace.m; sourceTree = "<group>"; };
+		1C6795B62658E7D20097E130 /* xref_stream_example.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = xref_stream_example.txt; sourceTree = "<group>"; };
 		1C6A762026270D5800781727 /* GColorSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GColorSpace.h; sourceTree = "<group>"; };
 		1C6A762126270D5800781727 /* GColorSpace.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GColorSpace.m; sourceTree = "<group>"; };
 		1C6A762526270D8A00781727 /* GDeviceGrayColorSpace.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GDeviceGrayColorSpace.h; sourceTree = "<group>"; };
@@ -419,6 +421,7 @@
 		936C4303250363AD00FFE547 /* pdf */ = {
 			isa = PBXGroup;
 			children = (
+				1C6795B62658E7D20097E130 /* xref_stream_example.txt */,
 				1CFD4F2B263D4AFC004E4808 /* coders-at-work.pdf */,
 				1C73D8812637E5E900F7C315 /* type0_function.bin */,
 				93386D372568E6D400B63E8E /* Super Mario World.pdf */,
@@ -620,6 +623,7 @@
 				93311A10254EA5EF00D58E06 /* PEP_Incremental.pdf in Resources */,
 				93B707AC255D129200F326EB /* bug_hex_string.pdf in Resources */,
 				938EB9752545A0D80045F463 /* tab.pdf in Resources */,
+				1C6795B72658E7D20097E130 /* xref_stream_example.txt in Resources */,
 				9359739E2543B36800BB217D /* PEP_GillSans.pdf in Resources */,
 				1CFD4F2C263D4AFC004E4808 /* coders-at-work.pdf in Resources */,
 				93899B0225594EF2001D79A8 /* A Sample PDF(Updated).pdf in Resources */,
