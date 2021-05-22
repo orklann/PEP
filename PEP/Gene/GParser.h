@@ -17,6 +17,15 @@ typedef enum {
     kXRefSubsectionHeader
 } XRefType;
 
+/*
+ * Three types for XRef stream entry: 0, 1, 2
+ */
+typedef enum {
+    kType0,
+    kType1,
+    kType2
+} XRefStreamEntryType;
+
 XRefType xrefType(NSString *line);
 BOOL isTrailerLine(NSString *line);
 
