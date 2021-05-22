@@ -871,8 +871,10 @@
     int len = (int)[streamContent length];
     for (int i = 0; i < len; i += (firstWidth + secondWidth + thirdWidth)) {
         NSMutableString *s = [NSMutableString string];
+        int ii = i;
         for (int j = 0; j < firstWidth; j++) {
-            int v = *(bytes + i + j);
+            ii += j;
+            int v = *(bytes + ii);
             [s appendFormat:@"%d", v];
         }
         XCTAssertTrue([s intValue] >= 0 && [s intValue] <= 2);
