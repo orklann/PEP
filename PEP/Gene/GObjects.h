@@ -237,6 +237,28 @@ NSArray *getDynamicCommandArgs(NSArray *objects);
 - (unsigned char)inUse;
 @end
 
+/*
+ * Three types for XRef stream entry: 0, 1, 2
+ */
+typedef enum {
+    kType0,
+    kType1,
+    kType2
+} XRefStreamEntryType;
+
+@interface GXRefStreamEntry : GXRefEntry {
+    XRefStreamEntryType entryType;
+    unsigned int objectNumberForObjectStream;
+    unsigned int indexInObjectStream;
+}
+
+- (XRefStreamEntryType)entryType;
+- (void)setEntryType:(XRefStreamEntryType)type;
+- (unsigned int)objectNumberForObjectStream;
+- (void)setObjectNumberForObjectStream:(unsigned int)number;
+- (unsigned int)indexInObjectStream;
+- (void)setIndexInObjectStream:(unsigned int)index;
+@end
 
 // Command Object (a.k.a operators) describe how PDF page content are shown,
 // And are in the content of PDF Page

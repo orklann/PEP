@@ -809,6 +809,33 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
 }
 @end
 
+@implementation GXRefStreamEntry
+
+- (XRefStreamEntryType)entryType {
+    return entryType;
+}
+
+- (void)setEntryType:(XRefStreamEntryType)type {
+    entryType = type;
+}
+
+- (unsigned int)objectNumberForObjectStream {
+    return objectNumberForObjectStream;
+}
+
+- (void)setObjectNumberForObjectStream:(unsigned int)number {
+    objectNumberForObjectStream = number;
+}
+
+- (unsigned int)indexInObjectStream {
+    return indexInObjectStream;
+}
+
+- (void)setIndexInObjectStream:(unsigned int)index {
+    indexInObjectStream = index;
+}
+@end
+
 @implementation GCommandObject
 + (id)create {
     id o = [[GCommandObject alloc] init];
