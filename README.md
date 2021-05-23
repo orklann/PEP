@@ -40,3 +40,6 @@ A simple [Roadmap](https://github.com/orklann/PEP/projects/1) is presented on Gi
 GPLv2.0 
 
 see `LICENSE` file for more details. 
+
+## Author
+Aaron Elkins (rkt)
