@@ -474,6 +474,28 @@
     }
 }
 
+/*
+ * Help validating GStream encoded stream from project Caparice.
+ */
+
+- (void)testGParserParseStreamObjectFromCaprice {
+    GParser *p = [GParser parser];
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSString *path = [bundle pathForResource:@"caprice_stream" ofType:@"bin"];
+    NSData *d = [NSData dataWithContentsOfFile:path];
+    [p setStream:d];
+    GStreamObject *stream = [p parseNextObject];
+    GDictionaryObject *dict = [stream dictionaryObject];
+    int length = [[[dict value] objectForKey:@"Length"] intValue];
+    XCTAssertEqual(length, 20);
+    NSString *filter = [(GNameObject*)[[dict value] objectForKey:@"Filter"] value];
+    XCTAssertEqualObjects(filter, @"FlateDecode");
+    NSString *expect = @"Hello, World";
+    NSData *decodedData = [stream getDecodedStreamContent];
+    NSString *decodedString = [[NSString alloc] initWithData:decodedData encoding:NSASCIIStringEncoding];
+    XCTAssertEqualObjects(expect, decodedString);
+}
+
 - (void)testGParserParseIndirectmObject {
     GParser *p = [GParser parser];
     char *b = "10 0 obj\n"
