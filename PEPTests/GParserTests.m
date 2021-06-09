@@ -881,25 +881,6 @@
     [p parse];
     
     GStreamObject *stm = [[p objects] firstObject];
-    
-    GDictionaryObject *dict = [stm dictionaryObject];
-    NSArray *widths = [(GArrayObject*)[[dict value] objectForKey:@"W"] value];
-    int firstWidth = [[widths firstObject] intValue];
-    int secondWidth = [[widths objectAtIndex:1] intValue];
-    int thirdWidth = [[widths objectAtIndex:2] intValue];
-    NSLog(@"W: %d %d %d", firstWidth, secondWidth, thirdWidth);
-    NSData *streamContent = [stm getDecodedStreamContent];
-    unsigned char *bytes = (unsigned char*)[streamContent bytes];
-    int len = (int)[streamContent length];
-    for (int i = 0; i < len; i += (firstWidth + secondWidth + thirdWidth)) {
-        NSMutableString *s = [NSMutableString string];
-        int ii = i;
-        for (int j = 0; j < firstWidth; j++) {
-            ii += j;
-            int v = *(bytes + ii);
-            [s appendFormat:@"%d", v];
-        }
-        XCTAssertTrue([s intValue] >= 0 && [s intValue] <= 2);
-    }
+    [p parseXRefStream:stm];
 }
 @end

@@ -811,6 +811,11 @@ NSArray *getDynamicCommandArgs(NSArray *objects) {
 
 @implementation GXRefStreamEntry
 
++ (id)create {
+    id o = [[GXRefStreamEntry alloc] init];
+    return o;
+}
+
 - (XRefStreamEntryType)entryType {
     return entryType;
 }

@@ -38,6 +38,7 @@ BOOL isTrailerLine(NSString *line);
 - (unsigned int)getStartXRef;
 - (void)updateXRefDictionary; 
 - (NSMutableDictionary *)parseXRef;
+- (NSMutableDictionary *)parseXRefStream:(GStreamObject*)stm;
 - (GDictionaryObject*)getTrailer;
 - (id)getObjectByRef:(NSString*)refKey;
 - (BOOL)refObjectNotFound:(NSString*)refKey;

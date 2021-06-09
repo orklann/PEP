@@ -252,6 +252,7 @@ typedef enum {
     unsigned int indexInObjectStream;
 }
 
++ (id)create;
 - (XRefStreamEntryType)entryType;
 - (void)setEntryType:(XRefStreamEntryType)type;
 - (unsigned int)objectNumberForObjectStream;

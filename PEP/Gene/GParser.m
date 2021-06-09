@@ -254,6 +254,62 @@ BOOL isTrailerLine(NSString *line) {
     return (unsigned int)[s intValue];
 }
 
+- (NSMutableDictionary *)parseXRefStream:(GStreamObject*)stm {
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    GDictionaryObject *dict = [stm dictionaryObject];
+    NSArray *widths = [(GArrayObject*)[[dict value] objectForKey:@"W"] value];
+    NSArray *index = [(GArrayObject*)[[dict value] objectForKey:@"Index"] value];
+    int startObjectNumber = [[index firstObject] intValue];
+    //int objectCount = [[index lastObject] intValue];
+    int firstWidth = [[widths firstObject] intValue];
+    int secondWidth = [[widths objectAtIndex:1] intValue];
+    int thirdWidth = [[widths objectAtIndex:2] intValue];
+    NSData *streamContent = [stm getDecodedStreamContent];
+    unsigned char *bytes = (unsigned char*)[streamContent bytes];
+    int len = (int)[streamContent length];
+    for (int i = 0; i < len; i += (firstWidth + secondWidth + thirdWidth)) {
+        int f1 = -1, f2 = -1, f3 = -1;
+        int ii = i;
+        for (int j = 0; j < firstWidth; j++) {
+            ii += j;
+            int v = *(bytes + ii);
+            f1 = v;
+        }
+        
+        for (int j = 0; j < secondWidth; j++) {
+            ii += j;
+            int v = *(bytes + ii);
+            f2 = v;
+        }
+                
+        for (int j = 0; j < thirdWidth; j++) {
+            ii += j;
+            int v = *(bytes + ii);
+            f3 = v;
+        }
+        
+        NSString *key;
+        GXRefStreamEntry *entry = [GXRefStreamEntry create];
+        [entry setObjectNumber:startObjectNumber];
+        if (f1 == kType0) {
+            key = [NSString stringWithFormat:@"%d-%d", startObjectNumber, f3];
+            [entry setEntryType:kType0];
+        } else if (f1 == kType1) {
+            key = [NSString stringWithFormat:@"%d-%d", startObjectNumber, f3];
+            [entry setEntryType:kType1];
+            [entry setOffset:f2];
+        } else if (f1 == kType2) {
+            key = [NSString stringWithFormat:@"%d-%d", startObjectNumber, 0];
+            [entry setEntryType:kType2];
+            [entry setObjectNumberForObjectStream:f2];
+            [entry setIndexInObjectStream:f3];
+        }
+        [result setObject:entry forKey:key];
+        startObjectNumber++;
+    }
+    return result;
+}
+
 - (NSMutableDictionary *)parseXRef:(int)startXRef {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [[self lexer] setPos:startXRef];
