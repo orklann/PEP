@@ -260,33 +260,41 @@ BOOL isTrailerLine(NSString *line) {
     NSArray *widths = [(GArrayObject*)[[dict value] objectForKey:@"W"] value];
     NSArray *index = [(GArrayObject*)[[dict value] objectForKey:@"Index"] value];
     int startObjectNumber = [[index firstObject] intValue];
-    //int objectCount = [[index lastObject] intValue];
     int firstWidth = [[widths firstObject] intValue];
     int secondWidth = [[widths objectAtIndex:1] intValue];
     int thirdWidth = [[widths objectAtIndex:2] intValue];
+    NSLog(@"%d %d %d", firstWidth, secondWidth, thirdWidth);
     NSData *streamContent = [stm getDecodedStreamContent];
     unsigned char *bytes = (unsigned char*)[streamContent bytes];
     int len = (int)[streamContent length];
     for (int i = 0; i < len; i += (firstWidth + secondWidth + thirdWidth)) {
-        int f1 = -1, f2 = -1, f3 = -1;
+        int f1 = 0, f2 = 0, f3 = 0;
         int ii = i;
+        NSMutableString *s = [NSMutableString string];
         for (int j = 0; j < firstWidth; j++) {
             ii += j;
             int v = *(bytes + ii);
-            f1 = v;
+            [s appendFormat:@"%d", v];
         }
+        ii++;
+        f1 = [s intValue];
         
+        s = [NSMutableString string];
         for (int j = 0; j < secondWidth; j++) {
             ii += j;
             int v = *(bytes + ii);
-            f2 = v;
+            [s appendFormat:@"%d", v];
         }
-                
+        ii++;
+        f2 = [s intValue];
+        
+        s = [NSMutableString string];
         for (int j = 0; j < thirdWidth; j++) {
             ii += j;
             int v = *(bytes + ii);
-            f3 = v;
+            [s appendFormat:@"%d", v];
         }
+        f3 = [s intValue];
         
         NSString *key;
         GXRefStreamEntry *entry = [GXRefStreamEntry create];
