@@ -1,0 +1,27 @@
+{
+    "workspace": "${workspaceRoot}/PEP.xcworkspace",
+    "scheme": "PEP",
+    "variables": {
+        "ARG1": "argument 1",
+        "ARG2": "argument 2"
+    },
+    "postBuildTasks": [
+        {
+            "name": "Sleep for a few seconds",
+            "program": "sleep",
+            "args": [ "3" ],
+            "cwd": "${workspaceRoot}"
+        }
+    ],
+    "debugConfigurations": [
+        {
+            "name": "test",
+            "cwd": "${workspaceRoot}",
+            "program": "${buildPath}/PEP.app/Contents/MacOS/PEP",
+            "args": [
+                "${ARG1}",
+                "${ARG2}"
+            ]
+        }
+    ] 
+}
